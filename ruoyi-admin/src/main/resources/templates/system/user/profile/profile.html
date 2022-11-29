@@ -214,18 +214,20 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="inputUserForm">
-                    <input name="inputUserAccount" id="inputUserAccount" type="hidden">
-                    <div class="form-group" id="nameForm">
-                        <label class="col-form-label">用户名称：</label>
-                        <input type="text" class="form-control" id="inputUserName" name="inputUserName" placeholder="请输入用户名称" value="">
-                    </div>
+                <form id="input-user-info">
+                    <input name="id" id="input-user-account" type="hidden" value="">
+                    <label for="input-user-name" class="col-sm-2 control-label">用户名称</label>
+                    <input type="text" class="form-control" id="input-user-name" name="userName" placeholder="请输入用户名称" value="">
+                    <label for="input-user-phone" class="col-sm-2 control-label">手机号码</label>
+                    <input type="text" class="form-control" id="input-user-phone" name="phonenumber" placeholder="请输入手机号码" value="">
+                    <label for="input-user-email" class="col-sm-2 control-label">邮箱地址</label>
+                    <input type="text" class="form-control" id="input-user-email" name="email" placeholder="请输入邮箱地址" value="">
                 </form>
             </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" onclick="submitUserInfo()" >Save changes</button>
             </div>
         </div>
     </div>
@@ -324,7 +326,8 @@
 
     function submitUserInfo() {
         if ($.validate.form()) {
-            $.operate.saveModal(ctx + "system/user/profile/update", $('#form-user-edit').serialize());
+            console.log($('#input-user-info').serialize())
+            $.operate.saveModal(ctx + "system/user/profile/update", $('#input-user-info').serialize());
         }
     }
 
@@ -383,11 +386,16 @@
     }
 
     $('#updateForm').on('show.bs.modal', function (event) {
-        var modal = $(this)
+        var modal = $(this);
         var newName='[[${user.loginName}]]'
-        console.log(newName);
-        modal.find('.modal-body.inputUserForm.nameForm input').val(newName)
-        //modal.find('.modal-body input').val(newName)
+        var newPhone='[[${user.phonenumber}]]'
+        var newEmail='[[${user.email}]]'
+        var inputName=document.getElementById("input-user-name");
+        var inputPhone=document.getElementById("input-user-phone");
+        var inputEmail=document.getElementById("input-user-email");
+        $('#input-user-name').val(newName);
+        $('#input-user-phone').val(newPhone);
+        $('#input-user-email').val(newEmail);
     });
 
 </script>
