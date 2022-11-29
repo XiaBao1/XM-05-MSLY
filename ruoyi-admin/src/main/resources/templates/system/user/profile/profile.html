@@ -8,9 +8,7 @@
 <input id="userId" name="userId" type="hidden" th:value="${user.userId}" />
 <section class="section-content">
     <div class="container">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateForm">
-            Launch demo modal
-        </button>
+
         <div class="row">
             <div class="text-center">
                 <p class="user-info-head" onclick="avatar()"><img class="img-circle img-lg" th:src="(${#strings.isEmpty(user.avatar)}) ? @{/img/profile.jpg} : @{${user.avatar}}" th:onerror="'this.src=\'' + @{'/img/profile.jpg'} + '\''"></p>
@@ -47,18 +45,30 @@
                         <td><i class="fa fa-envelope-o"></i></td>
                         <td>[[${#strings.abbreviate(user.email, 16)}]]</td>
                     </tr>
-                    <tr>
+                    <tr class="text-center">
+                        <td>性别</td>
+                        <td><i class="fa fa-heart"></i></td>
                         <td></td>
-                        <td align="center"><button type="button" class="btn btn-sm btn-primary" onclick="showEditView()">修改个人资料</button>&nbsp;
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateForm">
+                                修改个人资料
+                            </button>
                         </td>
                         <td></td>
+                        <td align="center">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updatePwdForm">
+                                修改密码
+                            </button>
+                        </td>
                     </tr>
                 </table>
             </div>
             <div class="col-sm-3"></div>
         </div>
 
-<!-- ********************************************************************** -->
+<!-- **********************************************************************
 
         <div class="row">
             <div class="col-sm-3 pr5">
@@ -109,10 +119,8 @@
                                 <li><a href="#modify_password" data-toggle="tab" aria-expanded="false">修改密码</a></li>
                             </ul>
                             <div class="tab-content">
-                                <!--用户信息-->
                                 <div class="tab-pane active" id="user_info" th:object="${user}">
                                     <form class="form-horizontal" id="form-user-edit">
-                                        <!--隐藏ID-->
                                         <input name="id" id="id" type="hidden">
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">用户名称：</label>
@@ -154,7 +162,6 @@
                                     </form>
                                 </div>
 
-                                <!--修改密码-->
                                 <div class="tab-pane" id="modify_password">
                                     <form class="form-horizontal" id="form-user-resetPwd">
                                         <div class="form-group">
@@ -199,8 +206,11 @@
                 </div>
             </div>
         </div>
+        -->
     </div>
 </section>
+
+
 
 <!--update form-->
 
@@ -233,6 +243,46 @@
     </div>
 </div>
 
+<div class="modal fade" id="updatePwdForm" tabindex="-1" role="dialog" aria-labelledby="updatePwdForm" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">修改密码</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="input-user-pwd">
+                    <label class="control-label">旧密码：</label>
+                    <input type="password" class="form-control" name="oldPassword" placeholder="请输入旧密码">
+                    <label class="control-label">新密码：</label>
+                    <input type="password" class="form-control" name="newPassword" id="newPassword" placeholder="请输入新密码">
+                        <th:block th:with="chrtype=${@config.getKey('sys.account.chrtype')}">
+                        <th:block th:if="${chrtype != '0'}">
+                        <span class="help-block m-b-none">
+                            <th:block th:if="${chrtype == '1'}"><i class="fa fa-info-circle" style="color: red;"></i>  密码只能为0-9数字 </th:block>
+                            <th:block th:if="${chrtype == '2'}"><i class="fa fa-info-circle" style="color: red;"></i>  密码只能为a-z和A-Z字母</th:block>
+                            <th:block th:if="${chrtype == '3'}"><i class="fa fa-info-circle" style="color: red;"></i>  密码必须包含（字母，数字）</th:block>
+                            <th:block th:if="${chrtype == '4'}"><i class="fa fa-info-circle" style="color: red;"></i>  密码必须包含（字母，数字，特殊字符!@#$%^&*()-=_+）</th:block>
+                        </span>
+                        </th:block>
+                        </th:block>
+                    <label class="control-label">确认密码：</label>
+                    <input type="password" class="form-control" name="confirmPassword" placeholder="请确认密码">
+              </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="submitChangPassword()" >Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <th:block th:include="include :: footer" />
 <script>
     /*用户管理-头像*/
@@ -261,7 +311,7 @@
     }
 
     /*用户信息-修改*/
-    $("#form-user-edit").validate({
+    $("#input-user-info").validate({
         onkeyup: false,
         rules:{
             userName:{
@@ -326,8 +376,9 @@
 
     function submitUserInfo() {
         if ($.validate.form()) {
-            console.log($('#input-user-info').serialize())
+            //console.log($('#input-user-info').serialize())
             $.operate.saveModal(ctx + "system/user/profile/update", $('#input-user-info').serialize());
+            $('#updateForm').modal('hide');
         }
     }
 
@@ -380,8 +431,9 @@
     function submitChangPassword () {
         var chrtype = [[${#strings.defaultString(@config.getKey('sys.account.chrtype'), 0)}]];
         var password = $("#newPassword").val();
-        if ($.validate.form("form-user-resetPwd") && checkpwd(chrtype, password)) {
-            $.operate.saveModal(ctx + "system/user/profile/resetPwd", $('#form-user-resetPwd').serialize());
+        if ($.validate.form("input-user-pwd") && checkpwd(chrtype, password)) {
+            $.operate.saveModal(ctx + "system/user/profile/resetPwd", $('#input-user-pwd').serialize());
+
         }
     }
 
