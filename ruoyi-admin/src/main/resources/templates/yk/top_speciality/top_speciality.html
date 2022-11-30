@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('热门特产榜单')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>特产名称：</label>
+                                <input type="text" name="specialtyName"/>
+                            </li>
+                            <li>
+                                <label>特产价格：</label>
+                                <input type="text" name="price"/>
+                            </li>
+                            <li>
+                                <label>特产销量：</label>
+                                <input type="text" name="sale"/>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "yk/top_speciality";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                modalName: "最热特产榜单",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '特产ID',
+                    visible: false
+                },
+                {
+                    field: 'specialtyName',
+                    title: '特产名称'
+                },
+                {
+                    field: 'price',
+                    title: '特产价格'
+                },
+                {
+                    field: 'sale',
+                    title: '特产销量'
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>
