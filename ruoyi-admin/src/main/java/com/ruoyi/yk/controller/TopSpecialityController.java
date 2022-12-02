@@ -21,8 +21,9 @@ import java.sql.*;
 @RequestMapping("/yk/top_speciality")
 public class TopSpecialityController extends BaseController {
 
-    private final String dbUser = "DataUser";
-    private final String dbPassword = "123456";
+    private final String dbUser = "Administrator";
+    private final String dbPassword = "XWClassroom20202023";
+    private final String dbUrl = "jdbc:mysql://www.ylxteach.net:3366/xm05_2022";
 
     private String prefix = "yk/top_speciality";
 
@@ -55,7 +56,7 @@ public class TopSpecialityController extends BaseController {
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ry", dbUser, dbPassword);
+            connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
 
             pstmt = connection.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
