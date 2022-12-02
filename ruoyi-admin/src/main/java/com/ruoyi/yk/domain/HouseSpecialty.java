@@ -33,6 +33,17 @@ public class HouseSpecialty {
     @Excel(name = "销量")
     private Long sale;
 
+    @Excel(name = "描述")
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Long getSale() {
         return sale;
     }
