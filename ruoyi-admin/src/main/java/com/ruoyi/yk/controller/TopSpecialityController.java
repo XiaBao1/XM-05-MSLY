@@ -1,11 +1,17 @@
 package com.ruoyi.yk.controller;
 
 
+import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.page.TableDataInfo;
 
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.web.domain.server.Sys;
 import com.ruoyi.yk.domain.HouseSpecialty;
+import com.ruoyi.yk.domain.LandlordHouse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +42,7 @@ public class TopSpecialityController extends BaseController {
     }
 
 
+
     @RequiresPermissions("yk:top_speciality:list")
     @PostMapping("/list")
     @ResponseBody
@@ -44,10 +51,27 @@ public class TopSpecialityController extends BaseController {
 
         startPage();
 
+        List list = getTopSpecialityList();
+
+        return getDataTable(list);
+    }
+
+    @Log(title = "热门特产", businessType = BusinessType.EXPORT)
+    @RequiresPermissions("yk:top_speciality:export")
+    @PostMapping("/export")
+    @ResponseBody
+    public AjaxResult export()
+    {
+        List<HouseSpecialty> list = getTopSpecialityList();
+        ExcelUtil<HouseSpecialty> util = new ExcelUtil<HouseSpecialty>(HouseSpecialty.class);
+        return util.exportExcel(list, "热门特产");
+    }
+
+    private List getTopSpecialityList() {
         List list = new ArrayList();
         Connection connection = null;
         PreparedStatement pstmt = null;
-        String sql = "SELECT HS.id, HS.specialty_name, HS.price, count(*) as sale, HS.description, LH.house_name "
+        String sql = "SELECT HS.id, HS.specialty_name, HS.price, count(*) as sale, HS.description, HS.inventory "
                 + "FROM house_specialty as HS join client_specialty_record as CSR on HS.id = CSR.specialty_id "
                 + "join landlord_house as LH on LH.id = HS.house_id "
                 + "GROUP BY HS.id "
@@ -68,6 +92,7 @@ public class TopSpecialityController extends BaseController {
                 item.setPrice(rs.getDouble("price"));
                 item.setSpecialtyName(rs.getString("specialty_name"));
                 item.setDescription(rs.getString("description"));
+                item.setInventory(rs.getInt("inventory"));
 
                 list.add(item);
             }
@@ -83,6 +108,6 @@ public class TopSpecialityController extends BaseController {
             }
         }
         System.out.println("return list size: " + list.size());
-        return getDataTable(list);
+        return list;
     }
 }
