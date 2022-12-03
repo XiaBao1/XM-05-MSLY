@@ -22,6 +22,10 @@ public class SysUser extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
+    private String province;
+
+    private int money;
+
     /** 用户ID */
     @Excel(name = "用户序号", cellType = ColumnType.NUMERIC, prompt = "用户编号")
     private Long userId;
@@ -45,6 +49,7 @@ public class SysUser extends BaseEntity
     private String userName;
 
     /** 用户类型 */
+    @Excel(name = "用户类别")
     private String userType;
 
     /** 用户邮箱 */
@@ -109,6 +114,22 @@ public class SysUser extends BaseEntity
     public SysUser(Long userId)
     {
         this.userId = userId;
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
     }
 
     public Long getUserId()

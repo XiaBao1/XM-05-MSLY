@@ -31,7 +31,7 @@ public class TopSpecialityController extends BaseController {
     private final String dbPassword = "XWClassroom20202023";
     private final String dbUrl = "jdbc:mysql://www.ylxteach.net:3366/xm05_2022";
 
-    private String prefix = "yk/top_speciality";
+    private final String prefix = "yk/top_speciality";
 
 
     @RequiresPermissions("yk:top_speciality:view")
@@ -47,8 +47,6 @@ public class TopSpecialityController extends BaseController {
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list() {
-        System.out.println("call list");
-
         startPage();
 
         List list = getTopSpecialityList();

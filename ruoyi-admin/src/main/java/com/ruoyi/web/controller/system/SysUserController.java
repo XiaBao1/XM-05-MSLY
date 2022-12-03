@@ -75,6 +75,10 @@ public class SysUserController extends BaseController
     {
         startPage();
         List<SysUser> list = userService.selectUserList(user);
+
+        if (list.size() > 1)
+            System.out.println(list.get(1));
+
         return getDataTable(list);
     }
 
