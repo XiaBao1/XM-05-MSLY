@@ -2,6 +2,8 @@ package com.ruoyi.web.controller.system;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.ruoyi.framework.web.domain.server.Sys;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,8 +78,6 @@ public class SysUserController extends BaseController
         startPage();
         List<SysUser> list = userService.selectUserList(user);
 
-        if (list.size() > 1)
-            System.out.println(list.get(1));
 
         return getDataTable(list);
     }
@@ -263,6 +263,8 @@ public class SysUserController extends BaseController
     @ResponseBody
     public AjaxResult remove(String ids)
     {
+        System.out.println("remove users");
+
         if (ArrayUtils.contains(Convert.toLongArray(ids), getUserId()))
         {
             return error("当前用户不能删除");

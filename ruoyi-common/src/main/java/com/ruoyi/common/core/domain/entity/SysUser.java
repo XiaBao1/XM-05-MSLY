@@ -22,8 +22,10 @@ public class SysUser extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
+    @Excel(name = "省份")
     private String province;
 
+    @Excel(name = "余额")
     private int money;
 
     /** 用户ID */
@@ -31,7 +33,7 @@ public class SysUser extends BaseEntity
     private Long userId;
 
     /** 部门ID */
-    @Excel(name = "部门编号", type = Type.IMPORT)
+    // @Excel(name = "部门编号", type = Type.IMPORT)
     private Long deptId;
 
     /** 部门父ID */
@@ -92,10 +94,10 @@ public class SysUser extends BaseEntity
     private Date pwdUpdateDate;
 
     /** 部门对象 */
-    @Excels({
-        @Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT),
-        @Excel(name = "部门负责人", targetAttr = "leader", type = Type.EXPORT)
-    })
+//    @Excels({
+//        @Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT),
+//        @Excel(name = "部门负责人", targetAttr = "leader", type = Type.EXPORT)
+//    })
     private SysDept dept;
 
     private List<SysRole> roles;
