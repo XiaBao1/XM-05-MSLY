@@ -4,11 +4,9 @@
     <th:block th:include="include :: header('用户个人信息')" />
     <style type="text/css">.user-info-head{position:relative;display:inline-block;}.user-info-head:hover:after{content:'\f030';position:absolute;left:0;right:0;top:0;bottom:0;color:#eee;background:rgba(0,0,0,0.5);font-family:FontAwesome;font-size:24px;font-style:normal;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;cursor:pointer;line-height:110px;border-radius:50%;}</style>
 </head>
-
 <input id="userId" name="userId" type="hidden" th:value="${user.userId}" />
 <section class="section-content">
     <div class="container">
-
         <div class="row">
             <div class="text-center">
                 <p class="user-info-head" onclick="avatar()"><img class="img-circle img-lg" th:src="(${#strings.isEmpty(user.avatar)}) ? @{/img/profile.jpg} : @{${user.avatar}}" th:onerror="'this.src=\'' + @{'/img/profile.jpg'} + '\''"></p>
@@ -18,195 +16,79 @@
         <div class="row">
             <div class="col-sm-3"></div>
             <div class="col-sm-6">
-                <h3 align="center" style="padding-top: 30px;padding-bottom: 10px;">个人资料</h3>
+                <h3 align="center" style="padding-top: 10px;padding-bottom: 5px;">个人资料</h3>
             </div>
             <div class="col-sm-3"></div>
         </div>
         <div class="row">
-            <div class="col-sm-3"></div>
-            <div class="col-sm-6">
-                <table class="table table-hover" style="table-layout: fixed;">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8">
+                <table class="table table-hover" style="table-layout: fixed;word-wrap:break-word;">
+                    <thead style="display: none;">
+                        <tr>
+                            <th style="width: 30%;">名称</th>
+                            <th style="width: 50%;">图标</th>
+                            <th style="width: 20%;">内容</th>
+                        </tr>
+                    </thead>
                     <tr class="text-center">
-                        <td>用户账号</td>
-                        <td><i class="fa fa-user"></i></td>
-                        <td>[[${user.loginName}]]</td>
+                        <td colspan='4'>您的账号</td>
+                        <td colspan='1'><i class="fa fa-id-card"></i></td>
+                        <td colspan='4'>[[${user.loginName}]]</td>
                     </tr>
                     <tr class="text-center">
-                        <td>用户姓名</td>
-                        <td> </td>
+                        <td colspan='4'>您的姓名</td>
+                        <td colspan='1'><i class="fa fa-user"></i></td>
+                        <td colspan='4'>[[${user.userName}]]</td>
                     </tr>
                     <tr class="text-center">
-                        <td>手机号码</td>
-                        <td><i class="fa fa-phone"></i></td>
-                        <td>[[${user.phonenumber}]]</td>
+                        <td colspan='4'>手机号码</td>
+                        <td colspan='1'><i class="fa fa-phone"></i></td>
+                        <td colspan='4'>[[${user.phonenumber}]]</td>
                     </tr>
                     <tr class="text-center">
-                        <td>邮箱地址</td>
-                        <td><i class="fa fa-envelope-o"></i></td>
-                        <td>[[${#strings.abbreviate(user.email, 16)}]]</td>
+                        <td colspan='4'>邮箱地址</td>
+                        <td colspan='1'><i class="fa fa-envelope-o"></i></td>
+                        <!--<td colspan='5'>[[${#strings.abbreviate(user.email, 16)}]]</td>-->
+                        <td colspan='4'>[[${user.email}]]</td>
                     </tr>
                     <tr class="text-center">
-                        <td>性别</td>
-                        <td><i class="fa fa-heart"></i></td>
-                        <td></td>
+                        <td colspan='4'>您的性别</td>
+                        <td colspan='1'><i class="fa fa-heart"></i></td>
+                        <td colspan='4'><div id="sex" name="sex"></div></td>
+                        <!--<td colspan='4'>[[${user.sex}]]</td>-->
+                    </tr>
+                    <tr class="text-center">
+                        <td colspan='4'>所在省份</td>
+                        <td colspan='1'><i class="fa fa-picture-o"></i></td>
+                        <td colspan='4'>[[${user.province}]]</td>
+                    </tr>
+                    <tr class="text-center">
+                        <td colspan='4'>账户余额</td>
+                        <td colspan='1'><i class="fa fa-jpy"></i></td>
+                        <td colspan='4'>[[${user.money}]]</td>
                     </tr>
                     <tr>
-                        <td align="center">
+                        <td align="center" colspan='3'>
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateForm">
-                                修改个人资料
+                                修改资料
                             </button>
                         </td>
-                        <td></td>
-                        <td align="center">
+                        <td align="center" colspan='3'>
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updatePwdForm">
                                 修改密码
+                            </button>
+                        </td>
+                        <td align="center" colspan='3'>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateMoneyForm">
+                                账户充值
                             </button>
                         </td>
                     </tr>
                 </table>
             </div>
-            <div class="col-sm-3"></div>
+            <div class="col-sm-2"></div>
         </div>
-
-<!-- **********************************************************************
-
-        <div class="row">
-            <div class="col-sm-3 pr5">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title ibox-title-gray dashboard-header gray-bg">
-                        <h5>个人资料</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <div class="text-center">
-                            <p class="user-info-head" onclick="avatar()"><img class="img-circle img-lg" th:src="(${#strings.isEmpty(user.avatar)}) ? @{/img/profile.jpg} : @{${user.avatar}}" th:onerror="'this.src=\'' + @{'/img/profile.jpg'} + '\''"></p>
-                            <p><a href="javascript:avatar()">修改头像</a></p>
-                        </div>
-                        <ul class="list-group list-group-striped">
-                            <li class="list-group-item"><i class="fa fa-user"></i>
-                                <b class="font-noraml">登录名称：</b>
-                                <p class="pull-right">[[${user.loginName}]]</p>
-                            </li>
-                            <li class="list-group-item"><i class="fa fa-phone"></i>
-                                <b  class="font-noraml">手机号码：</b>
-                                <p class="pull-right">[[${user.phonenumber}]]</p>
-                            </li>
-                            <li class="list-group-item" th:if="${user.dept?.deptName != null}"><i class="fa fa-group"></i>
-                                <b  class="font-noraml">所属部门：</b>
-                                <p class="pull-right" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;width:120px;">[[${user.dept?.deptName}]] / [[${#strings.defaultString(postGroup,'无岗位')}]]</p>
-                            </li>
-                            <li class="list-group-item"><i class="fa fa-envelope-o"></i>
-                                <b  class="font-noraml">邮箱地址：</b>
-                                <p class="pull-right" th:title="${user.email}">[[${#strings.abbreviate(user.email, 16)}]]</p>
-                            </li>
-                            <li class="list-group-item"><i class="fa fa-calendar"></i>
-                                <b  class="font-noraml">创建时间：</b>
-                                <p class="pull-right">[[${#dates.format(user.createTime, 'yyyy-MM-dd')}]]</p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-9 about">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title ibox-title-gray dashboard-header">
-                        <h5>基本资料</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <div class="nav-tabs-custom">
-                            <ul class="nav nav-tabs">
-                                <li class="active"><a href="#user_info" data-toggle="tab" aria-expanded="true">基本资料</a></li>
-                                <li><a href="#modify_password" data-toggle="tab" aria-expanded="false">修改密码</a></li>
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="user_info" th:object="${user}">
-                                    <form class="form-horizontal" id="form-user-edit">
-                                        <input name="id" id="id" type="hidden">
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">用户名称：</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="userName" th:field="*{userName}" placeholder="请输入用户名称">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">手机号码：</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="phonenumber" maxlength="11" th:field="*{phonenumber}" placeholder="请输入手机号码">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">邮箱：</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" maxlength="50" class="form-control" name="email" th:field="*{email}" placeholder="请输入邮箱">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">性别：</label>
-                                            <div class="col-sm-10">
-                                                <div class="radio-box">
-                                                    <input type="radio" id="radio1" th:field="*{sex}" name="sex" value="0">
-                                                    <label for="radio1">男</label>
-                                                </div>
-                                                <div class="radio-box">
-                                                    <input type="radio" id="radio2" th:field="*{sex}" name="sex" value="1">
-                                                    <label for="radio2">女</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-sm-offset-2 col-sm-10">
-                                                <button type="button" class="btn btn-sm btn-primary" onclick="submitUserInfo()"><i class="fa fa-check"></i>保 存</button>&nbsp;
-                                                <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-
-                                <div class="tab-pane" id="modify_password">
-                                    <form class="form-horizontal" id="form-user-resetPwd">
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">旧密码：</label>
-                                            <div class="col-sm-10">
-                                                <input type="password" class="form-control" name="oldPassword" placeholder="请输入旧密码">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">新密码：</label>
-                                            <div class="col-sm-10">
-                                                <input type="password" class="form-control" name="newPassword" id="newPassword" placeholder="请输入新密码">
-                                                <th:block th:with="chrtype=${@config.getKey('sys.account.chrtype')}">
-                                                    <th:block th:if="${chrtype != '0'}">
-                                                        <span class="help-block m-b-none">
-                                                            <th:block th:if="${chrtype == '1'}"><i class="fa fa-info-circle" style="color: red;"></i>  密码只能为0-9数字 </th:block>
-                                                            <th:block th:if="${chrtype == '2'}"><i class="fa fa-info-circle" style="color: red;"></i>  密码只能为a-z和A-Z字母</th:block>
-                                                            <th:block th:if="${chrtype == '3'}"><i class="fa fa-info-circle" style="color: red;"></i>  密码必须包含（字母，数字）</th:block>
-                                                            <th:block th:if="${chrtype == '4'}"><i class="fa fa-info-circle" style="color: red;"></i>  密码必须包含（字母，数字，特殊字符!@#$%^&*()-=_+）</th:block>
-                                                        </span>
-                                                    </th:block>
-                                                </th:block>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">确认密码：</label>
-                                            <div class="col-sm-10">
-                                                <input type="password" class="form-control" name="confirmPassword" placeholder="请确认密码">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-sm-offset-2 col-sm-10">
-                                                <button type="button" class="btn btn-sm btn-primary" onclick="submitChangPassword()"><i class="fa fa-check"></i>保 存</button>&nbsp;
-                                                <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        -->
     </div>
 </section>
 
@@ -226,18 +108,50 @@
             <div class="modal-body">
                 <form id="input-user-info">
                     <input name="id" id="input-user-account" type="hidden" value="">
-                    <label for="input-user-name" class="col-sm-2 control-label">用户名称</label>
-                    <input type="text" class="form-control" id="input-user-name" name="userName" placeholder="请输入用户名称" value="">
+                    <label for="input-login-name" class="col-sm-2 control-label">您的账号</label>
+                    <input type="text" class="form-control" id="input-login-name" name="loginName" placeholder="请输入您的账号名称" value="">
+                    <label for="input-user-name" class="col-sm-2 control-label">您的姓名</label>
+                    <input type="text" class="form-control" id="input-user-name" name="userName" placeholder="请输入您的姓名" value="">
                     <label for="input-user-phone" class="col-sm-2 control-label">手机号码</label>
                     <input type="text" class="form-control" id="input-user-phone" name="phonenumber" placeholder="请输入手机号码" value="">
                     <label for="input-user-email" class="col-sm-2 control-label">邮箱地址</label>
                     <input type="text" class="form-control" id="input-user-email" name="email" placeholder="请输入邮箱地址" value="">
+                    <label for="input-user-sex" class="col-sm-2 control-label">性别</label>
+                    <input type="text" class="form-control" id="input-user-sex" name="sex" placeholder="请输入性别" value="">
+                    <label for="input-user-province" class="col-sm-2 control-label">所在省份</label>
+                    <input type="text" class="form-control" id="input-user-province" name="province" placeholder="请输入所在省份" value="">
+
                 </form>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="submitUserInfo()" >Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消修改</button>
+                <button type="button" class="btn btn-primary" onclick="submitUserInfo()" >确认修改</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="updateMoneyForm" tabindex="-1" role="dialog" aria-labelledby="updateForm" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="UpdateMoneyTitle">修改个人资料</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="input-user-money-form">
+                    <input name="id" id="input-money-user-account" type="hidden" value="">
+                    <label for="input-user-money" class="col-sm-2 control-label">充值金额</label>
+                    <input type="text" class="form-control" id="input-user-money" name="money" placeholder="请输入充值金额" value="">
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消修改</button>
+                <button type="button" class="btn btn-primary" onclick="submitUserMoney()" >确认修改</button>
             </div>
         </div>
     </div>
@@ -274,8 +188,8 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="submitChangPassword()" >Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消修改</button>
+                <button type="button" class="btn btn-primary" onclick="submitChangPassword()" >确认修改</button>
             </div>
         </div>
     </div>
@@ -329,7 +243,7 @@
                             return $("#userId").val();
                         },
                         "email": function() {
-                            return $.common.trim($("#email").val());
+                            return $.common.trim($("#input-user-email").val());
                         }
                     },
                     dataFilter: function (data, type) {
@@ -349,7 +263,7 @@
                             return $("#userId").val();
                         },
                         "phonenumber": function() {
-                            return $.common.trim($("#phonenumber").val());
+                            return $.common.trim($("#input-user-phone").val());
                         }
                     },
                     dataFilter: function (data, type) {
@@ -358,6 +272,7 @@
                 }
             },
         },
+
         messages: {
             "userName": {
                 required: "请输入用户名称",
@@ -374,11 +289,42 @@
         focusCleanup: true
     });
 
+    /*账户余额-修改*/
+    $("#input-user-money-form").validate({
+        onkeyup: false,
+        rules: {
+            money: {
+                required: true,
+                digits: true,
+                number: true,
+                min: 0,
+                max: 2147483647
+            },
+        },
+        messages: {
+            "money": {
+                required: "请充值",
+                digits: "只能充值正整数金额",
+                number: "只能充值正整数金额",
+                max: "为保障您的账户安全，不能充值过大金额"
+            },
+        },
+        focusCleanup: true
+    });
+
     function submitUserInfo() {
         if ($.validate.form()) {
-            //console.log($('#input-user-info').serialize())
+            console.log($('#input-user-info').serialize())
             $.operate.saveModal(ctx + "system/user/profile/update", $('#input-user-info').serialize());
             $('#updateForm').modal('hide');
+        }
+    }
+
+    function submitUserMoney() {
+        if ($.validate.form()) {
+            var cur=$('#input-user-money-form').serialize();
+            $.operate.saveModal(ctx + "system/user/profile/update", $('#input-user-money-form').serialize());
+            $('#updateMoneyForm').modal('hide');
         }
     }
 
@@ -438,17 +384,52 @@
     }
 
     $('#updateForm').on('show.bs.modal', function (event) {
-        var modal = $(this);
-        var newName='[[${user.loginName}]]'
+        var Id='[[${user.userId}]]'
+        var newName='[[${user.userName}]]'
         var newPhone='[[${user.phonenumber}]]'
         var newEmail='[[${user.email}]]'
-        var inputName=document.getElementById("input-user-name");
-        var inputPhone=document.getElementById("input-user-phone");
-        var inputEmail=document.getElementById("input-user-email");
+        var newLoginName='[[${user.loginName}]]'
+        var newProvince='[[${user.province}]]'
+        $('#input-user-account').val(Id);
         $('#input-user-name').val(newName);
+        $('#input-login-name').val(newLoginName);
         $('#input-user-phone').val(newPhone);
         $('#input-user-email').val(newEmail);
+        var userSex='[[${user.sex}]]';
+        if(userSex == '1'){
+            $('#input-user-sex').val('女');
+        }
+        else if(userSex == '0'){
+            $('#input-user-sex').val('男');
+        }
+        else {
+            $('#input-user-sex').val('未知');
+        }
+        $('#input-user-province').val(newProvince);
+
     });
+
+    $('#updateMoneyForm').on('show.bs.modal', function (event) {
+        var Id='[[${user.userId}]]'
+        //var newMoney='[[${user.money}]]'
+        $('#input-money-user-account').val(Id);
+        //$('#input-user-money').val(newMoney);
+    });
+
+    $(document).ready(function(){
+        //console.log('111');
+        var tableSex=document.getElementById("sex");
+        var userSex='[[${user.sex}]]';
+        if(userSex == '1'){
+            $("#sex").html("女");
+        }
+        else if(userSex == '0'){
+            $("#sex").html("男");
+        }
+        else {
+            $("#sex").html("未知");
+        }
+    })
 
 </script>
 </body>

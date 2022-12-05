@@ -138,6 +138,12 @@ public class SysProfileController extends BaseController
         currentUser.setEmail(user.getEmail());
         currentUser.setPhonenumber(user.getPhonenumber());
         currentUser.setSex(user.getSex());
+        currentUser.setProvince(user.getProvince());
+        Integer currentMoney=currentUser.getMoney();
+        if(currentMoney+user.getMoney()<=0){
+            return error();
+        }
+        currentUser.setMoney(currentMoney+user.getMoney());
         if (StringUtils.isNotEmpty(user.getPhonenumber())
                 && UserConstants.USER_PHONE_NOT_UNIQUE.equals(userService.checkPhoneUnique(currentUser)))
         {
