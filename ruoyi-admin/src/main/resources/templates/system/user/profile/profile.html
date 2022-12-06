@@ -116,8 +116,12 @@
                     <input type="text" class="form-control" id="input-user-phone" name="phonenumber" placeholder="请输入手机号码" value="">
                     <label for="input-user-email" class="col-sm-2 control-label">邮箱地址</label>
                     <input type="text" class="form-control" id="input-user-email" name="email" placeholder="请输入邮箱地址" value="">
-                    <label for="input-user-sex" class="col-sm-2 control-label">性别</label>
-                    <input type="text" class="form-control" id="input-user-sex" name="sex" placeholder="请输入性别" value="">
+                    <label for="choose-user-sex" class="col-sm-2 control-label">性别</label>
+                    <select class="form-control" id="choose-user-sex" name="sex">
+                        <option value="0">男</option>
+                        <option value="1">女</option>
+                        <option value="2">其他</option>
+                    </select>
                     <label for="input-user-province" class="col-sm-2 control-label">所在省份</label>
                     <input type="text" class="form-control" id="input-user-province" name="province" placeholder="请输入所在省份" value="">
 
@@ -397,13 +401,16 @@
         $('#input-user-email').val(newEmail);
         var userSex='[[${user.sex}]]';
         if(userSex == '1'){
-            $('#input-user-sex').val('女');
+            //$('#input-user-sex').val('女');
+            $('#choose-user-sex').val('1');
         }
         else if(userSex == '0'){
-            $('#input-user-sex').val('男');
+            //$('#input-user-sex').val('男');
+            $('#choose-user-sex').val('0');
         }
         else {
-            $('#input-user-sex').val('未知');
+            //$('#input-user-sex').val('未知');
+            $('#choose-user-sex').val('2');
         }
         $('#input-user-province').val(newProvince);
 
@@ -427,9 +434,11 @@
             $("#sex").html("男");
         }
         else {
-            $("#sex").html("未知");
+            $("#sex").html("其他");
         }
     })
+
+
 
 </script>
 </body>
