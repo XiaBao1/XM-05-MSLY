@@ -198,6 +198,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	
  	<insert id="insertUser" parameterType="SysUser" useGeneratedKeys="true" keyProperty="userId">
  		insert into sys_user(
+ 			money,
 			<if test="province != null and province != ''">province,</if>
 
  			<if test="userId != null and userId != 0">user_id,</if>
@@ -217,6 +218,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			<if test="remark != null and remark != ''">remark,</if>
  			create_time
  		)values(
+			0,
 			<if test="province != null and province != ''">#{province},</if>
 
  			<if test="userId != null and userId != ''">#{userId},</if>
