@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改房iii间订购')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-buyroom-edit" th:object="${buyRoom}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">民宿ID：</label>
+                <div class="col-sm-8">
+                    <input name="houseId" th:field="*{houseId}" class="form-control" type="text" required disabled>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label ">房间号：</label>
+                <div class="col-sm-8">
+                    <input name="roomNumber" th:field="*{roomNumber}" class="form-control" type="text" required disabled>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label ">每日价格（￥）：</label>
+                <div class="col-sm-8">
+                    <input name="pricePerDay" th:field="*{pricePerDay}" class="form-control" type="text" required disabled>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label ">房间标准：</label>
+                <div class="col-sm-8">
+                    <input name="standard" th:field="*{standard}" class="form-control" type="text" required disabled>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label ">空闲：</label>
+                <div class="col-sm-8">
+                    <input name="isFree" th:field="*{isFree}" class="form-control" type="text" required disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label ">商家联系电话</label>
+<!--                <label class="col-sm-3 control-label">17208271247</label>-->
+                <div class="col-sm-8">
+                    <input name="isFree" class="form-control" type="text" value="17208271247" required disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label ">商家邮箱</label>
+                <div class="col-sm-8">
+                    <input name="isFree" class="form-control" type="text" value="2892036573@qq.com" required disabled>
+                </div>
+            </div>
+            <div>
+                <p style="text-align: center">
+                    <img src="https://jwc.scu.edu.cn/dfiles/9756/upload/22c29996-7e83-41de-94d8-564ac2f41e6e.jpg" text-align="center"></img>
+                </p>
+            </div>
+            <div>
+                <p style="text-align: center">
+                    <label>民宿图片</label>
+                </p>
+            </div>
+            <div>
+                <p style="text-align: right">
+                    <button th:style="'background:#1E90FF;border-style:none;color:#ffff;border-radius:5px;height:30px;width:50px'" name="dg" id="dg">订购</button>
+                </p>
+            </div>
+        </form>
+        <div class="scroller" style="height: 341px;" data-always-visible="1" data-rail-visible1="1">
+            <ul class="chats">
+                <li class="in">
+                    <img class="img-circle" th:width="50" height="50" alt="" src="https://jwc.scu.edu.cn/dfiles/9756/upload/22c29996-7e83-41de-94d8-564ac2f41e6e.jpg"/>
+                    <div class="message">
+                        <span class="arrow">
+                        </span>
+                        <a href="javascript:;" class="name">
+                            Bob Nilson </a>
+                        <span class="datetime">
+                            at 20:09 </span>
+                        <span class="body">
+                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. </span>
+                    </div>
+                </li>
+                <li class="out">
+                    <img class="img-circle" th:width="50" height="50" alt="" src="https://jwc.scu.edu.cn/dfiles/9756/upload/22c29996-7e83-41de-94d8-564ac2f41e6e.jpg"/>
+                    <div class="message">
+                        <span class="arrow">
+                        </span>
+                        <a href="javascript:;" class="name">
+                            Lisa Wong </a>
+                        <span class="datetime">
+                            at 20:11 </span>
+                        <span class="body">
+                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. </span>
+                    </div>
+                </li>
+                <li class="in">
+                    <img class="img-circle" th:width="50" height="50" alt="" src="https://jwc.scu.edu.cn/dfiles/9756/upload/22c29996-7e83-41de-94d8-564ac2f41e6e.jpg"/>
+                    <div class="message">
+                        <span class="arrow">
+                        </span>
+                        <a href="javascript:;" class="name">
+                            Bob Nilson </a>
+                        <span class="datetime">
+                            at 20:30 </span>
+                        <span class="body">
+                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. </span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+<!--    <th:block th:include="include :: footer" />-->
+<!--    <script th:inline="javascript">-->
+<!--        var prefix = ctx + "system/buyroom";-->
+<!--        $("#form-buyroom-edit").validate({-->
+<!--            focusCleanup: true-->
+<!--        });-->
+
+<!--        function submitHandler() {-->
+<!--            if ($.validate.form()) {-->
+<!--                $.operate.save(prefix + "/edit", $('#form-buyroom-edit').serialize());-->
+<!--            }-->
+<!--        }-->
+<!--    </script>-->
+</body>
+
+<script type="text/javascript" link rel="stylesheet" src="jquery-1.8.3.min.js">
+
+
+    $("#dg").click(function() {
+        var formData;// = $("#loginForm").serialize();
+        console.log("iiiiiiiiiiiii");
+        //alert(formData);
+        $.ajax({
+            url: "system/buyroom/ff",
+
+            dataType: "json",
+            type: "get",
+            data: formData,
+
+            success: function(result) {  //这里就是我出错的地方
+                alert(result.msg);
+            },
+            error: function(data) {
+                alert("请求出错");
+                alert(data);
+            }
+        });
+    });
+</script>
+
+
+</html>

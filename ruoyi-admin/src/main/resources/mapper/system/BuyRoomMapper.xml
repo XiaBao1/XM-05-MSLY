@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.BuyRoomMapper">
+    
+    <resultMap type="BuyRoom" id="BuyRoomResult">
+        <result property="id"    column="id"    />
+        <result property="houseId"    column="house_id"    />
+        <result property="roomNumber"    column="room_number"    />
+        <result property="pricePerDay"    column="price_per_day"    />
+        <result property="standard"    column="standard"    />
+        <result property="isFree"    column="is_free"    />
+    </resultMap>
+
+    <sql id="selectBuyRoomVo">
+        select id, house_id, room_number, price_per_day, standard, is_free from house_room
+    </sql>
+
+    <select id="selectBuyRoomList" parameterType="BuyRoom" resultMap="BuyRoomResult">
+        <include refid="selectBuyRoomVo"/>
+        <where>  
+            <if test="houseId != null "> and house_id = #{houseId}</if>
+            <if test="roomNumber != null  and roomNumber != ''"> and room_number = #{roomNumber}</if>
+            <if test="pricePerDay != null "> and price_per_day = #{pricePerDay}</if>
+            <if test="standard != null  and standard != ''"> and standard = #{standard}</if>
+            <if test="isFree != null "> and is_free = #{isFree}</if>
+        </where>
+    </select>
+    
+    <select id="selectBuyRoomById" parameterType="Long" resultMap="BuyRoomResult">
+        <include refid="selectBuyRoomVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBuyRoom" parameterType="BuyRoom" useGeneratedKeys="true" keyProperty="id">
+        insert into house_room
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="houseId != null">house_id,</if>
+            <if test="roomNumber != null and roomNumber != ''">room_number,</if>
+            <if test="pricePerDay != null">price_per_day,</if>
+            <if test="standard != null and standard != ''">standard,</if>
+            <if test="isFree != null">is_free,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="houseId != null">#{houseId},</if>
+            <if test="roomNumber != null and roomNumber != ''">#{roomNumber},</if>
+            <if test="pricePerDay != null">#{pricePerDay},</if>
+            <if test="standard != null and standard != ''">#{standard},</if>
+            <if test="isFree != null">#{isFree},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBuyRoom" parameterType="BuyRoom">
+        update house_room
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="houseId != null">house_id = #{houseId},</if>
+            <if test="roomNumber != null and roomNumber != ''">room_number = #{roomNumber},</if>
+            <if test="pricePerDay != null">price_per_day = #{pricePerDay},</if>
+            <if test="standard != null and standard != ''">standard = #{standard},</if>
+            <if test="isFree != null">is_free = #{isFree},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBuyRoomById" parameterType="Long">
+        delete from house_room where id = #{id}
+    </delete>
+
+    <delete id="deleteBuyRoomByIds" parameterType="String">
+        delete from house_room where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
