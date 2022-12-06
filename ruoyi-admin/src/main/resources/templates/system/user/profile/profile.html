@@ -319,15 +319,51 @@
     function submitUserInfo() {
         if ($.validate.form()) {
             console.log($('#input-user-info').serialize())
-            $.operate.saveModal(ctx + "system/user/profile/update", $('#input-user-info').serialize());
+            //$.operate.saveModal(ctx + "system/user/profile/update", $('#input-user-info').serialize());
+            $.ajax({
+                url: ctx + "system/user/profile/update",
+                data: $('#input-user-info').serialize(),
+                type: "post",
+                success: function(result) {
+                    if (result.code == web_status.SUCCESS) {
+                        layer.msg("请稍后……", {
+                            icon: 1,
+                            time: 500,
+                            shade: [0.1, '#8F8F8F']
+                        },function() {
+                            location.reload();
+                        });
+                    } else {
+                        alert(result.msg);
+                    }
+                }
+            })
             $('#updateForm').modal('hide');
         }
     }
 
     function submitUserMoney() {
         if ($.validate.form()) {
-            var cur=$('#input-user-money-form').serialize();
-            $.operate.saveModal(ctx + "system/user/profile/update", $('#input-user-money-form').serialize());
+            //var cur=$('#input-user-money-form').serialize();
+            //$.operate.saveModal(ctx + "system/user/profile/update", $('#input-user-money-form').serialize());
+            $.ajax({
+                url: ctx + "system/user/profile/update",
+                data: $('#input-user-money-form').serialize(),
+                type: "post",
+                success: function(result) {
+                    if (result.code == web_status.SUCCESS) {
+                        layer.msg("请稍后……", {
+                            icon: 1,
+                            time: 500,
+                            shade: [0.1, '#8F8F8F']
+                        },function() {
+                            location.reload();
+                        });
+                    } else {
+                        alert(result.msg);
+                    }
+                }
+            })
             $('#updateMoneyForm').modal('hide');
         }
     }
@@ -382,8 +418,26 @@
         var chrtype = [[${#strings.defaultString(@config.getKey('sys.account.chrtype'), 0)}]];
         var password = $("#newPassword").val();
         if ($.validate.form("input-user-pwd") && checkpwd(chrtype, password)) {
-            $.operate.saveModal(ctx + "system/user/profile/resetPwd", $('#input-user-pwd').serialize());
-
+            //$.operate.saveModal(ctx + "system/user/profile/resetPwd", $('#input-user-pwd').serialize());
+            $.ajax({
+                url: ctx + "system/user/profile/resetPwd",
+                data: $('#input-user-pwd').serialize(),
+                type: "post",
+                success: function(result) {
+                    if (result.code == web_status.SUCCESS) {
+                        layer.msg("请稍后……", {
+                            icon: 1,
+                            time: 500,
+                            shade: [0.1, '#8F8F8F']
+                        },function() {
+                            location.reload();
+                        });
+                    } else {
+                        alert(result.msg);
+                    }
+                }
+            })
+            $('#newPassword').modal('hide');
         }
     }
 
