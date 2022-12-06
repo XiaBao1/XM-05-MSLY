@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.system;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,7 +47,7 @@ import com.ruoyi.system.service.ISysUserService;
 @RequestMapping("/system/user")
 public class SysUserController extends BaseController
 {
-    private String prefix = "system/user";
+    private String prefix = "/system/user";
 
     @Autowired
     private ISysUserService userService;
@@ -70,6 +71,8 @@ public class SysUserController extends BaseController
         return prefix + "/user";
     }
 
+
+
     @RequiresPermissions("system:user:list")
     @PostMapping("/list")
     @ResponseBody
@@ -77,7 +80,6 @@ public class SysUserController extends BaseController
     {
         startPage();
         List<SysUser> list = userService.selectUserList(user);
-
 
         return getDataTable(list);
     }
@@ -229,6 +231,32 @@ public class SysUserController extends BaseController
         return error();
     }
 
+    @RequiresPermissions("system:user:statistics")
+    @GetMapping("/statistics")
+    public String statistics(ModelMap mmap)
+    {
+        return prefix + "/statistics";
+    }
+
+    @RequiresPermissions("system:user:statistics")
+    @Log(title = "用户统计", businessType = BusinessType.INSERT)
+    @PostMapping("/statistics")
+    @ResponseBody
+    public List<Integer> statisticsData()
+    {
+        List<Integer> list = userService.getMonthlyUserIncrement();
+        return list;
+    }
+
+    @RequiresPermissions("system:user:print")
+    @GetMapping("/print")
+    public String print(ModelMap mmap)
+    {
+        return prefix + "/print";
+    }
+
+
+
     /**
      * 进入授权角色页
      */
@@ -264,8 +292,6 @@ public class SysUserController extends BaseController
     @ResponseBody
     public AjaxResult remove(String ids)
     {
-        System.out.println("remove users");
-
         if (ArrayUtils.contains(Convert.toLongArray(ids), getUserId()))
         {
             return error("当前用户不能删除");
