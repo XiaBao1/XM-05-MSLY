@@ -49,6 +49,9 @@ public class SysIndexController extends BaseController
     {
         // 取身份信息
         SysUser user = getSysUser();
+
+        System.out.println(user.isAdmin());
+
         // 根据用户id取出菜单
         List<SysMenu> menus = menuService.selectMenusByUser(user);
         mmap.put("menus", menus);

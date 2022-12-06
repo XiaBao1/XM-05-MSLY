@@ -39,8 +39,6 @@ public class SysUser extends BaseEntity
     /** 部门父ID */
     private Long parentId;
 
-    /** 角色ID */
-    private Long roleId;
 
     /** 登录名称 */
     @Excel(name = "登录名称")
@@ -146,7 +144,16 @@ public class SysUser extends BaseEntity
 
     public boolean isAdmin()
     {
-        return isAdmin(this.userId);
+        if (roleIds == null) {
+            return false;
+        }
+
+        for (Long roleId :roleIds ) {
+            if (roleId == 1) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static boolean isAdmin(Long userId)
@@ -174,15 +181,6 @@ public class SysUser extends BaseEntity
         this.parentId = parentId;
     }
 
-    public Long getRoleId()
-    {
-        return roleId;
-    }
-
-    public void setRoleId(Long roleId)
-    {
-        this.roleId = roleId;
-    }
 
     @Xss(message = "登录账号不能包含脚本字符")
     @NotBlank(message = "登录账号不能为空")

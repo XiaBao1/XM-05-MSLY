@@ -12,6 +12,8 @@ import com.ruoyi.system.domain.SysUserRole;
  */
 public interface ISysRoleService
 {
+
+    public boolean isAdmin(Long userId);
     /**
      * 根据条件分页查询角色数据
      * 

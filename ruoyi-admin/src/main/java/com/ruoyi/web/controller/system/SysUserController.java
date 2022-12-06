@@ -120,7 +120,7 @@ public class SysUserController extends BaseController
     @GetMapping("/add")
     public String add(ModelMap mmap)
     {
-        mmap.put("roles", roleService.selectRoleAll().stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
+        mmap.put("roles", roleService.selectRoleAll().stream().collect(Collectors.toList()));
         mmap.put("posts", postService.selectPostAll());
         return prefix + "/add";
     }
@@ -151,6 +151,7 @@ public class SysUserController extends BaseController
         user.setSalt(ShiroUtils.randomSalt());
         user.setPassword(passwordService.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
         user.setCreateBy(getLoginName());
+
         return toAjax(userService.insertUser(user));
     }
 
