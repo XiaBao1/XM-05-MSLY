@@ -1,6 +1,5 @@
 package com.ruoyi.web.controller.system;
 
-import com.mchange.lang.IntegerUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,13 +160,6 @@ public class SysProfileController extends BaseController
         if (userService.updateUserInfo(currentUser) > 0)
         {
             setSysUser(userService.selectUserById(currentUser.getUserId()));
-            System.out.println(currentUser.getLoginName());
-            System.out.println(currentUser.getSex());
-            System.out.println(currentUser.getMoney());
-            System.out.println(currentUser.getUserName());
-            System.out.println(currentUser.getUserId());
-            System.out.println(currentUser.getEmail());
-            System.out.println(currentUser.getPhonenumber());
             return success();
         }
         return error();
