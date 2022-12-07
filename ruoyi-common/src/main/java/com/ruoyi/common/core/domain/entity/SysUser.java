@@ -86,6 +86,12 @@ public class SysUser extends BaseEntity
     /** 密码最后更新时间 */
     private Date pwdUpdateDate;
 
+    /** 账户余额 */
+    private Integer money;
+
+    /** 所在省份 */
+    private String province;
+
     /** 部门对象 */
     @Excels({
         @Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT),
@@ -310,6 +316,15 @@ public class SysUser extends BaseEntity
         this.pwdUpdateDate = pwdUpdateDate;
     }
 
+    @Size(min=0, message = "金额不能为负，不能过大！")
+    public Integer getMoney() { return money; }
+
+    public void setMoney(Integer money) { this.money = money; }
+
+    public String getProvince() { return province; }
+
+    public void setProvince(String province) { this.province = province; }
+
     public SysDept getDept()
     {
         if (dept == null)
@@ -377,6 +392,8 @@ public class SysUser extends BaseEntity
             .append("updateBy", getUpdateBy())
             .append("updateTime", getUpdateTime())
             .append("remark", getRemark())
+            .append("money", getMoney())
+            .append("province", getProvince())
             .append("dept", getDept())
 			.append("roles", getRoles())
             .toString();
