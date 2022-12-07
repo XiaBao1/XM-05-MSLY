@@ -369,6 +369,8 @@ var table = {
                     $("#" + table.options.id).bootstrapTable('refresh', params);
                 }
             },
+
+
             // 导出数据
             exportExcel: function(formId) {
                 table.set();
