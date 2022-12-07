@@ -85,12 +85,23 @@
                 </div>
             </div>
             <div class="row">
+<!--                <div class="col-sm-6">-->
+<!--                    <div class="form-group">-->
+<!--                        <label class="col-sm-4 control-label">角色：</label>-->
+<!--                        <div class="col-sm-8">-->
+<!--                            <label th:each="role:${roles}" class="check-box">-->
+<!--                                <input name="role" type="radio" th:value="${role.roleId}" th:text="${role.roleName}" th:checked="${role.flag}" th:disabled="${role.status == '1'}">-->
+<!--                            </label>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label class="col-sm-4 control-label">角色：</label>
                         <div class="col-sm-8">
-                            <label th:each="role:${roles}" class="check-box">
-                                <input name="role" type="radio" th:value="${role.roleId}" th:text="${role.roleName}" th:checked="${role.flag}" th:disabled="${role.status == '1'}">
+                            <label id='role_radio' th:each="role:${roles}" class="check-box">
+                                <input name="role" type="radio" th:value="${role.roleId}" th:text="${role.roleName}" th:disabled="${role.status == '1'}" required>
+                                <!--								<input name="role" type="radio" th:value="${role.roleId}" th:text="${role.roleName}" th:disabled="${role.status == '1'}">-->
                             </label>
                         </div>
                     </div>
@@ -207,8 +218,10 @@
 	        if ($.validate.form()) {
 	        	var data = $("#form-user-edit").serializeArray();
 	        	var status = $("input[id='status']").is(':checked') == true ? 0 : 1;
-	        	var roleIds = $.form.selectCheckeds("role");
+	        	// var roleIds = $.form.selectCheckeds("role");
+                var roleIds = $('input:radio:checked').val();
 	        	var postIds = $.form.selectSelects("post");
+	        	console.log(roleIds);
 	        	data.push({"name": "status", "value": status});
 	        	data.push({"name": "roleIds", "value": roleIds});
 	        	data.push({"name": "postIds", "value": postIds});

@@ -22,11 +22,7 @@ public class SysUser extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    @Excel(name = "省份")
-    private String province;
 
-    @Excel(name = "余额")
-    private int money;
 
     /** 用户ID */
     @Excel(name = "用户序号", cellType = ColumnType.NUMERIC, prompt = "用户编号")
@@ -91,6 +87,14 @@ public class SysUser extends BaseEntity
     /** 密码最后更新时间 */
     private Date pwdUpdateDate;
 
+    /** 账户余额 */
+    @Excel(name = "余额")
+    private Integer money;
+
+    /** 所在省份 */
+    @Excel(name = "省份")
+    private String province;
+
     /** 部门对象 */
 //    @Excels({
 //        @Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT),
@@ -116,21 +120,8 @@ public class SysUser extends BaseEntity
         this.userId = userId;
     }
 
-    public int getMoney() {
-        return money;
-    }
 
-    public void setMoney(int money) {
-        this.money = money;
-    }
 
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
-    }
 
     public Long getUserId()
     {
@@ -144,16 +135,7 @@ public class SysUser extends BaseEntity
 
     public boolean isAdmin()
     {
-        if (roleIds == null) {
-            return false;
-        }
-
-        for (Long roleId :roleIds ) {
-            if (roleId == 1) {
-                return true;
-            }
-        }
-        return false;
+        return isAdmin(this.userId);
     }
 
     public static boolean isAdmin(Long userId)
@@ -331,6 +313,15 @@ public class SysUser extends BaseEntity
         this.pwdUpdateDate = pwdUpdateDate;
     }
 
+    // @Size(min=0, message = "金额不能为负，不能过大！")
+    public Integer getMoney() { return money; }
+
+    public void setMoney(Integer money) { this.money = money; }
+
+    public String getProvince() { return province; }
+
+    public void setProvince(String province) { this.province = province; }
+
     public SysDept getDept()
     {
         if (dept == null)
@@ -398,6 +389,8 @@ public class SysUser extends BaseEntity
             .append("updateBy", getUpdateBy())
             .append("updateTime", getUpdateTime())
             .append("remark", getRemark())
+            .append("money", getMoney())
+            .append("province", getProvince())
             .append("dept", getDept())
 			.append("roles", getRoles())
             .toString();
