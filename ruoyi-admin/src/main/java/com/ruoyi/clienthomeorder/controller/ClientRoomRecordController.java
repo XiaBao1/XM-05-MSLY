@@ -2,6 +2,7 @@ package com.ruoyi.clienthomeorder.controller;
 
 import java.util.List;
 
+import com.ruoyi.system.service.ISysUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -130,6 +131,24 @@ public class ClientRoomRecordController extends BaseController
         return toAjax(clientRoomRecordService.deleteClientRoomRecordByIds(ids));
     }
 
+    /**
+     * 统计民宿订单
+     */
 
+    @RequiresPermissions("clienthomeorder:homeorder:eCharts")
+    @GetMapping("/eCharts")
+    public String statistics(ModelMap mmap)
+    {
+        return prefix + "/eCharts";
+    }
 
+    @RequiresPermissions("clienthomeorder:homeorder:eCharts")
+    @Log(title = "历史订单统计", businessType = BusinessType.INSERT)
+    @PostMapping("/eCharts")
+    @ResponseBody
+    public List<Integer> statisticsData()
+    {
+        List<Integer> list = clientRoomRecordService.getMonthlyClientRoomRecordIncrement();
+        return list;
+    }
 }

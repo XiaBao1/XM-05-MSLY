@@ -1,6 +1,10 @@
 package com.ruoyi.landlordhomeorder.service.impl;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+
+import com.ruoyi.clienthomeorder.domain.ClientRoomRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.landlordhomeorder.mapper.LandlordRoomRecordMapper;
@@ -26,6 +30,7 @@ public class LandlordRoomRecordServiceImpl implements ILandlordRoomRecordService
      * @param id 民宿订单主键
      * @return 民宿订单
      */
+
     @Override
     public LandlordRoomRecord selectLandlordRoomRecordById(Long id)
     {
@@ -80,6 +85,30 @@ public class LandlordRoomRecordServiceImpl implements ILandlordRoomRecordService
         return landlordRoomRecordMapper.deleteLandlordRoomRecordByIds(Convert.toStrArray(ids));
     }
 
+    @Override
+    public List<Integer> getMonthlyClientRoomRecordIncrement() {
+        int len = 12;
+        List<Integer> list = new ArrayList<Integer>(len);
+        for (int i = 0; i < len; i++) {
+            list.add(0);
+        }
+
+        Calendar ca = Calendar.getInstance();
+        List<LandlordRoomRecord> clientRoomRecord= landlordRoomRecordMapper.selectLandlordRoomRecordList(new LandlordRoomRecord());
+        for (LandlordRoomRecord user : clientRoomRecord) {
+            if ( !"1".equals(user.getIsDone()) ) {
+                ca.setTime(user.getCheckInDate());
+                int idx = ca.get(Calendar.MONTH);
+                int cur = list.get(idx);
+                list.set(idx, 1 + cur);
+            }
+        }
+
+        return list;
+    }
+
+
+
     /**
      * 删除民宿订单信息
      * 
@@ -91,4 +120,8 @@ public class LandlordRoomRecordServiceImpl implements ILandlordRoomRecordService
     {
         return landlordRoomRecordMapper.deleteLandlordRoomRecordById(id);
     }
+
+
+
+
 }

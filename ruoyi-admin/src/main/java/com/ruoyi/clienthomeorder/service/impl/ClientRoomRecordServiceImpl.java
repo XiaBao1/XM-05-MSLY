@@ -1,6 +1,10 @@
 package com.ruoyi.clienthomeorder.service.impl;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+
+import com.ruoyi.common.core.domain.entity.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.clienthomeorder.mapper.ClientRoomRecordMapper;
@@ -79,6 +83,28 @@ public class ClientRoomRecordServiceImpl implements IClientRoomRecordService
     public int deleteClientRoomRecordByIds(String ids)
     {
         return clientRoomRecordMapper.deleteClientRoomRecordByIds(Convert.toStrArray(ids));
+    }
+
+    @Override
+    public List<Integer> getMonthlyClientRoomRecordIncrement() {
+        int len = 12;
+        List<Integer> list = new ArrayList<Integer>(len);
+        for (int i = 0; i < len; i++) {
+            list.add(0);
+        }
+
+        Calendar ca = Calendar.getInstance();
+        List<ClientRoomRecord> clientRoomRecord= clientRoomRecordMapper.selectClientRoomRecordList(new ClientRoomRecord());
+        for (ClientRoomRecord user : clientRoomRecord) {
+            if ( !"1".equals(user.getIsDone()) ) {
+                ca.setTime(user.getCheckInDate());
+                int idx = ca.get(Calendar.MONTH);
+                int cur = list.get(idx);
+                list.set(idx, 1 + cur);
+            }
+        }
+
+        return list;
     }
 
     /**

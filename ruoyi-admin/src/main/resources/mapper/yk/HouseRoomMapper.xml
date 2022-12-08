@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="selectHouseRoomById" parameterType="Long" resultMap="HouseRoomResult">
         <include refid="selectHouseRoomVo"/>
-        where id = #{id}
+        and id = #{id}
     </select>
         
     <insert id="insertHouseRoom" parameterType="HouseRoom" useGeneratedKeys="true" keyProperty="id">

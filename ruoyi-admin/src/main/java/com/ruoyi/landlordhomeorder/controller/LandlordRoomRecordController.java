@@ -124,4 +124,23 @@ public class LandlordRoomRecordController extends BaseController
     {
         return toAjax(landlordRoomRecordService.deleteLandlordRoomRecordByIds(ids));
     }
+    /**
+     * 统计民宿订单
+     */
+    @RequiresPermissions("landlordhomeorder:landlordorder:eCharts")
+    @GetMapping("/eCharts")
+    public String statistics(ModelMap mmap)
+    {
+        return prefix + "/eCharts";
+    }
+
+    @RequiresPermissions("landlordhomeorder:landlordorder:eCharts")
+    @Log(title = "历史订单统计", businessType = BusinessType.INSERT)
+    @PostMapping("/eCharts")
+    @ResponseBody
+    public List<Integer> statisticsData()
+    {
+        List<Integer> list = landlordRoomRecordService.getMonthlyClientRoomRecordIncrement();
+        return list;
+    }
 }

@@ -51,6 +51,8 @@ public interface ILandlordRoomRecordService
      */
     public int deleteLandlordRoomRecordByIds(String ids);
 
+    public List<Integer> getMonthlyClientRoomRecordIncrement();
+
     /**
      * 删除民宿订单信息
      * 
