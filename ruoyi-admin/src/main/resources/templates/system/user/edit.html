@@ -100,7 +100,8 @@
                         <label class="col-sm-4 control-label">角色：</label>
                         <div class="col-sm-8">
                             <label id='role_radio' th:each="role:${roles}" class="check-box">
-                                <input name="role" type="radio" th:value="${role.roleId}" th:text="${role.roleName}" th:disabled="${role.status == '1'}" required>
+                                <input name="role" type="radio" th:value="${role.roleId}" th:text="${role.roleName}" th:disabled="${role.status == '1'}" required th:if="${role.flag == true}" checked>
+                                <input name="role" type="radio" th:value="${role.roleId}" th:text="${role.roleName}" th:disabled="${role.status == '1'}" required th:if="${role.flag == false}">
                                 <!--								<input name="role" type="radio" th:value="${role.roleId}" th:text="${role.roleName}" th:disabled="${role.status == '1'}">-->
                             </label>
                         </div>

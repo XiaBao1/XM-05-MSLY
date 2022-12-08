@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.framework.web.domain.server.Sys;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -207,6 +208,7 @@ public class SysUserController extends BaseController
     @GetMapping("/resetPwd/{userId}")
     public String resetPwd(@PathVariable("userId") Long userId, ModelMap mmap)
     {
+        userService.checkUserAllowed(userService.selectUserById(userId));
         mmap.put("user", userService.selectUserById(userId));
         return prefix + "/resetPwd";
     }
