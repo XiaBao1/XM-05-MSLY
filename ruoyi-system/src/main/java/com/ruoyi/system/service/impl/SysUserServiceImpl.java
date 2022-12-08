@@ -1,6 +1,8 @@
 package com.ruoyi.system.service.impl;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Validator;
@@ -62,6 +64,28 @@ public class SysUserServiceImpl implements ISysUserService
 
     @Autowired
     protected Validator validator;
+
+    @Override
+    public List<Integer> getMonthlyUserIncrement() {
+        int len = 12;
+        List<Integer> list = new ArrayList<Integer>(len);
+        for (int i = 0; i < len; i++) {
+            list.add(0);
+        }
+
+        Calendar ca = Calendar.getInstance();
+        List<SysUser> users = userMapper.selectUserList(new SysUser());
+        for (SysUser user : users) {
+            if ( !"2".equals(user.getDelFlag()) ) {
+                ca.setTime(user.getCreateTime());
+                int idx = ca.get(Calendar.MONTH);
+                int cur = list.get(idx);
+                list.set(idx, 1 + cur);
+            }
+        }
+
+        return list;
+    }
 
     /**
      * 根据条件分页查询用户列表
@@ -408,9 +432,14 @@ public class SysUserServiceImpl implements ISysUserService
     @Override
     public void checkUserAllowed(SysUser user)
     {
-        if (StringUtils.isNotNull(user.getUserId()) && user.isAdmin())
+        if (StringUtils.isNotNull(user.getUserId()))
         {
-            throw new ServiceException("不允许操作超级管理员用户");
+            List<SysUserRole> userRoles = userRoleMapper.selectUserRoleByUserId(user.getUserId());
+            for (SysUserRole userRole : userRoles) {
+                if (userRole.getRoleId() == 1) {
+                    throw new ServiceException("不允许操作超级管理员用户");
+                }
+            }
         }
     }
 

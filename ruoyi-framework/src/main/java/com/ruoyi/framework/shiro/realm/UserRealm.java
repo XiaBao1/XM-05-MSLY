@@ -63,7 +63,7 @@ public class UserRealm extends AuthorizingRealm
         Set<String> menus = new HashSet<String>();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         // 管理员拥有所有权限
-        if (user.isAdmin())
+        if (roleService.isAdmin(user.getUserId()))
         {
             info.addRole("admin");
             info.addStringPermission("*:*:*");

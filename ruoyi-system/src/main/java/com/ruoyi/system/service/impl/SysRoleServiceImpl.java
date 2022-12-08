@@ -46,6 +46,22 @@ public class SysRoleServiceImpl implements ISysRoleService
     @Autowired
     private SysRoleDeptMapper roleDeptMapper;
 
+    @Override
+    public boolean isAdmin(Long userId) {
+        List<SysRole> roles = roleMapper.selectRolesByUserId(userId);
+
+        if (roles == null) {
+            return false;
+        }
+
+        for (SysRole role : roles) {
+            if (role.getRoleId() == 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * 根据条件分页查询角色数据
      * 
