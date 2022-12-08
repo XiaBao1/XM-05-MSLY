@@ -21,15 +21,23 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">归属部门：</label>
+                        <label class="col-sm-4 control-label">省份：</label>
                         <div class="col-sm-8">
-                            <div class="input-group">
-                                <input class="form-control" type="text" name="deptName" onclick="selectDeptTree()" id="treeName" th:field="*{dept.deptName}">
-                            	<span class="input-group-addon"><i class="fa fa-search"></i></span>
-                            </div>
+                            <input name="province" placeholder="请输入所在的省份" class="form-control" type="text" maxlength="30" th:field="*{province}">
                         </div>
                     </div>
                 </div>
+<!--                <div class="col-sm-6">-->
+<!--                    <div class="form-group">-->
+<!--                        <label class="col-sm-4 control-label">归属部门：</label>-->
+<!--                        <div class="col-sm-8">-->
+<!--                            <div class="input-group">-->
+<!--                                <input class="form-control" type="text" name="deptName" onclick="selectDeptTree()" id="treeName" th:field="*{dept.deptName}">-->
+<!--                            	<span class="input-group-addon"><i class="fa fa-search"></i></span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
             <div class="row">
                 <div class="col-sm-6">
@@ -77,16 +85,38 @@
                 </div>
             </div>
             <div class="row">
+<!--                <div class="col-sm-6">-->
+<!--                    <div class="form-group">-->
+<!--                        <label class="col-sm-4 control-label">角色：</label>-->
+<!--                        <div class="col-sm-8">-->
+<!--                            <label th:each="role:${roles}" class="check-box">-->
+<!--                                <input name="role" type="radio" th:value="${role.roleId}" th:text="${role.roleName}" th:checked="${role.flag}" th:disabled="${role.status == '1'}">-->
+<!--                            </label>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">岗位：</label>
+                        <label class="col-sm-4 control-label">角色：</label>
                         <div class="col-sm-8">
-                            <select id="post" class="form-control select2-multiple" multiple>
-								<option th:each="post:${posts}" th:value="${post.postId}" th:text="${post.postName}" th:selected="${post.flag}" th:disabled="${post.status == '1'}"></option>
-							</select>
+                            <label id='role_radio' th:each="role:${roles}" class="check-box">
+                                <input name="role" type="radio" th:value="${role.roleId}" th:text="${role.roleName}" th:disabled="${role.status == '1'}" required th:if="${role.flag == true}" checked>
+                                <input name="role" type="radio" th:value="${role.roleId}" th:text="${role.roleName}" th:disabled="${role.status == '1'}" required th:if="${role.flag == false}">
+                                <!--								<input name="role" type="radio" th:value="${role.roleId}" th:text="${role.roleName}" th:disabled="${role.status == '1'}">-->
+                            </label>
                         </div>
                     </div>
                 </div>
+<!--                <div class="col-sm-6">-->
+<!--                    <div class="form-group">-->
+<!--                        <label class="col-sm-4 control-label">岗位：</label>-->
+<!--                        <div class="col-sm-8">-->
+<!--                            <select id="post" class="form-control select2-multiple" multiple>-->
+<!--								<option th:each="post:${posts}" th:value="${post.postId}" th:text="${post.postName}" th:selected="${post.flag}" th:disabled="${post.status == '1'}"></option>-->
+<!--							</select>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label class="col-sm-4 control-label">用户性别：</label>
@@ -101,11 +131,9 @@
             <div class="row">
             	<div class="col-sm-12">
                     <div class="form-group">
-                        <label class="col-xs-2 control-label">角色：</label>
+                        <label class="col-xs-2 control-label">余额：</label>
                         <div class="col-xs-10">
-                            <label th:each="role:${roles}" class="check-box">
-								<input name="role" type="checkbox" th:value="${role.roleId}" th:text="${role.roleName}" th:checked="${role.flag}" th:disabled="${role.status == '1'}">
-							</label>
+                            <input name="money" placeholder="请输入余额" class="form-control" type="text" maxlength="30" th:field="*{money}">
                         </div>
                     </div>
                 </div>
@@ -191,8 +219,10 @@
 	        if ($.validate.form()) {
 	        	var data = $("#form-user-edit").serializeArray();
 	        	var status = $("input[id='status']").is(':checked') == true ? 0 : 1;
-	        	var roleIds = $.form.selectCheckeds("role");
+	        	// var roleIds = $.form.selectCheckeds("role");
+                var roleIds = $('input:radio:checked').val();
 	        	var postIds = $.form.selectSelects("post");
+	        	console.log(roleIds);
 	        	data.push({"name": "status", "value": status});
 	        	data.push({"name": "roleIds", "value": roleIds});
 	        	data.push({"name": "postIds", "value": postIds});

@@ -1,7 +1,11 @@
 package com.ruoyi.web.controller.system;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.ruoyi.common.exception.ServiceException;
+import com.ruoyi.framework.web.domain.server.Sys;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +48,7 @@ import com.ruoyi.system.service.ISysUserService;
 @RequestMapping("/system/user")
 public class SysUserController extends BaseController
 {
-    private String prefix = "system/user";
+    private String prefix = "/system/user";
 
     @Autowired
     private ISysUserService userService;
@@ -68,6 +72,8 @@ public class SysUserController extends BaseController
         return prefix + "/user";
     }
 
+
+
     @RequiresPermissions("system:user:list")
     @PostMapping("/list")
     @ResponseBody
@@ -75,6 +81,7 @@ public class SysUserController extends BaseController
     {
         startPage();
         List<SysUser> list = userService.selectUserList(user);
+
         return getDataTable(list);
     }
 
@@ -116,7 +123,7 @@ public class SysUserController extends BaseController
     @GetMapping("/add")
     public String add(ModelMap mmap)
     {
-        mmap.put("roles", roleService.selectRoleAll().stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
+        mmap.put("roles", roleService.selectRoleAll().stream().collect(Collectors.toList()));
         mmap.put("posts", postService.selectPostAll());
         return prefix + "/add";
     }
@@ -147,6 +154,7 @@ public class SysUserController extends BaseController
         user.setSalt(ShiroUtils.randomSalt());
         user.setPassword(passwordService.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
         user.setCreateBy(getLoginName());
+
         return toAjax(userService.insertUser(user));
     }
 
@@ -157,10 +165,11 @@ public class SysUserController extends BaseController
     @GetMapping("/edit/{userId}")
     public String edit(@PathVariable("userId") Long userId, ModelMap mmap)
     {
+        userService.checkUserAllowed(userService.selectUserById(userId));
         userService.checkUserDataScope(userId);
         List<SysRole> roles = roleService.selectRolesByUserId(userId);
         mmap.put("user", userService.selectUserById(userId));
-        mmap.put("roles", SysUser.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
+        mmap.put("roles", roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
         mmap.put("posts", postService.selectPostsByUserId(userId));
         return prefix + "/edit";
     }
@@ -199,6 +208,7 @@ public class SysUserController extends BaseController
     @GetMapping("/resetPwd/{userId}")
     public String resetPwd(@PathVariable("userId") Long userId, ModelMap mmap)
     {
+        userService.checkUserAllowed(userService.selectUserById(userId));
         mmap.put("user", userService.selectUserById(userId));
         return prefix + "/resetPwd";
     }
@@ -223,6 +233,32 @@ public class SysUserController extends BaseController
         }
         return error();
     }
+
+    @RequiresPermissions("system:user:statistics")
+    @GetMapping("/statistics")
+    public String statistics(ModelMap mmap)
+    {
+        return prefix + "/statistics";
+    }
+
+    @RequiresPermissions("system:user:statistics")
+    @Log(title = "用户统计", businessType = BusinessType.INSERT)
+    @PostMapping("/statistics")
+    @ResponseBody
+    public List<Integer> statisticsData()
+    {
+        List<Integer> list = userService.getMonthlyUserIncrement();
+        return list;
+    }
+
+    @RequiresPermissions("system:user:print")
+    @GetMapping("/print")
+    public String print(ModelMap mmap)
+    {
+        return prefix + "/print";
+    }
+
+
 
     /**
      * 进入授权角色页

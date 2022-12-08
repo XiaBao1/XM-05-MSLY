@@ -22,19 +22,19 @@ public class SysUser extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
+
+
     /** 用户ID */
     @Excel(name = "用户序号", cellType = ColumnType.NUMERIC, prompt = "用户编号")
     private Long userId;
 
     /** 部门ID */
-    @Excel(name = "部门编号", type = Type.IMPORT)
+    // @Excel(name = "部门编号", type = Type.IMPORT)
     private Long deptId;
 
     /** 部门父ID */
     private Long parentId;
 
-    /** 角色ID */
-    private Long roleId;
 
     /** 登录名称 */
     @Excel(name = "登录名称")
@@ -45,6 +45,7 @@ public class SysUser extends BaseEntity
     private String userName;
 
     /** 用户类型 */
+    @Excel(name = "用户类别")
     private String userType;
 
     /** 用户邮箱 */
@@ -87,16 +88,18 @@ public class SysUser extends BaseEntity
     private Date pwdUpdateDate;
 
     /** 账户余额 */
+    @Excel(name = "余额")
     private Integer money;
 
     /** 所在省份 */
+    @Excel(name = "省份")
     private String province;
 
     /** 部门对象 */
-    @Excels({
-        @Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT),
-        @Excel(name = "部门负责人", targetAttr = "leader", type = Type.EXPORT)
-    })
+//    @Excels({
+//        @Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT),
+//        @Excel(name = "部门负责人", targetAttr = "leader", type = Type.EXPORT)
+//    })
     private SysDept dept;
 
     private List<SysRole> roles;
@@ -116,6 +119,9 @@ public class SysUser extends BaseEntity
     {
         this.userId = userId;
     }
+
+
+
 
     public Long getUserId()
     {
@@ -157,15 +163,6 @@ public class SysUser extends BaseEntity
         this.parentId = parentId;
     }
 
-    public Long getRoleId()
-    {
-        return roleId;
-    }
-
-    public void setRoleId(Long roleId)
-    {
-        this.roleId = roleId;
-    }
 
     @Xss(message = "登录账号不能包含脚本字符")
     @NotBlank(message = "登录账号不能为空")
@@ -316,7 +313,7 @@ public class SysUser extends BaseEntity
         this.pwdUpdateDate = pwdUpdateDate;
     }
 
-    @Size(min=0, message = "金额不能为负，不能过大！")
+    // @Size(min=0, message = "金额不能为负，不能过大！")
     public Integer getMoney() { return money; }
 
     public void setMoney(Integer money) { this.money = money; }

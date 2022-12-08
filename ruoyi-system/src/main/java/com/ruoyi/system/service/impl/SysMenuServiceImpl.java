@@ -9,6 +9,8 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+
+import com.ruoyi.system.service.ISysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.common.constant.UserConstants;
@@ -37,6 +39,24 @@ public class SysMenuServiceImpl implements ISysMenuService
     @Autowired
     private SysRoleMenuMapper roleMenuMapper;
 
+    @Autowired
+    private ISysRoleService roleService;
+
+    private boolean isAdmin(Long userId) {
+        List<SysRole> roles = roleService.selectRolesByUserId(userId);
+
+        if (roles == null) {
+            return false;
+        }
+
+        for (SysRole role : roles) {
+            if (role.getRoleId() == 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * 根据用户查询菜单
      * 
@@ -48,7 +68,7 @@ public class SysMenuServiceImpl implements ISysMenuService
     {
         List<SysMenu> menus = new LinkedList<SysMenu>();
         // 管理员显示所有菜单信息
-        if (user.isAdmin())
+        if (isAdmin(user.getUserId()))
         {
             menus = menuMapper.selectMenuNormalAll();
         }
@@ -68,7 +88,7 @@ public class SysMenuServiceImpl implements ISysMenuService
     public List<SysMenu> selectMenuList(SysMenu menu, Long userId)
     {
         List<SysMenu> menuList = null;
-        if (SysUser.isAdmin(userId))
+        if (isAdmin(userId))
         {
             menuList = menuMapper.selectMenuList(menu);
         }
@@ -89,7 +109,7 @@ public class SysMenuServiceImpl implements ISysMenuService
     public List<SysMenu> selectMenuAll(Long userId)
     {
         List<SysMenu> menuList = null;
-        if (SysUser.isAdmin(userId))
+        if (isAdmin(userId))
         {
             menuList = menuMapper.selectMenuAll();
         }
