@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.weather.mapper.WeatherMapper">
+    
+    <resultMap type="Weather" id="WeatherResult">
+        <result property="id"    column="id"    />
+        <result property="city"    column="city"    />
+        <result property="temperature"    column="temperature"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="type"    column="type"    />
+    </resultMap>
+
+    <sql id="selectWeatherVo">
+        select id, city, temperature, create_time, type from weather
+    </sql>
+
+    <select id="selectWeatherList" parameterType="Weather" resultMap="WeatherResult">
+        <include refid="selectWeatherVo"/>
+        <where>  
+            <if test="city != null  and city != ''"> and city = #{city}</if>
+            <if test="temperature != null  and temperature != ''"> and temperature = #{temperature}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+        </where>
+    </select>
+    
+    <select id="selectWeatherById" parameterType="Long" resultMap="WeatherResult">
+        <include refid="selectWeatherVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertWeather" parameterType="Weather" useGeneratedKeys="true" keyProperty="id">
+        insert into weather
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="city != null">city,</if>
+            <if test="temperature != null">temperature,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="type != null">type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="city != null">#{city},</if>
+            <if test="temperature != null">#{temperature},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="type != null">#{type},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWeather" parameterType="Weather">
+        update weather
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="city != null">city = #{city},</if>
+            <if test="temperature != null">temperature = #{temperature},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="type != null">type = #{type},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteWeatherById" parameterType="Long">
+        delete from weather where id = #{id}
+    </delete>
+
+    <delete id="deleteWeatherByIds" parameterType="String">
+        delete from weather where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
