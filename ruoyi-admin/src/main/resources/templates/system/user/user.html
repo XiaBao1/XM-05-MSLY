@@ -4,6 +4,29 @@
 	<th:block th:include="include :: header('用户列表')" />
 	<th:block th:include="include :: layout-latest-css" />
 	<th:block th:include="include :: ztree-css" />
+
+	<style>
+		@media print {
+			.fixed-table-toolbar {
+				display: none;
+			}
+
+			.noprint {
+				display: none;
+			}
+
+			.fixed-table-pagination {
+				display: none !important;
+			}
+
+		}
+		@page {
+			size: auto;
+			margin: 0mm;
+		}
+	</style>
+
+
 </head>
 <body class="gray-bg">
 
@@ -62,13 +85,13 @@
 					<a class="btn btn-success" onclick="$.modal.openTab('用户统计', '/system/user/statistics');" shiro:hasPermission="system:user:statistics">
 						<i class="fa fa-plus"></i> 统计
 					</a>
-					<a class="btn btn-success" onclick="window.open('/system/user/print');" shiro:hasPermission="system:user:statistics">
+					<a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="system:user:print">
 						<i class="fa fa-plus"></i> 打印
 					</a>
 		        </div>
 		        
-		        <div class="col-sm-12 select-table table-striped">
-				    <table id="bootstrap-table"></table>
+		        <div class="col-sm-12 select-table table-striped noprint" id="prints" style="width: 100%;">
+				    <table id="bootstrap-table" style="width: 100%;word-break:break-all; word-wrap:break-all; "></table>
 				</div>
 			</div>
 		</div>
@@ -114,7 +137,8 @@
 		        sortOrder: "desc",
 		        modalName: "用户",
 		        columns: [{
-		            checkbox: true
+		            checkbox: true,
+					field: 'checkbox'
 		        },
 		        {
 		            field: 'userId',
@@ -159,6 +183,7 @@
 		        },
 		        {
 		            title: '操作',
+					field: 'caozuo',
 		            align: 'center',
 		            formatter: function(value, row, index) {
 		                if (row.userId != 1) {
@@ -181,7 +206,17 @@
 		    };
 		    $.table.init(options);
 		}
-		
+
+		function printHtml() {
+			$("#prints").removeClass("noprint");
+			$.table.hideColumn("caozuo");
+			$.table.hideColumn("checkbox");
+			window.print();
+			$("#option").addClass("noprint");
+			$.table.showColumn("caozuo");
+			$.table.showColumn("checkbox");
+		}
+
 		function queryDeptTree()
 		{
 			var url = ctx + "system/user/deptTreeData";
