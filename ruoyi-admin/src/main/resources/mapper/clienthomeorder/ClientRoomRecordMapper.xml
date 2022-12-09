@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.clienthomeorder.mapper.ClientRoomRecordMapper">
+    
+    <resultMap type="ClientRoomRecord" id="ClientRoomRecordResult">
+        <result property="id"    column="id"    />
+        <result property="clientNumber"    column="client_number"    />
+        <result property="roomId"    column="room_id"    />
+        <result property="checkInDate"    column="check_in_date"    />
+        <result property="checkOutDate"    column="check_out_date"    />
+        <result property="reserveInDate"    column="reserve_in_date"    />
+        <result property="reserveOutDate"    column="reserve_out_date"    />
+        <result property="price"    column="price"    />
+        <result property="isPaid"    column="is_paid"    />
+        <result property="isDone"    column="is_done"    />
+    </resultMap>
+
+    <sql id="selectClientRoomRecordVo">
+        select id, client_number, room_id, check_in_date, check_out_date, reserve_in_date, reserve_out_date, price, is_paid, is_done from client_room_record
+    </sql>
+
+    <select id="selectClientRoomRecordList" parameterType="ClientRoomRecord" resultMap="ClientRoomRecordResult">
+        <include refid="selectClientRoomRecordVo"/>
+        <where>  
+            <if test="clientNumber != null "> and client_number = #{clientNumber}</if>
+            <if test="roomId != null "> and room_id = #{roomId}</if>
+            <if test="checkInDate != null "> and check_in_date = #{checkInDate}</if>
+            <if test="checkOutDate != null "> and check_out_date = #{checkOutDate}</if>
+            <if test="reserveInDate != null "> and reserve_in_date = #{reserveInDate}</if>
+            <if test="reserveOutDate != null "> and reserve_out_date = #{reserveOutDate}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="isPaid != null "> and is_paid = #{isPaid}</if>
+            <if test="isDone != null "> and is_done = #{isDone}</if>
+        </where>
+    </select>
+
+    
+    <select id="selectClientRoomRecordById" parameterType="Long" resultMap="ClientRoomRecordResult">
+        <include refid="selectClientRoomRecordVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertClientRoomRecord" parameterType="ClientRoomRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into client_room_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="clientNumber != null">client_number,</if>
+            <if test="roomId != null">room_id,</if>
+            <if test="checkInDate != null">check_in_date,</if>
+            <if test="checkOutDate != null">check_out_date,</if>
+            <if test="reserveInDate != null">reserve_in_date,</if>
+            <if test="reserveOutDate != null">reserve_out_date,</if>
+            <if test="price != null">price,</if>
+            <if test="isPaid != null">is_paid,</if>
+            <if test="isDone != null">is_done,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="clientNumber != null">#{clientNumber},</if>
+            <if test="roomId != null">#{roomId},</if>
+            <if test="checkInDate != null">#{checkInDate},</if>
+            <if test="checkOutDate != null">#{checkOutDate},</if>
+            <if test="reserveInDate != null">#{reserveInDate},</if>
+            <if test="reserveOutDate != null">#{reserveOutDate},</if>
+            <if test="price != null">#{price},</if>
+            <if test="isPaid != null">#{isPaid},</if>
+            <if test="isDone != null">#{isDone},</if>
+         </trim>
+    </insert>
+
+    <update id="updateClientRoomRecord" parameterType="ClientRoomRecord">
+        update client_room_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="clientNumber != null">client_number = #{clientNumber},</if>
+            <if test="roomId != null">room_id = #{roomId},</if>
+            <if test="checkInDate != null">check_in_date = #{checkInDate},</if>
+            <if test="checkOutDate != null">check_out_date = #{checkOutDate},</if>
+            <if test="reserveInDate != null">reserve_in_date = #{reserveInDate},</if>
+            <if test="reserveOutDate != null">reserve_out_date = #{reserveOutDate},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="isPaid != null">is_paid = #{isPaid},</if>
+            <if test="isDone != null">is_done = #{isDone},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteClientRoomRecordById" parameterType="Long">
+        delete from client_room_record where id = #{id}
+    </delete>
+
+    <delete id="deleteClientRoomRecordByIds" parameterType="String">
+        delete from client_room_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+
+</mapper>
