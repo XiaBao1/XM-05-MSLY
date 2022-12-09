@@ -18,6 +18,12 @@
                                 <label>温度：</label>
                                 <input type="text" name="temperature"/>
                             </li>
+                            <li class="select-time">
+                                <label>数据收集时间：</label>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginCollectTime]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endCollectTime]"/>
+                            </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -77,7 +83,11 @@
                     title: '温度'
                 },
                 {
-                    field: 'type',
+                    field: 'collectTime',
+                    title: '数据收集时间'
+                },
+                {
+                    field: 'weatherType',
                     title: '天气类型'
                 },
                 {

@@ -8,12 +8,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="id"    column="id"    />
         <result property="city"    column="city"    />
         <result property="temperature"    column="temperature"    />
-        <result property="createTime"    column="create_time"    />
-        <result property="type"    column="type"    />
+        <result property="collectTime"    column="collect_time"    />
+        <result property="weatherType"    column="weather_type"    />
     </resultMap>
 
     <sql id="selectWeatherVo">
-        select id, city, temperature, create_time, type from weather
+        select id, city, temperature, collect_time, weather_type from weather
     </sql>
 
     <select id="selectWeatherList" parameterType="Weather" resultMap="WeatherResult">
@@ -21,7 +21,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="city != null  and city != ''"> and city = #{city}</if>
             <if test="temperature != null  and temperature != ''"> and temperature = #{temperature}</if>
-            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="params.beginCollectTime != null and params.beginCollectTime != '' and params.endCollectTime != null and params.endCollectTime != ''"> and collect_time between #{params.beginCollectTime} and #{params.endCollectTime}</if>
+            <if test="weatherType != null  and weatherType != ''"> and weather_type = #{weatherType}</if>
         </where>
     </select>
     
@@ -35,14 +36,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="city != null">city,</if>
             <if test="temperature != null">temperature,</if>
-            <if test="createTime != null">create_time,</if>
-            <if test="type != null">type,</if>
+            <if test="collectTime != null">collect_time,</if>
+            <if test="weatherType != null">weather_type,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="city != null">#{city},</if>
             <if test="temperature != null">#{temperature},</if>
-            <if test="createTime != null">#{createTime},</if>
-            <if test="type != null">#{type},</if>
+            <if test="collectTime != null">#{collectTime},</if>
+            <if test="weatherType != null">#{weatherType},</if>
          </trim>
     </insert>
 
@@ -51,8 +52,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="city != null">city = #{city},</if>
             <if test="temperature != null">temperature = #{temperature},</if>
-            <if test="createTime != null">create_time = #{createTime},</if>
-            <if test="type != null">type = #{type},</if>
+            <if test="collectTime != null">collect_time = #{collectTime},</if>
+            <if test="weatherType != null">weather_type = #{weatherType},</if>
         </trim>
         where id = #{id}
     </update>

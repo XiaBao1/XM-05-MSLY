@@ -1,5 +1,7 @@
 package com.ruoyi.weather.domain;
 
+import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -26,9 +28,14 @@ public class Weather extends BaseEntity
     @Excel(name = "温度")
     private String temperature;
 
+    /** 数据收集时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "数据收集时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date collectTime;
+
     /** 天气类型 */
     @Excel(name = "天气类型")
-    private String type;
+    private String weatherType;
 
     public void setId(Long id) 
     {
@@ -57,14 +64,23 @@ public class Weather extends BaseEntity
     {
         return temperature;
     }
-    public void setType(String type) 
+    public void setCollectTime(Date collectTime) 
     {
-        this.type = type;
+        this.collectTime = collectTime;
     }
 
-    public String getType() 
+    public Date getCollectTime() 
     {
-        return type;
+        return collectTime;
+    }
+    public void setWeatherType(String weatherType) 
+    {
+        this.weatherType = weatherType;
+    }
+
+    public String getWeatherType() 
+    {
+        return weatherType;
     }
 
     @Override
@@ -73,8 +89,8 @@ public class Weather extends BaseEntity
             .append("id", getId())
             .append("city", getCity())
             .append("temperature", getTemperature())
-            .append("createTime", getCreateTime())
-            .append("type", getType())
+            .append("collectTime", getCollectTime())
+            .append("weatherType", getWeatherType())
             .toString();
     }
 }

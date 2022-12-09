@@ -1,7 +1,6 @@
 package com.ruoyi.weather.service.impl;
 
 import java.util.List;
-import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.weather.mapper.WeatherMapper;
@@ -54,7 +53,6 @@ public class WeatherServiceImpl implements IWeatherService
     @Override
     public int insertWeather(Weather weather)
     {
-        weather.setCreateTime(DateUtils.getNowDate());
         return weatherMapper.insertWeather(weather);
     }
 
