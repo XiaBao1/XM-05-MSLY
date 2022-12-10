@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.usertodolist.mapper.UserTodolistMapper">
+    
+    <resultMap type="UserTodolist" id="UserTodolistResult">
+        <result property="id"    column="id"    />
+        <result property="userNumber"    column="user_number"    />
+        <result property="content"    column="content"    />
+        <result property="ddlTime"    column="ddl_time"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectUserTodolistVo">
+        select id, user_number, content, ddl_time, status from user_todolist
+    </sql>
+
+    <select id="selectUserTodolistList" parameterType="UserTodolist" resultMap="UserTodolistResult">
+        <include refid="selectUserTodolistVo"/>
+        <where>  
+            <if test="content != null  and content != ''"> and content like concat('%', #{content}, '%')</if>
+            <if test="params.beginDdlTime != null and params.beginDdlTime != '' and params.endDdlTime != null and params.endDdlTime != ''"> and ddl_time between #{params.beginDdlTime} and #{params.endDdlTime}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectUserTodolistById" parameterType="Long" resultMap="UserTodolistResult">
+        <include refid="selectUserTodolistVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertUserTodolist" parameterType="UserTodolist" useGeneratedKeys="true" keyProperty="id">
+        insert into user_todolist
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userNumber != null">user_number,</if>
+            <if test="content != null and content != ''">content,</if>
+            <if test="ddlTime != null">ddl_time,</if>
+            <if test="status != null and status != ''">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userNumber != null">#{userNumber},</if>
+            <if test="content != null and content != ''">#{content},</if>
+            <if test="ddlTime != null">#{ddlTime},</if>
+            <if test="status != null and status != ''">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUserTodolist" parameterType="UserTodolist">
+        update user_todolist
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userNumber != null">user_number = #{userNumber},</if>
+            <if test="content != null and content != ''">content = #{content},</if>
+            <if test="ddlTime != null">ddl_time = #{ddlTime},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUserTodolistById" parameterType="Long">
+        delete from user_todolist where id = #{id}
+    </delete>
+
+    <delete id="deleteUserTodolistByIds" parameterType="String">
+        delete from user_todolist where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
