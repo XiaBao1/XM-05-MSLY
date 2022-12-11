@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('用户列表')" />
+    <th:block th:include="include :: layout-latest-css" />
+</head>
+<body class="gray-bg">
+
+<div class="ui-layout-center">
+    <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: layout-latest-js" />
+<script th:inline="javascript">
+    var prefix = ctx + "weather/weather";
+
+    $(function() {
+        var panehHidden = false;
+        if ($(this).width() < 769) {
+            panehHidden = true;
+        }
+        $('body').layout({ initClosed: panehHidden, west__size: 185 });
+        // 回到顶部绑定
+        if ($.fn.toTop !== undefined) {
+            var opt = {
+                win:$('.ui-layout-center'),
+                doc:$('.ui-layout-center')
+            };
+            $('#scroll-up').toTop(opt);
+        }
+        queryWeatherList();
+    });
+
+    function queryWeatherList() {
+        var options = {
+            url: prefix + "/list",
+            sortName: "collectTime",
+            sortOrder: "desc",
+            modalName: "天气信息",
+            pageSize: 1000000,
+            caption: 'abc',
+            columns: [
+                {
+                    field: 'id',
+                    title: '数据编号',
+                    visible: false
+                },
+                {
+                    field: 'city',
+                    title: '城市',
+                    sortable: true
+                },
+                {
+                    field: 'weatherDate',
+                    title: '天气日期',
+                    sortable: true
+                },
+                {
+                    field: 'lowT',
+                    title: '低温',
+                    sortable: true,
+                    formatter: function(value, item, index) {
+                        return value+'℃';
+                    }
+                },
+                {
+                    field: 'highT',
+                    title: '高温',
+                    sortable: true,
+                    formatter: function(value, item, index) {
+                        return value+'℃';
+                    }
+                },
+                {
+                    field: 'dayType',
+                    title: '白天天气'
+                },
+                {
+                    field: 'nightType',
+                    title: '夜晚天气'
+                },
+                {
+                    field: 'windDirection',
+                    title: '风向',
+                    sortable: true
+                },
+                {
+                    field: 'windSpeed',
+                    title: '风速',
+                    sortable: true,
+                    formatter: function(value, item, index) {
+                        return value+'m/s';
+                    }
+                },
+                {
+                    field: 'windScale',
+                    title: '风力',
+                    sortable: true,
+                    formatter: function(value, item, index) {
+                        return value+'级';
+                    }
+                },
+                {
+                    field: 'humidity',
+                    title: '湿度',
+                    sortable: true,
+                    formatter: function(value, item, index) {
+                        return value+'%';
+                    }
+                },
+                {
+                    field: 'collectTime',
+                    title: '数据收集时间',
+                    sortable: true
+                }]
+        };
+        $.table.init(options);
+    }
+
+</script>
+</body>
+</html>

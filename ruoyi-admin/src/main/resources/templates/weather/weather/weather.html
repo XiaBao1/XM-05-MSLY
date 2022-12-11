@@ -2,6 +2,27 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <th:block th:include="include :: header('天气信息列表')" />
+
+    <style>
+        @media print {
+            .fixed-table-toolbar {
+                display: none;
+            }
+
+            .noprint {
+                display: none;
+            }
+
+            .fixed-table-pagination {
+                display: none !important;
+            }
+
+        }
+        @page {
+            size: auto;
+            margin: 0mm;
+        }
+    </style>
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -71,13 +92,20 @@
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="weather:weather:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
+                <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="weather:weather:print">
+                    <i class="fa fa-plus"></i> 打印
+                </a>
+                <a class="btn btn-success" onclick="$.modal.openTab('天气信息统计', '/weather/weather/statistics');" shiro:hasPermission="weather:weather:statistics">
+                    <i class="fa fa-plus"></i> 统计
+                </a>
             </div>
-            <div class="col-sm-12 select-table table-striped">
-                <table id="bootstrap-table"></table>
+            <div class="col-sm-12 select-table table-striped noprint" id="prints" style="width: 100%;">
+                <table id="bootstrap-table" style="width: 100%;word-break:break-all; word-wrap:break-all; "></table>
             </div>
         </div>
     </div>
     <th:block th:include="include :: footer" />
+    <th:block th:include="include :: layout-latest-js" />
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('weather:weather:edit')}]];
         var removeFlag = [[${@permission.hasPermi('weather:weather:remove')}]];
@@ -91,8 +119,11 @@
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
                 modalName: "天气信息",
+                sortName: "collectTime",
+                sortOrder: "desc",
                 columns: [{
-                    checkbox: true
+                    checkbox: true,
+                    field: 'checkbox'
                 },
                 {
                     field: 'id',
@@ -169,6 +200,7 @@
                 },
                 {
                     title: '操作',
+                    field: 'caozuo',
                     align: 'center',
                     formatter: function(value, row, index) {
                         var actions = [];
@@ -181,6 +213,16 @@
             $.table.init(options);
 
         });
+
+        function printHtml() {
+            $("#prints").removeClass("noprint");
+            $.table.hideColumn("caozuo");
+            $.table.hideColumn("checkbox");
+            window.print();
+            $("#option").addClass("noprint");
+            $.table.showColumn("caozuo");
+            $.table.showColumn("checkbox");
+        }
     </script>
 </body>
 </html>

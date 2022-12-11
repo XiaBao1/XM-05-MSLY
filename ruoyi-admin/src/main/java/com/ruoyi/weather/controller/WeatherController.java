@@ -127,4 +127,28 @@ public class WeatherController extends BaseController
     {
         return toAjax(weatherService.deleteWeatherByIds(ids));
     }
+
+    @RequiresPermissions("weather:weather:statistics")
+    @GetMapping("/statistics")
+    public String statistics(ModelMap mmap)
+    {
+        return prefix + "/statistics";
+    }
+
+    @RequiresPermissions("weather:weather:statistics")
+    @Log(title = "天气信息统计", businessType = BusinessType.INSERT)
+    @PostMapping("/statistics")
+    @ResponseBody
+    public List<Integer> statisticsData()
+    {
+        List<Integer> list = weatherService.getMonthlyUserIncrement();
+        return list;
+    }
+
+    @RequiresPermissions("system:user:print")
+    @GetMapping("/print")
+    public String print(ModelMap mmap)
+    {
+        return prefix + "/print";
+    }
 }
