@@ -3,6 +3,8 @@ package com.ruoyi.common.core.domain.entity;
 import java.util.List;
 import java.util.ArrayList;
 import javax.validation.constraints.*;
+
+import com.ruoyi.common.annotation.Excel;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.domain.BaseEntity;
@@ -17,30 +19,37 @@ public class SysMenu extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 菜单ID */
+    @Excel(name = "菜单ID", cellType = Excel.ColumnType.NUMERIC, prompt = "菜单ID")
     private Long menuId;
 
     /** 菜单名称 */
+    @Excel(name = "菜单名称")
     private String menuName;
 
     /** 父菜单名称 */
+    @Excel(name = "父菜单名称")
     private String parentName;
 
     /** 父菜单ID */
+    @Excel(name = "父菜单ID", cellType = Excel.ColumnType.NUMERIC, prompt = "父菜单ID")
     private Long parentId;
 
     /** 显示顺序 */
     private String orderNum;
 
     /** 菜单URL */
+    @Excel(name = "菜单url")
     private String url;
 
     /** 打开方式（menuItem页签 menuBlank新窗口） */
     private String target;
 
     /** 类型（M目录 C菜单 F按钮） */
+    @Excel(name = "菜单类别", readConverterExp = "M=目录,C=菜单,F=按钮")
     private String menuType;
 
     /** 菜单状态（0显示 1隐藏） */
+    @Excel(name = "菜单状态", readConverterExp = "0=显示,1=隐藏")
     private String visible;
 
     /** 是否刷新（0刷新 1不刷新） */

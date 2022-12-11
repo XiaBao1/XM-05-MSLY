@@ -4,11 +4,11 @@ package com.ruoyi.yk.controller;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.page.TableDataInfo;
-
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.yk.domain.TopHouseSpecialty;
+import com.ruoyi.yk.domain.TopLandlordHouse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,59 +16,60 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.*;
-import java.sql.*;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
-@RequestMapping("/yk/top_speciality")
-public class TopSpecialityController extends BaseController {
-
+@RequestMapping("/yk/top_landlord")
+public class TopLandlordController extends BaseController {
     private final String dbUser = "Administrator";
     private final String dbPassword = "XWClassroom20202023";
     private final String dbUrl = "jdbc:mysql://www.ylxteach.net:3366/xm05_2022";
 
-    private final String prefix = "yk/top_speciality";
 
+    private final String prefix = "yk/top_landlord";
 
-    @RequiresPermissions("yk:top_speciality:view")
+    @RequiresPermissions("yk:top_landlord:view")
     @GetMapping()
     public String top_speciality()
     {
-        return prefix + "/top_speciality";
+        return prefix + "/top_landlord";
     }
 
 
-
-    @RequiresPermissions("yk:top_speciality:list")
+    @RequiresPermissions("yk:top_landlord:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list() {
         startPage();
-        List list = getTopSpecialityList();
+        List list = getTopLandlordList();
         return getDataTable(list);
     }
 
-    @Log(title = "热门特产", businessType = BusinessType.EXPORT)
-    @RequiresPermissions("yk:top_speciality:export")
+    @Log(title = "热门民宿", businessType = BusinessType.EXPORT)
+    @RequiresPermissions("system:top_landlord:export")
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export()
+    public AjaxResult export(SysUser user)
     {
-        List<TopHouseSpecialty> list = getTopSpecialityList();
-        ExcelUtil<TopHouseSpecialty> util = new ExcelUtil<TopHouseSpecialty>(TopHouseSpecialty.class);
-        return util.exportExcel(list, "热门特产");
+        List<TopLandlordHouse> list = getTopLandlordList();
+        ExcelUtil<TopLandlordHouse> util = new ExcelUtil<TopLandlordHouse>(TopLandlordHouse.class);
+        return util.exportExcel(list, "热门民宿");
     }
 
-    private List getTopSpecialityList() {
-        List list = new ArrayList();
+    private List<TopLandlordHouse> getTopLandlordList() {
+        List<TopLandlordHouse> list = new ArrayList<TopLandlordHouse>();
         Connection connection = null;
         PreparedStatement pstmt = null;
-        String sql = "SELECT HS.id, HS.specialty_name, HS.price, count(CSR.specialty_id ) as sale, HS.description, HS.inventory, HS.house_id "
-                + "FROM house_specialty as HS left join client_specialty_record as CSR on HS.id = CSR.specialty_id "
-                + "join landlord_house as LH on LH.id = HS.house_id "
-                + "GROUP BY HS.id "
-                + "ORDER BY  sale DESC;";
+        String sql = "select LH.*, count(CRR.id) as sale " +
+                "from landlord_house LH " +
+                "   left JOIN house_room HR on LH.id = HR.house_id " +
+                "   left JOIN client_room_record CRR on HR.id = CRR.room_id " +
+                "GROUP BY LH.id ;";
         // System.out.println(sql);
         try
         {
@@ -79,14 +80,13 @@ public class TopSpecialityController extends BaseController {
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                TopHouseSpecialty item = new TopHouseSpecialty();
+                TopLandlordHouse item = new TopLandlordHouse();
                 item.setId(rs.getLong("id"));
+                item.setAddress(rs.getString("address"));
+                item.setHouseName(rs.getString("house_name"));
+                item.setHostNumber(rs.getLong("host_number"));
+                item.setScore(rs.getLong("score"));
                 item.setSale(rs.getLong("sale"));
-                item.setPrice(rs.getDouble("price"));
-                item.setSpecialtyName(rs.getString("specialty_name"));
-                item.setDescription(rs.getString("description"));
-                item.setInventory(rs.getInt("inventory"));
-                item.setHouseId(rs.getLong("house_id"));
 
                 list.add(item);
             }
@@ -102,6 +102,8 @@ public class TopSpecialityController extends BaseController {
             }
         }
         // System.out.println("return list size: " + list.size());
+
         return list;
     }
+
 }

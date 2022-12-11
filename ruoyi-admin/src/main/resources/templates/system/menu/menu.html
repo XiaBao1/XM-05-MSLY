@@ -38,6 +38,9 @@
                 <a class="btn btn-info" id="expandAllBtn">
                     <i class="fa fa-exchange"></i> 展开/折叠
                 </a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:menu:export">
+					<i class="fa fa-download"></i> 导出
+				</a>
 	        </div>
        		 <div class="col-sm-12 select-table table-striped">
 	            <table id="bootstrap-tree-table"></table>
@@ -64,6 +67,7 @@
 		        createUrl: prefix + "/add/{id}",
 		        updateUrl: prefix + "/edit/{id}",
 		        removeUrl: prefix + "/remove/{id}",
+				exportUrl: prefix + "/export",
 		        modalName: "菜单",
 		        columns: [{
                     field: 'selectItem', 
