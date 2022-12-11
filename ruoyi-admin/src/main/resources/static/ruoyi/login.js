@@ -17,6 +17,7 @@ $.validator.setDefaults({
 function login() {
     $.modal.loading($("#btnSubmit").data("loading"));
     var username = $.common.trim($("input[name='username']").val());
+    // var userName = [[${@permission.getPrincipalProperty('username')}]];
     var password = $.common.trim($("input[name='password']").val());
     var validateCode = $("input[name='validateCode']").val();
     var rememberMe = $("input[name='rememberme']").is(':checked');
@@ -32,6 +33,7 @@ function login() {
         success: function(r) {
             if (r.code == web_status.SUCCESS) {
                 location.href = ctx + 'index';
+
             } else {
             	$('.imgcode').click();
             	$(".code").val("");
