@@ -13,7 +13,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @author sja
  * @date 2022-11-30
  */
-public class LandlordHouse extends BaseEntity
+public class TopLandlordHouse extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
@@ -26,7 +26,7 @@ public class LandlordHouse extends BaseEntity
 
     /** 房主账号 */
     @Excel(name = "房主账号")
-    private String hostNumber;
+    private Long hostNumber;
 
     /** 民宿地址 */
     @Excel(name = "民宿地址")
@@ -35,6 +35,10 @@ public class LandlordHouse extends BaseEntity
     /** 民宿得分 */
     @Excel(name = "民宿得分")
     private Long score;
+
+    /** 民宿得分 */
+    @Excel(name = "民宿销量")
+    private Long sale;
 
     /** 注册时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -59,12 +63,12 @@ public class LandlordHouse extends BaseEntity
     {
         return houseName;
     }
-    public void setHostNumber(String hostNumber) 
+    public void setHostNumber(Long hostNumber)
     {
         this.hostNumber = hostNumber;
     }
 
-    public String getHostNumber() 
+    public Long getHostNumber()
     {
         return hostNumber;
     }
@@ -94,6 +98,14 @@ public class LandlordHouse extends BaseEntity
     public Date getRegisterTime() 
     {
         return registerTime;
+    }
+
+    public Long getSale() {
+        return sale;
+    }
+
+    public void setSale(Long sale) {
+        this.sale = sale;
     }
 
     @Override

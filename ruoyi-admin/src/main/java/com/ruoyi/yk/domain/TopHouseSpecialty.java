@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.Date;
 
-public class HouseSpecialty {
+public class TopHouseSpecialty {
     private static final long serialVersionUID = 1L;
 
     /** 特产ID */
