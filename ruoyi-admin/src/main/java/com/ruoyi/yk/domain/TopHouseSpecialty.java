@@ -13,6 +13,12 @@ public class TopHouseSpecialty {
     /** 特产ID */
     private Long id;
 
+    @Excel(name = "民宿名称")
+    private String houseName;
+
+    @Excel(name = "民宿地址")
+    private String address;
+
     /** 特产名称 */
     @Excel(name = "特产名")
     private String specialtyName;
@@ -90,5 +96,21 @@ public class TopHouseSpecialty {
 
     public void setHouseId(Long houseId) {
         this.houseId = houseId;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getHouseName() {
+        return houseName;
+    }
+
+    public void setHouseName(String houseName) {
+        this.houseName = houseName;
     }
 }
