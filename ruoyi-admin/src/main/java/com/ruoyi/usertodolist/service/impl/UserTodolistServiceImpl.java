@@ -102,7 +102,6 @@ public class UserTodolistServiceImpl implements IUserTodolistService
     @Override
     public ArrayList<Map<String, String>> getMonthlyToDoListRecordIncrement() {
         ArrayList<Map<String,String>> list = new ArrayList<>();
-        HashMap<String, String> map = new HashMap<>();
         Integer count_0 = 0;
         Integer count_1 = 0;
         String serviceName_0 = "待完成";
@@ -116,12 +115,14 @@ public class UserTodolistServiceImpl implements IUserTodolistService
                 count_1 = count_1 + 1;
             }
         }
-        map.put("name",serviceName_0);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("name","待完成");
         map.put("value",count_0.toString());
         list.add(map);
-        map.put("name",serviceName_1);
-        map.put("value",count_1.toString());
-        list.add(map);
+        HashMap<String, String> map1 = new HashMap<>();
+        map1.put("name","已完成");
+        map1.put("value",count_1.toString());
+        list.add(map1);
 
         return list;
     }

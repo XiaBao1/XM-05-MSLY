@@ -86,9 +86,10 @@
             type: 'post',
             url: 'eCharts',
             async: false,
+            dataType: 'json',
             success: function(res) {
-                console.log(res);
                 usertodostatuscount = res;
+                console.log("================================="+res);
             }
         });
         var pieChart = echarts.init(document.getElementById("echarts-pie-chart"));
