@@ -8,8 +8,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="id"    column="id"    />
         <result property="city"    column="city"    />
         <result property="weatherDate"    column="weather_date"    />
-        <result property="lowT"    column="lowT"    />
-        <result property="highT"    column="highT"    />
+        <result property="lowT"    column="low_t"    />
+        <result property="highT"    column="high_t"    />
         <result property="dayType"    column="day_type"    />
         <result property="nightType"    column="night_type"    />
         <result property="windDirection"    column="wind_direction"    />
@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectWeatherVo">
-        select id, city, weather_date, lowT, highT, day_type, night_type, wind_direction, wind_speed, wind_scale, humidity, collect_time from weather
+        select id, city, weather_date, low_t, high_t, day_type, night_type, wind_direction, wind_speed, wind_scale, humidity, collect_time from weather
     </sql>
 
     <select id="selectWeatherList" parameterType="Weather" resultMap="WeatherResult">
@@ -28,8 +28,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="city != null  and city != ''"> and city = #{city}</if>
             <if test="params.beginWeatherDate != null and params.beginWeatherDate != '' and params.endWeatherDate != null and params.endWeatherDate != ''"> and weather_date between #{params.beginWeatherDate} and #{params.endWeatherDate}</if>
-            <if test="params.beginLowT != null and params.beginLowT != '' and params.endLowT != null and params.endLowT != ''"> and lowT between #{params.beginLowT} and #{params.endLowT}</if>
-            <if test="params.beginHighT != null and params.beginHighT != '' and params.endHighT != null and params.endHighT != ''"> and highT between #{params.beginHighT} and #{params.endHighT}</if>
+            <if test="params.beginLowT != null and params.beginLowT != '' and params.endLowT != null and params.endLowT != ''"> and low_t between #{params.beginLowT} and #{params.endLowT}</if>
+            <if test="params.beginHighT != null and params.beginHighT != '' and params.endHighT != null and params.endHighT != ''"> and high_t between #{params.beginHighT} and #{params.endHighT}</if>
             <if test="dayType != null  and dayType != ''"> and day_type = #{dayType}</if>
             <if test="nightType != null  and nightType != ''"> and night_type = #{nightType}</if>
             <if test="windDirection != null  and windDirection != ''"> and wind_direction = #{windDirection}</if>
@@ -50,8 +50,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="city != null">city,</if>
             <if test="weatherDate != null">weather_date,</if>
-            <if test="lowT != null">lowT,</if>
-            <if test="highT != null">highT,</if>
+            <if test="lowT != null">low_t,</if>
+            <if test="highT != null">high_t,</if>
             <if test="dayType != null">day_type,</if>
             <if test="nightType != null">night_type,</if>
             <if test="windDirection != null">wind_direction,</if>
@@ -80,8 +80,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="city != null">city = #{city},</if>
             <if test="weatherDate != null">weather_date = #{weatherDate},</if>
-            <if test="lowT != null">lowT = #{lowT},</if>
-            <if test="highT != null">highT = #{highT},</if>
+            <if test="lowT != null">low_t = #{lowT},</if>
+            <if test="highT != null">high_t = #{highT},</if>
             <if test="dayType != null">day_type = #{dayType},</if>
             <if test="nightType != null">night_type = #{nightType},</if>
             <if test="windDirection != null">wind_direction = #{windDirection},</if>

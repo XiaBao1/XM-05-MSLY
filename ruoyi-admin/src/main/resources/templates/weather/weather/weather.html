@@ -22,11 +22,15 @@
                             </li>
                             <li>
                                 <label>低温：</label>
-                                <input type="text" name="lowT"/>
+                                <input type="text" placeholder="下限" name="params[beginLowT]"/>
+                                <span>-</span>
+                                <input type="text" placeholder="上限" name="params[endLowT]"/>
                             </li>
                             <li>
                                 <label>高温：</label>
-                                <input type="text" name="highT"/>
+                                <input type="text" placeholder="下限" name="params[beginHighT]"/>
+                                <span>-</span>
+                                <input type="text" placeholder="上限" name="params[endHighT]"/>
                             </li>
                             <li>
                                 <label>风向：</label>
@@ -34,7 +38,9 @@
                             </li>
                             <li>
                                 <label>风速：</label>
-                                <input type="text" name="windSpeed"/>
+                                <input type="text" placeholder="下限" name="params[beginWindSpeed]"/>
+                                <span>-</span>
+                                <input type="text" placeholder="上限" name="params[endWindSpeed]"/>
                             </li>
                             <li>
                                 <label>风力：</label>
@@ -42,13 +48,9 @@
                             </li>
                             <li>
                                 <label>湿度：</label>
-                                <input type="text" name="humidity"/>
-                            </li>
-                            <li class="select-time">
-                                <label>数据收集时间：</label>
-                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginCollectTime]"/>
+                                <input type="text" placeholder="下限" name="params[beginHumidity]"/>
                                 <span>-</span>
-                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endCollectTime]"/>
+                                <input type="text" placeholder="上限" name="params[endHumidity]"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -62,9 +64,6 @@
             <div class="btn-group-sm" id="toolbar" role="group">
                 <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="weather:weather:add">
                     <i class="fa fa-plus"></i> 添加
-                </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="weather:weather:edit">
-                    <i class="fa fa-edit"></i> 修改
                 </a>
                 <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="weather:weather:remove">
                     <i class="fa fa-remove"></i> 删除
@@ -180,6 +179,7 @@
                 }]
             };
             $.table.init(options);
+
         });
     </script>
 </body>

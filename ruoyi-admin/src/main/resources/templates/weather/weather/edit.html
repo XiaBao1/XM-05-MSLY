@@ -24,13 +24,13 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">低温：</label>
+                <label class="col-sm-3 control-label">低温（℃）：</label>
                 <div class="col-sm-8">
                     <input name="lowT" th:field="*{lowT}" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">高温：</label>
+                <label class="col-sm-3 control-label">高温（℃）：</label>
                 <div class="col-sm-8">
                     <input name="highT" th:field="*{highT}" class="form-control" type="text">
                 </div>
@@ -38,36 +38,60 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">风向：</label>
                 <div class="col-sm-8">
-                    <input name="windDirection" th:field="*{windDirection}" class="form-control" type="text">
+                    <select class="form-control" name="windDirection" th:field="*{windDirection}" type="text">
+                        <option value="">--请选择风向--</option>
+                        <option value="北">北</option>
+                        <option value="东北">东北</option>
+                        <option value="东">东</option>
+                        <option value="东南">东南</option>
+                        <option value="南">南</option>
+                        <option value="西南">西南</option>
+                        <option value="西">西</option>
+                        <option value="西北">西北</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">风速：</label>
+                <label class="col-sm-3 control-label">风速（m/s）：</label>
                 <div class="col-sm-8">
                     <input name="windSpeed" th:field="*{windSpeed}" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">风力：</label>
+                <label class="col-sm-3 control-label">风力（级）：</label>
                 <div class="col-sm-8">
-                    <input name="windScale" th:field="*{windScale}" class="form-control" type="text">
+                    <select name="windScale" th:field="*{windScale}" class="form-control" type="text">
+                        <option value="">--请选择风力等级--</option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                    </select>
                 </div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">湿度：</label>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">湿度（%）：</label>
                 <div class="col-sm-8">
-                    <input name="humidity" th:field="*{humidity}" class="form-control" type="text">
+                    <input id="humidity" th:field="*{humidity}" name="humidity" class="form-control" type="text">
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 请输入0~100的整数</span>
                 </div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">数据收集时间：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="collectTime" th:value="${#dates.format(weather.collectTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
+            <input name="collectTime" th:field="*{collectTime}" type="hidden">
         </form>
     </div>
     <th:block th:include="include :: footer" />
@@ -75,7 +99,19 @@
     <script th:inline="javascript">
         var prefix = ctx + "weather/weather";
         $("#form-weather-edit").validate({
-            focusCleanup: true
+            focusCleanup: true,
+            rules: {
+                humidity: {
+                    required: true,
+                    range:[0,100]
+                }
+            },
+            messages: {
+                humidity: {
+                    required: "请输入湿度",
+                    range: "请输入0~100的整数"
+                }
+            }
         });
 
         function submitHandler() {
@@ -91,10 +127,12 @@
         });
 
         $("input[name='collectTime']").datetimepicker({
-            format: "yyyy-mm-dd",
+            format: "yyyy-mm-dd HH:mm:ss",
             minView: "month",
             autoclose: true
         });
+
+
     </script>
 </body>
 </html>

@@ -31,11 +31,11 @@ public class Weather extends BaseEntity
     private Date weatherDate;
 
     /** 低温 */
-    @Excel(name = "低温")
+    @Excel(name = "低温（℃）")
     private Long lowT;
 
     /** 高温 */
-    @Excel(name = "高温")
+    @Excel(name = "高温（℃）")
     private Long highT;
 
     /** 白天天气 */
@@ -51,20 +51,20 @@ public class Weather extends BaseEntity
     private String windDirection;
 
     /** 风速（单位m/s） */
-    @Excel(name = "风速", readConverterExp = "单=位m/s")
+    @Excel(name = "风速（m/s）")
     private BigDecimal windSpeed;
 
     /** 风力（单位级） */
-    @Excel(name = "风力", readConverterExp = "单=位级")
+    @Excel(name = "风力（级）")
     private Long windScale;
 
     /** 湿度（单位%） */
-    @Excel(name = "湿度", readConverterExp = "单=位%")
+    @Excel(name = "湿度（%）")
     private Long humidity;
 
     /** 数据收集时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "数据收集时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "数据收集时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date collectTime;
 
     public void setId(Long id) 

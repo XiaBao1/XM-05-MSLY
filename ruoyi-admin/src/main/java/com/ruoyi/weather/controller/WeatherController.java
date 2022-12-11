@@ -1,5 +1,7 @@
 package com.ruoyi.weather.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +88,7 @@ public class WeatherController extends BaseController
     @ResponseBody
     public AjaxResult addSave(Weather weather)
     {
+        weather.setCollectTime(new Date());
         return toAjax(weatherService.insertWeather(weather));
     }
 
