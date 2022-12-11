@@ -11,6 +11,7 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.yk.domain.TopHouseSpecialty;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,7 +61,31 @@ public class TopSpecialityController extends BaseController {
         return util.exportExcel(list, "热门特产");
     }
 
-    private List getTopSpecialityList() {
+    @RequiresPermissions("yk:top_speciality:statistics")
+    @GetMapping("/statistics")
+    public String statistics(ModelMap mmap)
+    {
+        return prefix + "/statistics";
+    }
+
+    @RequiresPermissions("yk:top_speciality:statistics")
+    @Log(title = "特产统计", businessType = BusinessType.OTHER)
+    @PostMapping("/statistics")
+    @ResponseBody
+    public List<Double> statisticsData()
+    {
+        List<TopHouseSpecialty> topSpecialityList = getTopSpecialityList();
+        List<Double> list = new ArrayList<Double>();
+
+        for (TopHouseSpecialty item : topSpecialityList) {
+            list.add(item.getPrice());
+            list.add((double)item.getSale());
+        }
+
+        return list;
+    }
+
+    private List<TopHouseSpecialty> getTopSpecialityList() {
         List list = new ArrayList();
         Connection connection = null;
         PreparedStatement pstmt = null;
