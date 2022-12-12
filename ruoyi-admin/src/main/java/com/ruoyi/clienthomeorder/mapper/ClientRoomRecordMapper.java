@@ -20,6 +20,7 @@ public interface ClientRoomRecordMapper
      */
     public ClientRoomRecord selectClientRoomRecordById(Long id);
 
+    public ClientRoomRecord selectClientRoomCommentRecordById(Long id);
     /**
      * 查询民宿订单列表
      * 
@@ -35,6 +36,14 @@ public interface ClientRoomRecordMapper
      * @return 结果
      */
     public int insertClientRoomRecord(ClientRoomRecord clientRoomRecord);
+
+    /**
+     * 新增民宿评论
+     *
+     * @param clientRoomRecord 民宿订单
+     * @return 结果
+     */
+    public int insertClientRoomCommentRecord(ClientRoomRecord clientRoomRecord);
 
     /**
      * 修改民宿订单

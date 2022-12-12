@@ -1,11 +1,14 @@
 package com.ruoyi.clienthomeorder.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ruoyi.common.utils.security.PermissionUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+
 
 /**
  * 民宿订单对象 client_room_record
@@ -27,6 +30,21 @@ public class ClientRoomRecord extends BaseEntity
     /** 房间ID */
     @Excel(name = "房间ID")
     private Long roomId;
+
+    @Excel(name = "用户昵称")
+    private String userName;
+
+    @Excel(name = "得分")
+    private BigDecimal score;
+
+    @Excel(name = "评论")
+    private String comment;
+
+    @Excel(name = "照片")
+    private String photo;
+
+    @Excel(name = "订单ID")
+    private Long roomRecordId;
 
     /** 预计入住时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -53,12 +71,16 @@ public class ClientRoomRecord extends BaseEntity
     private Long price;
 
     /** 已付款 */
-    @Excel(name = "已付款")
+    @Excel(name = "已付款", readConverterExp = "0=未付款,1=已付款")
     private Integer isPaid;
 
     /** 已完成 */
-    @Excel(name = "已完成")
+    @Excel(name = "已完成", readConverterExp = "0=未完成,1=已完成")
     private Integer isDone;
+
+    public ClientRoomRecord() {
+    }
+
 
     public void setId(Long id) 
     {
@@ -69,15 +91,35 @@ public class ClientRoomRecord extends BaseEntity
     {
         return id;
     }
-    public void setClientNumber(Long clientNumber) 
+    public void setClientNumber(Long clientNumber)
     {
         this.clientNumber = clientNumber;
     }
 
-    public Long getClientNumber() 
+    public String getUserName()
+    {
+        String userName = (String) PermissionUtils.getPrincipalProperty("userName");
+        return userName;
+    }
+
+    public Long getClientNumber()
     {
         return clientNumber;
     }
+    public void setRoomRecordId(Long roomRecordId){this.roomRecordId=roomRecordId;}
+    public Long getRoomRecordId() {
+        return roomRecordId;
+    }
+
+    public void setScore(BigDecimal score){this.score=score;}
+    public BigDecimal getScore(){return score;}
+
+    public void setComment(String comment){this.comment=comment;}
+    public String getComment(){return comment;}
+
+    public void setPhoto(String photo){this.photo=photo;}
+    public String getPhoto(){return photo;}
+
     public void setRoomId(Long roomId) 
     {
         this.roomId = roomId;
@@ -151,11 +193,15 @@ public class ClientRoomRecord extends BaseEntity
         return isDone;
     }
 
+
+
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
-            .append("clientNumber", getClientNumber())
+            .append("clientNumber",getClientNumber())
+            .append("userName", getUserName())
             .append("roomId", getRoomId())
             .append("checkInDate", getCheckInDate())
             .append("checkOutDate", getCheckOutDate())
@@ -164,6 +210,10 @@ public class ClientRoomRecord extends BaseEntity
             .append("price", getPrice())
             .append("isPaid", getIsPaid())
             .append("isDone", getIsDone())
+            .append("roomRecordId", getRoomRecordId())
+            .append("score", getScore())
+            .append("comment", getComment())
+            .append("photo", getPhoto())
             .toString();
     }
 }

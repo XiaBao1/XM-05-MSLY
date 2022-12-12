@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="ClientRoomRecord" id="ClientRoomRecordResult">
         <result property="id"    column="id"    />
-        <result property="clientNumber"    column="client_number"    />
+        <result property="userName"    column="user_name"    />
         <result property="roomId"    column="room_id"    />
         <result property="checkInDate"    column="check_in_date"    />
         <result property="checkOutDate"    column="check_out_date"    />
@@ -15,16 +15,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="price"    column="price"    />
         <result property="isPaid"    column="is_paid"    />
         <result property="isDone"    column="is_done"    />
+        <result property="roomRecordId"    column="room_record_id"    />
+        <result property="score"    column="score"    />
+        <result property="comment"    column="comment"    />
+        <result property="photo"    column="photo"    />
     </resultMap>
 
     <sql id="selectClientRoomRecordVo">
-        select id, client_number, room_id, check_in_date, check_out_date, reserve_in_date, reserve_out_date, price, is_paid, is_done from client_room_record
+        select id, user_name, room_id, check_in_date, check_out_date, reserve_in_date, reserve_out_date, price, is_paid, is_done from client_room_record join sys_user where client_number = user_id and user_name = #{userName}
     </sql>
 
     <select id="selectClientRoomRecordList" parameterType="ClientRoomRecord" resultMap="ClientRoomRecordResult">
         <include refid="selectClientRoomRecordVo"/>
-        <where>  
-            <if test="clientNumber != null "> and client_number = #{clientNumber}</if>
+            <if test="userName != null "> and user_name = #{userName}</if>
+
             <if test="roomId != null "> and room_id = #{roomId}</if>
             <if test="checkInDate != null "> and check_in_date = #{checkInDate}</if>
             <if test="checkOutDate != null "> and check_out_date = #{checkOutDate}</if>
@@ -33,15 +37,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="price != null "> and price = #{price}</if>
             <if test="isPaid != null "> and is_paid = #{isPaid}</if>
             <if test="isDone != null "> and is_done = #{isDone}</if>
-        </where>
+             order by check_in_date
     </select>
 
     
     <select id="selectClientRoomRecordById" parameterType="Long" resultMap="ClientRoomRecordResult">
-        <include refid="selectClientRoomRecordVo"/>
-        where id = #{id}
+        select id, client_number, room_id, check_in_date, check_out_date, reserve_in_date, reserve_out_date, price, is_paid, is_done from client_room_record where id = #{id}
     </select>
-        
+
+    <select id="selectClientRoomCommentRecordById" parameterType="Long" resultMap="ClientRoomRecordResult">
+        select id,room_record_id, score, comment, photo from client_room_comment  where id = #{id}
+    </select>
+
     <insert id="insertClientRoomRecord" parameterType="ClientRoomRecord" useGeneratedKeys="true" keyProperty="id">
         insert into client_room_record
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -54,7 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="price != null">price,</if>
             <if test="isPaid != null">is_paid,</if>
             <if test="isDone != null">is_done,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="clientNumber != null">#{clientNumber},</if>
             <if test="roomId != null">#{roomId},</if>
@@ -65,7 +72,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="price != null">#{price},</if>
             <if test="isPaid != null">#{isPaid},</if>
             <if test="isDone != null">#{isDone},</if>
-         </trim>
+        </trim>
+    </insert>
+
+
+    <insert id="insertClientRoomCommentRecord" parameterType="ClientRoomRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into client_room_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test=" roomRecordId!= null">room_record_id,</if>
+            <if test="score != null">score,</if>
+            <if test="comment != null">comment,</if>
+            <if test="photo != null">photo,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test=" roomRecordId!= null">#{roomRecordId},</if>
+            <if test="score != null">#{score},</if>
+            <if test="comment != null">#{comment},</if>
+            <if test="photo != null">#{photo},</if>
+        </trim>
     </insert>
 
     <update id="updateClientRoomRecord" parameterType="ClientRoomRecord">

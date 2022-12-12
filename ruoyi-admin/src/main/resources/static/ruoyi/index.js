@@ -10,6 +10,7 @@ layer.config({
 var isMobile = false;
 var sidebarHeight = isMobile ? '100%' : '96%';
 
+
 $(function() {
     // MetsiMenu
     $('#side-menu').metisMenu();
