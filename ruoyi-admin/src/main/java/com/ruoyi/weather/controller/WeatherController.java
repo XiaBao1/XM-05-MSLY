@@ -139,9 +139,9 @@ public class WeatherController extends BaseController
     @Log(title = "天气信息统计", businessType = BusinessType.INSERT)
     @PostMapping("/statistics")
     @ResponseBody
-    public List<Integer> statisticsData()
+    public List<Long> statisticsData()
     {
-        List<Integer> list = weatherService.getMonthlyUserIncrement();
+        List<Long> list = weatherService.getMonthTemperature();
         return list;
     }
 

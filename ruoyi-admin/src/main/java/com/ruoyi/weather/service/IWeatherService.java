@@ -58,4 +58,11 @@ public interface IWeatherService
      * @return 结果
      */
     public int deleteWeatherById(Long id);
+
+    /**
+     * 统计本月天气信息
+     *
+     * @return 结果
+     */
+    public List<Long> getMonthTemperature();
 }
