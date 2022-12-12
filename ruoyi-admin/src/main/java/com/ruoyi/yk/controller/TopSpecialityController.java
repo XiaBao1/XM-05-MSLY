@@ -4,10 +4,13 @@ package com.ruoyi.yk.controller;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.common.core.page.TableDataInfo;
 
+import com.ruoyi.common.core.page.TableSupport;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.common.utils.sql.SqlUtil;
 import com.ruoyi.yk.domain.TopHouseSpecialty;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
@@ -46,7 +49,7 @@ public class TopSpecialityController extends BaseController {
     @ResponseBody
     public TableDataInfo list() {
         startPage();
-        List list = getTopSpecialityList();
+        List<TopHouseSpecialty> list = getTopSpecialityList();
         return getDataTable(list);
     }
 
@@ -86,14 +89,19 @@ public class TopSpecialityController extends BaseController {
     }
 
     private List<TopHouseSpecialty> getTopSpecialityList() {
+        PageDomain pageDomain = TableSupport.buildPageRequest();
+        String orderBy = pageDomain.getOrderBy();
+
         List list = new ArrayList();
         Connection connection = null;
         PreparedStatement pstmt = null;
         String sql = "SELECT HS.id, HS.specialty_name, HS.price, count(CSR.specialty_id ) as sale, HS.description, HS.inventory, HS.house_id, LH.house_name, LH.address "
                 + "FROM house_specialty as HS left join client_specialty_record as CSR on HS.id = CSR.specialty_id "
                 + "join landlord_house as LH on LH.id = HS.house_id "
-                + "GROUP BY HS.id "
-                + "ORDER BY  sale DESC;";
+                + "GROUP BY HS.id ";
+        if (orderBy != null && ! orderBy.isEmpty()) {
+            sql += "order by " + orderBy;
+        }
         // System.out.println(sql);
         try
         {

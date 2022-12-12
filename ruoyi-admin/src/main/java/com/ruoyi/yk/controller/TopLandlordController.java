@@ -5,7 +5,9 @@ import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.core.page.TableSupport;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.yk.domain.TopLandlordHouse;
@@ -46,7 +48,7 @@ public class TopLandlordController extends BaseController {
     @ResponseBody
     public TableDataInfo list() {
         startPage();
-        List list = getTopLandlordList();
+        List<TopLandlordHouse> list = getTopLandlordList();
         return getDataTable(list);
     }
 
@@ -62,6 +64,9 @@ public class TopLandlordController extends BaseController {
     }
 
     private List<TopLandlordHouse> getTopLandlordList() {
+        PageDomain pageDomain = TableSupport.buildPageRequest();
+        String orderBy = pageDomain.getOrderBy();
+
         List<TopLandlordHouse> list = new ArrayList<TopLandlordHouse>();
         Connection connection = null;
         PreparedStatement pstmt = null;
@@ -69,7 +74,10 @@ public class TopLandlordController extends BaseController {
                 "from landlord_house LH " +
                 "   left JOIN house_room HR on LH.id = HR.house_id " +
                 "   left JOIN client_room_record CRR on HR.id = CRR.room_id " +
-                "GROUP BY LH.id ;";
+                "GROUP BY LH.id ";
+        if (orderBy != null && ! orderBy.isEmpty()) {
+            sql += "order by " + orderBy;
+        }
         // System.out.println(sql);
         try
         {

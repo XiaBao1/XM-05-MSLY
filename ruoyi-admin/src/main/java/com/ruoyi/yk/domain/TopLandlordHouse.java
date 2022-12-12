@@ -18,7 +18,7 @@ public class TopLandlordHouse extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 民宿ID */
-    private Long id;
+    private long id;
 
     /** 民宿名称 */
     @Excel(name = "民宿名称")
@@ -26,7 +26,7 @@ public class TopLandlordHouse extends BaseEntity
 
     /** 房主账号 */
     @Excel(name = "房主账号")
-    private Long hostNumber;
+    private long hostNumber;
 
     /** 民宿地址 */
     @Excel(name = "民宿地址")
@@ -34,11 +34,11 @@ public class TopLandlordHouse extends BaseEntity
 
     /** 民宿得分 */
     @Excel(name = "民宿得分")
-    private Long score;
+    private long score;
 
     /** 民宿得分 */
     @Excel(name = "民宿销量")
-    private Long sale;
+    private long sale;
 
     /** 注册时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -50,7 +50,7 @@ public class TopLandlordHouse extends BaseEntity
         this.id = id;
     }
 
-    public Long getId() 
+    public long getId()
     {
         return id;
     }
@@ -68,7 +68,7 @@ public class TopLandlordHouse extends BaseEntity
         this.hostNumber = hostNumber;
     }
 
-    public Long getHostNumber()
+    public long getHostNumber()
     {
         return hostNumber;
     }
@@ -81,12 +81,12 @@ public class TopLandlordHouse extends BaseEntity
     {
         return address;
     }
-    public void setScore(Long score) 
+    public void setScore(long score)
     {
         this.score = score;
     }
 
-    public Long getScore() 
+    public long getScore()
     {
         return score;
     }
@@ -100,11 +100,11 @@ public class TopLandlordHouse extends BaseEntity
         return registerTime;
     }
 
-    public Long getSale() {
+    public long getSale() {
         return sale;
     }
 
-    public void setSale(Long sale) {
+    public void setSale(long sale) {
         this.sale = sale;
     }
 

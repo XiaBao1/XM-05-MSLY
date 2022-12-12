@@ -74,8 +74,8 @@
                 url: prefix + "/list",
                 exportUrl: prefix + "/export",
                 modalName: "最热特产榜单",
-                sortName: "sale",
-                sortOrder: "desc",
+                // sortName: "sale",
+                // sortOrder: "desc",
                 columns: [
                 {
                     field: 'id',
@@ -104,8 +104,7 @@
                     title: '描述'
                 },{
                     field: 'inventory',
-                    title: '库存',
-                    sortable: true
+                    title: '库存'
                 }]
             };
             $.table.init(options);

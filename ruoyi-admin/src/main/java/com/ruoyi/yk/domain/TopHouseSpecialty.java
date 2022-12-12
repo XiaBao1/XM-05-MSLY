@@ -11,7 +11,7 @@ public class TopHouseSpecialty {
     private static final long serialVersionUID = 1L;
 
     /** 特产ID */
-    private Long id;
+    private long id;
 
     @Excel(name = "民宿名称")
     private String houseName;
@@ -25,7 +25,7 @@ public class TopHouseSpecialty {
 
     /** 价格 */
     @Excel(name = "价格")
-    private Double price;
+    private double price;
 
     /** 库存 */
     @Excel(name = "库存")
@@ -33,11 +33,11 @@ public class TopHouseSpecialty {
 
     /** 民宿id */
     @Excel(name = "民宿id")
-    private Long houseId;
+    private long houseId;
 
     /** 民宿 */
     @Excel(name = "销量")
-    private Long sale;
+    private long sale;
 
     @Excel(name = "描述")
     private String description;
@@ -50,19 +50,19 @@ public class TopHouseSpecialty {
         this.description = description;
     }
 
-    public Long getSale() {
+    public long getSale() {
         return sale;
     }
 
-    public void setSale(Long sale) {
+    public void setSale(long sale) {
         this.sale = sale;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -74,11 +74,11 @@ public class TopHouseSpecialty {
         this.specialtyName = specialtyName;
     }
 
-    public Double getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -90,11 +90,11 @@ public class TopHouseSpecialty {
         this.inventory = inventory;
     }
 
-    public Long getHouseId() {
+    public long getHouseId() {
         return houseId;
     }
 
-    public void setHouseId(Long houseId) {
+    public void setHouseId(long houseId) {
         this.houseId = houseId;
     }
 
