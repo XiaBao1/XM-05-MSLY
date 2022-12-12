@@ -113,8 +113,8 @@ public class WeatherServiceImpl implements IWeatherService
         monthStart.set(Calendar.DAY_OF_MONTH, 1); //设置为1号,当前日期既为本月第一天
         Calendar monthEnd = Calendar.getInstance();
         monthEnd.set(Calendar.DAY_OF_MONTH, monthEnd.getActualMaximum(Calendar.DAY_OF_MONTH)); //获取当前月最后一天
-        System.out.println(monthStart.getTime());
-        System.out.println(monthEnd.getTime());
+        //System.out.println(monthStart.getTime());
+        //System.out.println(monthEnd.getTime());
         List<Weather> allWeather=weatherMapper.selectWeatherList(new Weather());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         for(Weather cur:allWeather)
@@ -123,8 +123,8 @@ public class WeatherServiceImpl implements IWeatherService
             tmp.setTime(cur.getWeatherDate());
             if(cur.getCity().equals("成都") && monthStart.before(tmp) && tmp.before(monthEnd))
             {
-                System.out.println(cur.getCity());
-                System.out.println(cur.getWeatherDate().toString());
+                //System.out.println(cur.getCity());
+                //System.out.println(cur.getWeatherDate().toString());
                 tmp.setTime(cur.getWeatherDate());
                 int id=tmp.get(Calendar.DAY_OF_MONTH);
                 ans.set(id,cur.getHighT());
