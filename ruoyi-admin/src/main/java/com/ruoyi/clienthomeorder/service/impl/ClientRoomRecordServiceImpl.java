@@ -36,6 +36,11 @@ public class ClientRoomRecordServiceImpl implements IClientRoomRecordService
         return clientRoomRecordMapper.selectClientRoomRecordById(id);
     }
 
+    @Override
+    public ClientRoomRecord selectClientRoomCommentRecordById(Long id)
+    {
+        return clientRoomRecordMapper.selectClientRoomCommentRecordById(id);
+    }
     /**
      * 查询民宿订单列表
      * 
@@ -60,6 +65,13 @@ public class ClientRoomRecordServiceImpl implements IClientRoomRecordService
     {
         return clientRoomRecordMapper.insertClientRoomRecord(clientRoomRecord);
     }
+
+    @Override
+    public int insertClientRoomCommentRecord(ClientRoomRecord clientRoomRecord)
+    {
+        return clientRoomRecordMapper.insertClientRoomCommentRecord(clientRoomRecord);
+    }
+
 
     /**
      * 修改民宿订单

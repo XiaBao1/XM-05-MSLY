@@ -155,7 +155,7 @@ var table = {
             // 获取实例ID，如存在多个返回#id1,#id2 delimeter分隔符
             getOptionsIds: function(separator) {
                 var _separator = $.common.isEmpty(separator) ? "," : separator;
-                var optionsIds = "";  
+                var optionsIds = "";
                 $.each(table.config, function(key, value){
                     optionsIds += "#" + key + _separator;
                 });
@@ -173,7 +173,7 @@ var table = {
                     isAsc:          params.order
                 };
                 var currentId = $.common.isEmpty(table.options.formId) ? $('form').attr('id') : table.options.formId;
-                return $.extend(curParams, $.common.formToJSON(currentId)); 
+                return $.extend(curParams, $.common.formToJSON(currentId));
             },
             // 请求获取数据后处理回调函数
             responseHandler: function(res) {
@@ -439,12 +439,12 @@ var table = {
                             type: 'POST',
                             success: function (result) {
                                 if (result.code == web_status.SUCCESS) {
-                                	$.modal.close(index);
+                                    $.modal.close(index);
                                     $.modal.closeAll();
                                     $.modal.alertSuccess(result.msg);
                                     $.table.refresh();
                                 } else if (result.code == web_status.WARNING) {
-                                	$.modal.close(index);
+                                    $.modal.close(index);
                                     $.modal.enable();
                                     $.modal.alertWarning(result.msg)
                                 } else {
@@ -454,7 +454,7 @@ var table = {
                                 }
                             },
                             complete: function () {
-                            	layero.find('#file').val('');
+                                layero.find('#file').val('');
                             }
                         });
                     }
@@ -711,7 +711,7 @@ var table = {
                     startLayDate.config.max.year = '2099';
                     startLayDate.config.max.month = '12';
                     startLayDate.config.max.date = '31';
-                 }
+                }
             },
             // 获取选中复选框项
             selectCheckeds: function(name) {
@@ -757,9 +757,9 @@ var table = {
             // 消息提示
             msg: function(content, type) {
                 if (type != undefined) {
-                	top.layer.msg(content, { icon: $.modal.icon(type), time: 1000, shift: 5 });
+                    top.layer.msg(content, { icon: $.modal.icon(type), time: 1000, shift: 5 });
                 } else {
-                	top.layer.msg(content);
+                    top.layer.msg(content);
                 }
             },
             // 错误消息
@@ -798,17 +798,17 @@ var table = {
             // 消息提示，重新加载页面
             msgReload: function(msg, type) {
                 top.layer.msg(msg, {
-                    icon: $.modal.icon(type),
-                    time: 500,
-                    shade: [0.1, '#8F8F8F']
-                },
-                function() {
-                    $.modal.reload();
-                });
+                        icon: $.modal.icon(type),
+                        time: 500,
+                        shade: [0.1, '#8F8F8F']
+                    },
+                    function() {
+                        $.modal.reload();
+                    });
             },
             // 消息提示成功并刷新父窗体
             msgSuccessReload: function(msg) {
-            	$.modal.msgReload(msg, modal_status.SUCCESS);
+                $.modal.msgReload(msg, modal_status.SUCCESS);
             },
             // 获取iframe页的DOM
             getChildFrame: function (index) {
@@ -891,9 +891,9 @@ var table = {
             },
             // 弹出层指定参数选项
             openOptions: function (options) {
-                var _url = $.common.isEmpty(options.url) ? "/404.html" : options.url; 
-                var _title = $.common.isEmpty(options.title) ? "系统窗口" : options.title; 
-                var _width = $.common.isEmpty(options.width) ? "800" : options.width; 
+                var _url = $.common.isEmpty(options.url) ? "/404.html" : options.url;
+                var _title = $.common.isEmpty(options.title) ? "系统窗口" : options.title;
+                var _width = $.common.isEmpty(options.width) ? "800" : options.width;
                 var _height = $.common.isEmpty(options.height) ? ($(window).height() - 50) : options.height;
                 var _btn = ['<i class="fa fa-check"></i> 确认', '<i class="fa fa-close"></i> 关闭'];
                 // 如果是移动端，就使用自适应大小弹窗
@@ -1062,7 +1062,7 @@ var table = {
                     width: width,
                     height: height,
                     url: _url,
-                    skin: 'layui-layer-gray', 
+                    skin: 'layui-layer-gray',
                     btn: ['关闭'],
                     yes: function (index, layero) {
                         $.modal.close(index);
@@ -1143,6 +1143,41 @@ var table = {
             // 添加访问地址
             addUrl: function(id) {
                 var url = $.common.isEmpty(id) ? table.options.createUrl.replace("{id}", "") : table.options.createUrl.replace("{id}", id);
+                return url;
+            },
+            // 添加评论
+            comment: function(id) {
+                // table.set();
+                // if ($.common.isEmpty(id) && table.options.type == table_type.bootstrapTreeTable) {
+                //     var row = $("#" + table.options.id).bootstrapTreeTable('getSelections')[0];
+                //     if ($.common.isEmpty(row)) {
+                //         $.modal.alertWarning("请至少选择一条记录");
+                //         return;
+                //     }
+                //     var url = table.options.discussUrl.replace("{id}", row[table.options.uniqueId]);
+                //     $.modal.open("评论" + table.options.modalName, url);
+                // } else {
+                //     $.modal.open("评论" + table.options.modalName, $.operate.commentUrl(id));
+                // }
+
+                table.set();
+                $.modal.open("评论" + table.options.modalName, $.operate.commentUrl(id));
+            },
+            // 添加访问地址
+            commentUrl: function(id) {
+                // var url = "/404.html";
+                // if ($.common.isNotEmpty(id)) {
+                //     url = table.options.discussUrl.replace("{id}", id);
+                // } else {
+                //     var id = $.common.isEmpty(table.options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(table.options.uniqueId);
+                //     if (id.length == 0) {
+                //         $.modal.alertWarning("请至少选择一条记录");
+                //         return;
+                //     }
+                //     url = table.options.discussUrl.replace("{id}", id);
+                // }
+                // return url;
+                var url = $.common.isEmpty(id) ? table.options.discussUrl.replace("{id}", "") : table.options.discussUrl.replace("{id}", id);
                 return url;
             },
             // 修改信息
@@ -1299,7 +1334,7 @@ var table = {
                 if (result.code == web_status.SUCCESS) {
                     var parent = activeWindow();
                     if ($.common.isEmpty(parent.table)) {
-                    	$.modal.msgSuccessReload(result.msg);
+                        $.modal.msgSuccessReload(result.msg);
                     } else if (parent.table.options.type == table_type.bootstrapTable) {
                         $.modal.close();
                         parent.$.modal.msgSuccess(result.msg);
@@ -1324,8 +1359,8 @@ var table = {
                     var currentId = $('.page-tabs-content', topWindow).find('.active').attr('data-panel');
                     var topWindow = $('.RuoYi_iframe[data-id="' + currentId + '"]', topWindow)[0];
                     if ($.common.isNotEmpty(topWindow) && $.common.isNotEmpty(currentId)) {
-                    	var $contentWindow = topWindow.contentWindow;
-                    	$contentWindow.$.modal.msgSuccess(result.msg);
+                        var $contentWindow = topWindow.contentWindow;
+                        $contentWindow.$.modal.msgSuccess(result.msg);
                         $contentWindow.$(".layui-layer-padding").removeAttr("style");
                         if ($contentWindow.table.options.type == table_type.bootstrapTable) {
                             $contentWindow.$.table.refresh();
@@ -1620,12 +1655,12 @@ var table = {
                 if (!date) return;
                 if (!format) format = "yyyy-MM-dd";
                 switch (typeof date) {
-                case "string":
-                    date = new Date(date.replace(/-/g, "/"));
-                    break;
-                case "number":
-                    date = new Date(date);
-                    break;
+                    case "string":
+                        date = new Date(date.replace(/-/g, "/"));
+                        break;
+                    case "number":
+                        date = new Date(date);
+                        break;
                 }
                 if (!date instanceof Date) return;
                 var dict = {
@@ -1642,9 +1677,9 @@ var table = {
                     "ss": ("" + (date.getSeconds() + 100)).substr(1)
                 };
                 return format.replace(/(yyyy|MM?|dd?|HH?|ss?|mm?)/g,
-                function() {
-                    return dict[arguments[0]];
-                });
+                    function() {
+                        return dict[arguments[0]];
+                    });
             },
             // 获取节点数据，支持多层级访问
             getItemField: function (item, field) {
@@ -1719,11 +1754,11 @@ var table = {
             },
             // 获取obj对象长度
             getLength: function(obj) {
-                var count = 0;　　
+                var count = 0;
                 for (var i in obj) {
                     if (obj.hasOwnProperty(i)) {
                         count++;
-                    }　　
+                    }
                 }
                 return count;
             },
