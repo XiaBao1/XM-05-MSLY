@@ -97,13 +97,13 @@
         var barChart = echarts.init(document.getElementById("echarts-bar-chart"));
         var baroption = {
             title : {
-                text: '每月用户注册统计'
+                text: '民宿销量柱状图'
             },
             tooltip : {
                 trigger: 'axis'
             },
             legend: {
-                data:['注册数目']
+                data:['销量']
             },
             grid:{
                 x:30,
@@ -124,7 +124,7 @@
             ],
             series : [
                 {
-                    name:'用户注册数目',
+                    name:'销量',
                     type:'bar',
                     data: saleData,
                     markPoint : {
