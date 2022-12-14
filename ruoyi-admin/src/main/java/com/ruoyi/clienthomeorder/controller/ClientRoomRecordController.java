@@ -220,13 +220,13 @@ public class ClientRoomRecordController extends BaseController
     @ResponseBody
     public Map<String, String> menuIconUpload(MultipartFile newsMenuIconFile) throws IOException {
         System.out.println("文件："+newsMenuIconFile.getOriginalFilename()+"正在上传！");
-        String projectStaticPath = "C:\\yk\\uploadPath"; // 项目本地文件夹路径
-        String fileStoragePath = "\\clientroomrecord\\comments\\"; // 本地文件夹的相对路径
+        String projectStaticPath = "C:\\yk"; // 项目本地文件夹路径
+        String fileStoragePath = "\\uploadPath\\"; // 本地文件夹的相对路径
         Map<String, String> map = upload( newsMenuIconFile,projectStaticPath, fileStoragePath);
         System.out.println(map);
         String value = map.get("genFilename");
         System.out.println("key genFilename 对应的 value: " + value);
-        String path=projectStaticPath+fileStoragePath+value;
+        String path="http://localhost/profile/"+value;
         System.out.println(path);
         clientRoomRecordService.insertClientRoomCommentPhotoRecord(path);
         return map;

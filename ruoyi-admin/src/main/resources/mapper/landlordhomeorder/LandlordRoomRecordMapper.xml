@@ -7,6 +7,7 @@
     <resultMap type="LandlordRoomRecord" id="LandlordRoomRecordResult">
         <result property="id"    column="id"    />
         <result property="clientNumber"    column="client_number"    />
+        <result property="loginName"    column="login_name"    />
         <result property="roomId"    column="room_id"    />
         <result property="checkInDate"    column="check_in_date"    />
         <result property="checkOutDate"    column="check_out_date"    />
@@ -15,15 +16,16 @@
         <result property="price"    column="price"    />
         <result property="isPaid"    column="is_paid"    />
         <result property="isDone"    column="is_done"    />
+
     </resultMap>
 
     <sql id="selectLandlordRoomRecordVo">
-        select id, client_number, room_id, check_in_date, check_out_date, reserve_in_date, reserve_out_date, price, is_paid, is_done from client_room_record
+        select id,client_number,login_name, room_id, check_in_date, check_out_date, reserve_in_date, reserve_out_date, price, is_paid, is_done from client_room_record join sys_user where client_number=user_id and room_id in (select id from landlord_house where host_number=(select user_id from sys_user where user_name = #{userName}))
     </sql>
 
     <select id="selectLandlordRoomRecordList" parameterType="LandlordRoomRecord" resultMap="LandlordRoomRecordResult">
         <include refid="selectLandlordRoomRecordVo"/>
-        <where>
+<!--            <if test="loginName != null "> and login_name = #{loginName}</if>-->
             <if test="clientNumber != null "> and client_number = #{clientNumber}</if>
             <if test="roomId != null "> and room_id = #{roomId}</if>
             <if test="checkInDate != null "> and check_in_date = #{checkInDate}</if>
@@ -33,12 +35,10 @@
             <if test="price != null "> and price = #{price}</if>
             <if test="isPaid != null "> and is_paid = #{isPaid}</if>
             <if test="isDone != null "> and is_done = #{isDone}</if>
-        </where>
     </select>
 
     <select id="selectLandlordRoomRecordById" parameterType="Long" resultMap="LandlordRoomRecordResult">
-        <include refid="selectLandlordRoomRecordVo"/>
-        where id = #{id}
+         select id,client_number, room_id, check_in_date, check_out_date, reserve_in_date, reserve_out_date, price, is_paid, is_done from client_room_record where id = #{id}
     </select>
 
     <insert id="insertLandlordRoomRecord" parameterType="LandlordRoomRecord" useGeneratedKeys="true" keyProperty="id">

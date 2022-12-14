@@ -36,7 +36,6 @@
             <if test="isReceived != null "> and is_received = #{isReceived}</if>
             <if test="isPaid != null "> and is_paid = #{isPaid}</if>
             <if test="isDone != null "> and is_done = #{isDone}</if>
-             order by order_time
     </select>
 
     <select id="selectClientSpecialtyRecordById" parameterType="Long" resultMap="ClientSpecialtyRecordResult">

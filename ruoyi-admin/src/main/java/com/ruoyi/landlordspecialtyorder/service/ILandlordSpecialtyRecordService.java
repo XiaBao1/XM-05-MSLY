@@ -18,7 +18,6 @@ public interface ILandlordSpecialtyRecordService
      * @return 订单
      */
     public LandlordSpecialtyRecord selectLandlordSpecialtyRecordById(Long id);
-
     /**
      * 查询订单列表
      * 

@@ -38,7 +38,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="price != null "> and price = #{price}</if>
             <if test="isPaid != null "> and is_paid = #{isPaid}</if>
             <if test="isDone != null "> and is_done = #{isDone}</if>
-             order by check_in_date
     </select>
 
     
