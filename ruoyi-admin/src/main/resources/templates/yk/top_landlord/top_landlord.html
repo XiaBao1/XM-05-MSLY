@@ -55,6 +55,9 @@
             <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="system:top_landlord:print">
                 <i class="fa fa-plus"></i> 打印
             </a>
+            <a class="btn btn-success" onclick="$.modal.openTab('民宿统计', '/yk/top_landlord/statistics');" shiro:hasPermission="yk:top_landlord:statistics">
+                <i class="fa fa-plus"></i> 统计
+            </a>
         </div>
 
         <div class="col-sm-12 select-table table-striped noprint" id="prints" style="width: 100%;">

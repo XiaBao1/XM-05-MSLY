@@ -1,6 +1,8 @@
 package com.ruoyi.yk.controller;
 
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -10,9 +12,11 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.page.TableSupport;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.yk.domain.TopHouseSpecialty;
 import com.ruoyi.yk.domain.TopLandlordHouse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,6 +65,36 @@ public class TopLandlordController extends BaseController {
         List<TopLandlordHouse> list = getTopLandlordList();
         ExcelUtil<TopLandlordHouse> util = new ExcelUtil<TopLandlordHouse>(TopLandlordHouse.class);
         return util.exportExcel(list, "热门民宿");
+    }
+
+
+    @RequiresPermissions("yk:top_landlord:statistics")
+    @GetMapping("/statistics")
+    public String statistics(ModelMap mmap)
+    {
+        return prefix + "/statistics";
+    }
+
+    @RequiresPermissions("yk:top_landlord:statistics")
+    @Log(title = "民宿统计", businessType = BusinessType.OTHER)
+    @PostMapping("/statistics")
+    @ResponseBody
+    public JSONObject statisticsData()
+    {
+        List<TopLandlordHouse> topSpecialityList = getTopLandlordList();
+        JSONArray saleArray = new JSONArray();
+        JSONArray nameArray = new JSONArray();
+        JSONObject json = new JSONObject();
+
+        for (TopLandlordHouse item : topSpecialityList) {
+            saleArray.add(item.getSale());
+            nameArray.add(item.getHouseName());
+        }
+
+        json.put("sale", saleArray);
+        json.put("name", nameArray);
+
+        return json;
     }
 
     private List<TopLandlordHouse> getTopLandlordList() {
