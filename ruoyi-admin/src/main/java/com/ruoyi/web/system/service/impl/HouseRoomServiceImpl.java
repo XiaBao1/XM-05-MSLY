@@ -1,6 +1,9 @@
 package com.ruoyi.web.system.service.impl;
 
-import java.util.List;
+import java.util.*;
+
+import io.swagger.models.auth.In;
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.web.system.mapper.HouseRoomMapper;
@@ -90,5 +93,24 @@ public class HouseRoomServiceImpl implements IHouseRoomService
     public int deleteHouseRoomById(Long id)
     {
         return houseRoomMapper.deleteHouseRoomById(id);
+    }
+
+    public List<Integer> getAppointmentData(HouseRoom houseRoom){
+        List<Integer> ans=new ArrayList<>();
+        ans.add(getAppointNumber(houseRoom));
+        ans.add(getUnappointNumber(houseRoom));
+        return ans;
+    }
+
+    Integer getAppointNumber(HouseRoom houseRoom){
+        return houseRoomMapper.getAppointNumber(houseRoom);
+    }
+
+    Integer getUnappointNumber(HouseRoom houseRoom){
+        return houseRoomMapper.getUnappointNumber(houseRoom);
+    }
+
+    public String getHouseNameById(Long id){
+        return houseRoomMapper.getHouseNameById(id);
     }
 }

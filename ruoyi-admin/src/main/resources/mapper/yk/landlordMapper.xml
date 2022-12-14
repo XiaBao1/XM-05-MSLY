@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.system.mapper.landlordMapper">
+
+    <resultMap type="landlord" id="landlordResult">
+        <result property="id"    column="id"    />
+        <result property="houseName"    column="house_name"    />
+        <result property="hostNumber"    column="host_number"    />
+        <result property="address"    column="address"    />
+        <result property="score"    column="score"    />
+        <result property="registerTime"    column="register_time"    />
+        <result property="imageUrl"    column="image_url"    />
+    </resultMap>
+
+    <sql id="selectlandlordVo">
+        select id, house_name, host_number, address, score, register_time from landlord_house
+    </sql>
+
+    <select id="selectlandlordList" parameterType="landlord" resultMap="landlordResult">
+        <include refid="selectlandlordVo"/>
+        <where>
+            host_number=#{userId}
+            <if test="houseName != null  and houseName != ''"> and house_name like concat('%', #{houseName}, '%')</if>
+            <if test="address != null  and address != ''"> and address like concat('%', #{address}, '%')</if>
+            <if test="score != null "> and score like concat('%', #{score}, '%')</if>
+        </where>
+    </select>
+
+    <select id="selectlandlordById" parameterType="Long" resultMap="landlordResult">
+        <include refid="selectlandlordVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="getImageUrlById" parameterType="Long" resultType="String">
+        select image_url from landlord_house where id=#{id}
+    </select>
+
+    <select id="getAppointNumber" parameterType="landlord" resultType="Integer">
+        select count(*) from landlord_house where host_number=#{userId} and id in (select house_id from house_room where is_free=0)
+    </select>
+
+    <select id="getAllAppointNumber" parameterType="landlord" resultType="Integer">
+        select count(*) from landlord_house where host_number=#{userId}
+    </select>
+
+    <insert id="insertlandlord" parameterType="landlord" useGeneratedKeys="true" keyProperty="id">
+        insert into landlord_house
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="houseName != null">house_name,</if>
+           host_number,
+            <if test="address != null">address,</if>
+            <if test="score != null">score,</if>
+            <if test="registerTime != null">register_time,</if>
+            <if test="imageUrl != null">image_url,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="houseName != null">#{houseName},</if>
+            #{userId},
+            <if test="address != null">#{address},</if>
+            <if test="score != null">#{score},</if>
+            <if test="registerTime != null">#{registerTime},</if>
+            <if test="imageUrl != null">#{imageUrl},</if>
+        </trim>
+    </insert>
+
+    <update id="updatelandlord" parameterType="landlord">
+        update landlord_house
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="houseName != null">house_name = #{houseName},</if>
+            <if test="hostNumber != null">host_number = #{hostNumber},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="score != null">score = #{score},</if>
+            <if test="registerTime != null">register_time = #{registerTime},</if>
+            <if test="imageUrl != null">image_url = #{imageUrl},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletelandlordById" parameterType="Long">
+        delete from landlord_house where id = #{id}
+    </delete>
+
+    <delete id="deletelandlordByIds" parameterType="String">
+        delete from landlord_house where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

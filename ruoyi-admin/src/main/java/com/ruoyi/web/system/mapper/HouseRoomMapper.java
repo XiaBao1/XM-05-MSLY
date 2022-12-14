@@ -58,4 +58,11 @@ public interface HouseRoomMapper
      * @return 结果
      */
     public int deleteHouseRoomByIds(String[] ids);
+
+    public int getAppointNumber(HouseRoom houseRoom);
+
+    public int getUnappointNumber(HouseRoom houseRoom);
+
+    public String getHouseNameById(Long id);
+
 }

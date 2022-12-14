@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改房iii间订购')" />
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-buyRoom-buy" >
+        <!--    <form class="form-horizontal m" id="form-buyroom-buy" th:object="${buyRoom}">-->
+        <div class="form-group" hidden>
+            <label class="col-sm-3 control-label">房间ID：</label>
+            <div class="col-sm-8">
+                <input name="houseId"  class="form-control" th:value="${id}" type="number" id="id" required disabled >
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">入住年份（年）：</label>
+            <div class="col-sm-8">
+                <input name="houseId"  class="form-control" th:value="2023" type="number" id="year" required disabled >
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">入住月份（月）：</label>
+            <div class="col-sm-8">
+                <input name="houseId"  class="form-control" type="number" id="month" oninput="if(value>12)value=12;if(value<1)value=1" placeholder="请输入1~12的整数">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">入住日期（日）：</label>
+            <div class="col-sm-8">
+                <input name="houseName"  class="form-control" type="number" id="day" oninput="if(value>31)value=31;if(value<1)value=1" placeholder="请输入1~31的整数" >
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">入住时刻（小时）：</label>
+            <div class="col-sm-8">
+                <input name="roomNumber" class="form-control" type="number" id="hour" oninput="if(value>23)value=23;if(value<0)value=0" placeholder="请输入0~23的整数">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">入住时长（天）：</label>
+            <div class="col-sm-8">
+                <input name="roomNumber" class="form-control" type="number" id="last" oninput="if(value>30)value=30;if(value<1)value=1" placeholder="请输入1~30的整数">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label " th:size="10">支付密码(开启安全支付)：</label>
+            <div class="col-sm-8">
+                <input name="pricePerDay" class="form-control" type="password" id="pwd" maxlength="6" minlength="6" placeholder="请输入6位支付密码" >
+            </div>
+        </div>
+    </form>
+    <div>
+        <p style="text-align: right">
+            <button th:style="'background:#1E90FF;border-style:none;color:#ffff;border-radius:5px;height:30px;width:50px'" name="dg" id="dg" onclick="confirm()">确认</button>
+        </p>
+    </div>
+
+</div>
+
+
+
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: summernote-js" />
+<script th:inline="javascript" >
+    console.log("进入infopage的js");
+
+    function confirm() {
+        console.log("进入confirm")
+        var data={};
+        data.id=$("#id").val();
+        data.year=$("#year").val();
+        data.month=$("#month").val();
+        data.day=$("#day").val();
+        data.hour=$("#hour").val();
+        data.last=$("#last").val();
+        data.pwd=$("#pwd").val();
+        console.log(data);
+
+        $.ajax({
+            type: 'post',
+            url: '/system/buyroom/pay',
+            async: false,
+            data: data,
+            success: function(res) {
+                console.log(res);
+                let json = eval( "(" + res + ")" );
+                if(json.result_code==0){
+                    top.layer.alert("预定成功");
+                }
+                else{
+                    top.layer.alert(json.result_msg);
+                }
+            }
+        });
+    }
+
+
+</script>
+
+
+</body>
+
+
+</html>

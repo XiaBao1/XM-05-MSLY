@@ -14,23 +14,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectHouseRoomVo">
-        select id, house_id, room_number, price_per_day, standard, is_free from house_room where house_id in (select id from landlord_house where host_number=6)
+        select id, house_id, room_number, price_per_day, standard, is_free from house_room
     </sql>
 
     <select id="selectHouseRoomList" parameterType="HouseRoom" resultMap="HouseRoomResult">
         <include refid="selectHouseRoomVo"/>
-<!--        <where>  -->
+        <where>
+          house_id in (select id from landlord_house where host_number = #{userId})
             <if test="houseId != null"> and house_id = #{houseId}</if>
             <if test="roomNumber != null  and roomNumber != ''"> and room_number = #{roomNumber}</if>
             <if test="pricePerDay != null "> and price_per_day = #{pricePerDay}</if>
             <if test="standard != null  and standard != ''"> and standard = #{standard}</if>
             <if test="isFree != null "> and is_free = #{isFree}</if>
-<!--        </where>-->
+        </where>
     </select>
     
     <select id="selectHouseRoomById" parameterType="Long" resultMap="HouseRoomResult">
         <include refid="selectHouseRoomVo"/>
         where id = #{id}
+    </select>
+
+    <select id="getAppointNumber" parameterType="HouseRoom" resultType="Integer">
+        select count(*) from house_room where house_id in (select id from landlord_house where host_number = #{userId}) and is_free=0
+    </select>
+
+    <select id="getUnappointNumber" parameterType="HouseRoom" resultType="Integer">
+        select count(*) from house_room where house_id in (select id from landlord_house where host_number = #{userId}) and is_free=1
+    </select>
+
+    <select id="getHouseNameById" parameterType="Long" resultType="String">
+        select house_name from landlord_house where id=#{id}
     </select>
         
     <insert id="insertHouseRoom" parameterType="HouseRoom" useGeneratedKeys="true" keyProperty="id">
@@ -44,7 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 <!--            <if test="houseId != null">#{houseId},</if>-->
-            <if test="houseId != null">IF(#{houseId} IN (select id from landlord_house where host_number=6),#{houseId},null),</if>
+            <if test="houseId != null">IF(#{houseId} IN (select id from landlord_house where host_number = #{userId}),#{houseId},null),</if>
             <if test="roomNumber != null and roomNumber != ''">#{roomNumber},</if>
             <if test="pricePerDay != null">#{pricePerDay},</if>
             <if test="standard != null and standard != ''">#{standard},</if>
@@ -55,7 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateHouseRoom" parameterType="HouseRoom">
         update house_room
         <trim prefix="SET" suffixOverrides=",">
-            <if test="houseId != null">house_id = #{houseId},</if>
+            <if test="houseId != null">house_id = IF(#{houseId} IN (select id from landlord_house where host_number = #{userId}),#{houseId},null),</if>
             <if test="roomNumber != null and roomNumber != ''">room_number = #{roomNumber},</if>
             <if test="pricePerDay != null">price_per_day = #{pricePerDay},</if>
             <if test="standard != null and standard != ''">standard = #{standard},</if>

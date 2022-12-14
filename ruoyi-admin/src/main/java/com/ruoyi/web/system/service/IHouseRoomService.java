@@ -58,4 +58,8 @@ public interface IHouseRoomService
      * @return 结果
      */
     public int deleteHouseRoomById(Long id);
+
+    public List<Integer> getAppointmentData(HouseRoom houseRoom);
+
+    public String getHouseNameById(Long id);
 }

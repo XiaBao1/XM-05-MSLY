@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.system.mapper.BuySpecialtyMapper">
+    
+    <resultMap type="BuySpecialty" id="BuySpecialtyResult">
+        <result property="id"    column="id"    />
+        <result property="houseId"    column="house_id"    />
+        <result property="specialtyName"    column="specialty_name"    />
+        <result property="description"    column="description"    />
+        <result property="price"    column="price"    />
+        <result property="inventory"    column="inventory"    />
+        <result property="imageUrl"    column="image_url"    />
+    </resultMap>
+
+    <resultMap id="StringResult" type="String"></resultMap>
+
+    <resultMap id="LongResult" type="Long"></resultMap>
+
+    <resultMap id="DoubleResult" type="Double"></resultMap>
+
+    <sql id="selectBuySpecialtyVo">
+        select id, house_id, specialty_name, description, price, inventory, image_url from house_specialty
+    </sql>
+
+    <select id="selectBuySpecialtyList" parameterType="BuySpecialty" resultMap="BuySpecialtyResult">
+        <include refid="selectBuySpecialtyVo"/>
+        <where>  
+            <if test="houseId != null "> and house_id = #{houseId}</if>
+            <if test="specialtyName != null  and specialtyName != ''"> and specialty_name like concat('%', #{specialtyName}, '%')</if>
+            <if test="description != null  and description != ''"> and description like concat('%', #{description}, '%')</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="inventory != null "> and inventory = #{inventory}</if>
+        </where>
+    </select>
+    
+    <select id="selectBuySpecialtyById" parameterType="Long" resultMap="BuySpecialtyResult">
+        <include refid="selectBuySpecialtyVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="getHouseNameById" parameterType="Long" resultType="String">
+        select house_name from landlord_house where id=#{id}
+    </select>
+
+    <select id="getName" resultMap="StringResult">
+        select distinct specialty_name from house_specialty
+    </select>
+
+    <select id="getSellNumber" resultType="Long">
+        select sum(quantity) from client_specialty_record where(select specialty_name from house_specialty where house_specialty.id=client_specialty_record.specialty_id)=#{name}
+    </select>
+
+    <select id="getPhoneById" parameterType="Long" resultType="String">
+        select phonenumber from sys_user where user_id=(select host_number from landlord_house where id=#{id})
+    </select>
+
+    <select id="getMailboxById" parameterType="Long" resultType="String">
+        select email from sys_user where user_id=(select host_number from landlord_house where id=#{id})
+    </select>
+
+    <select id="getRecordId" parameterType="Long" resultMap="LongResult">
+        select id from client_specialty_comment where (select specialty_id from client_specialty_record where id=client_specialty_comment.specialty_record_id)=#{id}
+    </select>
+
+    <select id="getUserName" parameterType="Long" resultType="String">
+        select user_name from sys_user where user_id=(select client_number from client_specialty_record where client_specialty_record.id=
+        (select specialty_record_id from client_specialty_comment where client_specialty_comment.id=#{id}))
+    </select>
+
+    <select id="getUserComment" parameterType="Long" resultType="String">
+        select comment from client_specialty_comment where id=#{id}
+    </select>
+
+    <select id="getScore" parameterType="Long" resultMap="DoubleResult">
+        select score from client_specialty_comment where id in (select id from client_specialty_comment where
+        (select specialty_id from client_specialty_record where id=client_specialty_comment.specialty_record_id)=#{id})
+    </select>
+        
+    <insert id="insertBuySpecialty" parameterType="BuySpecialty" useGeneratedKeys="true" keyProperty="id">
+        insert into house_specialty
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="houseId != null">house_id,</if>
+            <if test="specialtyName != null and specialtyName != ''">specialty_name,</if>
+            <if test="description != null and description != ''">description,</if>
+            <if test="price != null">price,</if>
+            <if test="inventory != null">inventory,</if>
+            <if test="imageUrl != null">image_url,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="houseId != null">#{houseId},</if>
+            <if test="specialtyName != null and specialtyName != ''">#{specialtyName},</if>
+            <if test="description != null and description != ''">#{description},</if>
+            <if test="price != null">#{price},</if>
+            <if test="inventory != null">#{inventory},</if>
+            <if test="imageUrl != null">#{imageUrl},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBuySpecialty" parameterType="BuySpecialty">
+        update house_specialty
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="houseId != null">house_id = #{houseId},</if>
+            <if test="specialtyName != null and specialtyName != ''">specialty_name = #{specialtyName},</if>
+            <if test="description != null and description != ''">description = #{description},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="inventory != null">inventory = #{inventory},</if>
+            <if test="imageUrl != null">image_url = #{imageUrl},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBuySpecialtyById" parameterType="Long">
+        delete from house_specialty where id = #{id}
+    </delete>
+
+    <delete id="deleteBuySpecialtyByIds" parameterType="String">
+        delete from house_specialty where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
