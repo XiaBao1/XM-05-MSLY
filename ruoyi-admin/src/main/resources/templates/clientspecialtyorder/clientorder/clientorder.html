@@ -55,7 +55,7 @@
                             <input type="text" class="time-input" placeholder="请选择订单完成时间" name="finishTime"/>
                         </li>
                         <li>
-                            <label>是否收获：</label>
+                            <label>是否收货：</label>
                             <select name="isReceived" th:with="type=${@dict.getType('sys_user_is_received')}">
                                 <option value="">所有</option>
                                 <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
@@ -192,7 +192,6 @@
                     formatter: function(value, row, index) {
                         var actions = [];
                         actions.push('<a class="btn btn-success btn-xs ' + commentsFlag + '" href="javascript:void(0)" onclick="$.operate.comment(\'' + row.id + '\')"><i class="fa fa-edit"></i>评论</a> ');
-                        // actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
                     }
                 }]

@@ -19,6 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="score"    column="score"    />
         <result property="comment"    column="comment"    />
         <result property="photo"    column="photo"    />
+        <result property="path"    column="path"    />
     </resultMap>
 
     <sql id="selectClientRoomRecordVo">
@@ -107,6 +108,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </trim>
         where id = #{id}
     </update>
+
+    <update id="updateClientRoomCommentRecord" parameterType="ClientRoomRecord">
+        update client_room_comment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="roomRecordId != null">room_record_id = #{roomRecordId},</if>
+            <if test="score != null">score = #{score},</if>
+            <if test="comment != null">comment = #{comment},</if>
+        </trim>
+        where score is null
+    </update>
+
+
+    <insert id="insertClientRoomCommentPhotoRecord" parameterType="ClientRoomRecord">
+        insert client_room_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="path != null">photo,</if>
+    </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="path != null">#{path},</if>
+        </trim>
+    </insert>
 
     <delete id="deleteClientRoomRecordById" parameterType="Long">
         delete from client_room_record where id = #{id}

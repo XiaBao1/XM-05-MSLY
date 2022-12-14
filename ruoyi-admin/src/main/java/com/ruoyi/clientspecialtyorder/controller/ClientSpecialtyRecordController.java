@@ -1,8 +1,13 @@
 package com.ruoyi.clientspecialtyorder.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.ruoyi.clienthomeorder.domain.ClientRoomRecord;
+import com.ruoyi.common.config.ServerConfig;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +25,7 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 订单Controller
@@ -29,8 +35,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  */
 @Controller
 @RequestMapping("/clientspecialtyorder/clientorder")
-public class ClientSpecialtyRecordController extends BaseController
-{
+public class ClientSpecialtyRecordController extends BaseController {
     private String prefix = "clientspecialtyorder/clientorder";
 
     @Autowired
@@ -38,8 +43,7 @@ public class ClientSpecialtyRecordController extends BaseController
 
     @RequiresPermissions("clientspecialtyorder:clientorder:view")
     @GetMapping()
-    public String clientorder()
-    {
+    public String clientorder() {
         return prefix + "/clientorder";
     }
 
@@ -49,8 +53,7 @@ public class ClientSpecialtyRecordController extends BaseController
     @RequiresPermissions("clientspecialtyorder:clientorder:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(ClientSpecialtyRecord clientSpecialtyRecord)
-    {
+    public TableDataInfo list(ClientSpecialtyRecord clientSpecialtyRecord) {
         startPage();
         List<ClientSpecialtyRecord> list = clientSpecialtyRecordService.selectClientSpecialtyRecordList(clientSpecialtyRecord);
         return getDataTable(list);
@@ -63,8 +66,7 @@ public class ClientSpecialtyRecordController extends BaseController
     @Log(title = "订单", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(ClientSpecialtyRecord clientSpecialtyRecord)
-    {
+    public AjaxResult export(ClientSpecialtyRecord clientSpecialtyRecord) {
         List<ClientSpecialtyRecord> list = clientSpecialtyRecordService.selectClientSpecialtyRecordList(clientSpecialtyRecord);
         ExcelUtil<ClientSpecialtyRecord> util = new ExcelUtil<ClientSpecialtyRecord>(ClientSpecialtyRecord.class);
         return util.exportExcel(list, "订单数据");
@@ -74,8 +76,7 @@ public class ClientSpecialtyRecordController extends BaseController
      * 新增订单
      */
     @GetMapping("/add")
-    public String add()
-    {
+    public String add() {
         return prefix + "/add";
     }
 
@@ -86,8 +87,7 @@ public class ClientSpecialtyRecordController extends BaseController
     @Log(title = "订单", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(ClientSpecialtyRecord clientSpecialtyRecord)
-    {
+    public AjaxResult addSave(ClientSpecialtyRecord clientSpecialtyRecord) {
         return toAjax(clientSpecialtyRecordService.insertClientSpecialtyRecord(clientSpecialtyRecord));
     }
 
@@ -96,8 +96,7 @@ public class ClientSpecialtyRecordController extends BaseController
      */
     @RequiresPermissions("clientspecialtyorder:clientorder:edit")
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Long id, ModelMap mmap)
-    {
+    public String edit(@PathVariable("id") Long id, ModelMap mmap) {
 
         ClientSpecialtyRecord clientSpecialtyRecord = clientSpecialtyRecordService.selectClientSpecialtyRecordById(id);
         mmap.put("clientSpecialtyRecord", clientSpecialtyRecord);
@@ -115,8 +114,7 @@ public class ClientSpecialtyRecordController extends BaseController
     @Log(title = "订单", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(ClientSpecialtyRecord clientSpecialtyRecord)
-    {
+    public AjaxResult editSave(ClientSpecialtyRecord clientSpecialtyRecord) {
         return toAjax(clientSpecialtyRecordService.updateClientSpecialtyRecord(clientSpecialtyRecord));
     }
 
@@ -125,17 +123,15 @@ public class ClientSpecialtyRecordController extends BaseController
      */
     @RequiresPermissions("clientspecialtyorder:clientorder:remove")
     @Log(title = "订单", businessType = BusinessType.DELETE)
-    @PostMapping( "/remove")
+    @PostMapping("/remove")
     @ResponseBody
-    public AjaxResult remove(String ids)
-    {
+    public AjaxResult remove(String ids) {
         return toAjax(clientSpecialtyRecordService.deleteClientSpecialtyRecordByIds(ids));
     }
 
     @RequiresPermissions("clientspecialtyorder:clientorder:eCharts")
     @GetMapping("/eCharts")
-    public String statistics(ModelMap mmap)
-    {
+    public String statistics(ModelMap mmap) {
         return prefix + "/eCharts";
     }
 
@@ -143,49 +139,18 @@ public class ClientSpecialtyRecordController extends BaseController
     @Log(title = "历史订单统计", businessType = BusinessType.INSERT)
     @PostMapping("/eCharts")
     @ResponseBody
-    public List<Integer> statisticsData()
-    {
+    public List<Integer> statisticsData() {
         List<Integer> list = clientSpecialtyRecordService.getMonthlyClientSpecialtyRecordIncrement();
         return list;
     }
 
-//    /**
-//     * 评论民宿订单
-//     */
-//
-//    @RequiresPermissions("clientspecialtyorder:clientorder:comment")
-//    @GetMapping("/comment/{id}")
-//    public String comment(@PathVariable("id") Long id, ModelMap mmap)
-//    {
-//
-//        ClientSpecialtyRecord clientSpecialtyCommentRecord = clientSpecialtyRecordService.selectClientSpecialtyCommentRecordById(id);
-//        mmap.put("clientSpecialtyCommentRecord", clientSpecialtyCommentRecord);
-//        System.out.println("hellocomment------------------------------------");
-//
-//        System.out.println(clientSpecialtyCommentRecord.getId());
-//        System.out.println(clientSpecialtyCommentRecord.getspecialtyRecordId());
-//        System.out.println(clientSpecialtyCommentRecord);
-//        return prefix + "/comment";
-//    }
-//
-//    /**
-//     * 修改保存评论民宿订单
-//     */
-//    @RequiresPermissions("clientspecialtyorder:clientorder:comment")
-//    @Log(title = "评论", businessType = BusinessType.UPDATE)
-//    @PostMapping("/comment/")
-//    @ResponseBody
-//    public AjaxResult commentSave(ClientSpecialtyRecord clientSpecialtyRecord)
-//    {
-//        System.out.println("hellonewcomment------------------------------------");
-//        return toAjax(clientSpecialtyRecordService.insertClientSpecialtyCommentRecord(clientSpecialtyRecord));
-//    }
+
+
     /**
      * 新增订单评论
      */
     @GetMapping("/comment")
-    public String comment()
-    {
+    public String comment() {
         return prefix + "/comment";
     }
 
@@ -196,8 +161,65 @@ public class ClientSpecialtyRecordController extends BaseController
     @Log(title = "订单", businessType = BusinessType.INSERT)
     @PostMapping("/comment")
     @ResponseBody
-    public AjaxResult commentSave(ClientSpecialtyRecord clientSpecialtyRecord)
-    {
-        return toAjax(clientSpecialtyRecordService.insertClientSpecialtyCommentRecord(clientSpecialtyRecord));
+    public AjaxResult commentSave(ClientSpecialtyRecord clientSpecialtyRecord) {
+        return toAjax(clientSpecialtyRecordService.updateClientSpecialtyCommentRecord(clientSpecialtyRecord));
     }
+
+    /**
+     * 菜单图标上传
+     * @param newsMenuIconFile 上传的文件
+     * @return 上传的文件的URL
+     * @throws IOException
+     */
+    @PostMapping( "/menuIconUpload")
+    @ResponseBody
+    public Map<String, String> menuIconUpload(MultipartFile newsMenuIconFile) throws IOException {
+        System.out.println("文件："+newsMenuIconFile.getOriginalFilename()+"正在上传！");
+        String projectStaticPath = "C:\\yk\\uploadPath"; // 项目本地文件夹路径
+        String fileStoragePath = "\\clientspecialtyrecord\\comments\\"; // 本地文件夹的相对路径
+        Map<String, String> map = upload( newsMenuIconFile,projectStaticPath, fileStoragePath);
+        System.out.println(map);
+        String value = map.get("genFilename");
+        System.out.println("key genFilename 对应的 value: " + value);
+        String path=projectStaticPath+fileStoragePath+value;
+        System.out.println(path);
+        clientSpecialtyRecordService.insertClientSpecialtyCommentPhotoRecord(path);
+        return map;
+    }
+
+    /**
+     * SpringBoot上传文件到指定目录
+     * @param multipartFile 需要上传的文件
+     * @param projectStaticPath 当前项目到静态资源文件路径（从当前项目开始：如：存放在当前项目的"\\ruoyi-admin\\src\\main\\resources\\static"静态资源文件夹下）
+     * @param fileStoragePath 文件存放路径（从静态资源文件夹开始，如：存放在static的"\\news\\default_images"文件夹下)
+     * @return 存放文件路劲信息的map
+     * @throws IOException
+     */
+    public Map<String, String> upload(MultipartFile multipartFile, String projectStaticPath, String fileStoragePath) throws IOException {
+        String completedFilePath =   projectStaticPath + fileStoragePath; // 完整文件路径
+        // mk dir
+        File fileDir = new File(completedFilePath);
+        if (!fileDir.exists()) {
+            fileDir.mkdirs();
+        }
+        // mk file
+        String time = System.currentTimeMillis()+"";
+        int random = (int) (Math.random()*1000); // 生成一个[0,999]的随机数
+        String genFilename = time+random+".png";
+        File file = new File(completedFilePath + "\\"+ genFilename);
+        // upload file
+        multipartFile.transferTo(file); // 将multipartFile存入创建好的file中
+        // return file path info by map
+        Map<String, String> map = new HashMap<>();
+        map.put("completedFilePath", completedFilePath);
+        map.put("fileStoragePath", fileStoragePath);
+        map.put("genFilename", genFilename);
+        String path =fileStoragePath+genFilename;
+        for (String s : map.keySet()) {
+            System.out.println("key: " + s + " value: " + map.get(s));
+        }
+        return map;
+    }
+
+
 }

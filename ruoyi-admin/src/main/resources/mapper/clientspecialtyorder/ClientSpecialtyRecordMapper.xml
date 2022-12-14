@@ -19,6 +19,7 @@
         <result property="score"    column="score"    />
         <result property="comment"    column="comment"    />
         <result property="photo"    column="photo"    />
+        <result property="path"    column="path"    />
     </resultMap>
 
     <sql id="selectClientSpecialtyRecordVo">
@@ -112,12 +113,12 @@
     <update id="updateClientSpecialtyCommentRecord" parameterType="ClientSpecialtyRecord">
         update client_specialty_comment
         <trim prefix="SET" suffixOverrides=",">
-            <if test="specialtyRecordId != null">specialtyRecordId=#{specialty_record_id},</if>
+            <if test="specialtyRecordId != null">specialty_record_id=#{specialtyRecordId},</if>
             <if test="score != null">score =#{score},</if>
             <if test="comment != null">comment=#{comment},</if>
-            <if test="photo != null">photo=#{photo},</if>
+<!--            <if test="photo != null">photo=#{photo},</if>-->
         </trim>
-        where id = #{id}
+        where score is null
     </update>
 
     <delete id="deleteClientSpecialtyRecordById" parameterType="Long">
@@ -131,4 +132,14 @@
         </foreach>
     </delete>
 
+
+    <insert id="insertClientSpecialtyCommentPhotoRecord" parameterType="ClientSpecialtyRecord">
+        insert client_specialty_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="path != null">photo,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="path != null">#{path},</if>
+        </trim>
+    </insert>
 </mapper>

@@ -44,8 +44,10 @@ public class ClientSpecialtyRecord extends BaseEntity
 
     /** 特产照片 */
     @Excel(name = "照片")
-    private String photo;
+    public String photo;
 
+    @Excel(name = "照片地址")
+    private String path;
     /** 特产ID */
     @Excel(name = "特产ID")
     private Long specialtyId;
@@ -119,6 +121,9 @@ public class ClientSpecialtyRecord extends BaseEntity
 
     public void setPhoto(String photo){this.photo=photo;}
     public String getPhoto(){return photo;}
+
+    public void setPath(String path){this.path=path;}
+    public String getPath(){return path;}
 
     public void setSpecialtyId(Long specialtyId)
     {
@@ -211,6 +216,7 @@ public class ClientSpecialtyRecord extends BaseEntity
                 .append("score",getscore())
                 .append("comment",getcomment())
                 .append("photo",getPhoto())
+                .append("path",getPath())
                 .toString();
 
     }
