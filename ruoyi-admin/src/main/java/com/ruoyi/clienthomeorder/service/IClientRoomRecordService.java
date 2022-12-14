@@ -18,6 +18,8 @@ public interface IClientRoomRecordService
      * @return 民宿订单
      */
     public ClientRoomRecord selectClientRoomRecordById(Long id);
+    public ClientRoomRecord selectClientRoomCommentRecordById(Long id);
+
 
     /**
      * 查询民宿订单列表
@@ -34,6 +36,8 @@ public interface IClientRoomRecordService
      * @return 结果
      */
     public int insertClientRoomRecord(ClientRoomRecord clientRoomRecord);
+    public int insertClientRoomCommentRecord(ClientRoomRecord clientRoomRecord);
+
 
     /**
      * 修改民宿订单
@@ -42,6 +46,7 @@ public interface IClientRoomRecordService
      * @return 结果
      */
     public int updateClientRoomRecord(ClientRoomRecord clientRoomRecord);
+
 
     /**
      * 批量删除民宿订单

@@ -1,6 +1,9 @@
 package com.ruoyi.web.controller.system;
 
 import java.util.List;
+
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,6 +57,21 @@ public class SysMenuController extends BaseController
         return menuList;
     }
 
+    @Log(title = "菜单管理", businessType = BusinessType.EXPORT)
+    @RequiresPermissions("system:menu:export")
+    @PostMapping("/export")
+    @ResponseBody
+    public AjaxResult export(SysMenu menu)
+    {
+        Long userId = ShiroUtils.getUserId();
+        List<SysMenu> menuList = menuService.selectMenuList(menu, userId);
+
+        System.out.println(menuList);
+
+        ExcelUtil<SysMenu> util = new ExcelUtil<SysMenu>(SysMenu.class);
+        return util.exportExcel(menuList, "菜单管理");
+    }
+
     /**
      * 删除菜单
      */
@@ -75,7 +93,7 @@ public class SysMenuController extends BaseController
         return toAjax(menuService.deleteMenuById(menuId));
     }
 
-    /**
+    /**e
      * 新增
      */
     @GetMapping("/add/{parentId}")
