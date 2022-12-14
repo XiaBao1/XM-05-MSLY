@@ -1,0 +1,52 @@
+{
+  "pages": [
+    "pages/user/login/login",
+    "pages/info/landlord/top_landlord",
+    "pages/user/center/self_center",
+    "pages/user/todo/todo",
+    "pages/user/weather/weather",
+    "pages/user/comment/comment",
+    "pages/info/speciality/top_speciality",
+    "pages/history/room/room_history",
+    "pages/history/speciality/speciality_history",
+    "pages/info/room_order/room_order",
+    "pages/info/speciality_order/speciality_order",
+    "pages/info/index/info_index",
+    "pages/history/index/history_index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#f3b328",
+    "navigationBarTitleText": "民宿旅游平台",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#3e4663",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/info/index/info_index",
+        "text": "首页",
+        "iconPath": "image/index.png",
+        "selectedIconPath": "image/indexSelect.png"
+      },
+      {
+        "pagePath": "pages/history/index/history_index",
+        "text": "我的订单",
+        "iconPath": "image/goods.png",
+        "selectedIconPath": "image/goodSelect.png"
+      },
+      {
+        "pagePath": "pages/user/center/self_center",
+        "text": "个人中心",
+        "iconPath": "image/mine.png",
+        "selectedIconPath": "image/mineSelect.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

@@ -1,0 +1,19 @@
+<!--pages/mobileLog/mobileLog.wxml-->
+<view class="container">
+  <image class='banner' src="../../../image/swipper img/0.jpg"></image>
+  <view class='form'>
+    <view class='listInput'>
+      <label>账号</label>
+      <input type="text" value="{{account}}" bindinput="inputAccount"></input>
+    </view>
+    <view class='listInput'>
+      <label>密码</label>
+      <input type="password" value="{{password}}" bindinput="inputPassword"></input>
+    </view>
+  </view>
+  <button class='submit' bindtap='log'>登录</button>
+</view>
+
+
+
+

@@ -1,0 +1,53 @@
+<!--index.wxml-->
+<!-- 此处是一个swiper轮播 -->
+<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
+  <block>
+    <swiper-item>
+      <image widthFix class='banner' src="../../../image/swipper img/0.jpg"></image>
+    </swiper-item>
+    <swiper-item>
+      <image widthFix class='banner' src="../../../image/swipper img/1.jpg"></image>
+    </swiper-item>
+    <swiper-item>
+      <image widthFix class='banner' src="../../../image/swipper img/2.jpg"></image>
+    </swiper-item>
+    <swiper-item>
+      <image widthFix class='banner' src="../../../image/swipper img/3.jpg"></image>
+    </swiper-item>
+    <swiper-item>
+      <image widthFix class='banner' src="../../../image/swipper img/4.jpg"></image>
+    </swiper-item>
+    <swiper-item>
+      <image widthFix class='banner' src="../../../image/swipper img/5.jpg"></image>
+    </swiper-item>
+  </block>
+</swiper>
+
+<view class='content-below'>
+  <view class='icon-list'>
+    <view class='icon-text'>
+      <image class='icon' src='/image/icon/todo.png'></image>
+      <view class='text'>代办事项</view>
+    </view>
+    <view class='icon-text'>
+      <image src='/image/icon/topspeciality.png' class='icon'></image>
+      <view class='text'>热门特产</view>
+    </view>
+    <view class='icon-text'>
+      <image src='/image/icon/tophouse.png' class='icon'></image>
+      <view class='text'>热门民宿</view>
+    </view>
+    <view class='icon-text'>
+      <image src='/image/icon/orderroom.png' class='icon'></image>
+      <view class='text'>民宿订购</view>
+    </view>
+    <view class='icon-text'>
+      <image src='/image/icon/orderspeciality.png' class='icon'></image>
+      <view class='text'>特产订购</view>
+    </view>
+    <view class='icon-text'>
+      <image src='/image/icon/weather.png' class='icon'></image>
+      <view class='text'>天气查询</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,7 @@
+<view class="icon-list">
+  <image class='icon' src='/image/icon/house.png'></image>
+  <view class='text'>热门民宿</view>
+
+  <image class='icon' src='/image/icon/food.png'></image>
+  <view class='text'>热门民宿</view>
+</view>
