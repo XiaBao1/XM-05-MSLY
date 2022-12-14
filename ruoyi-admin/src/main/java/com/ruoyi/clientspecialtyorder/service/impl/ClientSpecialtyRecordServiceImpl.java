@@ -14,19 +14,19 @@ import com.ruoyi.common.core.text.Convert;
 
 /**
  * 订单Service业务层处理
- * 
+ *
  * @author ruoyi
  * @date 2022-12-08
  */
 @Service
-public class ClientSpecialtyRecordServiceImpl implements IClientSpecialtyRecordService 
+public class ClientSpecialtyRecordServiceImpl implements IClientSpecialtyRecordService
 {
     @Autowired
     private ClientSpecialtyRecordMapper clientSpecialtyRecordMapper;
 
     /**
      * 查询订单
-     * 
+     *
      * @param id 订单主键
      * @return 订单
      */
@@ -36,9 +36,13 @@ public class ClientSpecialtyRecordServiceImpl implements IClientSpecialtyRecordS
         return clientSpecialtyRecordMapper.selectClientSpecialtyRecordById(id);
     }
 
+    public ClientSpecialtyRecord selectClientSpecialtyCommentRecordById(Long id)
+    {
+        return clientSpecialtyRecordMapper.selectClientSpecialtyCommentRecordById(id);
+    }
     /**
      * 查询订单列表
-     * 
+     *
      * @param clientSpecialtyRecord 订单
      * @return 订单
      */
@@ -50,7 +54,7 @@ public class ClientSpecialtyRecordServiceImpl implements IClientSpecialtyRecordS
 
     /**
      * 新增订单
-     * 
+     *
      * @param clientSpecialtyRecord 订单
      * @return 结果
      */
@@ -61,8 +65,16 @@ public class ClientSpecialtyRecordServiceImpl implements IClientSpecialtyRecordS
     }
 
     /**
+     * 新增民宿评论
+     *
+     * @param clientSpecialtyRecord 民宿订单
+     * @return 结果
+     */
+
+
+    /**
      * 修改订单
-     * 
+     *
      * @param clientSpecialtyRecord 订单
      * @return 结果
      */
@@ -72,9 +84,13 @@ public class ClientSpecialtyRecordServiceImpl implements IClientSpecialtyRecordS
         return clientSpecialtyRecordMapper.updateClientSpecialtyRecord(clientSpecialtyRecord);
     }
 
+    public int insertClientSpecialtyCommentRecord(ClientSpecialtyRecord clientSpecialtyRecord)
+    {
+        return clientSpecialtyRecordMapper.insertClientSpecialtyCommentRecord(clientSpecialtyRecord);
+    }
     /**
      * 批量删除订单
-     * 
+     *
      * @param ids 需要删除的订单主键
      * @return 结果
      */
@@ -108,7 +124,7 @@ public class ClientSpecialtyRecordServiceImpl implements IClientSpecialtyRecordS
 
     /**
      * 删除订单信息
-     * 
+     *
      * @param id 订单主键
      * @return 结果
      */

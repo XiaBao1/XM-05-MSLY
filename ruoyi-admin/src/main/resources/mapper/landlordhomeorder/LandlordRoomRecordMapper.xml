@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.landlordhomeorder.mapper.LandlordRoomRecordMapper">
-    
+
     <resultMap type="LandlordRoomRecord" id="LandlordRoomRecordResult">
         <result property="id"    column="id"    />
         <result property="clientNumber"    column="client_number"    />
@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectLandlordRoomRecordList" parameterType="LandlordRoomRecord" resultMap="LandlordRoomRecordResult">
         <include refid="selectLandlordRoomRecordVo"/>
-        <where>  
+        <where>
             <if test="clientNumber != null "> and client_number = #{clientNumber}</if>
             <if test="roomId != null "> and room_id = #{roomId}</if>
             <if test="checkInDate != null "> and check_in_date = #{checkInDate}</if>
@@ -35,12 +35,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="isDone != null "> and is_done = #{isDone}</if>
         </where>
     </select>
-    
+
     <select id="selectLandlordRoomRecordById" parameterType="Long" resultMap="LandlordRoomRecordResult">
         <include refid="selectLandlordRoomRecordVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertLandlordRoomRecord" parameterType="LandlordRoomRecord" useGeneratedKeys="true" keyProperty="id">
         insert into client_room_record
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="price != null">price,</if>
             <if test="isPaid != null">is_paid,</if>
             <if test="isDone != null">is_done,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="clientNumber != null">#{clientNumber},</if>
             <if test="roomId != null">#{roomId},</if>
@@ -64,7 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="price != null">#{price},</if>
             <if test="isPaid != null">#{isPaid},</if>
             <if test="isDone != null">#{isDone},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateLandlordRoomRecord" parameterType="LandlordRoomRecord">
@@ -88,7 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteLandlordRoomRecordByIds" parameterType="String">
-        delete from client_room_record where id in 
+        delete from client_room_record where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

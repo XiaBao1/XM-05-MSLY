@@ -1,6 +1,8 @@
 package com.ruoyi.clientspecialtyorder.controller;
 
 import java.util.List;
+
+import com.ruoyi.clienthomeorder.domain.ClientRoomRecord;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +23,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 订单Controller
- * 
+ *
  * @author ruoyi
  * @date 2022-12-08
  */
@@ -96,8 +98,13 @@ public class ClientSpecialtyRecordController extends BaseController
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
+
         ClientSpecialtyRecord clientSpecialtyRecord = clientSpecialtyRecordService.selectClientSpecialtyRecordById(id);
         mmap.put("clientSpecialtyRecord", clientSpecialtyRecord);
+        System.out.println("hello------------------------------------");
+
+        System.out.println(clientSpecialtyRecord.getId());
+        System.out.println(clientSpecialtyRecord);
         return prefix + "/edit";
     }
 
@@ -140,5 +147,57 @@ public class ClientSpecialtyRecordController extends BaseController
     {
         List<Integer> list = clientSpecialtyRecordService.getMonthlyClientSpecialtyRecordIncrement();
         return list;
+    }
+
+//    /**
+//     * 评论民宿订单
+//     */
+//
+//    @RequiresPermissions("clientspecialtyorder:clientorder:comment")
+//    @GetMapping("/comment/{id}")
+//    public String comment(@PathVariable("id") Long id, ModelMap mmap)
+//    {
+//
+//        ClientSpecialtyRecord clientSpecialtyCommentRecord = clientSpecialtyRecordService.selectClientSpecialtyCommentRecordById(id);
+//        mmap.put("clientSpecialtyCommentRecord", clientSpecialtyCommentRecord);
+//        System.out.println("hellocomment------------------------------------");
+//
+//        System.out.println(clientSpecialtyCommentRecord.getId());
+//        System.out.println(clientSpecialtyCommentRecord.getspecialtyRecordId());
+//        System.out.println(clientSpecialtyCommentRecord);
+//        return prefix + "/comment";
+//    }
+//
+//    /**
+//     * 修改保存评论民宿订单
+//     */
+//    @RequiresPermissions("clientspecialtyorder:clientorder:comment")
+//    @Log(title = "评论", businessType = BusinessType.UPDATE)
+//    @PostMapping("/comment/")
+//    @ResponseBody
+//    public AjaxResult commentSave(ClientSpecialtyRecord clientSpecialtyRecord)
+//    {
+//        System.out.println("hellonewcomment------------------------------------");
+//        return toAjax(clientSpecialtyRecordService.insertClientSpecialtyCommentRecord(clientSpecialtyRecord));
+//    }
+    /**
+     * 新增订单评论
+     */
+    @GetMapping("/comment")
+    public String comment()
+    {
+        return prefix + "/comment";
+    }
+
+    /**
+     * 新增保存订单评论
+     */
+    @RequiresPermissions("clientspecialtyorder:clientorder:comment")
+    @Log(title = "订单", businessType = BusinessType.INSERT)
+    @PostMapping("/comment")
+    @ResponseBody
+    public AjaxResult commentSave(ClientSpecialtyRecord clientSpecialtyRecord)
+    {
+        return toAjax(clientSpecialtyRecordService.insertClientSpecialtyCommentRecord(clientSpecialtyRecord));
     }
 }

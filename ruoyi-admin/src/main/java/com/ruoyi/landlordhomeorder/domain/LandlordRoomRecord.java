@@ -24,6 +24,10 @@ public class LandlordRoomRecord extends BaseEntity
     @Excel(name = "顾客账号")
     private Long clientNumber;
 
+//    /** 顾客账号 */
+//    @Excel(name = "顾客账号")
+//    private Long clientNumber;
+
     /** 房间ID */
     @Excel(name = "房间ID")
     private Long roomId;
