@@ -1,43 +1,62 @@
 // pages/mine/mine.js
 Page({
   data: {
-
+    userName: "",
+    avatar: "",
+    money: -1,
+    province: "",
   },
-  
-  //个人中心的消息,点击跳转到我的消息
-  info(){
-    wx.navigateTo({
-      url: '../info/info',
+  onLoad: function() {
+    this.getCookie(this.getProfile);
+  },
+  getProfile: function(cookies) {
+    let that = this;
+    wx.request({
+      url: 'http://localhost/wx/user/profile',
+      header: {'cookie': cookies.data.substring(0, 48)},
+      method: "post",
+      success: function(res) {
+        console.log(res);
+        that.setProfile(res.data.data)
+      }
+    });
+  },
+  setProfile: function(data) {
+    let avatar = data.avatar;
+    let money = data.money;
+    let province = data.province;
+    if (avatar == "") {
+      avatar = "/image/pic.png";
+    }
+    this.setData({
+      userName: data.userName,
+      avatar: avatar,
+      money: money,
+      province: province
     })
   },
-  //个人中心的实名认证,点击跳转到实名认证
-  realName() {
-    wx.navigateTo({
-      url: '../realName/realName',
-    })
-  },
-  //个人中心的我的余额,点击跳转到我的余额
-  restMoney() {
-    wx.navigateTo({
-      url: '../restMoney/restMoney',
-    })
-  },
-  //个人中心的意见反馈,点击跳转到意见反馈
-  view() {
-    wx.navigateTo({
-      url: '../view/view',
-    })
-  },
-  //我的地址
-  addr(){
-    wx.navigateTo({
-      url: '../myAddr/myAddr',
-    })
+  getCookie: function(callback) {
+    wx.getStorage({
+      key: "cookies",
+      success: callback
+    });
   },
   //退出登录
-  signOut(){
-    wx.navigateTo({
-      url: '../logs/log',
-    })
-  }
+  signOutClicked(){
+    this.getCookie(this.logout);
+  },
+  logout: function(cookies) {
+    let that = this;
+    wx.request({
+      url: 'http://localhost/logout',
+      header: {'cookie': cookies.data.substring(0, 48)},
+      method: "get",
+      success: function(res) {
+        console.log(res);
+        wx.reLaunch({
+          url: '../login/login',
+        })
+      }
+    });
+  },
 })
