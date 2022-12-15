@@ -37,6 +37,13 @@ public class LandlordRoomRecordServiceImpl implements ILandlordRoomRecordService
         return landlordRoomRecordMapper.selectLandlordRoomRecordById(id);
     }
 
+
+    @Override
+    public LandlordRoomRecord selectLandlordRoomCommentRecordById(Long id)
+    {
+        return landlordRoomRecordMapper.selectLandlordRoomCommentRecordById(id);
+    }
+
     /**
      * 查询民宿订单列表
      * 
@@ -71,6 +78,12 @@ public class LandlordRoomRecordServiceImpl implements ILandlordRoomRecordService
     public int updateLandlordRoomRecord(LandlordRoomRecord landlordRoomRecord)
     {
         return landlordRoomRecordMapper.updateLandlordRoomRecord(landlordRoomRecord);
+    }
+
+    @Override
+    public int updateLandlordRoomCommentRecord(LandlordRoomRecord landlordRoomRecord)
+    {
+        return landlordRoomRecordMapper.updateLandlordRoomCommentRecord(landlordRoomRecord);
     }
 
     /**

@@ -71,15 +71,15 @@ public class ClientSpecialtyRecord extends BaseEntity
     private Date finishTime;
 
     /** 是否收获 */
-    @Excel(name = "是否收获")
+    @Excel(name = "是否收货", readConverterExp = "0=未收货,1=已收货")
     private Integer isReceived;
 
     /** 是否付款 */
-    @Excel(name = "是否付款")
+    @Excel(name = "是否付款", readConverterExp = "0=未付款,1=已付款")
     private Integer isPaid;
 
     /** 订单是否完成 */
-    @Excel(name = "订单是否完成")
+    @Excel(name = "订单是否完成", readConverterExp = "0=未完成,1=已完成")
     private Integer isDone;
 
     public void setId(Long id)

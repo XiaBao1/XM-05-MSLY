@@ -28,6 +28,7 @@
 
     <select id="selectClientSpecialtyRecordList" parameterType="ClientSpecialtyRecord" resultMap="ClientSpecialtyRecordResult">
         <include refid="selectClientSpecialtyRecordVo"/>
+            <if test="id != null "> and id = #{id}</if>
             <if test="specialtyId != null "> and specialty_id = #{specialtyId}</if>
             <if test="quantity != null "> and quantity = #{quantity}</if>
             <if test="price != null "> and price = #{price}</if>

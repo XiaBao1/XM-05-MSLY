@@ -36,7 +36,7 @@ public class LandlordRoomRecord extends BaseEntity
 
     /** 特产订单ID */
     @Excel(name = "特产订单ID")
-    private Long specialtyRecordId;
+    private Long roomRecordId;
 
     /** 特产得分 */
     @Excel(name = "得分")
@@ -82,11 +82,11 @@ public class LandlordRoomRecord extends BaseEntity
     private Long price;
 
     /** 已付款 */
-    @Excel(name = "已付款")
+    @Excel(name = "已付款", readConverterExp = "0=未付款,1=已付款")
     private Integer isPaid;
 
     /** 已完成 */
-    @Excel(name = "已完成")
+    @Excel(name = "已完成", readConverterExp = "0=未完成,1=已完成")
     private Integer isDone;
 
     public void setId(Long id) 
@@ -126,8 +126,8 @@ public class LandlordRoomRecord extends BaseEntity
         return loginName;
     }
 
-    public void setspecialtyRecordId(Long specialtyRecordId){this.specialtyRecordId=specialtyRecordId;}
-    public Long getspecialtyRecordId(){return specialtyRecordId;}
+    public void setroomRecordId(Long roomRecordId){this.roomRecordId=roomRecordId;}
+    public Long getroomRecordId(){return roomRecordId;}
 
     public void setScore(BigDecimal score){this.score=score;}
     public BigDecimal getscore(){return score;}
@@ -224,7 +224,7 @@ public class LandlordRoomRecord extends BaseEntity
             .append("price", getPrice())
             .append("isPaid", getIsPaid())
             .append("isDone", getIsDone())
-            .append("specialtyRecordId",getspecialtyRecordId())
+            .append("roomRecordId",getroomRecordId())
             .append("score",getscore())
              .append("comment",getcomment())
                 .append("photo",getPhoto())

@@ -161,32 +161,7 @@ public class ClientRoomRecordController extends BaseController
         return list;
     }
 
-//    @RequiresPermissions("clienthomeorder:homeorder:comment")
-//    @GetMapping("/comment/{id}")
-//    public String comment(@PathVariable("id") Long id, ModelMap mmap)
-//    {
-//        ClientRoomRecord clientRoomCommentRecord = clientRoomRecordService.selectClientRoomCommentRecordById(id);
-//        mmap.put("clientRoomCommentRecord", clientRoomCommentRecord);
-//        System.out.println("hellocomment------------------------------------");
-//
-//        System.out.println(clientRoomCommentRecord.getId());
-//        System.out.println(clientRoomCommentRecord);
-//        System.out.println(clientRoomCommentRecord.getScore());
-//        return prefix + "/comment";
-//    }
-//
-//    /**
-//     * 修改保存评论民宿订单
-//     */
-//    @RequiresPermissions("clienthomeorder:homeorder:comment")
-//    @Log(title = "评论", businessType = BusinessType.UPDATE)
-//    @PostMapping("/comment")
-//    @ResponseBody
-//    public AjaxResult commentSave(ClientRoomRecord clientRoomRecord)
-//    {
-//        System.out.println("hellonewcomment------------------------------------");
-//        return toAjax(clientRoomRecordService.insertClientRoomCommentRecord(clientRoomRecord));
-//    }
+
     /**
      * 新增民宿订单评论
      */

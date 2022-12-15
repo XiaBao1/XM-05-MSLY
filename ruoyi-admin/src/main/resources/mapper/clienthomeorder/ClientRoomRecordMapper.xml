@@ -28,8 +28,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectClientRoomRecordList" parameterType="ClientRoomRecord" resultMap="ClientRoomRecordResult">
         <include refid="selectClientRoomRecordVo"/>
+            <if test="id != null "> and id = #{id}</if>
             <if test="userName != null "> and user_name = #{userName}</if>
-
             <if test="roomId != null "> and room_id = #{roomId}</if>
             <if test="checkInDate != null "> and check_in_date = #{checkInDate}</if>
             <if test="checkOutDate != null "> and check_out_date = #{checkOutDate}</if>

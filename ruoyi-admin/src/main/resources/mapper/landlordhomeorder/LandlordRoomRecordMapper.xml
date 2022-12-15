@@ -16,7 +16,11 @@
         <result property="price"    column="price"    />
         <result property="isPaid"    column="is_paid"    />
         <result property="isDone"    column="is_done"    />
-
+        <result property="roomRecordId"    column="room_record_id"    />
+        <result property="score"    column="score"    />
+        <result property="comment"    column="comment"    />
+        <result property="photo"    column="photo"    />
+        <result property="path"    column="path"    />
     </resultMap>
 
     <sql id="selectLandlordRoomRecordVo">
@@ -25,7 +29,7 @@
 
     <select id="selectLandlordRoomRecordList" parameterType="LandlordRoomRecord" resultMap="LandlordRoomRecordResult">
         <include refid="selectLandlordRoomRecordVo"/>
-<!--            <if test="loginName != null "> and login_name = #{loginName}</if>-->
+            <if test="id != null "> and id = #{id}</if>
             <if test="clientNumber != null "> and client_number = #{clientNumber}</if>
             <if test="roomId != null "> and room_id = #{roomId}</if>
             <if test="checkInDate != null "> and check_in_date = #{checkInDate}</if>
@@ -39,6 +43,10 @@
 
     <select id="selectLandlordRoomRecordById" parameterType="Long" resultMap="LandlordRoomRecordResult">
          select id,client_number, room_id, check_in_date, check_out_date, reserve_in_date, reserve_out_date, price, is_paid, is_done from client_room_record where id = #{id}
+    </select>
+
+    <select id="selectLandlordRoomCommentRecordById" parameterType="Long" resultMap="LandlordRoomRecordResult">
+         select id,room_record_id,max(score) as score,max(comment) as comment,photo from client_room_comment where room_record_id = #{id}
     </select>
 
     <insert id="insertLandlordRoomRecord" parameterType="LandlordRoomRecord" useGeneratedKeys="true" keyProperty="id">
@@ -79,6 +87,17 @@
             <if test="price != null">price = #{price},</if>
             <if test="isPaid != null">is_paid = #{isPaid},</if>
             <if test="isDone != null">is_done = #{isDone},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="updateLandlordRoomCommentRecord" parameterType="LandlordRoomRecord">
+        update client_room_comment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="roomRecordId != null">room_record_id = #{roomRecordId},</if>
+            <if test="score != null">score = #{score},</if>
+            <if test="comment != null">comment = #{comment},</if>
+            <if test="photo != null">photo= #{photo},</if>
         </trim>
         where id = #{id}
     </update>

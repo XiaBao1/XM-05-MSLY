@@ -45,6 +45,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select id, client_number, specialty_id, quantity, price, order_time, finish_time, is_received, is_paid, is_done from client_specialty_record where id = #{id}
     </select>
 
+    <select id="selectLandlordSpecialtyCommentRecordById" parameterType="Long" resultMap="LandlordSpecialtyRecordResult">
+        select id, specialty_record_id,max(score) as score,max(comment) as comment,photo  from client_specialty_comment where specialty_record_id = #{id}
+    </select>
+
         
     <insert id="insertLandlordSpecialtyRecord" parameterType="LandlordSpecialtyRecord" useGeneratedKeys="true" keyProperty="id">
         insert into client_specialty_record
@@ -74,17 +78,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateLandlordSpecialtyRecord" parameterType="LandlordSpecialtyRecord">
-        update client_specialty_record
+    update client_specialty_record
+    <trim prefix="SET" suffixOverrides=",">
+        <if test="clientNumber != null">client_number = #{clientNumber},</if>
+        <if test="specialtyId != null">specialty_id = #{specialtyId},</if>
+        <if test="quantity != null">quantity = #{quantity},</if>
+        <if test="price != null">price = #{price},</if>
+        <if test="orderTime != null">order_time = #{orderTime},</if>
+        <if test="finishTime != null">finish_time = #{finishTime},</if>
+        <if test="isReceived != null">is_received = #{isReceived},</if>
+        <if test="isPaid != null">is_paid = #{isPaid},</if>
+        <if test="isDone != null">is_done = #{isDone},</if>
+    </trim>
+    where id = #{id}
+</update>
+
+    <update id="updateLandlordSpecialtyCommentRecord" parameterType="LandlordSpecialtyRecord">
+        update client_specialty_comment
         <trim prefix="SET" suffixOverrides=",">
-            <if test="clientNumber != null">client_number = #{clientNumber},</if>
-            <if test="specialtyId != null">specialty_id = #{specialtyId},</if>
-            <if test="quantity != null">quantity = #{quantity},</if>
-            <if test="price != null">price = #{price},</if>
-            <if test="orderTime != null">order_time = #{orderTime},</if>
-            <if test="finishTime != null">finish_time = #{finishTime},</if>
-            <if test="isReceived != null">is_received = #{isReceived},</if>
-            <if test="isPaid != null">is_paid = #{isPaid},</if>
-            <if test="isDone != null">is_done = #{isDone},</if>
+            <if test="specialtyRecordId != null">specialty_record_id = #{specialtyRecordId},</if>
+            <if test="score != null">score = #{score},</if>
+            <if test="comment != null">comment = #{comment},</if>
+            <if test="photo != null">photo = #{photo},</if>
         </trim>
         where id = #{id}
     </update>

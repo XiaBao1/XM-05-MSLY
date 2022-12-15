@@ -144,4 +144,28 @@ public class LandlordSpecialtyRecordController extends BaseController
         List<Integer> list = landlordSpecialtyRecordService.getMonthlyLandlordSpecialtyRecordIncrement();
         return list;
     }
+
+    /**
+     * 修改订单
+     */
+    @RequiresPermissions("landlordspecialtyorder:specialtyorder:querycomment")
+    @GetMapping("/querycomment/{id}")
+    public String querycomment(@PathVariable("id") Long id, ModelMap mmap)
+    {
+        LandlordSpecialtyRecord landlordSpecialtyRecord = landlordSpecialtyRecordService.selectLandlordSpecialtyCommentRecordById(id);
+        mmap.put("landlordSpecialtyRecord", landlordSpecialtyRecord);
+        return prefix + "/querycomment";
+    }
+
+    /**
+     * 修改保存订单
+     */
+    @RequiresPermissions("landlordspecialtyorder:specialtyorder:querycomment")
+    @Log(title = "订单", businessType = BusinessType.UPDATE)
+    @PostMapping("/querycomment")
+    @ResponseBody
+    public AjaxResult querycommentSave(LandlordSpecialtyRecord landlordSpecialtyRecord)
+    {
+        return toAjax(landlordSpecialtyRecordService.updateLandlordSpecialtyCommentRecord(landlordSpecialtyRecord));
+    }
 }

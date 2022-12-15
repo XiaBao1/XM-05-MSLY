@@ -30,10 +30,8 @@
                 <form id="formId">
                     <div class="select-list">
                         <ul>
-                            <li>
                                 <!--                                <label>房东：</label>-->
                                 <input type="hidden" name="${@permission.getPrincipalProperty('userName')}" />
-                            </li>
                             <li>
                                 <label>顾客ID：</label>
                                 <input type="text" name="clientNumber"/>
@@ -131,7 +129,7 @@
                 url: prefix + "/list",
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
-                queryUrl:prefix + "querycomment/{id}",
+                queryUrl:prefix + "/querycomment/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
                 modalName: "订单",
@@ -203,7 +201,7 @@
                     align: 'center',
                     formatter: function(value, row, index) {
                         var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + querycommentFlag + '" href="javascript:void(0)" onclick="query(\'' + row.id + '\')"><i class="fa fa-edit"></i>查看评价</a> ');
+                        actions.push('<a class="btn btn-success btn-xs ' + querycommentFlag + '" href="javascript:void(0)" onclick="$.operate.querycomment(\'' + row.id + '\')"><i class="fa fa-edit"></i>查看评价</a> ');
                          actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
                     }
@@ -221,10 +219,7 @@
             //显示操作列
             $.table.showColumn('chaozuo');
         }
-        function query(id) {
-            var url = prefix +'/querycomment/' + id;
-            $.modal.openTab("查看评价",url);
-        }
+
     </script>
 </body>
 </html>

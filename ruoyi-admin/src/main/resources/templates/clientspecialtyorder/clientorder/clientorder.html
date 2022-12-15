@@ -30,9 +30,11 @@
             <form id="formId">
                 <div class="select-list">
                     <ul>
+<!--                            <label>账户名：</label>-->
+                            <input type="hidden" name="${@permission.getPrincipalProperty('userName')}"/>
                         <li>
-                            <label>账户名：</label>
-                            <input type="text" name="${@permission.getPrincipalProperty('userName')}"/>
+                            <label>订单ID：</label>
+                            <input type="text" name="id"/>
                         </li>
                         <li>
                             <label>特产ID：</label>
