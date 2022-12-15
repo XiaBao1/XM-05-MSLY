@@ -129,6 +129,7 @@ public class TopLandlordController extends BaseController {
                 item.setHostNumber(rs.getLong("host_number"));
                 item.setScore(rs.getLong("score"));
                 item.setSale(rs.getLong("sale"));
+                item.setImageUrl(rs.getString("image_url"));
 
                 list.add(item);
             }

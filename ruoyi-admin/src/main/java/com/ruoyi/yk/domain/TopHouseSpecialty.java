@@ -39,6 +39,8 @@ public class TopHouseSpecialty {
     @Excel(name = "销量")
     private long sale;
 
+    private String imageUrl;
+
     @Excel(name = "描述")
     private String description;
 
@@ -112,5 +114,13 @@ public class TopHouseSpecialty {
 
     public void setHouseName(String houseName) {
         this.houseName = houseName;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

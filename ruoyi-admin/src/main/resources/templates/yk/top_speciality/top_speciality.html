@@ -74,19 +74,26 @@
                 url: prefix + "/list",
                 exportUrl: prefix + "/export",
                 modalName: "最热特产榜单",
-                // sortName: "sale",
-                // sortOrder: "desc",
+                sortName: "sale",
+                sortOrder: "desc",
                 columns: [
                 {
                     field: 'id',
                     title: '特产ID',
                     visible: false
-                },{
-                    field: 'houseName',
-                    title: '民宿名称',
+                }, {
+                    title: '图片',
+                    field: 'image',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        return '<img src="'+ row.imageUrl + '" style="width: 100px; height: 100px">';
+                    }
                 }, {
                     field: 'specialtyName',
                     title: '特产名称'
+                },{
+                    field: 'houseName',
+                    title: '民宿名称',
                 }, {
                     field: 'address',
                     title: '民宿地址',
@@ -112,8 +119,11 @@
 
         function printHtml() {
             $("#prints").removeClass("noprint");
+            $.table.hideColumn('image');
             window.print();
             $("#option").addClass("noprint");
+            $.table.showColumn('image');
+
         }
     </script>
 </body>

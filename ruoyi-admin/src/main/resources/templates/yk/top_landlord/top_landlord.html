@@ -74,10 +74,21 @@
             url: prefix + "/list",
             exportUrl: prefix + "/export",
             modalName: "最热民宿榜单",
+            sortName: "sale",
+            sortOrder: "desc",
             columns: [
                 {
                     field: 'id',
-                    title: '民宿ID'
+                    title: '民宿ID',
+                    visible: false
+                },
+                {
+                    title: '图片',
+                    field: 'image',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        return '<img src="'+ row.imageUrl + '" style="width: 100px; height: 100px">';
+                    }
                 },
                 {
                     field: 'houseName',
@@ -102,8 +113,10 @@
 
     function printHtml() {
         $("#prints").removeClass("noprint");
+        $.table.hideColumn('image');
         window.print();
         $("#option").addClass("noprint");
+        $.table.showColumn('image');
     }
 </script>
 </body>

@@ -40,6 +40,8 @@ public class TopLandlordHouse extends BaseEntity
     @Excel(name = "民宿销量")
     private long sale;
 
+    private String imageUrl;
+
     /** 注册时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "注册时间", width = 30, dateFormat = "yyyy-MM-dd")
@@ -106,6 +108,14 @@ public class TopLandlordHouse extends BaseEntity
 
     public void setSale(long sale) {
         this.sale = sale;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @Override
