@@ -52,6 +52,8 @@ public interface ClientRoomRecordMapper
      * @return 结果
      */
     public int updateClientRoomRecord(ClientRoomRecord clientRoomRecord);
+    public int updateClientRoomCommentRecord(ClientRoomRecord clientRoomRecord);
+    public int insertClientRoomCommentPhotoRecord(String path);
 
     /**
      * 删除民宿订单

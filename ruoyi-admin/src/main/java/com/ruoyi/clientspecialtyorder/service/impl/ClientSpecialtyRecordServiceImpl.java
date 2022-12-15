@@ -64,6 +64,11 @@ public class ClientSpecialtyRecordServiceImpl implements IClientSpecialtyRecordS
         return clientSpecialtyRecordMapper.insertClientSpecialtyRecord(clientSpecialtyRecord);
     }
 
+
+    public int insertClientSpecialtyCommentPhotoRecord(String path)
+    {
+        return clientSpecialtyRecordMapper.insertClientSpecialtyCommentPhotoRecord(path);
+    }
     /**
      * 新增民宿评论
      *
@@ -84,9 +89,11 @@ public class ClientSpecialtyRecordServiceImpl implements IClientSpecialtyRecordS
         return clientSpecialtyRecordMapper.updateClientSpecialtyRecord(clientSpecialtyRecord);
     }
 
-    public int insertClientSpecialtyCommentRecord(ClientSpecialtyRecord clientSpecialtyRecord)
+
+    @Override
+    public int updateClientSpecialtyCommentRecord(ClientSpecialtyRecord clientSpecialtyRecord)
     {
-        return clientSpecialtyRecordMapper.insertClientSpecialtyCommentRecord(clientSpecialtyRecord);
+        return clientSpecialtyRecordMapper.updateClientSpecialtyCommentRecord(clientSpecialtyRecord);
     }
     /**
      * 批量删除订单

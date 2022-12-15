@@ -1,6 +1,10 @@
 package com.ruoyi.clienthomeorder.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.ruoyi.clientspecialtyorder.domain.ClientSpecialtyRecord;
 import com.ruoyi.common.json.JSONObject;
@@ -22,6 +26,7 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -156,32 +161,7 @@ public class ClientRoomRecordController extends BaseController
         return list;
     }
 
-//    @RequiresPermissions("clienthomeorder:homeorder:comment")
-//    @GetMapping("/comment/{id}")
-//    public String comment(@PathVariable("id") Long id, ModelMap mmap)
-//    {
-//        ClientRoomRecord clientRoomCommentRecord = clientRoomRecordService.selectClientRoomCommentRecordById(id);
-//        mmap.put("clientRoomCommentRecord", clientRoomCommentRecord);
-//        System.out.println("hellocomment------------------------------------");
-//
-//        System.out.println(clientRoomCommentRecord.getId());
-//        System.out.println(clientRoomCommentRecord);
-//        System.out.println(clientRoomCommentRecord.getScore());
-//        return prefix + "/comment";
-//    }
-//
-//    /**
-//     * 修改保存评论民宿订单
-//     */
-//    @RequiresPermissions("clienthomeorder:homeorder:comment")
-//    @Log(title = "评论", businessType = BusinessType.UPDATE)
-//    @PostMapping("/comment")
-//    @ResponseBody
-//    public AjaxResult commentSave(ClientRoomRecord clientRoomRecord)
-//    {
-//        System.out.println("hellonewcomment------------------------------------");
-//        return toAjax(clientRoomRecordService.insertClientRoomCommentRecord(clientRoomRecord));
-//    }
+
     /**
      * 新增民宿订单评论
      */
@@ -198,9 +178,70 @@ public class ClientRoomRecordController extends BaseController
     @Log(title = "评论", businessType = BusinessType.INSERT)
     @PostMapping("/comment")
     @ResponseBody
-    public AjaxResult commentSave(ClientRoomRecord clientRoomRecord)
-    {
-        return toAjax(clientRoomRecordService.insertClientRoomCommentRecord(clientRoomRecord));
+    public AjaxResult commentSave(ClientRoomRecord clientRoomRecord) throws IOException {
+        System.out.println("hello-------------------");
+
+        return toAjax(clientRoomRecordService.updateClientRoomCommentRecord(clientRoomRecord));
     }
+
+
+    /**
+     * 菜单图标上传
+     * @param newsMenuIconFile 上传的文件
+     * @return 上传的文件的URL
+     * @throws IOException
+     */
+    @PostMapping( "/menuIconUpload")
+    @ResponseBody
+    public Map<String, String> menuIconUpload(MultipartFile newsMenuIconFile) throws IOException {
+        System.out.println("文件："+newsMenuIconFile.getOriginalFilename()+"正在上传！");
+        String projectStaticPath = "C:\\yk"; // 项目本地文件夹路径
+        String fileStoragePath = "\\uploadPath\\"; // 本地文件夹的相对路径
+        Map<String, String> map = upload( newsMenuIconFile,projectStaticPath, fileStoragePath);
+        System.out.println(map);
+        String value = map.get("genFilename");
+        System.out.println("key genFilename 对应的 value: " + value);
+        String path="http://localhost/profile/"+value;
+        System.out.println(path);
+        clientRoomRecordService.insertClientRoomCommentPhotoRecord(path);
+        return map;
+    }
+
+    /**
+     * SpringBoot上传文件到指定目录
+     * @param multipartFile 需要上传的文件
+     * @param projectStaticPath 当前项目到静态资源文件路径（从当前项目开始：如：存放在当前项目的"\\ruoyi-admin\\src\\main\\resources\\static"静态资源文件夹下）
+     * @param fileStoragePath 文件存放路径（从静态资源文件夹开始，如：存放在static的"\\news\\default_images"文件夹下)
+     * @return 存放文件路劲信息的map
+     * @throws IOException
+     */
+    public Map<String, String> upload(MultipartFile multipartFile, String projectStaticPath, String fileStoragePath) throws IOException {
+        String completedFilePath =   projectStaticPath + fileStoragePath; // 完整文件路径
+        // mk dir
+        File fileDir = new File(completedFilePath);
+        if (!fileDir.exists()) {
+            fileDir.mkdirs();
+        }
+        // mk file
+        String time = System.currentTimeMillis()+"";
+        int random = (int) (Math.random()*1000); // 生成一个[0,999]的随机数
+        String genFilename = time+random+".png";
+        File file = new File(completedFilePath + "\\"+ genFilename);
+        // upload file
+        multipartFile.transferTo(file); // 将multipartFile存入创建好的file中
+        // return file path info by map
+        Map<String, String> map = new HashMap<>();
+        map.put("completedFilePath", completedFilePath);
+        map.put("fileStoragePath", fileStoragePath);
+        map.put("genFilename", genFilename);
+        String path =fileStoragePath+genFilename;
+        for (String s : map.keySet()) {
+            System.out.println("key: " + s + " value: " + map.get(s));
+        }
+        return map;
+    }
+
+
+
 
 }

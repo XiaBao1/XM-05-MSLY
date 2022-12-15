@@ -37,6 +37,7 @@ public interface IClientSpecialtyRecordService
      * @return 结果
      */
     public int insertClientSpecialtyRecord(ClientSpecialtyRecord clientSpecialtyRecord);
+    public int insertClientSpecialtyCommentPhotoRecord(String path);
 
 
 
@@ -48,7 +49,7 @@ public interface IClientSpecialtyRecordService
      * @return 结果
      */
     public int updateClientSpecialtyRecord(ClientSpecialtyRecord clientSpecialtyRecord);
-    public int insertClientSpecialtyCommentRecord(ClientSpecialtyRecord clientSpecialtyRecord);
+    public int updateClientSpecialtyCommentRecord(ClientSpecialtyRecord clientSpecialtyRecord);
 
 
     /**

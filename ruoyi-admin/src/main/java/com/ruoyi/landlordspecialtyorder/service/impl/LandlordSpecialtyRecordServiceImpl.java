@@ -35,7 +35,11 @@ public class LandlordSpecialtyRecordServiceImpl implements ILandlordSpecialtyRec
     {
         return landlordSpecialtyRecordMapper.selectLandlordSpecialtyRecordById(id);
     }
-
+    @Override
+    public LandlordSpecialtyRecord selectLandlordSpecialtyCommentRecordById(Long id)
+    {
+        return landlordSpecialtyRecordMapper.selectLandlordSpecialtyCommentRecordById(id);
+    }
     /**
      * 查询订单列表
      * 
@@ -71,7 +75,11 @@ public class LandlordSpecialtyRecordServiceImpl implements ILandlordSpecialtyRec
     {
         return landlordSpecialtyRecordMapper.updateLandlordSpecialtyRecord(landlordSpecialtyRecord);
     }
-
+    @Override
+    public int updateLandlordSpecialtyCommentRecord(LandlordSpecialtyRecord landlordSpecialtyRecord)
+    {
+        return landlordSpecialtyRecordMapper.updateLandlordSpecialtyCommentRecord(landlordSpecialtyRecord);
+    }
     /**
      * 批量删除订单
      * 
