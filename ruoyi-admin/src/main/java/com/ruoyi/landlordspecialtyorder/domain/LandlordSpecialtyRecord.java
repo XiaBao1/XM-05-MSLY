@@ -1,7 +1,9 @@
 package com.ruoyi.landlordspecialtyorder.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ruoyi.common.utils.security.PermissionUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -24,6 +26,33 @@ public class LandlordSpecialtyRecord extends BaseEntity
     @Excel(name = "顾客ID")
     private Long clientNumber;
 
+    /** 用户名 */
+    @Excel(name = "用户名")
+    private String userName;
+
+    /** 用户名 */
+    @Excel(name = "顾客登录名")
+    private String loginName;
+
+    /** 特产订单ID */
+    @Excel(name = "特产订单ID")
+    private Long specialtyRecordId;
+
+    /** 特产得分 */
+    @Excel(name = "得分")
+    private BigDecimal score;
+
+    /** 特产评价 */
+    @Excel(name = "评价")
+    private String comment;
+
+    /** 特产照片 */
+    @Excel(name = "照片")
+    public String photo;
+
+    @Excel(name = "照片地址")
+    private String path;
+
     /** 特产ID */
     @Excel(name = "特产ID")
     private Long specialtyId;
@@ -34,7 +63,7 @@ public class LandlordSpecialtyRecord extends BaseEntity
 
     /** 订单价格 */
     @Excel(name = "订单价格")
-    private Long price;
+    public Long price;
 
     /** 下单时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -47,15 +76,15 @@ public class LandlordSpecialtyRecord extends BaseEntity
     private Date finishTime;
 
     /** 是否收获 */
-    @Excel(name = "是否收获")
+    @Excel(name = "是否收货", readConverterExp = "0=未收货,1=已收货")
     private Integer isReceived;
 
     /** 是否付款 */
-    @Excel(name = "是否付款")
+    @Excel(name = "是否付款", readConverterExp = "0=未付款,1=已付款")
     private Integer isPaid;
 
     /** 订单是否完成 */
-    @Excel(name = "订单是否完成")
+    @Excel(name = "订单是否完成", readConverterExp = "0=未完成,1=已完成")
     private Integer isDone;
 
     public void setId(Long id) 
@@ -76,6 +105,37 @@ public class LandlordSpecialtyRecord extends BaseEntity
     {
         return clientNumber;
     }
+
+    public String getUserName() {
+        String userName = (String) PermissionUtils.getPrincipalProperty("userName");
+        return userName;
+    }
+
+    public void setLoginName(String loginName)
+    {
+        this.loginName = loginName;
+    }
+
+    public String getLoginName()
+    {
+        return loginName;
+    }
+
+    public void setspecialtyRecordId(Long specialtyRecordId){this.specialtyRecordId=specialtyRecordId;}
+    public Long getspecialtyRecordId(){return specialtyRecordId;}
+
+    public void setScore(BigDecimal score){this.score=score;}
+    public BigDecimal getscore(){return score;}
+
+    public void setComment(String comment){this.comment=comment;}
+    public String getcomment(){return comment;}
+
+    public void setPhoto(String photo){this.photo=photo;}
+    public String getPhoto(){return photo;}
+
+    public void setPath(String path){this.path=path;}
+    public String getPath(){return path;}
+
     public void setSpecialtyId(Long specialtyId) 
     {
         this.specialtyId = specialtyId;
@@ -154,6 +214,8 @@ public class LandlordSpecialtyRecord extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("clientNumber", getClientNumber())
+             .append("userName",getUserName())
+             .append("loginName",getLoginName())
             .append("specialtyId", getSpecialtyId())
             .append("quantity", getQuantity())
             .append("price", getPrice())
@@ -162,6 +224,11 @@ public class LandlordSpecialtyRecord extends BaseEntity
             .append("isReceived", getIsReceived())
             .append("isPaid", getIsPaid())
             .append("isDone", getIsDone())
+                .append("specialtyRecordId",getspecialtyRecordId())
+                .append("score",getscore())
+                .append("comment",getcomment())
+                .append("photo",getPhoto())
+                .append("path",getPath())
             .toString();
     }
 }

@@ -18,7 +18,7 @@ public interface ILandlordRoomRecordService
      * @return 民宿订单
      */
     public LandlordRoomRecord selectLandlordRoomRecordById(Long id);
-
+    public LandlordRoomRecord selectLandlordRoomCommentRecordById(Long id);
     /**
      * 查询民宿订单列表
      * 
@@ -42,7 +42,7 @@ public interface ILandlordRoomRecordService
      * @return 结果
      */
     public int updateLandlordRoomRecord(LandlordRoomRecord landlordRoomRecord);
-
+    public int updateLandlordRoomCommentRecord(LandlordRoomRecord landlordRoomRecord);
     /**
      * 批量删除民宿订单
      * 
