@@ -23,6 +23,20 @@ public interface ISysRoleService
     public List<SysRole> selectRoleList(SysRole role);
 
     /**
+     * 查询角色名
+     *
+     * @return 角色名
+     */
+    public List<String> getRoleName();
+
+    /**
+     * 查询角色数量，按role_id排序
+     *
+     * @return 角色数量
+     */
+    public List<Integer> getRoleCount();
+
+    /**
      * 根据用户ID查询角色列表
      * 
      * @param userId 用户ID
