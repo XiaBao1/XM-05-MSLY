@@ -11,6 +11,12 @@
                     <div class="select-list">
                         <ul>
                             <li>
+                                <label>用户名：</label>
+                                <!--                                <input type="text" name="userName"/>-->
+                                <!--                                <input th:value="${@permission.getPrincipalProperty('userName')}">-->
+                                <input type="text" name="${@permission.getPrincipalProperty('userName')}"/>
+                            </li>
+                            <li>
                                 <label>内容：</label>
                                 <input type="text" name="content"/>
                             </li>
@@ -58,7 +64,7 @@
                 <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="usertodolist:todolist:print">
                     <i class="glyphicon glyphicon-print icon-share"></i> 打印
                 </a>
-                <a class="btn btn-warning" onclick="$.modal.openTab('特产订单管理统计', '/usertodolist/todolist/eCharts');" shiro:hasPermission="lusertodolist:todolist:eCharts">
+                <a class="btn btn-warning" onclick="$.modal.openTab('待办事项统计', '/usertodolist/todolist/eCharts');" shiro:hasPermission="usertodolist:todolist:eCharts">
                     <i class="fa fa-plus"></i> 统计
                 </a>
 
@@ -102,18 +108,25 @@
                     field: 'id',
                     title: '',
                     visible: false
-                },
+                }, {
+                        field: 'userNumber',
+                        title: '用户名'
+                    },
                 {
                     field: 'content',
-                    title: '内容'
+                    title: '内容',
+                    sortable: true
+
                 },
                 {
                     field: 'ddlTime',
-                    title: '截止时间'
+                    title: '截止时间',
+                    sortable: true
                 },
                 {
                     field: 'status',
                     title: '待办事项状态',
+                    sortable: true,
                     formatter: function(value, row, index) {
                        return $.table.selectDictLabel(statusDatas, value);
                     }

@@ -18,16 +18,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectUserTodolistList" parameterType="UserTodolist" resultMap="UserTodolistResult">
         <include refid="selectUserTodolistVo"/>
-        <where>  
+<!--        <where>  -->where user_number = #{userNumber}
             <if test="content != null  and content != ''"> and content like concat('%', #{content}, '%')</if>
             <if test="params.beginDdlTime != null and params.beginDdlTime != '' and params.endDdlTime != null and params.endDdlTime != ''"> and ddl_time between #{params.beginDdlTime} and #{params.endDdlTime}</if>
             <if test="status != null  and status != ''"> and status = #{status}</if>
-        </where>
+<!--        </where>-->
     </select>
     
     <select id="selectUserTodolistById" parameterType="Long" resultMap="UserTodolistResult">
         <include refid="selectUserTodolistVo"/>
-        where id = #{id}
+            where id = #{id}
     </select>
         
     <insert id="insertUserTodolist" parameterType="UserTodolist" useGeneratedKeys="true" keyProperty="id">

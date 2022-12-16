@@ -100,6 +100,7 @@ public class UserTodolistController extends BaseController
     {
         UserTodolist userTodolist = userTodolistService.selectUserTodolistById(id);
         mmap.put("userTodolist", userTodolist);
+        System.out.println("==================================================================================="+userTodolist);
         return prefix + "/edit";
     }
 

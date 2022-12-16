@@ -57,6 +57,7 @@ public class UserTodolist extends BaseEntity
 
     public String getUserNumber() 
     {
+        String userNumber = (String) PermissionUtils.getPrincipalProperty("userName");
         return userNumber;
     }
     public void setContent(String content) 
