@@ -1,1 +1,174 @@
-/* pages/info/landlord/top_landlord.wxss */
+/* pages/restMoney/restMoney.wxss */
+page{
+  background: #ededed
+}
+.restMoney{
+  width: 100%;
+  height: 200rpx;
+  background: #f3b328;
+  margin: 16rpx 0;
+  display: flex;
+  justify-content: space-between
+}
+.yue{
+  height: 98rpx;
+  margin: 60rpx 0 0 56rpx;
+}
+.describe{
+  font-size: 46rpx;
+  color: #000000;
+  line-height: 26rpx;
+  font-weight: bold;
+}
+.explain{
+  font-size: 26rpx;
+  color: #000000;
+  line-height: 26rpx;
+  margin-top: 26rpx;
+}
+.chongzhi{
+  width: 162rpx;
+  height: 52rpx;
+  background: #303850;
+  border-radius: 26rpx;
+  border: 2rpx solid #ffffff;
+  font-size: 26rpx;
+  line-height: 52rpx;
+  text-align: center;
+  color: #ffffff;
+  margin:102rpx 54rpx 0 0;
+}
+.swiper-tab{
+  width: 100%;  
+  border-bottom:2rpx solid #ededed;
+  text-align: center;  
+  line-height: 88rpx;
+  height: 88rpx;
+  background: #ffffff;
+  display: flex;
+  justify-content: space-between
+} 
+.show{
+  display: block
+}
+.hidden{
+  display: none
+}
+.tab-item{  
+    display: block;  
+    font-size: 24rpx;
+    /* font-weight: bold; */
+    width: 50%;  
+    color: #999999;  
+}  
+.active{ 
+    color: #3d4663;  
+    font-weight: bold;
+    border-bottom: 3rpx solid #3d4663;
+}  
+.recharge{
+  width: 100%;
+  height: auto;
+  background: #ffffff;
+}
+.record{
+  width: 100%;
+  height: 450rpx;
+  background: #ffffff;
+  border-bottom:2rpx solid #ededed;
+  display: flex;
+  justify-content: space-between;
+}
+.list{
+  width: 50%;
+  height: 150rpx;
+  margin:28rpx 0 0 22rpx
+}
+.image{
+  width: 50%;
+  height: 100%;
+}
+.img{
+  width: 100%;
+  height: 100%;
+}
+.housename{
+  font-size: 52rpx;
+  font-weight: bold;
+  color:#333333;
+  line-height: 32rpx;
+  margin-top: 26rpx;
+}
+.word{
+  font-size: 32rpx;
+  font-weight: bold;
+  color:#333333;
+  line-height: 32rpx;
+  margin-top: 26rpx;
+}
+.address{
+  font-size: 22rpx;
+  color:#333333;
+  line-height: 32rpx;
+  margin-top: 26rpx;
+}
+.time{
+  font-size: 20rpx;
+  color: #999999;
+  line-height: 20rpx;
+  margin-top: 22rpx;
+}
+.money{
+  width: 160rpx;
+  height: 20rpx;
+  line-height: 20rpx;
+  color: #9f9f9f;
+  font-size: 20rpx;
+  margin-top: 56rpx;
+  text-align: right;
+  margin-right: 24rpx;
+}
+.consume{
+  width: 100%;
+  height: auto;
+  background: #ffffff;
+}
+.rexian{
+  width: 100%;
+  height: 88rpx;
+  bottom: 0rpx;
+  left: 0
+}
+.tels{
+  width: 100%;
+  height: 88rpx;
+  font-size: 24rpx;
+  line-height: 88rpx;
+  text-align: center;
+  color: #666666
+}
+.kefu{
+  width: 200rpx;
+  height: 54rpx;
+  background: #aaaaaa;
+  border-top-left-radius: 27rpx;
+  border-bottom-left-radius: 27rpx;
+  position: fixed;
+  bottom:20rpx;
+  right: 0;
+  display: flex;
+  justify-content: space-around
+}
+.kufu_pic{
+  width: 32rpx;
+  height: 34rpx;
+  display: block;
+  margin: 10rpx 0 0 26rpx;
+}
+.kefu_describe{
+  width: 102rpx;
+  height: 54rpx;
+  font-size: 24rpx;
+  line-height: 54rpx;
+  color:#ededed;
+}

@@ -37,6 +37,36 @@ Page({
       }
     });
   },
+  toTopLandlord:function() {
+    wx.navigateTo({
+      url: '../../info/landlord/top_landlord',
+    });
+  },
+  toTodoList:function() {
+    wx.navigateTo({
+      url: '../../user/todo/todo',
+    });
+  },
+  toTopSpeciality:function() {
+    wx.navigateTo({
+      url: '../../info/speciality/top_speciality',
+    });
+  },
+  toRoomOrder:function() {
+    wx.navigateTo({
+      url: '../../info/room_order/room_order',
+    });
+  },
+  toSpecialityOrder:function() {
+    wx.navigateTo({
+      url: '../../info/speciality_order/speciality_order',
+    });
+  },
+  toWeather:function() {
+    wx.navigateTo({
+      url: '../../user/weather/weather',
+    });
+  },
 changeIndicatorDots(e) {
     this.setData({
       indicatorDots: !this.data.indicatorDots

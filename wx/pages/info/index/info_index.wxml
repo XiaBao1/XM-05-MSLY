@@ -25,27 +25,27 @@
 
 <view class='content-below'>
   <view class='icon-list'>
-    <view class='icon-text'>
+    <view class='icon-text' bindtap='toTodoList'>
       <image class='icon' src='/image/icon/todo.png'></image>
       <view class='text'>代办事项</view>
     </view>
-    <view class='icon-text'>
+    <view class='icon-text' bindtap='toTopSpeciality'>
       <image src='/image/icon/topspeciality.png' class='icon'></image>
       <view class='text'>热门特产</view>
     </view>
-    <view class='icon-text'>
+    <view class='icon-text' bindtap='toTopLandlord'>
       <image src='/image/icon/tophouse.png' class='icon'></image>
       <view class='text'>热门民宿</view>
     </view>
-    <view class='icon-text'>
+    <view class='icon-text' bindtap='toRoomOrder'>
       <image src='/image/icon/orderroom.png' class='icon'></image>
       <view class='text'>民宿订购</view>
     </view>
-    <view class='icon-text'>
+    <view class='icon-text' bindtap='toSpecialityOrder'>
       <image src='/image/icon/orderspeciality.png' class='icon'></image>
       <view class='text'>特产订购</view>
     </view>
-    <view class='icon-text'>
+    <view class='icon-text' bindtap='toWeather'>
       <image src='/image/icon/weather.png' class='icon'></image>
       <view class='text'>天气查询</view>
     </view>

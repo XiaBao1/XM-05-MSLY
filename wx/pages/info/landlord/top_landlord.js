@@ -1,20 +1,80 @@
 // pages/info/landlord/top_landlord.js
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
-
+    returnData: "",
+    servicelist:[],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    let that = this;
+    wx.getStorage({
+      key: "cookies",
+      success: that.getTopLandlord
+    });
   },
 
+  getTopLandlord: function(cookies) {
+    let that = this;
+    wx.request({
+      url: 'http://localhost/yk/top_landlord/list',
+      header: {'cookie': cookies.data.substring(0, 48), 'Content-Type': 'application/x-www-form-urlencoded'},
+      method: "post",
+      success: function(res) {
+        console.log(res);
+        that.handleGetLandlordData(res.data);
+        that.setData({
+          returnData: res.data
+        });
+      }
+    });
+  },  
+  handleGetLandlordData(data){
+    let _this = this;
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading'
+    })
+    let newlist = [];
+    for(var i=0;i<data.rows.length;i++){
+      let id=data.rows[i].id;
+      let houseName=data.rows[i].houseName;
+      let imageUrl=data.rows[i].imageUrl;
+      let sale=data.rows[i].sale;
+      let score=data.rows[i].score;
+      let address=data.rows[i].address;
+      //console.log(id+','+houseName+','+sale+','+score);
+      newlist.push({
+        "id":id,
+        "name":houseName,
+        "sale":sale,
+        "score":score,
+        "imgurl":imageUrl,
+        "address":address
+      })
+    }
+    newlist=newlist.sort(function(obj1, obj2) {
+      var lhs1 = obj1["sale"];
+      var rhs1 = obj2["sale"];
+      var lhs2= obj1["score"];
+      var rhs2= obj2["score"];
+      if(lhs1-rhs1==0){
+          return rhs2 - lhs2;
+      }else{   
+          return rhs1 - lhs1; // 年份升序
+      }
+    });
+    setTimeout(()=>{
+     _this.setData({
+       servicelist:_this.data.servicelist.concat(newlist)
+     })
+    },1500)
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
