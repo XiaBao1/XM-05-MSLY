@@ -63,6 +63,40 @@ public class SysRoleServiceImpl implements ISysRoleService
     }
 
     /**
+     * 查询角色名
+     *
+     * @return 角色名
+     */
+    @Override
+    public List<String> getRoleName()
+    {
+        SysRole tmp=new SysRole();
+        List<SysRole> sysrole=roleMapper.selectRoleList(tmp);
+        List<String> list=new ArrayList<String>(sysrole.size());
+        for(SysRole roleitem : sysrole){
+            list.add(roleitem.getRoleName());
+        }
+        return list;
+    }
+
+    /**
+     * 查询角色ID
+     *
+     * @return 角色ID
+     */
+    public List<Integer> getRoleCount()
+    {
+        SysRole tmp=new SysRole();
+        List<SysRole> sysrole=roleMapper.selectRoleList(tmp);
+        //List<Long> list=new ArrayList<Long>(sysrole.size());
+        List<Integer> count=new ArrayList<Integer>(sysrole.size());
+        for(SysRole roleitem : sysrole){
+            count.add(userRoleMapper.countUserRoleByRoleId(roleitem.getRoleId()));
+        }
+        return count;
+    }
+
+    /**
      * 根据条件分页查询角色数据
      * 
      * @param role 角色信息

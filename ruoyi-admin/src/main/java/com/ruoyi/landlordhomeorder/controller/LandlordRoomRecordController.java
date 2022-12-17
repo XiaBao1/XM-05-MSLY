@@ -143,4 +143,28 @@ public class LandlordRoomRecordController extends BaseController
         List<Integer> list = landlordRoomRecordService.getMonthlyClientRoomRecordIncrement();
         return list;
     }
+
+    /**
+     * 修改民宿订单
+     */
+    @RequiresPermissions("landlordhomeorder:landlordorder:querycomment")
+    @GetMapping("/querycomment/{id}")
+    public String querycomment(@PathVariable("id") Long id, ModelMap mmap)
+    {
+        LandlordRoomRecord landlordRoomRecord = landlordRoomRecordService.selectLandlordRoomCommentRecordById(id);
+        mmap.put("landlordRoomRecord", landlordRoomRecord);
+        return prefix + "/querycomment";
+    }
+
+    /**
+     * 修改保存民宿订单
+     */
+    @RequiresPermissions("landlordhomeorder:landlordorder:querycomment")
+    @Log(title = "民宿订单", businessType = BusinessType.UPDATE)
+    @PostMapping("/querycomment")
+    @ResponseBody
+    public AjaxResult querycommentSave(LandlordRoomRecord landlordRoomRecord)
+    {
+        return toAjax(landlordRoomRecordService.updateLandlordRoomCommentRecord(landlordRoomRecord));
+    }
 }

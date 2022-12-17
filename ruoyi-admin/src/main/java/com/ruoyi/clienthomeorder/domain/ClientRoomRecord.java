@@ -1,5 +1,6 @@
 package com.ruoyi.clienthomeorder.domain;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -8,6 +9,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -41,7 +43,13 @@ public class ClientRoomRecord extends BaseEntity
     private String comment;
 
     @Excel(name = "照片")
-    private String photo;
+    public String photo;
+
+    @Excel(name = "照片路径")
+    public String path;
+
+    @Excel(name = "照片文件")
+    public MultipartFile newsMenuIconFile;
 
     @Excel(name = "订单ID")
     private Long roomRecordId;
@@ -117,8 +125,14 @@ public class ClientRoomRecord extends BaseEntity
     public void setComment(String comment){this.comment=comment;}
     public String getComment(){return comment;}
 
+    public void setNewsMenuIconFile(MultipartFile newsMenuIconFile){this.newsMenuIconFile=newsMenuIconFile;}
+    public MultipartFile getNewsMenuIconFile(){return newsMenuIconFile;}
+
     public void setPhoto(String photo){this.photo=photo;}
     public String getPhoto(){return photo;}
+
+    public void setPath(String path){this.path=path;}
+    public String getPath(){return path;}
 
     public void setRoomId(Long roomId) 
     {
@@ -214,6 +228,8 @@ public class ClientRoomRecord extends BaseEntity
             .append("score", getScore())
             .append("comment", getComment())
             .append("photo", getPhoto())
+            .append("path",getPath())
+            .append("newsMenuIconFile",getNewsMenuIconFile())
             .toString();
     }
 }

@@ -44,8 +44,10 @@ public class ClientSpecialtyRecord extends BaseEntity
 
     /** 特产照片 */
     @Excel(name = "照片")
-    private String photo;
+    public String photo;
 
+    @Excel(name = "照片地址")
+    private String path;
     /** 特产ID */
     @Excel(name = "特产ID")
     private Long specialtyId;
@@ -69,15 +71,15 @@ public class ClientSpecialtyRecord extends BaseEntity
     private Date finishTime;
 
     /** 是否收获 */
-    @Excel(name = "是否收获")
+    @Excel(name = "是否收货", readConverterExp = "0=未收货,1=已收货")
     private Integer isReceived;
 
     /** 是否付款 */
-    @Excel(name = "是否付款")
+    @Excel(name = "是否付款", readConverterExp = "0=未付款,1=已付款")
     private Integer isPaid;
 
     /** 订单是否完成 */
-    @Excel(name = "订单是否完成")
+    @Excel(name = "订单是否完成", readConverterExp = "0=未完成,1=已完成")
     private Integer isDone;
 
     public void setId(Long id)
@@ -119,6 +121,9 @@ public class ClientSpecialtyRecord extends BaseEntity
 
     public void setPhoto(String photo){this.photo=photo;}
     public String getPhoto(){return photo;}
+
+    public void setPath(String path){this.path=path;}
+    public String getPath(){return path;}
 
     public void setSpecialtyId(Long specialtyId)
     {
@@ -211,6 +216,7 @@ public class ClientSpecialtyRecord extends BaseEntity
                 .append("score",getscore())
                 .append("comment",getcomment())
                 .append("photo",getPhoto())
+                .append("path",getPath())
                 .toString();
 
     }

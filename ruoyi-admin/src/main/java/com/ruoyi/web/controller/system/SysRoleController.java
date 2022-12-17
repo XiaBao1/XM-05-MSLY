@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.system;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,41 @@ public class SysRoleController extends BaseController
         startPage();
         List<SysRole> list = roleService.selectRoleList(role);
         return getDataTable(list);
+    }
+
+    @RequiresPermissions("system:role:statistics")
+    @GetMapping("/statistics")
+    public String statisticsName(ModelMap mmap)
+    {
+        return prefix + "/statistics";
+    }
+
+    @RequiresPermissions("system:role:statistics")
+    @Log(title = "权限信息统计", businessType = BusinessType.INSERT)
+    @PostMapping("/statistics")
+    @ResponseBody
+    public List<String> statisticsNameData()
+    {
+        List<String> list=roleService.getRoleName();
+        return list;
+    }
+
+    @RequiresPermissions("system:role:statistics")
+    @GetMapping("/statistics/count")
+    public String statisticsCount(ModelMap mmap)
+    {
+        return prefix + "/statistics/count";
+    }
+
+    @RequiresPermissions("system:role:statistics")
+    @Log(title = "权限信息统计", businessType = BusinessType.INSERT)
+    @PostMapping("/statistics/count")
+    @ResponseBody
+    public List<Integer> statisticsCountData()
+    {
+        //roleService.getRoleCount();
+        List<Integer> list=roleService.getRoleCount();
+        return list;
     }
 
     @Log(title = "角色管理", businessType = BusinessType.EXPORT)
