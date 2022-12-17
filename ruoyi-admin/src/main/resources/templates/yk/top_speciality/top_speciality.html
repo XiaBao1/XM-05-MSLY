@@ -55,6 +55,9 @@
                 <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="system:top_speciality:print">
                     <i class="fa fa-plus"></i> 打印
                 </a>
+                <a class="btn btn-success" onclick="$.modal.openTab('特产统计', '/yk/top_speciality/statistics');" shiro:hasPermission="yk:top_speciality:statistics">
+                    <i class="fa fa-plus"></i> 统计
+                </a>
             </div>
 
             <div class="col-sm-12 select-table table-striped noprint" id="prints" style="width: 100%;">
@@ -71,32 +74,44 @@
                 url: prefix + "/list",
                 exportUrl: prefix + "/export",
                 modalName: "最热特产榜单",
+                sortName: "sale",
+                sortOrder: "desc",
                 columns: [
                 {
                     field: 'id',
                     title: '特产ID',
                     visible: false
-                },
-                {
+                }, {
+                    title: '图片',
+                    field: 'image',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        return '<img src="'+ row.imageUrl + '" style="width: 100px; height: 100px">';
+                    }
+                }, {
                     field: 'specialtyName',
                     title: '特产名称'
-                },
-                {
+                },{
+                    field: 'houseName',
+                    title: '民宿名称',
+                }, {
+                    field: 'address',
+                    title: '民宿地址',
+                },{
                     field: 'price',
                     title: '特产价格',
-                    sortable: true,
+                    sortable: true
                 },
                 {
                     field: 'sale',
                     title: '特产销量',
-                    sortable: true,
+                    sortable: true
                 },{
                     field: 'description',
                     title: '描述'
                 },{
                     field: 'inventory',
-                    title: '库存',
-                    sortable: true,
+                    title: '库存'
                 }]
             };
             $.table.init(options);
@@ -104,8 +119,11 @@
 
         function printHtml() {
             $("#prints").removeClass("noprint");
+            $.table.hideColumn('image');
             window.print();
             $("#option").addClass("noprint");
+            $.table.showColumn('image');
+
         }
     </script>
 </body>

@@ -1,16 +1,22 @@
 package com.ruoyi.yk.controller;
 
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.core.page.TableSupport;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.yk.domain.TopHouseSpecialty;
 import com.ruoyi.yk.domain.TopLandlordHouse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,7 +52,7 @@ public class TopLandlordController extends BaseController {
     @ResponseBody
     public TableDataInfo list() {
         startPage();
-        List list = getTopLandlordList();
+        List<TopLandlordHouse> list = getTopLandlordList();
         return getDataTable(list);
     }
 
@@ -61,7 +67,40 @@ public class TopLandlordController extends BaseController {
         return util.exportExcel(list, "热门民宿");
     }
 
+
+    @RequiresPermissions("yk:top_landlord:statistics")
+    @GetMapping("/statistics")
+    public String statistics(ModelMap mmap)
+    {
+        return prefix + "/statistics";
+    }
+
+    @RequiresPermissions("yk:top_landlord:statistics")
+    @Log(title = "民宿统计", businessType = BusinessType.OTHER)
+    @PostMapping("/statistics")
+    @ResponseBody
+    public JSONObject statisticsData()
+    {
+        List<TopLandlordHouse> topSpecialityList = getTopLandlordList();
+        JSONArray saleArray = new JSONArray();
+        JSONArray nameArray = new JSONArray();
+        JSONObject json = new JSONObject();
+
+        for (TopLandlordHouse item : topSpecialityList) {
+            saleArray.add(item.getSale());
+            nameArray.add(item.getHouseName());
+        }
+
+        json.put("sale", saleArray);
+        json.put("name", nameArray);
+
+        return json;
+    }
+
     private List<TopLandlordHouse> getTopLandlordList() {
+        PageDomain pageDomain = TableSupport.buildPageRequest();
+        String orderBy = pageDomain.getOrderBy();
+
         List<TopLandlordHouse> list = new ArrayList<TopLandlordHouse>();
         Connection connection = null;
         PreparedStatement pstmt = null;
@@ -69,7 +108,10 @@ public class TopLandlordController extends BaseController {
                 "from landlord_house LH " +
                 "   left JOIN house_room HR on LH.id = HR.house_id " +
                 "   left JOIN client_room_record CRR on HR.id = CRR.room_id " +
-                "GROUP BY LH.id ;";
+                "GROUP BY LH.id ";
+        if (orderBy != null && ! orderBy.isEmpty()) {
+            sql += "order by " + orderBy;
+        }
         // System.out.println(sql);
         try
         {
@@ -87,6 +129,7 @@ public class TopLandlordController extends BaseController {
                 item.setHostNumber(rs.getLong("host_number"));
                 item.setScore(rs.getLong("score"));
                 item.setSale(rs.getLong("sale"));
+                item.setImageUrl(rs.getString("image_url"));
 
                 list.add(item);
             }
