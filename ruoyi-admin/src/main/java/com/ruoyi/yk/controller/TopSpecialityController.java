@@ -4,13 +4,17 @@ package com.ruoyi.yk.controller;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.common.core.page.TableDataInfo;
 
+import com.ruoyi.common.core.page.TableSupport;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.common.utils.sql.SqlUtil;
 import com.ruoyi.yk.domain.TopHouseSpecialty;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,7 +49,7 @@ public class TopSpecialityController extends BaseController {
     @ResponseBody
     public TableDataInfo list() {
         startPage();
-        List list = getTopSpecialityList();
+        List<TopHouseSpecialty> list = getTopSpecialityList();
         return getDataTable(list);
     }
 
@@ -60,15 +64,44 @@ public class TopSpecialityController extends BaseController {
         return util.exportExcel(list, "热门特产");
     }
 
-    private List getTopSpecialityList() {
+    @RequiresPermissions("yk:top_speciality:statistics")
+    @GetMapping("/statistics")
+    public String statistics(ModelMap mmap)
+    {
+        return prefix + "/statistics";
+    }
+
+    @RequiresPermissions("yk:top_speciality:statistics")
+    @Log(title = "特产统计", businessType = BusinessType.OTHER)
+    @PostMapping("/statistics")
+    @ResponseBody
+    public List<Double> statisticsData()
+    {
+        List<TopHouseSpecialty> topSpecialityList = getTopSpecialityList();
+        List<Double> list = new ArrayList<Double>();
+
+        for (TopHouseSpecialty item : topSpecialityList) {
+            list.add(item.getPrice());
+            list.add((double)item.getSale());
+        }
+
+        return list;
+    }
+
+    private List<TopHouseSpecialty> getTopSpecialityList() {
+        PageDomain pageDomain = TableSupport.buildPageRequest();
+        String orderBy = pageDomain.getOrderBy();
+
         List list = new ArrayList();
         Connection connection = null;
         PreparedStatement pstmt = null;
-        String sql = "SELECT HS.id, HS.specialty_name, HS.price, count(CSR.specialty_id ) as sale, HS.description, HS.inventory, HS.house_id "
+        String sql = "SELECT HS.id, HS.specialty_name, HS.image_url, HS.price, count(CSR.specialty_id ) as sale, HS.description, HS.inventory, HS.house_id, LH.house_name, LH.address "
                 + "FROM house_specialty as HS left join client_specialty_record as CSR on HS.id = CSR.specialty_id "
                 + "join landlord_house as LH on LH.id = HS.house_id "
-                + "GROUP BY HS.id "
-                + "ORDER BY  sale DESC;";
+                + "GROUP BY HS.id ";
+        if (orderBy != null && ! orderBy.isEmpty()) {
+            sql += "order by " + orderBy;
+        }
         // System.out.println(sql);
         try
         {
@@ -87,6 +120,9 @@ public class TopSpecialityController extends BaseController {
                 item.setDescription(rs.getString("description"));
                 item.setInventory(rs.getInt("inventory"));
                 item.setHouseId(rs.getLong("house_id"));
+                item.setHouseName(rs.getString("house_name"));
+                item.setAddress(rs.getString("address"));
+                item.setImageUrl(rs.getString("image_url"));
 
                 list.add(item);
             }

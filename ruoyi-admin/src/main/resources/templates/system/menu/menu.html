@@ -2,6 +2,26 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
 	<th:block th:include="include :: header('菜单列表')" />
+	<style>
+		@media print {
+			.fixed-table-toolbar {
+				display: none;
+			}
+
+			.noprint {
+				display: none;
+			}
+
+			.fixed-table-pagination {
+				display: none !important;
+			}
+
+		}
+		@page {
+			size: auto;
+			margin: 0mm;
+		}
+	</style>
 </head>
 <body class="gray-bg">
     <div class="container-div">
@@ -41,9 +61,12 @@
 				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:menu:export">
 					<i class="fa fa-download"></i> 导出
 				</a>
+				<a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="system:top_landlord:print">
+					<i class="fa fa-plus"></i> 打印
+				</a>
 	        </div>
-       		 <div class="col-sm-12 select-table table-striped">
-	            <table id="bootstrap-tree-table"></table>
+       		 <div class="col-sm-12 select-table table-striped noprint" id="prints" style="width: 100%;">
+	            <table id="bootstrap-tree-table" style="width: 100%;word-break:break-all; word-wrap:break-all; "></table>
 	        </div>
 	    </div>
 	</div>
@@ -160,6 +183,15 @@
 		    };
 		    $.treeTable.init(options);
 		});
+
+	function printHtml() {
+		$("#expandAllBtn").click();
+		$("#prints").removeClass("noprint");
+		window.print();
+		$("#option").addClass("noprint");
+		$("#expandAllBtn").click();
+	}
 	</script>
+
 </body>
 </html>
