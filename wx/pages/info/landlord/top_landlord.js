@@ -5,6 +5,7 @@ Page({
    */
   data: {
     returnData: "",
+    returnDataSta: "",
     servicelist:[],
   },
 
@@ -18,7 +19,36 @@ Page({
       success: that.getTopLandlord
     });
   },
-
+  toStatistics: function(){
+    let that = this;
+    wx.getStorage({
+      key: "cookies",
+      success: that.getTopLandlordSta
+    });
+    wx.navigateTo({
+      url: './statistics/statistics',
+    })
+  },
+  getTopLandlordSta: function(cookies) {
+    let that = this;
+    wx.request({
+      url: 'http://localhost/yk/top_landlord/statistics',
+      header: {'cookie': cookies.data.substring(0, 48), 'Content-Type': 'application/x-www-form-urlencoded'},
+      method: "post",
+      success: function(res) {
+        console.log(res);
+        // that.setData({
+        //   returnDataSta: res.data
+        // });
+        //console.log(res.data.name);
+        console.log('set storage');
+        wx.setStorage({
+          key:"landlordSta",
+          data: res.data
+        });
+      }
+    });
+  },
   getTopLandlord: function(cookies) {
     let that = this;
     wx.request({

@@ -12,7 +12,8 @@
     "pages/info/room_order/room_order",
     "pages/info/speciality_order/speciality_order",
     "pages/info/index/info_index",
-    "pages/history/index/history_index"
+    "pages/history/index/history_index",
+    "pages/info/landlord/statistics/statistics"
   ],
   "window": {
     "backgroundTextStyle": "light",
