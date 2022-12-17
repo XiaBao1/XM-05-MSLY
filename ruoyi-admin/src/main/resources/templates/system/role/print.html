@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('角色列表')" />
+    <th:block th:include="include :: layout-latest-css" />
+</head>
+<body class="gray-bg">
+
+<div class="ui-layout-center">
+    <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: layout-latest-js" />
+<script th:inline="javascript">
+    var prefix = ctx + "system/role";
+
+    $(function() {
+        var panehHidden = false;
+        if ($(this).width() < 769) {
+            panehHidden = true;
+        }
+        $('body').layout({ initClosed: panehHidden, west__size: 185 });
+        // 回到顶部绑定
+        if ($.fn.toTop !== undefined) {
+            var opt = {
+                win:$('.ui-layout-center'),
+                doc:$('.ui-layout-center')
+            };
+            $('#scroll-up').toTop(opt);
+        }
+        queryWeatherList();
+    });
+
+    function queryWeatherList() {
+        var options = {
+            url: prefix + "/list",
+            sortName: "id",
+            sortOrder: "asc",
+            modalName: "角色列表",
+            pageSize: 1000000,
+            caption: 'abc',
+            columns: [
+                {
+                    field: 'roleId',
+                    title: '角色编号',
+                    sortable: true
+                },
+                {
+                    field: 'roleName',
+                    title: '角色名称',
+                    sortable: true
+                },
+                {
+                    field: 'roleKey',
+                    title: '权限字符',
+                    sortable: true
+                },
+                {
+                    visible: editFlag == 'hidden' ? false : true,
+                    field: 'status',
+                    title: '角色状态',
+                    //align: 'center',
+                    formatter: function (value, row, index) {
+                        //return statusTools(row);
+                        if(value=='1') {
+                            return "启用";
+                        }
+                        else {
+                            return "停用";
+                        }
+                    }
+                },
+                {
+                    field: 'createTime',
+                    title: '创建时间',
+                    sortable: true
+                }]
+        };
+        $.table.init(options);
+    }
+
+</script>
+</body>
+</html>
