@@ -10,3 +10,6 @@
   width: 400rpx;
   height: 400rpx;
 }
+.text{
+  text-align: center;
+}

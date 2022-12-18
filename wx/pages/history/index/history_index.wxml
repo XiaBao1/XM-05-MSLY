@@ -1,7 +1,11 @@
 <view class="icon-list">
-  <image class='icon' src='/image/icon/house.png'></image>
-  <view class='text'>热门民宿</view>
+  <view class='icon-text' bindtap='toRoomHistory'>
+    <image class='icon' src='/image/icon/house.png'></image>
+    <view class='text'>民宿订单</view>
+  </view>
 
-  <image class='icon' src='/image/icon/food.png'></image>
-  <view class='text'>热门民宿</view>
+  <view class='icon-text' bindtap='toSpecialityHistory'>
+    <image class='icon' src='/image/icon/food.png'></image>
+    <view class='text'>特产订单</view>
+  </view>
 </view>
