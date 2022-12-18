@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.client_landlord_feedback.mapper.ClientLandlordFeedbackMapper">
+    
+    <resultMap type="ClientLandlordFeedback" id="ClientLandlordFeedbackResult">
+        <result property="id"    column="id"    />
+        <result property="userNumber"    column="user_number"    />
+        <result property="feedbackContent"    column="feedback_content"    />
+        <result property="feedbackTime"    column="feedback_time"    />
+        <result property="adminAnswer"    column="admin_answer"    />
+        <result property="answerTime"    column="answer_time"    />
+    </resultMap>
+
+    <sql id="selectClientLandlordFeedbackVo">
+        select id, user_number, feedback_content, feedback_time ,admin_answer,answer_time from client_landlord_feedback join admin_feedback where id = feedback_id and user_number = #{userNumber}
+    </sql>
+
+    <select id="selectClientLandlordFeedbackList" parameterType="ClientLandlordFeedback" resultMap="ClientLandlordFeedbackResult">
+        <include refid="selectClientLandlordFeedbackVo"/>
+
+            <if test="feedbackContent != null  and feedbackContent != ''"> and feedback_content like concat('%', #{feedbackContent}, '%')</if>
+            <if test="params.beginFeedbackTime != null and params.beginFeedbackTime != '' and params.endFeedbackTime != null and params.endFeedbackTime != ''"> and feedback_time between #{params.beginFeedbackTime} and #{params.endFeedbackTime}</if>
+
+    </select>
+    
+    <select id="selectClientLandlordFeedbackById" parameterType="Long" resultMap="ClientLandlordFeedbackResult">
+<!--        <include refid="selectClientLandlordFeedbackVo"/>-->
+        select id, user_number, feedback_content, feedback_time from client_landlord_feedback where id = #{id}
+    </select>
+        
+    <insert id="insertClientLandlordFeedback" parameterType="ClientLandlordFeedback" useGeneratedKeys="true" keyProperty="id">
+
+        insert into client_landlord_feedback
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userNumber != null and userNumber != ''">user_number,</if>
+            <if test="feedbackContent != null and feedbackContent != ''">feedback_content,</if>
+            <if test="feedbackTime != null">feedback_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userNumber != null and userNumber != ''">#{userNumber},</if>
+            <if test="feedbackContent != null and feedbackContent != ''">#{feedbackContent},</if>
+            <if test="feedbackTime != null">#{feedbackTime},</if>
+         </trim>
+
+    </insert>
+
+    <insert id="insertClientLandlordFeedback2" parameterType="ClientLandlordFeedback" useGeneratedKeys="true" keyProperty="id">
+
+        insert into admin_feedback (feedback_id) values (#{id})
+
+    </insert>
+
+    <update id="updateClientLandlordFeedback" parameterType="ClientLandlordFeedback">
+        update client_landlord_feedback
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userNumber != null and userNumber != ''">user_number = #{userNumber},</if>
+            <if test="feedbackContent != null and feedbackContent != ''">feedback_content = #{feedbackContent},</if>
+            <if test="feedbackTime != null">feedback_time = #{feedbackTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteClientLandlordFeedbackById" parameterType="Long">
+        delete from client_landlord_feedback where id = #{id}
+    </delete>
+
+    <delete id="deleteClientLandlordFeedbackById2" parameterType="Long">
+        delete from admin_feedback where feedback_id = #{id}
+    </delete>
+
+    <delete id="deleteClientLandlordFeedbackByIds" parameterType="String">
+        delete from client_landlord_feedback where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteClientLandlordFeedbackByIds2" parameterType="String">
+        delete from admin_feedback where feedback_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
