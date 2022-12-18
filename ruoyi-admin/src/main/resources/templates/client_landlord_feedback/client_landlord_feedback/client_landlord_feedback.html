@@ -45,6 +45,9 @@
                 <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="client_landlord_feedback:client_landlord_feedback:print">
                     <i class="glyphicon glyphicon-print icon-share"></i> 打印
                 </a>
+                <a class="btn btn-warning" onclick="$.modal.openTab('历史反馈统计', '/client_landlord_feedback/client_landlord_feedback/eCharts');" shiro:hasPermission="client_landlord_feedback:client_landlord_feedback:eCharts">
+                    <i class="fa fa-plus"></i> 统计
+                </a>
 
             </div>
 <!--            <div class="col-sm-12 select-table table-striped">-->
@@ -91,14 +94,31 @@
                     title: '',
                     visible: false
                 },
+                    {
+                        field: 'userNumber',
+                        title: '用户名',
+                        sortable: true
+                    },
                 {
                     field: 'feedbackContent',
-                    title: '反馈内容'
+                    title: '反馈内容',
+                    sortable: true
                 },
                 {
                     field: 'feedbackTime',
-                    title: '反馈时间'
+                    title: '反馈时间',
+                    sortable: true
                 },
+                    {
+                        field:'adminAnswer',
+                        title:'管理员回复',
+                        sortable: true
+                    },
+                    {
+                        field:'answerTime',
+                        title:'回复时间',
+                        sortable: true
+                    },
                 {
                     title: '操作',
                     align: 'center',

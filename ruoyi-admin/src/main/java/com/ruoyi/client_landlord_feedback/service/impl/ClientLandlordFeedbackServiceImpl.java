@@ -1,6 +1,10 @@
 package com.ruoyi.client_landlord_feedback.service.impl;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+
+import com.ruoyi.landlordhomeorder.domain.LandlordRoomRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.client_landlord_feedback.mapper.ClientLandlordFeedbackMapper;
@@ -53,7 +57,8 @@ public class ClientLandlordFeedbackServiceImpl implements IClientLandlordFeedbac
     @Override
     public int insertClientLandlordFeedback(ClientLandlordFeedback clientLandlordFeedback)
     {
-        return clientLandlordFeedbackMapper.insertClientLandlordFeedback(clientLandlordFeedback);
+        clientLandlordFeedbackMapper.insertClientLandlordFeedback(clientLandlordFeedback);
+        return clientLandlordFeedbackMapper.insertClientLandlordFeedback2(clientLandlordFeedback);
     }
 
     /**
@@ -77,7 +82,8 @@ public class ClientLandlordFeedbackServiceImpl implements IClientLandlordFeedbac
     @Override
     public int deleteClientLandlordFeedbackByIds(String ids)
     {
-        return clientLandlordFeedbackMapper.deleteClientLandlordFeedbackByIds(Convert.toStrArray(ids));
+        clientLandlordFeedbackMapper.deleteClientLandlordFeedbackByIds(Convert.toStrArray(ids));
+        return clientLandlordFeedbackMapper.deleteClientLandlordFeedbackByIds2(Convert.toStrArray(ids));
     }
 
     /**
@@ -89,6 +95,30 @@ public class ClientLandlordFeedbackServiceImpl implements IClientLandlordFeedbac
     @Override
     public int deleteClientLandlordFeedbackById(Long id)
     {
-        return clientLandlordFeedbackMapper.deleteClientLandlordFeedbackById(id);
+        clientLandlordFeedbackMapper.deleteClientLandlordFeedbackById(id);
+        return clientLandlordFeedbackMapper.deleteClientLandlordFeedbackById2(id);
     }
+
+    @Override
+    public List<Integer> getMonthlyFeedbackRecordIncrement() {
+        int len = 12;
+        List<Integer> list = new ArrayList<Integer>(len);
+        for (int i = 0; i < len; i++) {
+            list.add(0);
+        }
+
+        Calendar ca = Calendar.getInstance();
+        List<ClientLandlordFeedback> feedbackRecord= clientLandlordFeedbackMapper.selectClientLandlordFeedbackList(new ClientLandlordFeedback());
+        for (ClientLandlordFeedback user : feedbackRecord) {
+            if ( !"".equals(user.getId()) ) {
+                ca.setTime(user.getFeedbackTime());
+                int idx = ca.get(Calendar.MONTH);
+                int cur = list.get(idx);
+                list.set(idx, 1 + cur);
+            }
+        }
+
+        return list;
+    }
+
 }

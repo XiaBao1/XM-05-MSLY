@@ -7,13 +7,7 @@
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-admin_feedback-edit" th:object="${adminFeedback}">
-            <input name="id" th:field="*{id}" type="hidden">
-<!--            <div class="form-group">    -->
-<!--                <label class="col-sm-3 control-label is-required">反馈ID：</label>-->
-<!--                <div class="col-sm-8">-->
-<!--                    <input name="feedbackId" th:field="*{feedbackId}" class="form-control" type="text" required>-->
-<!--                </div>-->
-<!--            </div>-->
+            <input name="answerId" th:field="*{answerId}" type="hidden">
             <div class="form-group">    
                 <label class="col-sm-3 control-label">管理员回复：</label>
                 <div class="col-sm-8">

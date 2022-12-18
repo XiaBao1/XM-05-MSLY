@@ -2,6 +2,7 @@ package com.ruoyi.admin_feedback.domain;
 
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ruoyi.common.utils.security.PermissionUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -11,18 +12,30 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 反馈处理对象 admin_feedback
  * 
  * @author yyt
- * @date 2022-12-10
+ * @date 2022-12-17
  */
 public class AdminFeedback extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     /**  */
-    private Long id;
+    private Long answerId;
 
     /** 反馈ID */
-    @Excel(name = "反馈ID")
     private Long feedbackId;
+
+    /** 账号 */
+    @Excel(name = "反馈用户")
+    private String userNumber;
+
+    /** 反馈内容 */
+    @Excel(name = "反馈内容")
+    private String feedbackContent;
+
+    /** 反馈时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "反馈时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date feedbackTime;
 
     /** 管理员回复 */
     @Excel(name = "管理员回复")
@@ -33,14 +46,37 @@ public class AdminFeedback extends BaseEntity
     @Excel(name = "回复时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date answerTime;
 
-    public void setId(Long id) 
+    public String getUserNumber()
     {
-        this.id = id;
+        return userNumber;
+    }
+    public void setFeedbackContent(String feedbackContent)
+    {
+        this.feedbackContent = feedbackContent;
     }
 
-    public Long getId() 
+    public String getFeedbackContent()
     {
-        return id;
+        return feedbackContent;
+    }
+    public void setFeedbackTime(Date feedbackTime)
+    {
+        this.feedbackTime = feedbackTime;
+    }
+
+    public Date getFeedbackTime()
+    {
+        return feedbackTime;
+    }
+
+    public void setAnswerId(Long answerId) 
+    {
+        this.answerId = answerId;
+    }
+
+    public Long getAnswerId() 
+    {
+        return answerId;
     }
     public void setFeedbackId(Long feedbackId) 
     {
@@ -73,10 +109,13 @@ public class AdminFeedback extends BaseEntity
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
+            .append("answerId", getAnswerId())
             .append("feedbackId", getFeedbackId())
             .append("adminAnswer", getAdminAnswer())
             .append("answerTime", getAnswerTime())
+                .append("userNumber", getUserNumber())
+                .append("feedbackContent", getFeedbackContent())
+                .append("feedbackTime", getFeedbackTime())
             .toString();
     }
 }

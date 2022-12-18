@@ -58,4 +58,6 @@ public interface IClientLandlordFeedbackService
      * @return 结果
      */
     public int deleteClientLandlordFeedbackById(Long id);
+
+    public List<Integer> getMonthlyFeedbackRecordIncrement();
 }

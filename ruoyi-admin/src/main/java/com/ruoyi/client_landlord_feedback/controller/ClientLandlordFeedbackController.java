@@ -98,6 +98,7 @@ public class ClientLandlordFeedbackController extends BaseController
     {
         ClientLandlordFeedback clientLandlordFeedback = clientLandlordFeedbackService.selectClientLandlordFeedbackById(id);
         mmap.put("clientLandlordFeedback", clientLandlordFeedback);
+        System.out.println("==================================================================================="+clientLandlordFeedback);
         return prefix + "/edit";
     }
 
@@ -123,5 +124,25 @@ public class ClientLandlordFeedbackController extends BaseController
     public AjaxResult remove(String ids)
     {
         return toAjax(clientLandlordFeedbackService.deleteClientLandlordFeedbackByIds(ids));
+    }
+
+    /**
+     * 统计
+     */
+    @RequiresPermissions("client_landlord_feedback:client_landlord_feedback:eCharts")
+    @GetMapping("/eCharts")
+    public String statistics(ModelMap mmap)
+    {
+        return prefix + "/eCharts";
+    }
+
+    @RequiresPermissions("client_landlord_feedback:client_landlord_feedback:eCharts")
+    @Log(title = "历史反馈统计", businessType = BusinessType.INSERT)
+    @PostMapping("/eCharts")
+    @ResponseBody
+    public List<Integer> statisticsData()
+    {
+        List<Integer> list = clientLandlordFeedbackService.getMonthlyFeedbackRecordIncrement();
+        return list;
     }
 }

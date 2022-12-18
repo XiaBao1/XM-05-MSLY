@@ -7,17 +7,17 @@ import com.ruoyi.admin_feedback.domain.AdminFeedback;
  * 反馈处理Service接口
  * 
  * @author yyt
- * @date 2022-12-10
+ * @date 2022-12-17
  */
 public interface IAdminFeedbackService 
 {
     /**
      * 查询反馈处理
      * 
-     * @param id 反馈处理主键
+     * @param answerId 反馈处理主键
      * @return 反馈处理
      */
-    public AdminFeedback selectAdminFeedbackById(Long id);
+    public AdminFeedback selectAdminFeedbackByAnswerId(Long answerId);
 
     /**
      * 查询反馈处理列表
@@ -46,16 +46,23 @@ public interface IAdminFeedbackService
     /**
      * 批量删除反馈处理
      * 
-     * @param ids 需要删除的反馈处理主键集合
+     * @param answerIds 需要删除的反馈处理主键集合
      * @return 结果
      */
-    public int deleteAdminFeedbackByIds(String ids);
+    public int deleteAdminFeedbackByAnswerIds(String answerIds);
 
     /**
      * 删除反馈处理信息
      * 
-     * @param id 反馈处理主键
+     * @param answerId 反馈处理主键
      * @return 结果
      */
-    public int deleteAdminFeedbackById(Long id);
+    public int deleteAdminFeedbackByAnswerId(Long answerId);
+
+    /**
+     * 统计
+     *
+     * @return 结果
+     */
+    public List<Integer> getMonthIncrement();
 }

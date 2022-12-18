@@ -5,31 +5,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.ruoyi.admin_feedback.mapper.AdminFeedbackMapper">
     
     <resultMap type="AdminFeedback" id="AdminFeedbackResult">
-        <result property="id"    column="id"    />
+        <result property="answerId"    column="answer_id"    />
         <result property="feedbackId"    column="feedback_id"    />
         <result property="adminAnswer"    column="admin_answer"    />
         <result property="answerTime"    column="answer_time"    />
+        <result property="userNumber"    column="user_number"    />
+        <result property="feedbackContent"    column="feedback_content"    />
+        <result property="feedbackTime"    column="feedback_time"    />
     </resultMap>
 
     <sql id="selectAdminFeedbackVo">
-        select id, feedback_id, admin_answer, answer_time from admin_feedback
+        select answer_id, feedback_id, user_number, feedback_content, feedback_time ,admin_answer, answer_time from admin_feedback join client_landlord_feedback where id = feedback_id
     </sql>
 
     <select id="selectAdminFeedbackList" parameterType="AdminFeedback" resultMap="AdminFeedbackResult">
         <include refid="selectAdminFeedbackVo"/>
-        <where>  
-            <if test="feedbackId != null "> and feedback_id = #{feedbackId}</if>
+
             <if test="adminAnswer != null  and adminAnswer != ''"> and admin_answer like concat('%', #{adminAnswer}, '%')</if>
             <if test="params.beginAnswerTime != null and params.beginAnswerTime != '' and params.endAnswerTime != null and params.endAnswerTime != ''"> and answer_time between #{params.beginAnswerTime} and #{params.endAnswerTime}</if>
-        </where>
+
     </select>
     
-    <select id="selectAdminFeedbackById" parameterType="Long" resultMap="AdminFeedbackResult">
+    <select id="selectAdminFeedbackByAnswerId" parameterType="Long" resultMap="AdminFeedbackResult">
         <include refid="selectAdminFeedbackVo"/>
-        where id = #{id}
+        and answer_id = #{answerId}
     </select>
         
-    <insert id="insertAdminFeedback" parameterType="AdminFeedback" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertAdminFeedback" parameterType="AdminFeedback" useGeneratedKeys="true" keyProperty="answerId">
         insert into admin_feedback
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="feedbackId != null">feedback_id,</if>
@@ -50,18 +52,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="adminAnswer != null">admin_answer = #{adminAnswer},</if>
             <if test="answerTime != null">answer_time = #{answerTime},</if>
         </trim>
-        where id = #{id}
+        where answer_id = #{answerId}
     </update>
 
-    <delete id="deleteAdminFeedbackById" parameterType="Long">
-        delete from admin_feedback where id = #{id}
+    <delete id="deleteAdminFeedbackByAnswerId" parameterType="Long">
+        delete from admin_feedback where answer_id = #{answerId}
     </delete>
 
-    <delete id="deleteAdminFeedbackByIds" parameterType="String">
-        delete from admin_feedback where id in 
-        <foreach item="id" collection="array" open="(" separator="," close=")">
-            #{id}
+
+    <delete id="deleteAdminFeedbackByAnswerIds" parameterType="String">
+        delete from admin_feedback where answer_id in 
+        <foreach item="answerId" collection="array" open="(" separator="," close=")">
+            #{answerId}
         </foreach>
     </delete>
+
 
 </mapper>

@@ -7,17 +7,17 @@ import com.ruoyi.admin_feedback.domain.AdminFeedback;
  * 反馈处理Mapper接口
  * 
  * @author yyt
- * @date 2022-12-10
+ * @date 2022-12-17
  */
 public interface AdminFeedbackMapper 
 {
     /**
      * 查询反馈处理
      * 
-     * @param id 反馈处理主键
+     * @param answerId 反馈处理主键
      * @return 反馈处理
      */
-    public AdminFeedback selectAdminFeedbackById(Long id);
+    public AdminFeedback selectAdminFeedbackByAnswerId(Long answerId);
 
     /**
      * 查询反馈处理列表
@@ -46,16 +46,18 @@ public interface AdminFeedbackMapper
     /**
      * 删除反馈处理
      * 
-     * @param id 反馈处理主键
+     * @param answerId 反馈处理主键
      * @return 结果
      */
-    public int deleteAdminFeedbackById(Long id);
+    public int deleteAdminFeedbackByAnswerId(Long answerId);
+    public int deleteAdminFeedbackByAnswerId2(Long answerId);
 
     /**
      * 批量删除反馈处理
      * 
-     * @param ids 需要删除的数据主键集合
+     * @param answerIds 需要删除的数据主键集合
      * @return 结果
      */
-    public int deleteAdminFeedbackByIds(String[] ids);
+    public int deleteAdminFeedbackByAnswerIds(String[] answerIds);
+    public int deleteAdminFeedbackByAnswerIds2(String[] answerIds);
 }

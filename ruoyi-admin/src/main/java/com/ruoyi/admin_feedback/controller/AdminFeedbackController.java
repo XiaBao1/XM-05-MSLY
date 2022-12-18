@@ -23,7 +23,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 反馈处理Controller
  * 
  * @author yyt
- * @date 2022-12-10
+ * @date 2022-12-17
  */
 @Controller
 @RequestMapping("/admin_feedback/admin_feedback")
@@ -93,10 +93,10 @@ public class AdminFeedbackController extends BaseController
      * 修改反馈处理
      */
     @RequiresPermissions("admin_feedback:admin_feedback:edit")
-    @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Long id, ModelMap mmap)
+    @GetMapping("/edit/{answerId}")
+    public String edit(@PathVariable("answerId") Long answerId, ModelMap mmap)
     {
-        AdminFeedback adminFeedback = adminFeedbackService.selectAdminFeedbackById(id);
+        AdminFeedback adminFeedback = adminFeedbackService.selectAdminFeedbackByAnswerId(answerId);
         mmap.put("adminFeedback", adminFeedback);
         return prefix + "/edit";
     }
@@ -122,6 +122,24 @@ public class AdminFeedbackController extends BaseController
     @ResponseBody
     public AjaxResult remove(String ids)
     {
-        return toAjax(adminFeedbackService.deleteAdminFeedbackByIds(ids));
+        return toAjax(adminFeedbackService.deleteAdminFeedbackByAnswerIds(ids));
+    }
+
+
+    @RequiresPermissions("admin_feedback:admin_feedback:statistics")
+    @GetMapping("/statistics")
+    public String statistics(ModelMap mmap)
+    {
+        return prefix + "/statistics";
+    }
+
+    @RequiresPermissions("admin_feedback:admin_feedback:statistics")
+    @Log(title = "平台反馈统计", businessType = BusinessType.INSERT)
+    @PostMapping("/statistics")
+    @ResponseBody
+    public List<Integer> statisticsData()
+    {
+        List<Integer> list = adminFeedbackService.getMonthIncrement();
+        return list;
     }
 }

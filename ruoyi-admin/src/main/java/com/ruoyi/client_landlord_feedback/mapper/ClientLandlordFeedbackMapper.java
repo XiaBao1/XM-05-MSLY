@@ -35,6 +35,8 @@ public interface ClientLandlordFeedbackMapper
      */
     public int insertClientLandlordFeedback(ClientLandlordFeedback clientLandlordFeedback);
 
+    public int insertClientLandlordFeedback2(ClientLandlordFeedback clientLandlordFeedback);
+
     /**
      * 修改我要反馈
      * 
@@ -50,6 +52,7 @@ public interface ClientLandlordFeedbackMapper
      * @return 结果
      */
     public int deleteClientLandlordFeedbackById(Long id);
+    public int deleteClientLandlordFeedbackById2(Long id);
 
     /**
      * 批量删除我要反馈
@@ -58,4 +61,5 @@ public interface ClientLandlordFeedbackMapper
      * @return 结果
      */
     public int deleteClientLandlordFeedbackByIds(String[] ids);
+    public int deleteClientLandlordFeedbackByIds2(String[] ids);
 }
