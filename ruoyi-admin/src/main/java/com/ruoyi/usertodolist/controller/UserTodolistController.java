@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.ruoyi.client_landlord_feedback.domain.ClientLandlordFeedback;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -63,6 +64,7 @@ public class UserTodolistController extends BaseController
     @RequiresPermissions("usertodolist:todolist:export")
     @Log(title = "我的待办", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
+    @ResponseBody
     public AjaxResult export(UserTodolist userTodolist)
     {
         List<UserTodolist> list = userTodolistService.selectUserTodolistList(userTodolist);
@@ -70,6 +72,16 @@ public class UserTodolistController extends BaseController
         return util.exportExcel(list, "我的待办数据");
     }
 
+//    @RequiresPermissions("client_landlord_feedback:client_landlord_feedback:export")
+//    @Log(title = "我要反馈", businessType = BusinessType.EXPORT)
+//    @PostMapping("/export")
+//    @ResponseBody
+//    public AjaxResult export(ClientLandlordFeedback clientLandlordFeedback)
+//    {
+//        List<ClientLandlordFeedback> list = clientLandlordFeedbackService.selectClientLandlordFeedbackList(clientLandlordFeedback);
+//        ExcelUtil<ClientLandlordFeedback> util = new ExcelUtil<ClientLandlordFeedback>(ClientLandlordFeedback.class);
+//        return util.exportExcel(list, "我要反馈数据");
+//    }
     /**
      * 新增我的待办
      */
