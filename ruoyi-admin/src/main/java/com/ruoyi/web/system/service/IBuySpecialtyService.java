@@ -5,15 +5,15 @@ import com.ruoyi.web.system.domain.BuySpecialty;
 
 /**
  * 特产订购Service接口
- * 
+ *
  * @author pch
  * @date 2022-12-14
  */
-public interface IBuySpecialtyService 
+public interface IBuySpecialtyService
 {
     /**
      * 查询特产订购
-     * 
+     *
      * @param id 特产订购主键
      * @return 特产订购
      */
@@ -21,7 +21,7 @@ public interface IBuySpecialtyService
 
     /**
      * 查询特产订购列表
-     * 
+     *
      * @param buySpecialty 特产订购
      * @return 特产订购集合
      */
@@ -29,7 +29,7 @@ public interface IBuySpecialtyService
 
     /**
      * 新增特产订购
-     * 
+     *
      * @param buySpecialty 特产订购
      * @return 结果
      */
@@ -37,7 +37,7 @@ public interface IBuySpecialtyService
 
     /**
      * 修改特产订购
-     * 
+     *
      * @param buySpecialty 特产订购
      * @return 结果
      */
@@ -45,7 +45,7 @@ public interface IBuySpecialtyService
 
     /**
      * 批量删除特产订购
-     * 
+     *
      * @param ids 需要删除的特产订购主键集合
      * @return 结果
      */
@@ -53,7 +53,7 @@ public interface IBuySpecialtyService
 
     /**
      * 删除特产订购信息
-     * 
+     *
      * @param id 特产订购主键
      * @return 结果
      */
@@ -76,4 +76,12 @@ public interface IBuySpecialtyService
     public String getUserComment(Long id);
 
     public List<Double> getScore(Long id);
+
+    public Long getMoneyById(Long id);
+
+    public void updateInventory(BuySpecialty buySpecialty);
+
+    public void updateMoney(BuySpecialty buySpecialty);
+
+    public void insertRecord(BuySpecialty buySpecialty);
 }

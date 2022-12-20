@@ -42,12 +42,18 @@ public class BuyRoom extends BaseEntity
     @Excel(name = "空闲")
     private Integer isFree;
 
+    @Excel(name = "下单时间")
+    private String buyTime;
+
     public  Long userId= (Long) PermissionUtils.getPrincipalProperty("userId");
 
     public void setId(Long id)
     {
         this.id = id;
     }
+
+    public String getBuyTime(){return buyTime;}
+    public void setBuyTime(String buyTime){this.buyTime=buyTime;}
 
     public Long getId()
     {

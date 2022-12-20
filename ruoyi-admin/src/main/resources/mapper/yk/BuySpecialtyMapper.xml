@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.web.system.mapper.BuySpecialtyMapper">
-    
+
     <resultMap type="BuySpecialty" id="BuySpecialtyResult">
         <result property="id"    column="id"    />
         <result property="houseId"    column="house_id"    />
@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectBuySpecialtyList" parameterType="BuySpecialty" resultMap="BuySpecialtyResult">
         <include refid="selectBuySpecialtyVo"/>
-        <where>  
+        <where>
             <if test="houseId != null "> and house_id = #{houseId}</if>
             <if test="specialtyName != null  and specialtyName != ''"> and specialty_name like concat('%', #{specialtyName}, '%')</if>
             <if test="description != null  and description != ''"> and description like concat('%', #{description}, '%')</if>
@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="inventory != null "> and inventory = #{inventory}</if>
         </where>
     </select>
-    
+
     <select id="selectBuySpecialtyById" parameterType="Long" resultMap="BuySpecialtyResult">
         <include refid="selectBuySpecialtyVo"/>
         where id = #{id}
@@ -77,7 +77,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select score from client_specialty_comment where id in (select id from client_specialty_comment where
         (select specialty_id from client_specialty_record where id=client_specialty_comment.specialty_record_id)=#{id})
     </select>
-        
+
+    <select id="getMoneyById" parameterType="Long" resultType="Long">
+        select money from sys_user where user_id=#{id}
+    </select>
+
     <insert id="insertBuySpecialty" parameterType="BuySpecialty" useGeneratedKeys="true" keyProperty="id">
         insert into house_specialty
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -87,7 +91,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="price != null">price,</if>
             <if test="inventory != null">inventory,</if>
             <if test="imageUrl != null">image_url,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="houseId != null">#{houseId},</if>
             <if test="specialtyName != null and specialtyName != ''">#{specialtyName},</if>
@@ -95,7 +99,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="price != null">#{price},</if>
             <if test="inventory != null">#{inventory},</if>
             <if test="imageUrl != null">#{imageUrl},</if>
-         </trim>
+        </trim>
+    </insert>
+
+    <insert id="insertRecord" parameterType="BuySpecialty">
+        insert into client_specialty_record (client_number,specialty_id,quantity,price,order_time,is_received,is_paid,is_done) values
+        (#{userId},#{id},#{quantity},#{price},now(),0,1,0)
     </insert>
 
     <update id="updateBuySpecialty" parameterType="BuySpecialty">
@@ -111,12 +120,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </update>
 
+    <update id="updateInventory" parameterType="BuySpecialty">
+        update house_specialty set inventory=#{inventory} where id=#{id};
+    </update>
+
+    <update id="updateMoney" parameterType="BuySpecialty">
+        update sys_user set money=#{money} where user_id=#{userId}
+    </update>
+
     <delete id="deleteBuySpecialtyById" parameterType="Long">
         delete from house_specialty where id = #{id}
     </delete>
 
     <delete id="deleteBuySpecialtyByIds" parameterType="String">
-        delete from house_specialty where id in 
+        delete from house_specialty where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

@@ -164,26 +164,13 @@
 
     function dinggou() {
         console.log("这里是订购函数");
-        if(isFree==0){
+        if(inventory==0){
             //alert("此房间已预定");
-            top.layer.alert("此房间已预定");
+            top.layer.alert("此特产暂无库存");
         }
         else{
-            // $.ajax({
-            //     type: 'post',
-            //     url: '/system/buyroom/pay',
-            //     async: false,
-            //     data: data,
-            //     success: function(res) {
-            //         console.log(res);
-            //         let json2 = eval( "(" + res + ")" );
-            //         if(json2.result_code==0){
-            //             top.layer.alert("预定成功");
-            //         }
-            //     }
-            // });
-            var url="system/buyroom/infopage/"+id;
-            //$.modal.openTab("民宿订购",url);
+            var url="system/buySpecialty/infopage/"+id;
+            $.modal.openTab("订购支付",url);
         }
     }
 

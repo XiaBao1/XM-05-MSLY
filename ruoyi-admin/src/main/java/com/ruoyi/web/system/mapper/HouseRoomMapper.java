@@ -5,15 +5,15 @@ import com.ruoyi.web.system.domain.HouseRoom;
 
 /**
  * 房子管理Mapper接口
- * 
+ *
  * @author ruoyi
  * @date 2022-12-02
  */
-public interface HouseRoomMapper 
+public interface HouseRoomMapper
 {
     /**
      * 查询房子管理
-     * 
+     *
      * @param id 房子管理主键
      * @return 房子管理
      */
@@ -21,7 +21,7 @@ public interface HouseRoomMapper
 
     /**
      * 查询房子管理列表
-     * 
+     *
      * @param houseRoom 房子管理
      * @return 房子管理集合
      */
@@ -29,7 +29,7 @@ public interface HouseRoomMapper
 
     /**
      * 新增房子管理
-     * 
+     *
      * @param houseRoom 房子管理
      * @return 结果
      */
@@ -37,7 +37,7 @@ public interface HouseRoomMapper
 
     /**
      * 修改房子管理
-     * 
+     *
      * @param houseRoom 房子管理
      * @return 结果
      */
@@ -45,7 +45,7 @@ public interface HouseRoomMapper
 
     /**
      * 删除房子管理
-     * 
+     *
      * @param id 房子管理主键
      * @return 结果
      */
@@ -53,7 +53,7 @@ public interface HouseRoomMapper
 
     /**
      * 批量删除房子管理
-     * 
+     *
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */

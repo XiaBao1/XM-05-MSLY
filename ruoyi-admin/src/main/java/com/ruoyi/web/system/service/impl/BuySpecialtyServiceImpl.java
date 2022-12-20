@@ -10,19 +10,19 @@ import com.ruoyi.common.core.text.Convert;
 
 /**
  * 特产订购Service业务层处理
- * 
+ *
  * @author pch
  * @date 2022-12-14
  */
 @Service
-public class BuySpecialtyServiceImpl implements IBuySpecialtyService 
+public class BuySpecialtyServiceImpl implements IBuySpecialtyService
 {
     @Autowired
     private BuySpecialtyMapper buySpecialtyMapper;
 
     /**
      * 查询特产订购
-     * 
+     *
      * @param id 特产订购主键
      * @return 特产订购
      */
@@ -34,7 +34,7 @@ public class BuySpecialtyServiceImpl implements IBuySpecialtyService
 
     /**
      * 查询特产订购列表
-     * 
+     *
      * @param buySpecialty 特产订购
      * @return 特产订购
      */
@@ -46,7 +46,7 @@ public class BuySpecialtyServiceImpl implements IBuySpecialtyService
 
     /**
      * 新增特产订购
-     * 
+     *
      * @param buySpecialty 特产订购
      * @return 结果
      */
@@ -58,7 +58,7 @@ public class BuySpecialtyServiceImpl implements IBuySpecialtyService
 
     /**
      * 修改特产订购
-     * 
+     *
      * @param buySpecialty 特产订购
      * @return 结果
      */
@@ -70,7 +70,7 @@ public class BuySpecialtyServiceImpl implements IBuySpecialtyService
 
     /**
      * 批量删除特产订购
-     * 
+     *
      * @param ids 需要删除的特产订购主键
      * @return 结果
      */
@@ -82,7 +82,7 @@ public class BuySpecialtyServiceImpl implements IBuySpecialtyService
 
     /**
      * 删除特产订购信息
-     * 
+     *
      * @param id 特产订购主键
      * @return 结果
      */
@@ -126,5 +126,21 @@ public class BuySpecialtyServiceImpl implements IBuySpecialtyService
 
     public List<Double> getScore(Long id){
         return buySpecialtyMapper.getScore(id);
+    }
+
+    public Long getMoneyById(Long id){
+        return buySpecialtyMapper.getMoneyById(id);
+    }
+
+    public void updateInventory(BuySpecialty buySpecialty){
+        buySpecialtyMapper.updateInventory(buySpecialty);
+    }
+
+    public void updateMoney(BuySpecialty buySpecialty){
+        buySpecialtyMapper.updateMoney(buySpecialty);
+    }
+
+    public void insertRecord(BuySpecialty buySpecialty){
+        buySpecialtyMapper.insertRecord(buySpecialty);
     }
 }

@@ -1,6 +1,7 @@
 package com.ruoyi.web.system.controller;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import com.alibaba.fastjson.JSONArray;
@@ -28,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 特产订购Controller
- * 
+ *
  * @author pch
  * @date 2022-12-14
  */
@@ -239,6 +240,65 @@ public class BuySpecialtyController extends BaseController
         res.put("allComment",s);
         System.out.println("s已经加入res");
         res.put("result_code",0);
+        return res.toString();
+    }
+
+    @GetMapping("/infopage/{id}")
+    public String infopage(@PathVariable("id") Long id,ModelMap mmap)
+    {
+        //userService.checkUserAllowed(userService.selectUserById(userId));
+        //mmap.put("user", userService.selectUserById(userId));
+        String suf="&id="+id.toString();
+        System.out.println("infopage controller");
+        return prefix + "/infopage";
+    }
+
+    @PostMapping("pay")
+    @ResponseBody
+    public String pay(HttpServletRequest request){
+        JSONObject res=new JSONObject();
+        Long id=Long.parseLong(request.getParameter("id"));
+        //空 密码6位
+        if(request.getParameter("buyNumber").isEmpty()){
+            res.put("result_code",1);
+            res.put("result_msg","请填写订购数量");
+            return res.toString();
+        }
+        Long buyNumber=Long.parseLong(request.getParameter("buyNumber"));
+        if(request.getParameter("pwd").length()!=6){
+            res.put("result_code",1);
+            res.put("result_msg","请填写正确的支付密码");
+            return res.toString();
+        }
+        //数量
+        BuySpecialty buySpecialty=buySpecialtyService.selectBuySpecialtyById(id);
+        if(buyNumber>buySpecialty.getInventory()){
+            res.put("result_code",1);
+            res.put("result_msg","当前库存不足");
+            return res.toString();
+        }
+        buySpecialty.setInventory(buySpecialty.getInventory()-buyNumber);
+        //余额
+        Long money=buySpecialtyService.getMoneyById(buySpecialty.userId);
+        Long cost=buyNumber*buySpecialty.getPrice();
+        if(money<cost){
+            res.put("result_code",1);
+            res.put("result_msg","当前余额不足");
+            return res.toString();
+        }
+        money=money-cost;
+        //更新 余额 库存 订单
+        buySpecialty.money=money;
+        buySpecialty.quantity=buyNumber;
+        Date date=new Date();
+        String order_time=date.getYear()+"-"+date.getMonth()+"-"+date.getDay()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+        buySpecialty.order_time=order_time;
+        buySpecialtyService.updateInventory(buySpecialty);
+        buySpecialtyService.updateMoney(buySpecialty);
+        buySpecialtyService.insertRecord(buySpecialty);
+
+        res.put("result_code",0);
+        res.put("result_msg","下单成功");
         return res.toString();
     }
 }

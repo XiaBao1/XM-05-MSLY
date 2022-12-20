@@ -59,34 +59,34 @@
             </form>
         </div>
 
-                    <div class="btn-group-sm" id="toolbar" role="group">
-        <!--                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:buyroom:add">-->
-        <!--                    <i class="fa fa-plus"></i> 添加-->
-        <!--                </a>-->
-        <!--                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:buyroom:edit">-->
-        <!--                    <i class="fa fa-edit"></i> 修改-->
-        <!--                </a>-->
-        <!--                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:buyroom:remove">-->
-        <!--                    <i class="fa fa-remove"></i> 删除-->
-        <!--                </a>-->
-                        <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:buyroom:export">
-                            <i class="fa fa-download"></i> 导出
-                        </a>
-                        <a class="btn btn-success" onclick="$.modal.openTab('民宿订购统计', '/system/buyroom/statistics');" shiro:hasPermission="system:buyroom:statistics">
-                            <i class="fa fa-plus"></i> 统计
-                        </a>
-                        <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="xxxx:xxxx:print">
-                            <i class="glyphicon glyphicon-print icon-share"></i> 打印
-                        </a>
-                    </div>
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <!--                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:buyroom:add">-->
+            <!--                    <i class="fa fa-plus"></i> 添加-->
+            <!--                </a>-->
+            <!--                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:buyroom:edit">-->
+            <!--                    <i class="fa fa-edit"></i> 修改-->
+            <!--                </a>-->
+            <!--                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:buyroom:remove">-->
+            <!--                    <i class="fa fa-remove"></i> 删除-->
+            <!--                </a>-->
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:buyroom:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
+            <a class="btn btn-success" onclick="$.modal.openTab('民宿订购统计', '/system/buyroom/statistics');" shiro:hasPermission="system:buyroom:statistics">
+                <i class="fa fa-plus"></i> 统计
+            </a>
+            <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="xxxx:xxxx:print">
+                <i class="glyphicon glyphicon-print icon-share"></i> 打印
+            </a>
+        </div>
         <div class="col-sm-12 select-table table‐bordered noprint" id="prints" style="width: 100%;">
             <!--<table id="bootstrap-table" style="width: 100%;white-space: nowrap;  "></table>-->
             <!--超长冒号显示会影响打印-->
             <table id="bootstrap-table" style="width: 100%;word-break:break-all; word-wrap:break-all; "></table>
         </div>
-<!--        <div class="col-sm-12 select-table table-striped">-->
-<!--            <table id="bootstrap-table"></table>-->
-<!--        </div>-->
+        <!--        <div class="col-sm-12 select-table table-striped">-->
+        <!--            <table id="bootstrap-table"></table>-->
+        <!--        </div>-->
     </div>
 </div>
 <th:block th:include="include :: footer" />
@@ -115,8 +115,8 @@
                 {
                     field: 'houseId',
                     title: '民宿ID',
-                    sortable: 'true'
-                    //visible: false
+                    sortable: 'true',
+                    visible: false
                 },
                 {
                     field:'houseName',

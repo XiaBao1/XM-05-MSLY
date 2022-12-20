@@ -24,89 +24,89 @@
     <th:block th:include="include :: header('特产订购列表')" />
 </head>
 <body class="gray-bg">
-     <div class="container-div">
-        <div class="row">
-            <div class="col-sm-12 search-collapse">
-                <form id="formId">
-                    <div class="select-list">
-                        <ul>
-                            <li>
-                                <label>民宿ID：</label>
-                                <input type="text" name="houseId"/>
-                            </li>
-                            <li>
-                                <label>特产名称：</label>
-                                <input type="text" name="specialtyName"/>
-                            </li>
-                            <li>
-                                <label>特产描述：</label>
-                                <input type="text" name="description"/>
-                            </li>
-                            <li>
-                                <label>特产单价：</label>
-                                <input type="text" name="price"/>
-                            </li>
-                            <li>
-                                <label>库存量：</label>
-                                <input type="text" name="inventory"/>
-                            </li>
-                            <li>
-                                <a class="btn btn-primary btn-rounded btn-sm noprint" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-                            </li>
-                        </ul>
-                    </div>
-                </form>
-            </div>
-
-            <div class="btn-group-sm" id="toolbar" role="group">
-<!--                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:buySpecialty:add">-->
-<!--                    <i class="fa fa-plus"></i> 添加-->
-<!--                </a>-->
-<!--                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:buySpecialty:edit">-->
-<!--                    <i class="fa fa-edit"></i> 修改-->
-<!--                </a>-->
-<!--                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:buySpecialty:remove">-->
-<!--                    <i class="fa fa-remove"></i> 删除-->
-<!--                </a>-->
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:buySpecialty:export">
-                    <i class="fa fa-download"></i> 导出
-                </a>
-                <a class="btn btn-success" onclick="$.modal.openTab('特产销售统计', '/system/buySpecialty/statistics');" shiro:hasPermission="system:buySpecialty:statistics">
-                    <i class="fa fa-plus"></i> 统计
-                </a>
-                <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="xxxx:xxxx:print">
-                    <i class="glyphicon glyphicon-print icon-share"></i> 打印
-                </a>
-            </div>
-            <div class="col-sm-12 select-table table‐bordered noprint" id="prints" style="width: 100%;">
-                <!--<table id="bootstrap-table" style="width: 100%;white-space: nowrap;  "></table>-->
-                <!--超长冒号显示会影响打印-->
-                <table id="bootstrap-table" style="width: 100%;word-break:break-all; word-wrap:break-all; "></table>
-            </div>
-<!--            <div class="col-sm-12 select-table table-striped">-->
-<!--                <table id="bootstrap-table"></table>-->
-<!--            </div>-->
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="formId">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            <label>民宿ID：</label>
+                            <input type="text" name="houseId"/>
+                        </li>
+                        <li>
+                            <label>特产名称：</label>
+                            <input type="text" name="specialtyName"/>
+                        </li>
+                        <li>
+                            <label>特产描述：</label>
+                            <input type="text" name="description"/>
+                        </li>
+                        <li>
+                            <label>特产单价：</label>
+                            <input type="text" name="price"/>
+                        </li>
+                        <li>
+                            <label>库存量：</label>
+                            <input type="text" name="inventory"/>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm noprint" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
         </div>
-    </div>
-    <th:block th:include="include :: footer" />
-    <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:buySpecialty:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:buySpecialty:remove')}]];
-        var buyFlag = [[${@permission.hasPermi('system:buySpecialty:buy')}]];
-        var prefix = ctx + "system/buySpecialty";
 
-        $(function() {
-            var options = {
-                url: prefix + "/list",
-                createUrl: prefix + "/add",
-                updateUrl: prefix + "/edit/{id}",
-                removeUrl: prefix + "/remove",
-                exportUrl: prefix + "/export",
-                modalName: "特产订购",
-                columns: [{
-                    checkbox: true
-                },
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <!--                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:buySpecialty:add">-->
+            <!--                    <i class="fa fa-plus"></i> 添加-->
+            <!--                </a>-->
+            <!--                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:buySpecialty:edit">-->
+            <!--                    <i class="fa fa-edit"></i> 修改-->
+            <!--                </a>-->
+            <!--                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:buySpecialty:remove">-->
+            <!--                    <i class="fa fa-remove"></i> 删除-->
+            <!--                </a>-->
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:buySpecialty:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
+            <a class="btn btn-success" onclick="$.modal.openTab('特产销售统计', '/system/buySpecialty/statistics');" shiro:hasPermission="system:buySpecialty:statistics">
+                <i class="fa fa-plus"></i> 统计
+            </a>
+            <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="xxxx:xxxx:print">
+                <i class="glyphicon glyphicon-print icon-share"></i> 打印
+            </a>
+        </div>
+        <div class="col-sm-12 select-table table‐bordered noprint" id="prints" style="width: 100%;">
+            <!--<table id="bootstrap-table" style="width: 100%;white-space: nowrap;  "></table>-->
+            <!--超长冒号显示会影响打印-->
+            <table id="bootstrap-table" style="width: 100%;word-break:break-all; word-wrap:break-all; "></table>
+        </div>
+        <!--            <div class="col-sm-12 select-table table-striped">-->
+        <!--                <table id="bootstrap-table"></table>-->
+        <!--            </div>-->
+    </div>
+</div>
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('system:buySpecialty:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('system:buySpecialty:remove')}]];
+    var buyFlag = [[${@permission.hasPermi('system:buySpecialty:buy')}]];
+    var prefix = ctx + "system/buySpecialty";
+
+    $(function() {
+        var options = {
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "特产订购",
+            columns: [{
+                checkbox: true
+            },
                 {
                     field: 'id',
                     title: '',
@@ -115,12 +115,13 @@
                 {
                     field: 'houseId',
                     title: '民宿ID',
-                    sortable: 'true'
+                    sortable: 'true',
+                    visible: false
                 },
-                    {
-                      field: 'houseName',
-                      title: '民宿名称',
-                    },
+                {
+                    field: 'houseName',
+                    title: '民宿名称',
+                },
                 {
                     field: 'specialtyName',
                     title: '特产名称',
@@ -162,28 +163,28 @@
                         return actions.join('');
                     }
                 }]
-            };
-            $.table.init(options);
-        });
+        };
+        $.table.init(options);
+    });
 
-        function buy(id) {
-            var url = prefix + '/buy/' + id;
-            $.modal.openTab("详情页", url);
-        }
-
-
-
-        function printHtml() {
-            $("#prints").removeClass("noprint");
-            //隐藏操作列
-            $.table.hideColumn('caozuo');
-            window.print();
-            $("#option").addClass("noprint");
-            //显示操作列
-            $.table.showColumn('caozuo');
-        }
+    function buy(id) {
+        var url = prefix + '/buy/' + id;
+        $.modal.openTab("详情页", url);
+    }
 
 
-    </script>
+
+    function printHtml() {
+        $("#prints").removeClass("noprint");
+        //隐藏操作列
+        $.table.hideColumn('caozuo');
+        window.print();
+        $("#option").addClass("noprint");
+        //显示操作列
+        $.table.showColumn('caozuo');
+    }
+
+
+</script>
 </body>
 </html>

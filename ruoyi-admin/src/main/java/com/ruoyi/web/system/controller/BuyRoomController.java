@@ -313,6 +313,13 @@ public class BuyRoomController extends BaseController
         String timeout=String.valueOf(toYear)+"-"+toMonth+"-"+toDay+" "+hour+":00:00";
         bb.setStandard(timein);//借用
         bb.setRoomNumber(timeout);//借用
+        Date date=new Date();
+        SimpleDateFormat dateFormat1= new SimpleDateFormat("yyyy-MM-dd HH:MM:SS");
+        System.out.println(dateFormat.format(date));
+        String buy_time=dateFormat.format(date);
+        // String buy_time=date.getYear()+"-"+date.getMonth()+"-"+date.getDay()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+        System.out.println(buy_time+"   &&&&&&&&&&&");
+        bb.setBuyTime(buy_time);
         buyRoomService.insertRecord(bb);
 
 

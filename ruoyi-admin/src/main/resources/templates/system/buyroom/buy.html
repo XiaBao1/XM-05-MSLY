@@ -6,7 +6,7 @@
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
     <form class="form-horizontal m" id="form-buyRoom-buy" >
-<!--    <form class="form-horizontal m" id="form-buyroom-buy" th:object="${buyRoom}">-->
+        <!--    <form class="form-horizontal m" id="form-buyroom-buy" th:object="${buyRoom}">-->
         <div class="form-group" hidden>
             <label class="col-sm-3 control-label">房间ID：</label>
             <div class="col-sm-8">
@@ -68,11 +68,11 @@
             </div>
         </div>
         <div id="showImage">
-<!--            <p style="text-align: center">-->
-<!--                <img th:src="@{/img/minsu.jpg}" alt="无法显示图片" th:width="600" height="400">-->
-<!--            </p>-->
+            <!--            <p style="text-align: center">-->
+            <!--                <img th:src="@{/img/minsu.jpg}" alt="无法显示图片" th:width="600" height="400">-->
+            <!--            </p>-->
         </div>
-<!--        <img src="http://localhost/profile/test.png">-->
+        <!--        <img src="http://localhost/profile/test.png">-->
         <div>
             <p style="text-align: center">
                 <font size="5" >民宿展示</font>
@@ -84,22 +84,22 @@
             </p>
         </div>
     </form>
-<!--    <div><img src="https://pic1.zhimg.com/80/v2-b31f71b9dbfc90cd5897e052075c6a90_720w.webp"  class="img-circle" alt="User Image" th:width="50" height="50"/></div>-->
+    <!--    <div><img src="https://pic1.zhimg.com/80/v2-b31f71b9dbfc90cd5897e052075c6a90_720w.webp"  class="img-circle" alt="User Image" th:width="50" height="50"/></div>-->
     <div class="scroller" style="height: 341px;" data-always-visible="1" data-rail-visible1="1" id="showComment">
-<!--        <ul class="chats">-->
-<!--            <li class="in">-->
-<!--                <img th:src="@{/img/profile.jpg}" class="img-circle" alt="User Image" th:width="50" height="50">-->
-<!--                &lt;!&ndash;                    <img class="img-circle" th:width="50" height="50" alt="" src="../static/img/profile.jpg"/>&ndash;&gt;-->
-<!--                <div class="message">-->
-<!--                        <span class="arrow">-->
-<!--                        </span>-->
-<!--                    <a href="javascript:;" class="name" id="commentName">-->
-<!--                        hhu </a>-->
-<!--                    <span class="body" id="commentContent">-->
-<!--                           hhhh </span>-->
-<!--                </div>-->
-<!--            </li>-->
-<!--        </ul>-->
+        <!--        <ul class="chats">-->
+        <!--            <li class="in">-->
+        <!--                <img th:src="@{/img/profile.jpg}" class="img-circle" alt="User Image" th:width="50" height="50">-->
+        <!--                &lt;!&ndash;                    <img class="img-circle" th:width="50" height="50" alt="" src="../static/img/profile.jpg"/>&ndash;&gt;-->
+        <!--                <div class="message">-->
+        <!--                        <span class="arrow">-->
+        <!--                        </span>-->
+        <!--                    <a href="javascript:;" class="name" id="commentName">-->
+        <!--                        hhu </a>-->
+        <!--                    <span class="body" id="commentContent">-->
+        <!--                           hhhh </span>-->
+        <!--                </div>-->
+        <!--            </li>-->
+        <!--        </ul>-->
     </div>
 </div>
 <!--    <script th:inline="javascript">-->
@@ -133,17 +133,17 @@
         async: false,
         data: data,
         success: function(res) {
-             console.log(res);
+            console.log(res);
             let json = eval( "(" + res + ")" );
-             roomNumber= json.roomNumber;
-             houseId=json.houseId;
-             standard=json.standard;
-             price=json.pricePerDay;
-             isFree=json.isFree;
-             phone=json.phoneNumber;
-             mailbox=json.mailBox;
-             houseName=json.houseName;
-             imageUrl=json.imageUrl;
+            roomNumber= json.roomNumber;
+            houseId=json.houseId;
+            standard=json.standard;
+            price=json.pricePerDay;
+            isFree=json.isFree;
+            phone=json.phoneNumber;
+            mailbox=json.mailBox;
+            houseName=json.houseName;
+            imageUrl=json.imageUrl;
         }
     });
     document.getElementById("roomNumber").value=roomNumber;

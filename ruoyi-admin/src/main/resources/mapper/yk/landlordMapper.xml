@@ -15,7 +15,7 @@
     </resultMap>
 
     <sql id="selectlandlordVo">
-        select id, house_name, host_number, address, score, register_time from landlord_house
+        select id, house_name, host_number, address, score, register_time,image_url from landlord_house
     </sql>
 
     <select id="selectlandlordList" parameterType="landlord" resultMap="landlordResult">
@@ -49,7 +49,7 @@
         insert into landlord_house
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="houseName != null">house_name,</if>
-           host_number,
+            host_number,
             <if test="address != null">address,</if>
             <if test="score != null">score,</if>
             <if test="registerTime != null">register_time,</if>

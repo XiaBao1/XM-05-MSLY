@@ -13,19 +13,19 @@ import com.ruoyi.common.core.text.Convert;
 
 /**
  * 房子管理Service业务层处理
- * 
+ *
  * @author ruoyi
  * @date 2022-12-02
  */
 @Service
-public class HouseRoomServiceImpl implements IHouseRoomService 
+public class HouseRoomServiceImpl implements IHouseRoomService
 {
     @Autowired
     private HouseRoomMapper houseRoomMapper;
 
     /**
      * 查询房子管理
-     * 
+     *
      * @param id 房子管理主键
      * @return 房子管理
      */
@@ -37,7 +37,7 @@ public class HouseRoomServiceImpl implements IHouseRoomService
 
     /**
      * 查询房子管理列表
-     * 
+     *
      * @param houseRoom 房子管理
      * @return 房子管理
      */
@@ -49,7 +49,7 @@ public class HouseRoomServiceImpl implements IHouseRoomService
 
     /**
      * 新增房子管理
-     * 
+     *
      * @param houseRoom 房子管理
      * @return 结果
      */
@@ -61,7 +61,7 @@ public class HouseRoomServiceImpl implements IHouseRoomService
 
     /**
      * 修改房子管理
-     * 
+     *
      * @param houseRoom 房子管理
      * @return 结果
      */
@@ -73,7 +73,7 @@ public class HouseRoomServiceImpl implements IHouseRoomService
 
     /**
      * 批量删除房子管理
-     * 
+     *
      * @param ids 需要删除的房子管理主键
      * @return 结果
      */
@@ -85,7 +85,7 @@ public class HouseRoomServiceImpl implements IHouseRoomService
 
     /**
      * 删除房子管理信息
-     * 
+     *
      * @param id 房子管理主键
      * @return 结果
      */

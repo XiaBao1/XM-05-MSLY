@@ -9,7 +9,7 @@ import org.apache.shiro.SecurityUtils;
 
 /**
  * 房子管理对象 house_room
- * 
+ *
  * @author ruoyi
  * @date 2022-12-02
  */
@@ -47,7 +47,7 @@ public class HouseRoom extends BaseEntity
 
     //private Long userId= SecurityUtils.getUserId();
 
-    public void setId(Long id) 
+    public void setId(Long id)
     {
         this.id = id;
     }
@@ -56,48 +56,48 @@ public class HouseRoom extends BaseEntity
     {
         return id;
     }
-    public void setHouseId(Long houseId) 
+    public void setHouseId(Long houseId)
     {
         this.houseId = houseId;
     }
 
-    public Long getHouseId() 
+    public Long getHouseId()
     {
         return houseId;
     }
-    public void setRoomNumber(String roomNumber) 
+    public void setRoomNumber(String roomNumber)
     {
         this.roomNumber = roomNumber;
     }
 
-    public String getRoomNumber() 
+    public String getRoomNumber()
     {
         return roomNumber;
     }
-    public void setPricePerDay(Long pricePerDay) 
+    public void setPricePerDay(Long pricePerDay)
     {
         this.pricePerDay = pricePerDay;
     }
 
-    public Long getPricePerDay() 
+    public Long getPricePerDay()
     {
         return pricePerDay;
     }
-    public void setStandard(String standard) 
+    public void setStandard(String standard)
     {
         this.standard = standard;
     }
 
-    public String getStandard() 
+    public String getStandard()
     {
         return standard;
     }
-    public void setIsFree(Integer isFree) 
+    public void setIsFree(Integer isFree)
     {
         this.isFree = isFree;
     }
 
-    public Integer getIsFree() 
+    public Integer getIsFree()
     {
         return isFree;
     }
@@ -106,13 +106,13 @@ public class HouseRoom extends BaseEntity
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("houseId", getHouseId())
-            .append("roomNumber", getRoomNumber())
-            .append("pricePerDay", getPricePerDay())
-            .append("standard", getStandard())
-            .append("isFree", getIsFree())
-            .toString();
+                .append("id", getId())
+                .append("houseId", getHouseId())
+                .append("roomNumber", getRoomNumber())
+                .append("pricePerDay", getPricePerDay())
+                .append("standard", getStandard())
+                .append("isFree", getIsFree())
+                .toString();
     }
 
 //    public Integer getUserId(){

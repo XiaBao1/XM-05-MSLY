@@ -114,7 +114,7 @@
     </insert>
 
     <insert id="insertRecord" parameterType="BuyRoom">
-        insert into client_room_record (client_number,room_id,check_in_date,check_out_date,price,is_paid,is_done) values (#{userId},#{id},#{standard},#{roomNumber},#{pricePerDay},1,0)
+        insert into client_room_record (client_number,room_id,buy_time,reserve_in_date,reserve_out_date,price,is_paid,is_done) values (#{userId},#{id},now(),#{standard},#{roomNumber},#{pricePerDay},1,0)
     </insert>
 
     <update id="setIsFreeById" parameterType="Long">

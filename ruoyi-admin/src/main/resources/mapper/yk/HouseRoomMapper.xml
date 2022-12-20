@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.web.system.mapper.HouseRoomMapper">
-    
+
     <resultMap type="HouseRoom" id="HouseRoomResult">
         <result property="id"    column="id"    />
         <result property="houseId"    column="house_id"    />
@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectHouseRoomList" parameterType="HouseRoom" resultMap="HouseRoomResult">
         <include refid="selectHouseRoomVo"/>
         <where>
-          house_id in (select id from landlord_house where host_number = #{userId})
+            house_id in (select id from landlord_house where host_number = #{userId})
             <if test="houseId != null"> and house_id = #{houseId}</if>
             <if test="roomNumber != null  and roomNumber != ''"> and room_number = #{roomNumber}</if>
             <if test="pricePerDay != null "> and price_per_day = #{pricePerDay}</if>
@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="isFree != null "> and is_free = #{isFree}</if>
         </where>
     </select>
-    
+
     <select id="selectHouseRoomById" parameterType="Long" resultMap="HouseRoomResult">
         <include refid="selectHouseRoomVo"/>
         where id = #{id}
@@ -45,7 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="getHouseNameById" parameterType="Long" resultType="String">
         select house_name from landlord_house where id=#{id}
     </select>
-        
+
     <insert id="insertHouseRoom" parameterType="HouseRoom" useGeneratedKeys="true" keyProperty="id">
         insert into house_room
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -54,15 +54,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="pricePerDay != null">price_per_day,</if>
             <if test="standard != null and standard != ''">standard,</if>
             <if test="isFree != null">is_free,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-<!--            <if test="houseId != null">#{houseId},</if>-->
+            <!--            <if test="houseId != null">#{houseId},</if>-->
             <if test="houseId != null">IF(#{houseId} IN (select id from landlord_house where host_number = #{userId}),#{houseId},null),</if>
             <if test="roomNumber != null and roomNumber != ''">#{roomNumber},</if>
             <if test="pricePerDay != null">#{pricePerDay},</if>
             <if test="standard != null and standard != ''">#{standard},</if>
             <if test="isFree != null">#{isFree},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateHouseRoom" parameterType="HouseRoom">
@@ -82,7 +82,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteHouseRoomByIds" parameterType="String">
-        delete from house_room where id in 
+        delete from house_room where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
