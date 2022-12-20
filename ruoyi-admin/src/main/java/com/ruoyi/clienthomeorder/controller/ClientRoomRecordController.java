@@ -64,6 +64,7 @@ public class ClientRoomRecordController extends BaseController
     {
         startPage();
         List<ClientRoomRecord> list = clientRoomRecordService.selectClientRoomRecordList(clientRoomRecord);
+        System.out.println(list);
         return getDataTable(list);
     }
 
@@ -241,7 +242,29 @@ public class ClientRoomRecordController extends BaseController
         return map;
     }
 
+    /**
+     * 查询评论
+     */
+    @RequiresPermissions("clienthomeorder:homeorder:querycomment")
+    @GetMapping("/querycomment/{id}")
+    public String querycomment(@PathVariable("id") Long id, ModelMap mmap)
+    {
+        ClientRoomRecord clientRoomRecord = clientRoomRecordService.selectClientRoomCommentRecordById(id);
+        mmap.put("clientRoomRecord", clientRoomRecord);
+        return prefix + "/querycomment";
+    }
 
+    /**
+     * 保存评论
+     */
+    @RequiresPermissions("clienthomeorder:homeorder:querycomment")
+    @Log(title = "民宿订单", businessType = BusinessType.UPDATE)
+    @PostMapping("/querycomment")
+    @ResponseBody
+    public AjaxResult querycommentSave(ClientRoomRecord clientRoomRecord)
+    {
+        return toAjax(clientRoomRecordService.updateClientRoomRecord(clientRoomRecord));
+    }
 
 
 }

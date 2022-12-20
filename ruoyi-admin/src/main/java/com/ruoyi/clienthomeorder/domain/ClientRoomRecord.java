@@ -29,9 +29,16 @@ public class ClientRoomRecord extends BaseEntity
     @Excel(name = "顾客账号")
     private Long clientNumber;
 
-    /** 房间ID */
+    /** 民宿ID */
     @Excel(name = "房间ID")
     private Long roomId;
+
+    /** 房间号 */
+    @Excel(name = "房间号")
+    private Long roomNumber;
+
+    @Excel(name = "民宿名称")
+    private String houseName;
 
     @Excel(name = "用户昵称")
     private String userName;
@@ -53,6 +60,11 @@ public class ClientRoomRecord extends BaseEntity
 
     @Excel(name = "订单ID")
     private Long roomRecordId;
+
+    /** 下单时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "下单时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date buyTime;
 
     /** 预计入住时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -119,6 +131,14 @@ public class ClientRoomRecord extends BaseEntity
         return roomRecordId;
     }
 
+    public void setRoomNumber(Long roomNumber){this.roomNumber=roomNumber;}
+    public Long getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setHouseName(String houseName){this.houseName=houseName;}
+    public String getHouseName(){return houseName;}
+
     public void setScore(BigDecimal score){this.score=score;}
     public BigDecimal getScore(){return score;}
 
@@ -152,6 +172,17 @@ public class ClientRoomRecord extends BaseEntity
     {
         return checkInDate;
     }
+
+    public void setBuyTime(Date buyTime)
+    {
+        this.buyTime = buyTime;
+    }
+
+    public Date getBuyTime()
+    {
+        return buyTime;
+    }
+
     public void setCheckOutDate(Date checkOutDate) 
     {
         this.checkOutDate = checkOutDate;
@@ -217,6 +248,8 @@ public class ClientRoomRecord extends BaseEntity
             .append("clientNumber",getClientNumber())
             .append("userName", getUserName())
             .append("roomId", getRoomId())
+            .append("roomNumber",getRoomNumber())
+            .append("buyTime",getBuyTime())
             .append("checkInDate", getCheckInDate())
             .append("checkOutDate", getCheckOutDate())
             .append("reserveInDate", getReserveInDate())
@@ -230,6 +263,7 @@ public class ClientRoomRecord extends BaseEntity
             .append("photo", getPhoto())
             .append("path",getPath())
             .append("newsMenuIconFile",getNewsMenuIconFile())
+            .append("houseName", getHouseName())
             .toString();
     }
 }

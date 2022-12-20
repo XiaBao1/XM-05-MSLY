@@ -20,6 +20,7 @@ public interface LandlordSpecialtyRecordMapper
      */
     public LandlordSpecialtyRecord selectLandlordSpecialtyRecordById(Long id);
     public LandlordSpecialtyRecord selectLandlordSpecialtyCommentRecordById(Long id);
+    public LandlordSpecialtyRecord selectSpecialtyId(LandlordSpecialtyRecord landlordSpecialtyRecord);
     /**
      * 查询订单列表
      * 

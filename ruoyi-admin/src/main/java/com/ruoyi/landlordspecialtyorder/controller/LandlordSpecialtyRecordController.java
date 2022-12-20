@@ -86,6 +86,10 @@ public class LandlordSpecialtyRecordController extends BaseController
     @ResponseBody
     public AjaxResult addSave(LandlordSpecialtyRecord landlordSpecialtyRecord)
     {
+        LandlordSpecialtyRecord a =landlordSpecialtyRecordService.selectSpecialtyId(landlordSpecialtyRecord);
+        Long value =a.specialtyId;
+        System.out.println(value);
+        landlordSpecialtyRecord.specialtyId=value;
         return toAjax(landlordSpecialtyRecordService.insertLandlordSpecialtyRecord(landlordSpecialtyRecord));
     }
 
@@ -110,6 +114,7 @@ public class LandlordSpecialtyRecordController extends BaseController
     @ResponseBody
     public AjaxResult editSave(LandlordSpecialtyRecord landlordSpecialtyRecord)
     {
+        System.out.println(landlordSpecialtyRecord);
         return toAjax(landlordSpecialtyRecordService.updateLandlordSpecialtyRecord(landlordSpecialtyRecord));
     }
 
@@ -146,7 +151,7 @@ public class LandlordSpecialtyRecordController extends BaseController
     }
 
     /**
-     * 修改订单
+     * 查询评论
      */
     @RequiresPermissions("landlordspecialtyorder:specialtyorder:querycomment")
     @GetMapping("/querycomment/{id}")
@@ -158,7 +163,7 @@ public class LandlordSpecialtyRecordController extends BaseController
     }
 
     /**
-     * 修改保存订单
+     * 保存评论
      */
     @RequiresPermissions("landlordspecialtyorder:specialtyorder:querycomment")
     @Log(title = "订单", businessType = BusinessType.UPDATE)

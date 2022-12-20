@@ -1151,6 +1151,7 @@ var table = {
                 table.set();
                 $.modal.open("评论" + table.options.modalName, $.operate.commentUrl(id));
             },
+
             // 添加访问地址
             commentUrl: function(id) {
                 var url = $.common.isEmpty(id) ? table.options.discussUrl.replace("{id}", "") : table.options.discussUrl.replace("{id}", id);
@@ -1165,12 +1166,21 @@ var table = {
                         return;
                     }
                     var url = table.options.queryUrl.replace("{id}", row[table.options.uniqueId]);
-                    $.modal.open("修改" + table.options.modalName, url);
+                    $.modal.open("查询" + table.options.modalName, url);
                 } else {
-                    $.modal.open("修改" + table.options.modalName, $.operate.querycommentUrl(id));
+                    $.modal.open("查询" + table.options.modalName, $.operate.querycommentUrl(id));
                 }
             },
-
+            // 添加信息，以tab页展现
+            querycommentTab: function (id) {
+                table.set();
+                $.modal.openTab("查询" + table.options.modalName, $.operate.querycommentUrl(id));
+            },
+            // 添加信息 全屏
+            querycommentFull: function(id) {
+                table.set();
+                $.modal.openFull("查询" + table.options.modalName, $.operate.querycommentUrl(id));
+            },
             // 修改访问地址
             querycommentUrl: function(id) {
                 var url = "/404.html";

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import com.ruoyi.clienthomeorder.domain.ClientRoomRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.landlordhomeorder.mapper.LandlordRoomRecordMapper;
@@ -42,6 +41,11 @@ public class LandlordRoomRecordServiceImpl implements ILandlordRoomRecordService
     public LandlordRoomRecord selectLandlordRoomCommentRecordById(Long id)
     {
         return landlordRoomRecordMapper.selectLandlordRoomCommentRecordById(id);
+    }
+
+    public LandlordRoomRecord selectRoomID(LandlordRoomRecord landlordRoomRecord)
+    {
+        return landlordRoomRecordMapper.selectRoomID(landlordRoomRecord);
     }
 
     /**

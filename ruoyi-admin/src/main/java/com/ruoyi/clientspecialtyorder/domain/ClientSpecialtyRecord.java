@@ -30,9 +30,18 @@ public class ClientSpecialtyRecord extends BaseEntity
     @Excel(name = "用户名")
     private String userName;
 
+    /** 特产名 */
+    @Excel(name = "特产名")
+    private String specialtyName;
+
+    /** 民宿 */
+    @Excel(name = "民宿")
+    private String houseName;
+
     /** 特产订单ID */
     @Excel(name = "特产订单ID")
     private Long specialtyRecordId;
+
 
     /** 特产得分 */
     @Excel(name = "得分")
@@ -109,6 +118,12 @@ public class ClientSpecialtyRecord extends BaseEntity
         String userName = (String) PermissionUtils.getPrincipalProperty("userName");
         return userName;
     }
+
+    public void setSpecialtyName(String specialtyName){this.specialtyName=specialtyName;}
+    public String getSpecialtyName(){return specialtyName;}
+
+    public void setHouseName(String houseName){this.houseName=houseName;}
+    public String getHouseName(){return houseName;}
 
     public void setspecialtyRecordId(Long specialtyRecordId){this.specialtyRecordId=specialtyRecordId;}
     public Long getspecialtyRecordId(){return specialtyRecordId;}
@@ -205,6 +220,8 @@ public class ClientSpecialtyRecord extends BaseEntity
                 .append("clientNumber", getClientNumber())
                 .append("userName",getUserName())
                 .append("specialtyId", getSpecialtyId())
+                .append("specialtyName",getSpecialtyName())
+                .append("houseName",getHouseName())
                 .append("quantity", getQuantity())
                 .append("price", getPrice())
                 .append("orderTime", getOrderTime())
