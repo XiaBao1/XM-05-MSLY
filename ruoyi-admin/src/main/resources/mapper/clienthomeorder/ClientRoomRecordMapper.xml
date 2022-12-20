@@ -8,6 +8,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="id"    column="id"    />
         <result property="userName"    column="user_name"    />
         <result property="roomId"    column="room_id"    />
+        <result property="roomNumber"    column="room_number"    />
+        <result property="houseName"    column="house_name"    />
+        <result property="buyTime"    column="buy_time"    />
         <result property="checkInDate"    column="check_in_date"    />
         <result property="checkOutDate"    column="check_out_date"    />
         <result property="reserveInDate"    column="reserve_in_date"    />
@@ -23,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectClientRoomRecordVo">
-        select id, user_name, room_id, check_in_date, check_out_date, reserve_in_date, reserve_out_date, price, is_paid, is_done from client_room_record join sys_user where client_number = user_id and user_name = #{userName}
+    select client_room_record.id as id, user_name, room_id,room_number,house_name,buy_time,check_in_date, check_out_date, reserve_in_date, reserve_out_date, price, is_paid, is_done from (client_room_record join sys_user) join landlord_house join house_room where client_number = user_id and room_id =house_room.id and house_room.house_id = landlord_house.id
     </sql>
 
     <select id="selectClientRoomRecordList" parameterType="ClientRoomRecord" resultMap="ClientRoomRecordResult">
@@ -31,6 +34,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="id != null "> and id = #{id}</if>
             <if test="userName != null "> and user_name = #{userName}</if>
             <if test="roomId != null "> and room_id = #{roomId}</if>
+            <if test="roomNumber != null "> and room_number = #{roomNumber}</if>
+            <if test="houseName != '' "> and house_name = #{houseName}</if>
+            <if test="buyTime != null "> and buy_time = #{buyTime}</if>
             <if test="checkInDate != null "> and check_in_date = #{checkInDate}</if>
             <if test="checkOutDate != null "> and check_out_date = #{checkOutDate}</if>
             <if test="reserveInDate != null "> and reserve_in_date = #{reserveInDate}</if>

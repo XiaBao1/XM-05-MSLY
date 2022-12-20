@@ -30,9 +30,17 @@ public class LandlordSpecialtyRecord extends BaseEntity
     @Excel(name = "用户名")
     private String userName;
 
+    /** 特产名 */
+    @Excel(name = "特产名")
+    private String specialtyName;
+
+    /** 民宿 */
+    @Excel(name = "民宿")
+    private String houseName;
+
     /** 用户名 */
     @Excel(name = "顾客登录名")
-    private String loginName;
+    private String clientName;
 
     /** 特产订单ID */
     @Excel(name = "特产订单ID")
@@ -55,7 +63,7 @@ public class LandlordSpecialtyRecord extends BaseEntity
 
     /** 特产ID */
     @Excel(name = "特产ID")
-    private Long specialtyId;
+    public Long specialtyId;
 
     /** 订货量 */
     @Excel(name = "订货量")
@@ -111,14 +119,20 @@ public class LandlordSpecialtyRecord extends BaseEntity
         return userName;
     }
 
-    public void setLoginName(String loginName)
+    public void setSpecialtyName(String specialtyName){this.specialtyName=specialtyName;}
+    public String getSpecialtyName(){return specialtyName;}
+
+    public void setHouseName(String houseName){this.houseName=houseName;}
+    public String getHouseName(){return houseName;}
+
+    public void setClientName(String clientName)
     {
-        this.loginName = loginName;
+        this.clientName = clientName;
     }
 
-    public String getLoginName()
+    public String getClientName()
     {
-        return loginName;
+        return clientName;
     }
 
     public void setspecialtyRecordId(Long specialtyRecordId){this.specialtyRecordId=specialtyRecordId;}
@@ -215,7 +229,9 @@ public class LandlordSpecialtyRecord extends BaseEntity
             .append("id", getId())
             .append("clientNumber", getClientNumber())
              .append("userName",getUserName())
-             .append("loginName",getLoginName())
+             .append("clientName",getClientName())
+                .append("specialtyName",getSpecialtyName())
+                .append("houseName",getHouseName())
             .append("specialtyId", getSpecialtyId())
             .append("quantity", getQuantity())
             .append("price", getPrice())

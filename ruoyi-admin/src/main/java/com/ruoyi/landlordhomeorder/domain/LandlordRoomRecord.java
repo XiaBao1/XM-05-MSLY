@@ -27,16 +27,23 @@ public class LandlordRoomRecord extends BaseEntity
     private Long clientNumber;
 
     /** 用户名 */
-    @Excel(name = "用户名")
-    private String userName;
+    @Excel(name = "顾客名")
+    private String clientName;
 
     /** 用户名 */
-    @Excel(name = "顾客登录名")
+    @Excel(name = "顾客名")
     private String loginName;
 
     /** 特产订单ID */
     @Excel(name = "特产订单ID")
     private Long roomRecordId;
+
+    /** 房间号 */
+    @Excel(name = "房间号")
+    private Long roomNumber;
+
+    @Excel(name = "民宿名称")
+    private String houseName;
 
     /** 特产得分 */
     @Excel(name = "得分")
@@ -55,7 +62,12 @@ public class LandlordRoomRecord extends BaseEntity
 
     /** 房间ID */
     @Excel(name = "房间ID")
-    private Long roomId;
+    public Long roomId;
+
+    /** 下单时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "下单时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date buyTime;
 
     /** 预计入住时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -117,17 +129,35 @@ public class LandlordRoomRecord extends BaseEntity
     }
 
     public void setLoginName(String loginName)
-    {
-        this.loginName = loginName;
-    }
+{
+    this.loginName = loginName;
+}
 
     public String getLoginName()
     {
         return loginName;
     }
 
+    public void setClientName(String clientName)
+    {
+        this.clientName = clientName;
+    }
+
+    public String getClientName()
+    {
+        return clientName;
+    }
+
     public void setroomRecordId(Long roomRecordId){this.roomRecordId=roomRecordId;}
     public Long getroomRecordId(){return roomRecordId;}
+
+    public void setRoomNumber(Long roomNumber){this.roomNumber=roomNumber;}
+    public Long getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setHouseName(String houseName){this.houseName=houseName;}
+    public String getHouseName(){return houseName;}
 
     public void setScore(BigDecimal score){this.score=score;}
     public BigDecimal getscore(){return score;}
@@ -148,6 +178,15 @@ public class LandlordRoomRecord extends BaseEntity
     public void setCheckInDate(Date checkInDate) 
     {
         this.checkInDate = checkInDate;
+    }
+
+    public void setBuyTime(Date buyTime)
+    {
+        this.buyTime = buyTime;
+    }
+    public Date getBuyTime()
+    {
+        return buyTime;
     }
 
     public Date getCheckInDate() 
@@ -216,7 +255,9 @@ public class LandlordRoomRecord extends BaseEntity
             .append("clientNumber", getClientNumber())
             .append("userName",getUserName())
             .append("loginName",getLoginName())
+            .append("clientName",getClientName())
             .append("roomId", getRoomId())
+             .append("buyTime",getBuyTime())
             .append("checkInDate", getCheckInDate())
             .append("checkOutDate", getCheckOutDate())
             .append("reserveInDate", getReserveInDate())
@@ -227,8 +268,10 @@ public class LandlordRoomRecord extends BaseEntity
             .append("roomRecordId",getroomRecordId())
             .append("score",getscore())
              .append("comment",getcomment())
-                .append("photo",getPhoto())
+             .append("photo",getPhoto())
              .append("path",getPath())
+             .append("roomNumber",getRoomNumber())
+             .append("houseName", getHouseName())
             .toString();
     }
 }

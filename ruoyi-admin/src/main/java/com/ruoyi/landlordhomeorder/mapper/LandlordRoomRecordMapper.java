@@ -20,6 +20,7 @@ public interface LandlordRoomRecordMapper
      */
     public LandlordRoomRecord selectLandlordRoomRecordById(Long id);
     public LandlordRoomRecord selectLandlordRoomCommentRecordById(Long id);
+    public LandlordRoomRecord selectRoomID(LandlordRoomRecord landlordRoomRecord);
 
     /**
      * 查询民宿订单列表

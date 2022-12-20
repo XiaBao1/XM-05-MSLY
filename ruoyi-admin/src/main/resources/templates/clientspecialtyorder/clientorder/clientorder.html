@@ -32,13 +32,21 @@
                     <ul>
 <!--                            <label>账户名：</label>-->
                             <input type="hidden" name="${@permission.getPrincipalProperty('userName')}"/>
+<!--                        <li>-->
+<!--                            <label>订单ID：</label>-->
+<!--                            <input type="text" name="id"/>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <label>特产ID：</label>-->
+<!--                            <input type="text" name="specialtyId"/>-->
+<!--                        </li>-->
                         <li>
-                            <label>订单ID：</label>
-                            <input type="text" name="id"/>
+                            <label>特产名：</label>
+                            <input type="text" name="specialtyName"/>
                         </li>
                         <li>
-                            <label>特产ID：</label>
-                            <input type="text" name="specialtyId"/>
+                            <label>民宿：</label>
+                            <input type="text" name="houseName"/>
                         </li>
                         <li>
                             <label>订货量：</label>
@@ -150,6 +158,17 @@
                 {
                     field: 'specialtyId',
                     title: '特产ID',
+                    sortable: 'true,' ,
+                    visible: false
+                },
+                {
+                    field: 'specialtyName',
+                    title: '特产名',
+                    sortable: 'true'
+                },
+                {
+                    field: 'houseName',
+                    title: '民宿',
                     sortable: 'true'
                 },
                 {

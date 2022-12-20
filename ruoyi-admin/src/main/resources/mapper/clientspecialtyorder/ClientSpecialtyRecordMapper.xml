@@ -8,6 +8,8 @@
         <result property="id"    column="id"    />
         <result property="userName"    column="user_name"    />
         <result property="specialtyId"    column="specialty_id"    />
+        <result property="specialtyName"    column="specialty_name"    />
+        <result property="houseName"    column="house_name"    />
         <result property="quantity"    column="quantity"    />
         <result property="price"    column="price"    />
         <result property="orderTime"    column="order_time"    />
@@ -23,13 +25,15 @@
     </resultMap>
 
     <sql id="selectClientSpecialtyRecordVo">
-        select id, user_name, specialty_id, quantity, price, order_time, finish_time, is_received, is_paid, is_done from client_specialty_record join sys_user where user_name =#{userName}
+        select client_specialty_record.id as id, user_name, specialty_id,specialty_name,house_name,quantity, client_specialty_record.price as price, order_time, finish_time, is_received, is_paid, is_done from client_specialty_record join sys_user join house_specialty join landlord_house where specialty_id =house_specialty.id and house_specialty.house_id=landlord_house.id and user_id = client_number and user_name =#{userName}
     </sql>
 
     <select id="selectClientSpecialtyRecordList" parameterType="ClientSpecialtyRecord" resultMap="ClientSpecialtyRecordResult">
         <include refid="selectClientSpecialtyRecordVo"/>
             <if test="id != null "> and id = #{id}</if>
             <if test="specialtyId != null "> and specialty_id = #{specialtyId}</if>
+            <if test="specialtyName != '' "> and specialty_name = #{specialtyName}</if>
+            <if test="houseName != '' "> and house_name = #{houseName}</if>
             <if test="quantity != null "> and quantity = #{quantity}</if>
             <if test="price != null "> and price = #{price}</if>
             <if test="orderTime != null "> and order_time = #{orderTime}</if>
@@ -98,7 +102,7 @@
     update client_specialty_record
     <trim prefix="SET" suffixOverrides=",">
         <if test="clientNumber != null">client_number = #{clientNumber},</if>
-        <if test="specialtyId != null">specialty_id = #{specialtyId},</if>
+        <if test="specialtyId != ''">specialty_id = #{specialtyId},</if>
         <if test="quantity != null">quantity = #{quantity},</if>
         <if test="price != null">price = #{price},</if>
         <if test="orderTime != null">order_time = #{orderTime},</if>

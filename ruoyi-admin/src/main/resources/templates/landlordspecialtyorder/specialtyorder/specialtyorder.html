@@ -33,12 +33,16 @@
                                 <!--                                <label>房东：</label>-->
                                 <input type="hidden" name="${@permission.getPrincipalProperty('userName')}" />
                             <li>
-                                <label>顾客ID：</label>
-                                <input type="text" name="clientNumber"/>
+                                <label>顾客名：</label>
+                                <input type="text" name="clientName"/>
                             </li>
                             <li>
-                                <label>特产ID：</label>
-                                <input type="text" name="specialtyId"/>
+                                <label>特产名：</label>
+                                <input type="text" name="specialtyName"/>
+                            </li>
+                            <li>
+                                <label>民宿：</label>
+                                <input type="text" name="houseName"/>
                             </li>
                             <li>
                                 <label>订货量：</label>
@@ -143,18 +147,30 @@
                 {
                     field: 'clientNumber',
                     title: '顾客ID',
-                    sortable: 'true'
+                    sortable: 'true',
+                    visible: false
                 },
                 {
-                    field: 'loginName',
+                    field: 'clientName',
                     title: '用户名',
                     sortable: 'true'
                 },
                 {
                     field: 'specialtyId',
                     title: '特产ID',
-                    sortable: 'true'
+                    sortable: 'true',
+                    visible: false
                 },
+                    {
+                        field: 'specialtyName',
+                        title: '特产名',
+                        sortable: 'true'
+                    },
+                    {
+                        field: 'houseName',
+                        title: '民宿',
+                        sortable: 'true'
+                    },
                 {
                     field: 'quantity',
                     title: '订货量',

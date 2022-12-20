@@ -40,6 +40,10 @@ public class LandlordSpecialtyRecordServiceImpl implements ILandlordSpecialtyRec
     {
         return landlordSpecialtyRecordMapper.selectLandlordSpecialtyCommentRecordById(id);
     }
+    public LandlordSpecialtyRecord selectSpecialtyId(LandlordSpecialtyRecord landlordSpecialtyRecord)
+    {
+        return landlordSpecialtyRecordMapper.selectSpecialtyId(landlordSpecialtyRecord);
+    }
     /**
      * 查询订单列表
      * 
