@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.system.mapper.HouseSpecialtyMapper">
+
+    <resultMap type="HouseSpecialty" id="HouseSpecialtyResult">
+        <result property="id"    column="id"    />
+        <result property="houseId"    column="house_id"    />
+        <result property="specialtyName"    column="specialty_name"    />
+        <result property="description"    column="description"    />
+        <result property="price"    column="price"    />
+        <result property="inventory"    column="inventory"    />
+        <result property="imageUrl"    column="image_url"    />
+    </resultMap>
+
+    <resultMap id="StringResult" type="String"></resultMap>
+
+    <sql id="selectHouseSpecialtyVo">
+        select id, house_id, specialty_name, description, price, inventory, image_url from house_specialty
+    </sql>
+
+    <select id="selectHouseSpecialtyList" parameterType="HouseSpecialty" resultMap="HouseSpecialtyResult">
+        <include refid="selectHouseSpecialtyVo"/>
+        <where>
+            house_id in (select id from landlord_house where host_number=#{userId})
+            <if test="houseId != null "> and house_id = #{houseId}</if>
+            <if test="specialtyName != null  and specialtyName != ''"> and specialty_name like concat('%', #{specialtyName}, '%')</if>
+            <if test="description != null  and description != ''"> and description = #{description}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="inventory != null "> and inventory = #{inventory}</if>
+            <if test="imageUrl != null  and imageUrl != ''"> and image_url = #{imageUrl}</if>
+        </where>
+    </select>
+
+    <select id="selectHouseSpecialtyById" parameterType="Long" resultMap="HouseSpecialtyResult">
+        <include refid="selectHouseSpecialtyVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="getHouseNameById" parameterType="Long" resultType="String">
+        select house_name from landlord_house where id=#{id}
+    </select>
+
+    <select id="getName" parameterType="Long" resultMap="StringResult">
+        select distinct specialty_name from house_specialty where house_id in (select id from landlord_house where host_number=#{id})
+    </select>
+
+    <select id="getSellNumber" parameterType="HouseSpecialty" resultType="Long">
+        select sum(inventory) from house_specialty where specialty_name=#{specialtyName} and house_id in (select id from landlord_house where host_number=#{userId})
+    </select>
+
+    <select id="getSoldNumber" parameterType="HouseSpecialty" resultType="Long">
+        select sum(quantity) from client_specialty_record where (select specialty_name from house_specialty where client_specialty_record.specialty_id=house_specialty.id)=#{specialtyName} and
+        (select house_id from house_specialty where client_specialty_record.specialty_id=house_specialty.id) in (select id from landlord_house where host_number=#{userId})
+    </select>
+
+    <insert id="insertHouseSpecialty" parameterType="HouseSpecialty" useGeneratedKeys="true" keyProperty="id">
+        insert into house_specialty
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="houseId != null">house_id,</if>
+            <if test="specialtyName != null and specialtyName != ''">specialty_name,</if>
+            <if test="description != null and description != ''">description,</if>
+            <if test="price != null">price,</if>
+            <if test="inventory != null">inventory,</if>
+            <if test="imageUrl != null">image_url,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="houseId != null">IF(#{houseId} IN (select id from landlord_house where host_number = #{userId}),#{houseId},null),</if>
+            <if test="specialtyName != null and specialtyName != ''">#{specialtyName},</if>
+            <if test="description != null and description != ''">#{description},</if>
+            <if test="price != null">#{price},</if>
+            <if test="inventory != null">#{inventory},</if>
+            <if test="imageUrl != null">#{imageUrl},</if>
+        </trim>
+    </insert>
+
+    <update id="updateHouseSpecialty" parameterType="HouseSpecialty">
+        update house_specialty
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="houseId != null">house_id =IF(#{houseId} IN (select id from landlord_house where host_number = #{userId}),#{houseId},null),</if>
+            <if test="specialtyName != null and specialtyName != ''">specialty_name = #{specialtyName},</if>
+            <if test="description != null and description != ''">description = #{description},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="inventory != null">inventory = #{inventory},</if>
+            <if test="imageUrl != null">image_url = #{imageUrl},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHouseSpecialtyById" parameterType="Long">
+        delete from house_specialty where id = #{id}
+    </delete>
+
+    <delete id="deleteHouseSpecialtyByIds" parameterType="String">
+        delete from house_specialty where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

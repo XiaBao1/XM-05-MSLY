@@ -21,7 +21,7 @@
             margin: 0mm;
         }
     </style>
-    <th:block th:include="include :: header('房子管理列表')" />
+    <th:block th:include="include :: header('民宿管理列表')" />
 </head>
 <body class="gray-bg">
 <div class="container-div">
@@ -31,25 +31,17 @@
                 <div class="select-list">
                     <ul>
                         <li>
-                            <label>民宿ID：</label>
-                            <input type="text" name="houseId"/>
+                            <label>民宿名称：</label>
+                            <input type="text" name="houseName"/>
                         </li>
                         <li>
-                            <label>房间号：</label>
-                            <input type="text" name="roomNumber"/>
+                            <label>民宿地址：</label>
+                            <input type="text" name="address"/>
                         </li>
-                        <li>
-                            <label>每日价格：</label>
-                            <input type="text" name="pricePerDay"/>
-                        </li>
-                        <li>
-                            <label>房间标准：</label>
-                            <input type="text" name="standard"/>
-                        </li>
-                        <li>
-                            <label>空闲：</label>
-                            <input type="text" name="isFree"/>
-                        </li>
+                        <!--                        <li>-->
+                        <!--                            <label>民宿评分：</label>-->
+                        <!--                            <input type="text" name="score"/>-->
+                        <!--                        </li>-->
                         <li>
                             <a class="btn btn-primary btn-rounded btn-sm noprint" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                             <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -60,19 +52,19 @@
         </div>
 
         <div class="btn-group-sm" id="toolbar" role="group">
-            <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:room:add">
-                <i class="fa fa-plus"></i> 上传房源
+            <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:landlord:add">
+                <i class="fa fa-plus"></i> 新增民宿
             </a>
-            <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:room:edit">
+            <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:landlord:edit">
                 <i class="fa fa-edit"></i> 修改
             </a>
-            <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:room:remove">
+            <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:landlord:remove">
                 <i class="fa fa-remove"></i> 删除
             </a>
-            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:room:export">
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:landlord:export">
                 <i class="fa fa-download"></i> 导出
             </a>
-            <a class="btn btn-success" onclick="$.modal.openTab('房源统计', '/system/room/statistics');" shiro:hasPermission="system:room:statistics">
+            <a class="btn btn-success" onclick="$.modal.openTab('民宿统计', '/system/landlord/statistics');" shiro:hasPermission="system:landlord:statistics">
                 <i class="fa fa-plus"></i> 统计
             </a>
             <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="xxxx:xxxx:print">
@@ -84,16 +76,18 @@
             <!--超长冒号显示会影响打印-->
             <table id="bootstrap-table" style="width: 100%;word-break:break-all; word-wrap:break-all; "></table>
         </div>
-        <!--            <div class="col-sm-12 select-table table-striped">-->
-        <!--                <table id="bootstrap-table"></table>-->
-        <!--            </div>-->
+        <!--    </div>-->
+        <!--        <div class="col-sm-12 select-table table-striped">-->
+        <!--            <table id="bootstrap-table"></table>-->
+        <!--        </div>-->
+        <!--    </div>-->
     </div>
 </div>
 <th:block th:include="include :: footer" />
 <script th:inline="javascript">
-    var editFlag = [[${@permission.hasPermi('system:room:edit')}]];
-    var removeFlag = [[${@permission.hasPermi('system:room:remove')}]];
-    var prefix = ctx + "system/room";
+    var editFlag = [[${@permission.hasPermi('system:landlord:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('system:landlord:remove')}]];
+    var prefix = ctx + "system/landlord";
 
     $(function() {
         var options = {
@@ -102,7 +96,7 @@
             updateUrl: prefix + "/edit/{id}",
             removeUrl: prefix + "/remove",
             exportUrl: prefix + "/export",
-            modalName: "房子管理",
+            modalName: "民宿管理",
             columns: [{
                 checkbox: true
             },
@@ -112,39 +106,32 @@
                     visible: false
                 },
                 {
-                    field: 'houseId',
-                    title: '民宿ID',
-                    sortable: 'true',
-                    visible: false
-                },
-                {
                     field: 'houseName',
                     title: '民宿名称',
                     sortable: 'true'
                 },
                 {
-                    field: 'roomNumber',
-                    title: '房间号',
+                    field: 'address',
+                    title: '民宿地址',
                     sortable: 'true'
                 },
                 {
-                    field: 'pricePerDay',
-                    title: '每日价格',
+                    field: 'score',
+                    title: '民宿评分',
                     sortable: 'true'
                 },
                 {
-                    field: 'standard',
-                    title: '房间标准',
+                    field: 'registerTime',
+                    title: '注册时间',
                     sortable: 'true'
                 },
                 {
-                    field: 'isFree',
-                    title: '空闲',
-                    sortable: 'true',
-                    formatter:function (value) {
-                        if(value==1)value="是";
-                        else value="否";
-                        return value;
+                    field: 'imageUrl',
+                    title: '民宿图片',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<img src="'+value+'" alt="无法显示图片" height="60" width="90"/>');
+                        return actions.join('');
                     }
                 },
                 {
@@ -172,8 +159,6 @@
         //显示操作列
         $.table.showColumn('caozuo');
     }
-
-
 </script>
 </body>
 </html>

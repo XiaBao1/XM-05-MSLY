@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <style>
+        @media print {
+            .fixed-table-toolbar {
+                display: none;
+            }
+
+            .noprint {
+                display: none;
+            }
+
+            .fixed-table-pagination {
+                display: none !important;
+            }
+
+        }
+        @page {
+            size: auto;
+            margin: 0mm;
+        }
+    </style>
+    <th:block th:include="include :: header('我的特产列表')" />
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="formId">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            <label>民宿ID：</label>
+                            <input type="text" name="houseId"/>
+                        </li>
+                        <li>
+                            <label>特产名称：</label>
+                            <input type="text" name="specialtyName"/>
+                        </li>
+                        <li>
+                            <label>特产描述：</label>
+                            <input type="text" name="description"/>
+                        </li>
+                        <li>
+                            <label>特产单价：</label>
+                            <input type="text" name="price"/>
+                        </li>
+                        <li>
+                            <label>库存量：</label>
+                            <input type="text" name="inventory"/>
+                        </li>
+                        <li hidden>
+                            <label>特产链接：</label>
+                            <input type="text" name="imageUrl"/>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm noprint" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:specialty:add">
+                <i class="fa fa-plus"></i> 新增特产
+            </a>
+            <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:specialty:edit">
+                <i class="fa fa-edit"></i> 修改
+            </a>
+            <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:specialty:remove">
+                <i class="fa fa-remove"></i> 删除
+            </a>
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:specialty:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
+            <a class="btn btn-success" onclick="$.modal.openTab('特产统计', '/system/specialty/statistics');" shiro:hasPermission="system:landlord:statistics">
+                <i class="fa fa-plus"></i> 统计
+            </a>
+            <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="xxxx:xxxx:print">
+                <i class="glyphicon glyphicon-print icon-share"></i> 打印
+            </a>
+        </div>
+        <div class="col-sm-12 select-table table‐bordered noprint" id="prints" style="width: 100%;">
+            <!--<table id="bootstrap-table" style="width: 100%;white-space: nowrap;  "></table>-->
+            <!--超长冒号显示会影响打印-->
+            <table id="bootstrap-table" style="width: 100%;word-break:break-all; word-wrap:break-all; "></table>
+        </div>
+        <!--        <div class="col-sm-12 select-table table-striped">-->
+        <!--            <table id="bootstrap-table"></table>-->
+        <!--        </div>-->
+        <!--    </div>-->
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:specialty:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:specialty:remove')}]];
+        var prefix = ctx + "system/specialty";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "我的特产",
+                columns: [{
+                    checkbox: true
+                },
+                    {
+                        field: 'id',
+                        title: '',
+                        visible: false
+                    },
+                    {
+                        field: 'houseId',
+                        title: '民宿ID',
+                        sortable: 'true',
+                        visible: false
+                    },
+                    {
+                        field: 'houseName',
+                        title: '民宿名称',
+                        sortable: 'true'
+                    },
+                    {
+                        field: 'specialtyName',
+                        title: '特产名称',
+                        sortable: 'true'
+                    },
+                    {
+                        field: 'description',
+                        title: '特产描述'
+                    },
+                    {
+                        field: 'price',
+                        title: '特产单价',
+                        sortable: 'true'
+                    },
+                    {
+                        field: 'inventory',
+                        title: '库存量',
+                        sortable: 'true'
+                    },
+                    {
+                        field: 'imageUrl',
+                        title: '特产图片',
+                        formatter: function(value, row, index) {
+                            var actions = [];
+                            actions.push('<img src="'+value+'" alt="无法显示图片" height="60" width="90"/>');
+                            return actions.join('');
+                        }
+                    },
+                    {
+                        title: '操作',
+                        field: 'caozuo',
+                        width: '150px',
+                        align: 'center',
+                        formatter: function(value, row, index) {
+                            var actions = [];
+                            actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>修改信息</a> ');
+                            actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                            return actions.join('');
+                        }
+                    }]
+            };
+            $.table.init(options);
+        });
+
+        function printHtml() {
+            $("#prints").removeClass("noprint");
+            //隐藏操作列
+            $.table.hideColumn('caozuo');
+            window.print();
+            $("#option").addClass("noprint");
+            //显示操作列
+            $.table.showColumn('caozuo');
+        }
+
+    </script>
+</body>
+</html>

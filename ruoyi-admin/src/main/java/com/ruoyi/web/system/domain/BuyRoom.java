@@ -5,15 +5,14 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
-import org.apache.shiro.SecurityUtils;
 
 /**
- * 房子管理对象 house_room
+ * 房间订购对象 house_room
  *
  * @author ruoyi
  * @date 2022-12-02
  */
-public class HouseRoom extends BaseEntity
+public class BuyRoom extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
@@ -43,14 +42,18 @@ public class HouseRoom extends BaseEntity
     @Excel(name = "空闲")
     private Integer isFree;
 
-    public  Long userId= (Long) PermissionUtils.getPrincipalProperty("userId");
+    @Excel(name = "下单时间")
+    private String buyTime;
 
-    //private Long userId= SecurityUtils.getUserId();
+    public  Long userId= (Long) PermissionUtils.getPrincipalProperty("userId");
 
     public void setId(Long id)
     {
         this.id = id;
     }
+
+    public String getBuyTime(){return buyTime;}
+    public void setBuyTime(String buyTime){this.buyTime=buyTime;}
 
     public Long getId()
     {
@@ -102,7 +105,6 @@ public class HouseRoom extends BaseEntity
         return isFree;
     }
 
-
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -114,9 +116,4 @@ public class HouseRoom extends BaseEntity
                 .append("isFree", getIsFree())
                 .toString();
     }
-
-//    public Integer getUserId(){
-//        Integer ans= (Integer) PermissionUtils.getPrincipalProperty("userId");
-//        return ans;
-//    }
 }
