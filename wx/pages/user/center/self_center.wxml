@@ -11,7 +11,7 @@
     <view class='mine_head_center'>
       <view class='headBorder'><image class="Head" src="{{avatar}}"></image></view>
       <view class='dian'></view>
-      <view class='nameBox'>{{userName}}<open-data type="userNickName" lang="zh_CN" class="name"></open-data> </view>
+      <view class='nameBox' bindtap="userNameClicked">{{userName}}</view>
     </view>
     <view class='jiange'></view>
     <view class='mine_head_right' bindtap='addr'>
@@ -22,10 +22,10 @@
 </view>
 <!-- 内容 -->
 <view class='list_content'>
-  <view class='list' bindtap='realName'>
+  <view class='list' bindtap='modifyInfoClicked'>
     <view class='list_left'>
       <image class='listIcon' src='../../../image//realName.png'></image>
-      <view class='listName'>实名认证</view>
+      <view class='listName'>修改信息</view>
     </view>
     <image src='../../../image//jiantou.png' class='jiantou'></image>
   </view>

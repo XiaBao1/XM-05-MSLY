@@ -1,4 +1,6 @@
 // pages/mine/mine.js
+let userData = null;
+let getCookie = require("../../../utils/util.js")['getCookie'];
 Page({
   data: {
     userName: "",
@@ -7,7 +9,7 @@ Page({
     province: "",
   },
   onLoad: function() {
-    this.getCookie(this.getProfile);
+    getCookie(this.getProfile);
   },
   getProfile: function(cookies) {
     let that = this;
@@ -17,6 +19,7 @@ Page({
       method: "post",
       success: function(res) {
         console.log(res);
+        userData = res.data.data;
         that.setProfile(res.data.data)
       }
     });
@@ -35,12 +38,18 @@ Page({
       province: province
     })
   },
-  getCookie: function(callback) {
-    wx.getStorage({
-      key: "cookies",
-      success: callback
-    });
+
+  userNameClicked: function() {
+    wx.navigateTo({
+      url: '../user_info/user_info?data=' + JSON.stringify(userData),
+    })
   },
+  modifyInfoClicked: function() {
+    wx.navigateTo({
+      url: '../modify_info/modify_info?data=' + JSON.stringify(userData),
+    })
+  },
+
   //退出登录
   signOutClicked(){
     this.getCookie(this.logout);
