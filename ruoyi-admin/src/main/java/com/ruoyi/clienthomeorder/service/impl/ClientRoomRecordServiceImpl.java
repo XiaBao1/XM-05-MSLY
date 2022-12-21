@@ -84,7 +84,14 @@ public class ClientRoomRecordServiceImpl implements IClientRoomRecordService
     {
         return clientRoomRecordMapper.updateClientRoomRecord(clientRoomRecord);
     }
-
+    public int updateClientRoomCommentRecord(ClientRoomRecord clientRoomRecord)
+    {
+        return clientRoomRecordMapper.updateClientRoomCommentRecord(clientRoomRecord);
+    }
+    public int insertClientRoomCommentPhotoRecord(String path)
+    {
+        return clientRoomRecordMapper.insertClientRoomCommentPhotoRecord(path);
+    }
     /**
      * 批量删除民宿订单
      * 

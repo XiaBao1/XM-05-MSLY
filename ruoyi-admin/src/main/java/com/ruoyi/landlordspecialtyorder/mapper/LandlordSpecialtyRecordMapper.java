@@ -19,7 +19,8 @@ public interface LandlordSpecialtyRecordMapper
      * @return 订单
      */
     public LandlordSpecialtyRecord selectLandlordSpecialtyRecordById(Long id);
-
+    public LandlordSpecialtyRecord selectLandlordSpecialtyCommentRecordById(Long id);
+    public LandlordSpecialtyRecord selectSpecialtyId(LandlordSpecialtyRecord landlordSpecialtyRecord);
     /**
      * 查询订单列表
      * 
@@ -43,7 +44,7 @@ public interface LandlordSpecialtyRecordMapper
      * @return 结果
      */
     public int updateLandlordSpecialtyRecord(LandlordSpecialtyRecord landlordSpecialtyRecord);
-
+    public int updateLandlordSpecialtyCommentRecord(LandlordSpecialtyRecord landlordSpecialtyRecord);
     /**
      * 删除订单
      * 

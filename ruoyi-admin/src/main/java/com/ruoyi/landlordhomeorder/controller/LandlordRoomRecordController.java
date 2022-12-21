@@ -86,6 +86,10 @@ public class LandlordRoomRecordController extends BaseController
     @ResponseBody
     public AjaxResult addSave(LandlordRoomRecord landlordRoomRecord)
     {
+        LandlordRoomRecord a = landlordRoomRecordService.selectRoomID(landlordRoomRecord);
+        Long value = a.roomId;
+        System.out.println(value);
+        landlordRoomRecord.roomId =value;;
         return toAjax(landlordRoomRecordService.insertLandlordRoomRecord(landlordRoomRecord));
     }
 
@@ -98,6 +102,7 @@ public class LandlordRoomRecordController extends BaseController
     {
         LandlordRoomRecord landlordRoomRecord = landlordRoomRecordService.selectLandlordRoomRecordById(id);
         mmap.put("landlordRoomRecord", landlordRoomRecord);
+        //System.out.println(landlordRoomRecord);
         return prefix + "/edit";
     }
 
@@ -110,6 +115,7 @@ public class LandlordRoomRecordController extends BaseController
     @ResponseBody
     public AjaxResult editSave(LandlordRoomRecord landlordRoomRecord)
     {
+
         return toAjax(landlordRoomRecordService.updateLandlordRoomRecord(landlordRoomRecord));
     }
 
@@ -142,5 +148,29 @@ public class LandlordRoomRecordController extends BaseController
     {
         List<Integer> list = landlordRoomRecordService.getMonthlyClientRoomRecordIncrement();
         return list;
+    }
+
+    /**
+     * 修改民宿订单
+     */
+    @RequiresPermissions("landlordhomeorder:landlordorder:querycomment")
+    @GetMapping("/querycomment/{id}")
+    public String querycomment(@PathVariable("id") Long id, ModelMap mmap)
+    {
+        LandlordRoomRecord landlordRoomRecord = landlordRoomRecordService.selectLandlordRoomCommentRecordById(id);
+        mmap.put("landlordRoomRecord", landlordRoomRecord);
+        return prefix + "/querycomment";
+    }
+
+    /**
+     * 修改保存民宿订单
+     */
+    @RequiresPermissions("landlordhomeorder:landlordorder:querycomment")
+    @Log(title = "查看评论", businessType = BusinessType.UPDATE)
+    @PostMapping("/querycomment")
+    @ResponseBody
+    public AjaxResult querycommentSave(LandlordRoomRecord landlordRoomRecord)
+    {
+        return toAjax(landlordRoomRecordService.updateLandlordRoomCommentRecord(landlordRoomRecord));
     }
 }

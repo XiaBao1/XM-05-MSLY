@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.housesgps.mapper.HouseGPSMapper">
+    
+    <resultMap type="HouseGPS" id="HouseGPSResult">
+        <result property="id"    column="id"    />
+        <result property="houseName"    column="house_name"    />
+        <result property="hostNumber"    column="host_number"    />
+        <result property="address"    column="address"    />
+        <result property="score"    column="score"    />
+        <result property="registerTime"    column="register_time"    />
+    </resultMap>
+
+    <sql id="selectHouseGPSVo">
+        select id, house_name, host_number, address, score, register_time from landlord_house
+    </sql>
+
+    <select id="selectHouseGPSList" parameterType="HouseGPS" resultMap="HouseGPSResult">
+        <include refid="selectHouseGPSVo"/>
+        <where>  
+            <if test="houseName != null  and houseName != ''"> and house_name like concat('%', #{houseName}, '%')</if>
+            <if test="address != null  and address != ''"> and address like concat('%', #{address}, '%')</if>
+            <if test="score != null "> and score like concat('%', #{score}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectHouseGPSById" parameterType="Long" resultMap="HouseGPSResult">
+        <include refid="selectHouseGPSVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHouseGPS" parameterType="HouseGPS" useGeneratedKeys="true" keyProperty="id">
+        insert into landlord_house
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="houseName != null">house_name,</if>
+            <if test="hostNumber != null">host_number,</if>
+            <if test="address != null">address,</if>
+            <if test="score != null">score,</if>
+            <if test="registerTime != null">register_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="houseName != null">#{houseName},</if>
+            <if test="hostNumber != null">#{hostNumber},</if>
+            <if test="address != null">#{address},</if>
+            <if test="score != null">#{score},</if>
+            <if test="registerTime != null">#{registerTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHouseGPS" parameterType="HouseGPS">
+        update landlord_house
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="houseName != null">house_name = #{houseName},</if>
+            <if test="hostNumber != null">host_number = #{hostNumber},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="score != null">score = #{score},</if>
+            <if test="registerTime != null">register_time = #{registerTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHouseGPSById" parameterType="Long">
+        delete from landlord_house where id = #{id}
+    </delete>
+
+    <delete id="deleteHouseGPSByIds" parameterType="String">
+        delete from landlord_house where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

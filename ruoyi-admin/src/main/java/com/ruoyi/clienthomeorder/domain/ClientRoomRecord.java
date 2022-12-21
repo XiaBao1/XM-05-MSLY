@@ -1,5 +1,6 @@
 package com.ruoyi.clienthomeorder.domain;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -8,6 +9,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -27,9 +29,16 @@ public class ClientRoomRecord extends BaseEntity
     @Excel(name = "顾客账号")
     private Long clientNumber;
 
-    /** 房间ID */
+    /** 民宿ID */
     @Excel(name = "房间ID")
     private Long roomId;
+
+    /** 房间号 */
+    @Excel(name = "房间号")
+    private Long roomNumber;
+
+    @Excel(name = "民宿名称")
+    private String houseName;
 
     @Excel(name = "用户昵称")
     private String userName;
@@ -41,10 +50,21 @@ public class ClientRoomRecord extends BaseEntity
     private String comment;
 
     @Excel(name = "照片")
-    private String photo;
+    public String photo;
+
+    @Excel(name = "照片路径")
+    public String path;
+
+    @Excel(name = "照片文件")
+    public MultipartFile newsMenuIconFile;
 
     @Excel(name = "订单ID")
     private Long roomRecordId;
+
+    /** 下单时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "下单时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date buyTime;
 
     /** 预计入住时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -111,14 +131,28 @@ public class ClientRoomRecord extends BaseEntity
         return roomRecordId;
     }
 
+    public void setRoomNumber(Long roomNumber){this.roomNumber=roomNumber;}
+    public Long getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setHouseName(String houseName){this.houseName=houseName;}
+    public String getHouseName(){return houseName;}
+
     public void setScore(BigDecimal score){this.score=score;}
     public BigDecimal getScore(){return score;}
 
     public void setComment(String comment){this.comment=comment;}
     public String getComment(){return comment;}
 
+    public void setNewsMenuIconFile(MultipartFile newsMenuIconFile){this.newsMenuIconFile=newsMenuIconFile;}
+    public MultipartFile getNewsMenuIconFile(){return newsMenuIconFile;}
+
     public void setPhoto(String photo){this.photo=photo;}
     public String getPhoto(){return photo;}
+
+    public void setPath(String path){this.path=path;}
+    public String getPath(){return path;}
 
     public void setRoomId(Long roomId) 
     {
@@ -138,6 +172,17 @@ public class ClientRoomRecord extends BaseEntity
     {
         return checkInDate;
     }
+
+    public void setBuyTime(Date buyTime)
+    {
+        this.buyTime = buyTime;
+    }
+
+    public Date getBuyTime()
+    {
+        return buyTime;
+    }
+
     public void setCheckOutDate(Date checkOutDate) 
     {
         this.checkOutDate = checkOutDate;
@@ -203,6 +248,8 @@ public class ClientRoomRecord extends BaseEntity
             .append("clientNumber",getClientNumber())
             .append("userName", getUserName())
             .append("roomId", getRoomId())
+            .append("roomNumber",getRoomNumber())
+            .append("buyTime",getBuyTime())
             .append("checkInDate", getCheckInDate())
             .append("checkOutDate", getCheckOutDate())
             .append("reserveInDate", getReserveInDate())
@@ -214,6 +261,9 @@ public class ClientRoomRecord extends BaseEntity
             .append("score", getScore())
             .append("comment", getComment())
             .append("photo", getPhoto())
+            .append("path",getPath())
+            .append("newsMenuIconFile",getNewsMenuIconFile())
+            .append("houseName", getHouseName())
             .toString();
     }
 }

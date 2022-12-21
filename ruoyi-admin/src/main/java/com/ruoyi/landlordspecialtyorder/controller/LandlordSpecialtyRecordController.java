@@ -21,7 +21,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 订单Controller
- * 
+ *
  * @author ruoyi
  * @date 2022-12-08
  */
@@ -86,6 +86,10 @@ public class LandlordSpecialtyRecordController extends BaseController
     @ResponseBody
     public AjaxResult addSave(LandlordSpecialtyRecord landlordSpecialtyRecord)
     {
+        LandlordSpecialtyRecord a =landlordSpecialtyRecordService.selectSpecialtyId(landlordSpecialtyRecord);
+        Long value =a.specialtyId;
+        System.out.println(value);
+        landlordSpecialtyRecord.specialtyId=value;
         return toAjax(landlordSpecialtyRecordService.insertLandlordSpecialtyRecord(landlordSpecialtyRecord));
     }
 
@@ -110,6 +114,7 @@ public class LandlordSpecialtyRecordController extends BaseController
     @ResponseBody
     public AjaxResult editSave(LandlordSpecialtyRecord landlordSpecialtyRecord)
     {
+        System.out.println(landlordSpecialtyRecord);
         return toAjax(landlordSpecialtyRecordService.updateLandlordSpecialtyRecord(landlordSpecialtyRecord));
     }
 
@@ -143,5 +148,29 @@ public class LandlordSpecialtyRecordController extends BaseController
     {
         List<Integer> list = landlordSpecialtyRecordService.getMonthlyLandlordSpecialtyRecordIncrement();
         return list;
+    }
+
+    /**
+     * 查询评论
+     */
+    @RequiresPermissions("landlordspecialtyorder:specialtyorder:querycomment")
+    @GetMapping("/querycomment/{id}")
+    public String querycomment(@PathVariable("id") Long id, ModelMap mmap)
+    {
+        LandlordSpecialtyRecord landlordSpecialtyRecord = landlordSpecialtyRecordService.selectLandlordSpecialtyCommentRecordById(id);
+        mmap.put("landlordSpecialtyRecord", landlordSpecialtyRecord);
+        return prefix + "/querycomment";
+    }
+
+    /**
+     * 保存评论
+     */
+    @RequiresPermissions("landlordspecialtyorder:specialtyorder:querycomment")
+    @Log(title = "订单", businessType = BusinessType.UPDATE)
+    @PostMapping("/querycomment")
+    @ResponseBody
+    public AjaxResult querycommentSave(LandlordSpecialtyRecord landlordSpecialtyRecord)
+    {
+        return toAjax(landlordSpecialtyRecordService.updateLandlordSpecialtyCommentRecord(landlordSpecialtyRecord));
     }
 }
