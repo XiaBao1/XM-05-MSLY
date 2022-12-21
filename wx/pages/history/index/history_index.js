@@ -10,9 +10,24 @@ Page({
 
   /**
    * 生命周期函数--监听页面加载
+   * 2022/12/17 LRC测试过cookies没问题，没有保留测试的语句，若需要可参考info_index.js
    */
-  onLoad(options) {
+  onLoad: function() {
+    wx.getStorage({
+     key: "cookies",
+    });
+  },
 
+  toRoomHistory:function() {
+    wx.navigateTo({
+      url: '../../history/room/room_history',
+    });
+  },
+
+  toSpecialityHistory:function() {
+    wx.navigateTo({
+      url: '../../history/speciality/speciality_history',
+    });
   },
 
   /**

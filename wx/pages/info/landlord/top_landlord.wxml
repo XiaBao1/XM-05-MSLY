@@ -1,2 +1,33 @@
-<!--pages/info/landlord/top_landlord.wxml-->
-<text>pages/info/landlord/top_landlord.wxml</text>
+<!--pages/restMoney/restMoney.wxml-->
+<view class='main'>
+  <view class='restMoney'>
+    <view class='yue'>
+      <view class='describe'>热门民宿榜单</view>
+      <view class='explain'>为您选取本平台最热门的5家民宿</view>
+      <button class='sbutton' bindtap='toStatistics'>
+        查看统计图表
+      </button>
+    </view>
+  </view>
+  <!-- <view class='qiehuan' style="width:100%;height:{{height}};background:red"> -->
+  <view class='tab-items'>
+    <view class='recharge' wx:for="{{servicelist}}" wx:key="{{item.id}}" wx:for-item="item">
+      <view class='record'>
+        <view class='list'>
+          <view class='housename'>{{item.name}}</view>
+          <view class='address'>{{item.address}}</view>
+          <view class='word'>民宿评价：{{item.score}}分</view>
+          <view class='word'>民宿销量：{{item.sale}}</view>
+        </view>
+        <view class='image'>
+          <image class='img' src="{{item.imgurl}}" mode="aspectFit"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 热线 -->
+  <view class='rexian'>
+    <view class='tels'>服务热线：4008-888-999</view>
+  </view>
+  <!-- </view> -->
+</view>
