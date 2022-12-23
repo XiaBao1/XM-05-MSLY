@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('我的待办列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+<!--                            <li>-->
+<!--                                <label>用户名：</label>-->
+<!--                                &lt;!&ndash;                                <input type="text" name="userName"/>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                <input th:value="${@permission.getPrincipalProperty('userName')}">&ndash;&gt;-->
+<!--                                <input type="text" name="${@permission.getPrincipalProperty('userName')}"/>-->
+<!--                            </li>-->
+                            <li>
+                                <label>内容：</label>
+                                <input type="text" name="content"/>
+                            </li>
+                            <li class="select-time">
+                                <label>截止时间：</label>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginDdlTime]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endDdlTime]"/>
+                            </li>
+                            <li>
+                                <label>完成状态：</label>
+                                <select name="status" th:with="type=${@dict.getType('todolist_status')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-12 select-table table‐bordered noprint" id="prints" style="width: 100%;">
+                <!--<table id="bootstrap-table" style="width: 100%;white-space: nowrap;  "></table>-->
+                <!--超长冒号显示会影响打印-->
+                <table id="bootstrap-table" style="width: 100%;word-break:break-all; word-wrap:break-all; "></table>
+            </div>
+
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="usertodolist:todolist:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="usertodolist:todolist:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="usertodolist:todolist:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="usertodolist:todolist:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+                <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="usertodolist:todolist:print">
+                    <i class="glyphicon glyphicon-print icon-share"></i> 打印
+                </a>
+                <a class="btn btn-warning" onclick="$.modal.openTab('待办事项统计', '/usertodolist/todolist/eCharts');" shiro:hasPermission="usertodolist:todolist:eCharts">
+                    <i class="fa fa-plus"></i> 统计
+                </a>
+
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('usertodolist:todolist:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('usertodolist:todolist:remove')}]];
+        var statusDatas = [[${@dict.getType('todolist_status')}]];
+        var prefix = ctx + "usertodolist/todolist";
+
+        // 自定义打印页面模板
+        function printHtml() {
+            $("#prints").removeClass("noprint");
+            //隐藏操作列
+            $.table.hideColumn('chaozuo');
+            window.print();
+            $("#option").addClass("noprint");
+            //显示操作列
+            $.table.showColumn('chaozuo');
+        }
+
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "我的待办",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '',
+                    visible: false
+                }, {
+                        field: 'userNumber',
+                        title: '用户名'
+                    },
+                {
+                    field: 'content',
+                    title: '内容',
+                    sortable: true
+
+                },
+                {
+                    field: 'ddlTime',
+                    title: '截止时间',
+                    sortable: true
+                },
+                {
+                    field: 'status',
+                    title: '待办事项状态',
+                    sortable: true,
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(statusDatas, value);
+                    }
+                },
+                {
+                    title: '操作',
+                    field: 'chaozuo',
+                    width: '150px',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>
+<style>
+    @media print {
+        .fixed-table-toolbar {
+            display: none;
+        }
+
+        .noprint {
+            display: none;
+        }
+
+        .fixed-table-pagination {
+            display: none !important;
+        }
+
+    }
+    @page {
+        size: auto;
+        margin: 0mm;
+    }
+</style>

@@ -2,6 +2,27 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <th:block th:include="include :: header('热门特产榜单')" />
+
+    <style>
+        @media print {
+            .fixed-table-toolbar {
+                display: none;
+            }
+
+            .noprint {
+                display: none;
+            }
+
+            .fixed-table-pagination {
+                display: none !important;
+            }
+
+        }
+        @page {
+            size: auto;
+            margin: 0mm;
+        }
+    </style>
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -31,10 +52,16 @@
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="yk:top_speciality:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
+                <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="system:top_speciality:print">
+                    <i class="fa fa-plus"></i> 打印
+                </a>
+                <a class="btn btn-success" onclick="$.modal.openTab('特产统计', '/yk/top_speciality/statistics');" shiro:hasPermission="yk:top_speciality:statistics">
+                    <i class="fa fa-plus"></i> 统计
+                </a>
             </div>
 
-            <div class="col-sm-12 select-table table-striped">
-                <table id="bootstrap-table"></table>
+            <div class="col-sm-12 select-table table-striped noprint" id="prints" style="width: 100%;">
+                <table id="bootstrap-table" style="width: 100%;word-break:break-all; word-wrap:break-all; "></table>
             </div>
         </div>
     </div>
@@ -47,36 +74,57 @@
                 url: prefix + "/list",
                 exportUrl: prefix + "/export",
                 modalName: "最热特产榜单",
-                columns: [{
-                    checkbox: true
-                },
+                sortName: "sale",
+                sortOrder: "desc",
+                columns: [
                 {
                     field: 'id',
                     title: '特产ID',
                     visible: false
-                },
-                {
+                }, {
+                    title: '图片',
+                    field: 'image',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        return '<img src="'+ row.imageUrl + '" style="width: 100px; height: 100px">';
+                    }
+                }, {
                     field: 'specialtyName',
                     title: '特产名称'
-                },
-                {
+                },{
+                    field: 'houseName',
+                    title: '民宿名称',
+                }, {
+                    field: 'address',
+                    title: '民宿地址',
+                },{
                     field: 'price',
-                    title: '特产价格'
+                    title: '特产价格',
+                    sortable: true
                 },
                 {
                     field: 'sale',
                     title: '特产销量',
-                    sortable: true,
+                    sortable: true
                 },{
                     field: 'description',
                     title: '描述'
                 },{
                     field: 'inventory',
-                    title: '库存',
+                    title: '库存'
                 }]
             };
             $.table.init(options);
         });
+
+        function printHtml() {
+            $("#prints").removeClass("noprint");
+            $.table.hideColumn('image');
+            window.print();
+            $("#option").addClass("noprint");
+            $.table.showColumn('image');
+
+        }
     </script>
 </body>
 </html>

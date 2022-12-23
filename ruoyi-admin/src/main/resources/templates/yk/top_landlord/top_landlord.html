@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('热门民宿榜单')" />
+
+    <style>
+        @media print {
+            .fixed-table-toolbar {
+                display: none;
+            }
+
+            .noprint {
+                display: none;
+            }
+
+            .fixed-table-pagination {
+                display: none !important;
+            }
+
+        }
+        @page {
+            size: auto;
+            margin: 0mm;
+        }
+    </style>
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+        <!--            <div class="col-sm-12 search-collapse">-->
+        <!--                <form id="formId">-->
+        <!--                    <div class="select-list">-->
+        <!--                        <ul>-->
+        <!--                            <li>-->
+        <!--                                <label>特产名称：</label>-->
+        <!--                                <input type="text" name="specialtyName"/>-->
+        <!--                            </li>-->
+        <!--                            <li>-->
+        <!--                                <label>特产价格：</label>-->
+        <!--                                <input type="text" name="price"/>-->
+        <!--                            </li>-->
+        <!--                            <li>-->
+        <!--                                <label>特产销量：</label>-->
+        <!--                                <input type="text" name="sale"/>-->
+        <!--                            </li>-->
+        <!--                        </ul>-->
+        <!--                    </div>-->
+        <!--                </form>-->
+        <!--            </div>-->
+
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="yk:top_landlord:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
+            <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="system:top_landlord:print">
+                <i class="fa fa-plus"></i> 打印
+            </a>
+            <a class="btn btn-success" onclick="$.modal.openTab('民宿统计', '/yk/top_landlord/statistics');" shiro:hasPermission="yk:top_landlord:statistics">
+                <i class="fa fa-plus"></i> 统计
+            </a>
+        </div>
+
+        <div class="col-sm-12 select-table table-striped noprint" id="prints" style="width: 100%;">
+            <table id="bootstrap-table" style="width: 100%;word-break:break-all; word-wrap:break-all; "></table>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+    var prefix = ctx + "yk/top_landlord";
+
+    $(function() {
+        var options = {
+            url: prefix + "/list",
+            exportUrl: prefix + "/export",
+            modalName: "最热民宿榜单",
+            sortName: "sale",
+            sortOrder: "desc",
+            columns: [
+                {
+                    field: 'id',
+                    title: '民宿ID',
+                    visible: false
+                },
+                {
+                    title: '图片',
+                    field: 'image',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        return '<img src="'+ row.imageUrl + '" style="width: 100px; height: 100px">';
+                    }
+                },
+                {
+                    field: 'houseName',
+                    title: '民宿名称'
+                },
+                {
+                    field: 'address',
+                    title: '民宿地址',
+                },
+                {
+                    field: 'sale',
+                    title: '民宿销量',
+                    sortable: true,
+                },{
+                    field: 'score',
+                    title: '民宿得分',
+                    sortable: true,
+                }]
+        };
+        $.table.init(options);
+    });
+
+    function printHtml() {
+        $("#prints").removeClass("noprint");
+        $.table.hideColumn('image');
+        window.print();
+        $("#option").addClass("noprint");
+        $.table.showColumn('image');
+    }
+</script>
+</body>
+</html>

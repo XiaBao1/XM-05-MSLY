@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.clientspecialtyorder.mapper.ClientSpecialtyRecordMapper">
+
+    <resultMap type="ClientSpecialtyRecord" id="ClientSpecialtyRecordResult">
+        <result property="id"    column="id"    />
+        <result property="userName"    column="user_name"    />
+        <result property="specialtyId"    column="specialty_id"    />
+        <result property="specialtyName"    column="specialty_name"    />
+        <result property="houseName"    column="house_name"    />
+        <result property="quantity"    column="quantity"    />
+        <result property="price"    column="price"    />
+        <result property="orderTime"    column="order_time"    />
+        <result property="finishTime"    column="finish_time"    />
+        <result property="isReceived"    column="is_received"    />
+        <result property="isPaid"    column="is_paid"    />
+        <result property="isDone"    column="is_done"    />
+        <result property="specialtyRecordId"    column="specialty_record_id"    />
+        <result property="score"    column="score"    />
+        <result property="comment"    column="comment"    />
+        <result property="photo"    column="photo"    />
+        <result property="path"    column="path"    />
+    </resultMap>
+
+    <sql id="selectClientSpecialtyRecordVo">
+        select client_specialty_record.id as id, user_name, specialty_id,specialty_name,house_name,quantity, client_specialty_record.price as price, order_time, finish_time, is_received, is_paid, is_done from client_specialty_record join sys_user join house_specialty join landlord_house where specialty_id =house_specialty.id and house_specialty.house_id=landlord_house.id and user_id = client_number and user_name =#{userName}
+    </sql>
+
+    <select id="selectClientSpecialtyRecordList" parameterType="ClientSpecialtyRecord" resultMap="ClientSpecialtyRecordResult">
+        <include refid="selectClientSpecialtyRecordVo"/>
+            <if test="id != null "> and id = #{id}</if>
+            <if test="specialtyId != null "> and specialty_id = #{specialtyId}</if>
+            <if test="specialtyName != '' "> and specialty_name = #{specialtyName}</if>
+            <if test="houseName != '' "> and house_name = #{houseName}</if>
+            <if test="quantity != null "> and quantity = #{quantity}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="orderTime != null "> and order_time = #{orderTime}</if>
+            <if test="finishTime != null "> and finish_time = #{finishTime}</if>
+            <if test="isReceived != null "> and is_received = #{isReceived}</if>
+            <if test="isPaid != null "> and is_paid = #{isPaid}</if>
+            <if test="isDone != null "> and is_done = #{isDone}</if>
+    </select>
+
+    <select id="selectClientSpecialtyRecordById" parameterType="Long" resultMap="ClientSpecialtyRecordResult">
+        select id,client_number, specialty_id, quantity, price, order_time, finish_time, is_received, is_paid, is_done from client_specialty_record  where id = #{id}
+    </select>
+
+    <select id="selectClientSpecialtyCommentRecordById" parameterType="Long" resultMap="ClientSpecialtyRecordResult">
+        select id,specialty_record_id, score, comment, photo from client_specialty_comment  where id = #{id}
+    </select>
+
+    <insert id="insertClientSpecialtyRecord" parameterType="ClientSpecialtyRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into client_specialty_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="clientNumber != null">client_number,</if>
+            <if test="specialtyId != null">specialty_id,</if>
+            <if test="quantity != null">quantity,</if>
+            <if test="price != null">price,</if>
+            <if test="orderTime != null">order_time,</if>
+            <if test="finishTime != null">finish_time,</if>
+            <if test="isReceived != null">is_received,</if>
+            <if test="isPaid != null">is_paid,</if>
+            <if test="isDone != null">is_done,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="clientNumber != null">#{clientNumber},</if>
+            <if test="specialtyId != null">#{specialtyId},</if>
+            <if test="quantity != null">#{quantity},</if>
+            <if test="price != null">#{price},</if>
+            <if test="orderTime != null">#{orderTime},</if>
+            <if test="finishTime != null">#{finishTime},</if>
+            <if test="isReceived != null">#{isReceived},</if>
+            <if test="isPaid != null">#{isPaid},</if>
+            <if test="isDone != null">#{isDone},</if>
+        </trim>
+
+    </insert>
+
+
+    <insert id="insertClientSpecialtyCommentRecord" parameterType="ClientSpecialtyRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into client_specialty_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+<!--            <if test="id != null">id,</if>-->
+            <if test="specialtyRecordId != null">specialty_record_id,</if>
+            <if test="score != null">score,</if>
+            <if test="comment != null">comment,</if>
+            <if test="photo != null">photo,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+<!--            <if test="id != null">#{id},</if>-->
+            <if test="specialtyRecordId != null">#{specialtyRecordId},</if>
+            <if test="score != null">#{score},</if>
+            <if test="comment != null">#{comment},</if>
+            <if test="photo != null">#{photo},</if>
+        </trim>
+
+    </insert>
+
+    <update id="updateClientSpecialtyRecord" parameterType="ClientSpecialtyRecord">
+    update client_specialty_record
+    <trim prefix="SET" suffixOverrides=",">
+        <if test="clientNumber != null">client_number = #{clientNumber},</if>
+        <if test="specialtyId != ''">specialty_id = #{specialtyId},</if>
+        <if test="quantity != null">quantity = #{quantity},</if>
+        <if test="price != null">price = #{price},</if>
+        <if test="orderTime != null">order_time = #{orderTime},</if>
+        <if test="finishTime != null">finish_time = #{finishTime},</if>
+        <if test="isReceived != null">is_received = #{isReceived},</if>
+        <if test="isPaid != null">is_paid = #{isPaid},</if>
+        <if test="isDone != null">is_done = #{isDone},</if>
+    </trim>
+    where id = #{id}
+</update>
+
+    <update id="updateClientSpecialtyCommentRecord" parameterType="ClientSpecialtyRecord">
+        update client_specialty_comment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="specialtyRecordId != null">specialty_record_id=#{specialtyRecordId},</if>
+            <if test="score != null">score =#{score},</if>
+            <if test="comment != null">comment=#{comment},</if>
+<!--            <if test="photo != null">photo=#{photo},</if>-->
+        </trim>
+        where score is null
+    </update>
+
+    <delete id="deleteClientSpecialtyRecordById" parameterType="Long">
+        delete from client_specialty_record where id = #{id}
+    </delete>
+
+    <delete id="deleteClientSpecialtyRecordByIds" parameterType="String">
+        delete from client_specialty_record where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+    <insert id="insertClientSpecialtyCommentPhotoRecord" parameterType="ClientSpecialtyRecord">
+        insert client_specialty_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="path != null">photo,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="path != null">#{path},</if>
+        </trim>
+    </insert>
+</mapper>

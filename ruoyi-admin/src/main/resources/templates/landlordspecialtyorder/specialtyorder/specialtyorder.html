@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('订单列表')" />
+</head>
+<style>
+    @media print {
+        .fixed-table-toolbar {
+            display: none;
+        }
+
+        .noprint {
+            display: none;
+        }
+
+        .fixed-table-pagination {
+            display: none !important;
+        }
+
+    }
+    @page {
+        size: auto;
+        margin: 0mm;
+    }
+</style>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                                <!--                                <label>房东：</label>-->
+                                <input type="hidden" name="${@permission.getPrincipalProperty('userName')}" />
+                            <li>
+                                <label>顾客名：</label>
+                                <input type="text" name="clientName"/>
+                            </li>
+                            <li>
+                                <label>特产名：</label>
+                                <input type="text" name="specialtyName"/>
+                            </li>
+                            <li>
+                                <label>民宿：</label>
+                                <input type="text" name="houseName"/>
+                            </li>
+                            <li>
+                                <label>订货量：</label>
+                                <input type="text" name="quantity"/>
+                            </li>
+                            <li>
+                                <label>订单价格：</label>
+                                <input type="text" name="price"/>
+                            </li>
+                            <li>
+                                <label>下单时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择下单时间" name="orderTime"/>
+                            </li>
+                            <li>
+                                <label>订单完成时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择订单完成时间" name="finishTime"/>
+                            </li>
+                            <li>
+                                <label>是否收获：</label>
+                                <select name="isReceived" th:with="type=${@dict.getType('sys_user_is_received')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>是否付款：</label>
+                                <select name="isPaid" th:with="type=${@dict.getType('sys_user_is_paid')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>订单是否完成：</label>
+                                <select name="isDone" th:with="type=${@dict.getType('sys_user_is_done')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="landlordspecialtyorder:specialtyorder:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="landlordspecialtyorder:specialtyorder:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="landlordspecialtyorder:specialtyorder:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="landlordspecialtyorder:specialtyorder:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+                <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="xxxx:xxxx:print">
+                    <i class="glyphicon glyphicon-print icon-share"></i> 打印
+                </a>
+                <a class="btn btn-warning" onclick="$.modal.openTab('特产订单管理统计', '/landlordspecialtyorder/specialtyorder/eCharts');" shiro:hasPermission="landlordspecialtyorder:specialtyorder:eCharts">
+                    <i class="fa fa-plus"></i> 统计
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table‐bordered noprint" id="prints" style="width: 100%;">
+                <!--<table id="bootstrap-table" style="width: 100%;white-space: nowrap;  "></table>-->
+                <!--超长冒号显示会影响打印-->
+                <table id="bootstrap-table" style="width: 100%;word-break:break-all; word-wrap:break-all; "></table>
+            </div>
+
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('landlordspecialtyorder:specialtyorder:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('landlordspecialtyorder:specialtyorder:remove')}]];
+        var querycommentFlag = [[${@permission.hasPermi('landlordspecialtyorder:specialtyorder:querycomment')}]];
+        var isReceivedDatas = [[${@dict.getType('sys_user_is_received')}]];
+        var isPaidDatas = [[${@dict.getType('sys_user_is_paid')}]];
+        var isDoneDatas = [[${@dict.getType('sys_user_is_done')}]];
+        var prefix = ctx + "landlordspecialtyorder/specialtyorder";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                queryUrl:prefix + "/querycomment/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "订单",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '订单ID',
+                },
+                {
+                    field: 'clientNumber',
+                    title: '顾客ID',
+                    sortable: 'true',
+                    visible: false
+                },
+                {
+                    field: 'clientName',
+                    title: '用户名',
+                    sortable: 'true'
+                },
+                {
+                    field: 'specialtyId',
+                    title: '特产ID',
+                    sortable: 'true',
+                    visible: false
+                },
+                    {
+                        field: 'specialtyName',
+                        title: '特产名',
+                        sortable: 'true'
+                    },
+                    {
+                        field: 'houseName',
+                        title: '民宿',
+                        sortable: 'true'
+                    },
+                {
+                    field: 'quantity',
+                    title: '订货量',
+                    sortable: 'true'
+                },
+                {
+                    field: 'price',
+                    title: '订单价格',
+                    sortable: 'true'
+                },
+                {
+                    field: 'orderTime',
+                    title: '下单时间'
+                },
+                {
+                    field: 'finishTime',
+                    title: '订单完成时间'
+                },
+                {
+                    field: 'isReceived',
+                    title: '是否收获',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(isReceivedDatas, value);
+                    }
+                },
+                {
+                    field: 'isPaid',
+                    title: '是否付款',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(isPaidDatas, value);
+                    }
+                },
+                {
+                    field: 'isDone',
+                    title: '订单是否完成',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(isDoneDatas, value);
+                    }
+                },
+                {
+                    title: '操作',
+                    field: 'chaozuo',
+                    width: '150px',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + querycommentFlag + '" href="javascript:void(0)" onclick="$.operate.querycomment(\'' + row.id + '\')"><i class="fa fa-edit"></i>查看评价</a> ');
+                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+        // 自定义打印页面模板
+        function printHtml() {
+            $("#prints").removeClass("noprint");
+            //隐藏操作列
+            $.table.hideColumn('chaozuo');
+            window.print();
+            $("#option").addClass("noprint");
+            //显示操作列
+            $.table.showColumn('chaozuo');
+        }
+
+    </script>
+</body>
+</html>
