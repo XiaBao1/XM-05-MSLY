@@ -81,26 +81,32 @@
 
 <script type="text/javascript">
     $(function () {
-        var userCountByMonth;
+        console.log("jjjj");
+        var dataName=[];
+        var dataRecord=[];
         $.ajax({
             type: 'post',
             url: 'statistics',
             async: false,
             success: function(res) {
                 console.log(res);
-                userCountByMonth = res;
+                let json= eval( "(" + res + ")" );
+                for(var i=0;i<json.house.length;i++){
+                    dataName.push(json.house[i].name);
+                    dataRecord.push(json.house[i].record);
+                }
             }
         });
         var barChart = echarts.init(document.getElementById("echarts-bar-chart"));
         var baroption = {
             title : {
-                text: '每月用户注册统计'
+                text: '特产历史购买情况统计'
             },
             tooltip : {
                 trigger: 'axis'
             },
             legend: {
-                data:['注册数目']
+                data:['历史购买数目']
             },
             grid:{
                 x:30,
@@ -111,7 +117,7 @@
             xAxis : [
                 {
                     type : 'category',
-                    data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+                    data : dataName
                 }
             ],
             yAxis : [
@@ -121,9 +127,9 @@
             ],
             series : [
                 {
-                    name:'用户注册数目',
+                    name:'历史购买数目',
                     type:'bar',
-                    data: userCountByMonth,
+                    data: dataRecord,
                     markPoint : {
                         data : [
                             {type : 'max', name: '最大值'},
@@ -139,7 +145,6 @@
             ]
         };
         barChart.setOption(baroption);
-
         window.onresize = barChart.resize;
 
     });

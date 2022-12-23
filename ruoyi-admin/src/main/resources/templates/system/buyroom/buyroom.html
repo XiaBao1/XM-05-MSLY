@@ -21,7 +21,7 @@
             margin: 0mm;
         }
     </style>
-    <th:block th:include="include :: header('房子管理列表')" />
+    <th:block th:include="include :: header('房间订购列表')" />
 </head>
 <body class="gray-bg">
 <div class="container-div">
@@ -60,19 +60,19 @@
         </div>
 
         <div class="btn-group-sm" id="toolbar" role="group">
-            <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:room:add">
-                <i class="fa fa-plus"></i> 上传房源
-            </a>
-            <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:room:edit">
-                <i class="fa fa-edit"></i> 修改
-            </a>
-            <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:room:remove">
-                <i class="fa fa-remove"></i> 删除
-            </a>
-            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:room:export">
+            <!--                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:buyroom:add">-->
+            <!--                    <i class="fa fa-plus"></i> 添加-->
+            <!--                </a>-->
+            <!--                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:buyroom:edit">-->
+            <!--                    <i class="fa fa-edit"></i> 修改-->
+            <!--                </a>-->
+            <!--                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:buyroom:remove">-->
+            <!--                    <i class="fa fa-remove"></i> 删除-->
+            <!--                </a>-->
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:buyroom:export">
                 <i class="fa fa-download"></i> 导出
             </a>
-            <a class="btn btn-success" onclick="$.modal.openTab('房源统计', '/system/room/statistics');" shiro:hasPermission="system:room:statistics">
+            <a class="btn btn-success" onclick="$.modal.openTab('民宿订购统计', '/system/buyroom/statistics');" shiro:hasPermission="system:buyroom:statistics">
                 <i class="fa fa-plus"></i> 统计
             </a>
             <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="xxxx:xxxx:print">
@@ -84,16 +84,17 @@
             <!--超长冒号显示会影响打印-->
             <table id="bootstrap-table" style="width: 100%;word-break:break-all; word-wrap:break-all; "></table>
         </div>
-        <!--            <div class="col-sm-12 select-table table-striped">-->
-        <!--                <table id="bootstrap-table"></table>-->
-        <!--            </div>-->
+        <!--        <div class="col-sm-12 select-table table-striped">-->
+        <!--            <table id="bootstrap-table"></table>-->
+        <!--        </div>-->
     </div>
 </div>
 <th:block th:include="include :: footer" />
 <script th:inline="javascript">
-    var editFlag = [[${@permission.hasPermi('system:room:edit')}]];
-    var removeFlag = [[${@permission.hasPermi('system:room:remove')}]];
-    var prefix = ctx + "system/room";
+    var editFlag = [[${@permission.hasPermi('system:buyroom:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('system:buyroom:remove')}]];
+    var buyFlag = [[${@permission.hasPermi('system:buyroom:buy')}]];
+    var prefix = ctx + "system/buyroom";
 
     $(function() {
         var options = {
@@ -102,7 +103,7 @@
             updateUrl: prefix + "/edit/{id}",
             removeUrl: prefix + "/remove",
             exportUrl: prefix + "/export",
-            modalName: "房子管理",
+            modalName: "房间订购",
             columns: [{
                 checkbox: true
             },
@@ -118,9 +119,8 @@
                     visible: false
                 },
                 {
-                    field: 'houseName',
+                    field:'houseName',
                     title: '民宿名称',
-                    sortable: 'true'
                 },
                 {
                     field: 'roomNumber',
@@ -154,14 +154,23 @@
                     align: 'center',
                     formatter: function(value, row, index) {
                         var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>修改信息</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        //actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>详情页查看</a> ');
+                        //actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        //actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-search"></i>编辑</a> ');
+                        actions.push("<a class='btn btn-success btn-xs " + buyFlag + "' href='javascript:void(0)' onclick='buy(" + row.id + ")'><i class='fa fa-search'></i>详情页查看</a>");
                         return actions.join('');
                     }
                 }]
         };
         $.table.init(options);
     });
+
+    function buy(id) {
+        var url = prefix + '/buy/' + id;
+        $.modal.openTab("详情页", url);
+    }
+
+
 
     function printHtml() {
         $("#prints").removeClass("noprint");
@@ -172,6 +181,9 @@
         //显示操作列
         $.table.showColumn('caozuo');
     }
+
+
+
 
 
 </script>

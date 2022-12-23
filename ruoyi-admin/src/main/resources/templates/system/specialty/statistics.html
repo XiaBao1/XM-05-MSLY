@@ -47,6 +47,7 @@
                 <div class="ibox-content">
 
                     <div class="echarts" id="echarts-bar-chart"></div>
+                    <div class="echarts" id="echarts-bar-chart2"></div>
                 </div>
             </div>
         </div>
@@ -81,26 +82,34 @@
 
 <script type="text/javascript">
     $(function () {
-        var userCountByMonth;
+        console.log("jjjj");
+        var dataName=[];
+        var dataSell=[];
+        var dataSold=[];
         $.ajax({
             type: 'post',
             url: 'statistics',
             async: false,
             success: function(res) {
                 console.log(res);
-                userCountByMonth = res;
+                let json= eval( "(" + res + ")" );
+                for(var i=0;i<json.specialty.length;i++){
+                    dataName.push(json.specialty[i].name);
+                    dataSell.push(json.specialty[i].sell);
+                    dataSold.push(json.specialty[i].sold);
+                }
             }
         });
         var barChart = echarts.init(document.getElementById("echarts-bar-chart"));
         var baroption = {
             title : {
-                text: '每月用户注册统计'
+                text: '特产库存情况统计'
             },
             tooltip : {
                 trigger: 'axis'
             },
             legend: {
-                data:['注册数目']
+                data:['库存数目']
             },
             grid:{
                 x:30,
@@ -111,7 +120,7 @@
             xAxis : [
                 {
                     type : 'category',
-                    data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+                    data : dataName
                 }
             ],
             yAxis : [
@@ -121,9 +130,9 @@
             ],
             series : [
                 {
-                    name:'用户注册数目',
+                    name:'库存数目',
                     type:'bar',
-                    data: userCountByMonth,
+                    data: dataSell,
                     markPoint : {
                         data : [
                             {type : 'max', name: '最大值'},
@@ -139,8 +148,65 @@
             ]
         };
         barChart.setOption(baroption);
-
         window.onresize = barChart.resize;
+
+
+
+
+        barChart = echarts.init(document.getElementById("echarts-bar-chart2"));
+        baroption = {
+            title : {
+                text: '特产出售情况统计'
+            },
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['出售数目']
+            },
+            grid:{
+                x:30,
+                x2:40,
+                y2:24
+            },
+            calculable : true,
+            xAxis : [
+                {
+                    type : 'category',
+                    data : dataName
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'出售数目',
+                    type:'bar',
+                    data: dataSold,
+                    markPoint : {
+                        data : [
+                            {type : 'max', name: '最大值'},
+                            {type : 'min', name: '最小值'}
+                        ]
+                    },
+                    markLine : {
+                        data : [
+                            {type : 'average', name: '平均值'}
+                        ]
+                    }
+                }
+            ]
+        };
+        barChart.setOption(baroption);
+        window.onresize = barChart.resize;
+
+
+
+
+
 
     });
 </script>

@@ -21,7 +21,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 房子管理Controller
- * 
+ *
  * @author ruoyi
  * @date 2022-12-02
  */
@@ -51,6 +51,9 @@ public class HouseRoomController extends BaseController
     {
         startPage();
         List<HouseRoom> list = houseRoomService.selectHouseRoomList(houseRoom);
+        for(HouseRoom houseRoom1:list){
+            houseRoom1.houseName=houseRoomService.getHouseNameById(houseRoom1.getHouseId());
+        }
         return getDataTable(list);
     }
 
@@ -123,5 +126,24 @@ public class HouseRoomController extends BaseController
     public AjaxResult remove(String ids)
     {
         return toAjax(houseRoomService.deleteHouseRoomByIds(ids));
+    }
+
+    @RequiresPermissions("system:room:statistics")
+    @GetMapping("/statistics")
+    public String statistics(ModelMap mmap)
+    {
+        return prefix + "/statistics";
+    }
+
+    @RequiresPermissions("system:room:statistics")
+    @Log(title = "房源统计", businessType = BusinessType.INSERT)
+    @PostMapping("/statistics")
+    @ResponseBody
+    public List<Integer> statisticsData()
+    {
+        System.out.println("6666");
+        HouseRoom houseRoom=new HouseRoom();
+        List<Integer> list = houseRoomService.getAppointmentData(houseRoom);
+        return list;
     }
 }
