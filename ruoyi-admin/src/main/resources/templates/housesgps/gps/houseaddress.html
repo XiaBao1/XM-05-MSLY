@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" >
+<!--<head>-->
+<head>
+
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Baidu Map </title>
+    <style type="text/css">
+        body,html{
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        #container{
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        #result{
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            width: 250px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background: #fff;
+            box-shadow: 0 2px 6px 0 rgba(27, 142, 236, 0.5);
+            border-radius: 7px;
+            z-index: 99;
+        }
+    </style>
+</head>
+<body>
+
+<div name="container" id="container"></div>
+<script src="https://api.map.baidu.com/api?v=1.0&type=webgl&ak=frhSyaiBg0LIz22SAcjFiCQR4zwvK8sK"></script>
+<script type="text/javascript" th:inline = "javascript">
+    var housename = '[[${housename}]]';
+    housename = (housename).substring(1,housename.length-1);
+    var address = '[[${address}]]';
+    address = (address).substring(1,address.length-1);
+    var city = '[[${city}]]';
+    city = (city).substring(1,city.length-1);
+    var map = new BMapGL.Map("container");          // 创建地图实例
+    var point = new BMapGL.Point(116.331398,39.897445);  // 创建点坐标
+    map.centerAndZoom(point, 12);                 // 初始化地图，设置中心点坐标和地图级别
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+    map.setHeading(64.5);   //设置地图旋转角度
+    map.setTilt(73);       //设置地图的倾斜角度
+
+
+    var marker ;
+    //创建地址解析器实例
+    var myGeo = new BMapGL.Geocoder();
+    // 将地址解析结果显示在地图上，并调整地图视野
+    myGeo.getPoint(address, function(point){
+        if(point){
+            map.centerAndZoom(point, 16);
+            marker = new BMapGL.Marker(point, {title: address})
+            map.addOverlay(marker);
+
+            var opts = {
+                width : 200,     // 信息窗口宽度
+                height: 100,     // 信息窗口高度
+                title : housename  // 信息窗口标题
+                //message:"这里是故宫"
+            }
+            var infoWindow = new BMapGL.InfoWindow(address, opts);  // 创建信息窗口对象
+            marker.addEventListener("click", function(){
+                map.openInfoWindow(infoWindow, point); //开启信息窗口
+            });
+        }else{
+            alert('您选择的地址没有解析到结果！');
+        }
+    }, city)
+
+</script>
+
+</body>
+</html>
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" >-->
+<!--<head>-->
+<!--    <th:block th:include="include :: header('查看位置')" />-->
+<!--    <th:block th:include="include :: datetimepicker-css" />-->
+
+<!--    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />-->
+<!--    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />-->
+<!--&lt;!&ndash;    <title>Baidu Map </title>&ndash;&gt;-->
+<!--    <style type="text/css">-->
+<!--        body,html{-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            padding: 0;-->
+<!--            margin: 0;-->
+<!--        }-->
+<!--        #container{-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            overflow: hidden;-->
+<!--        }-->
+<!--        #result{-->
+<!--            position: fixed;-->
+<!--            top: 10px;-->
+<!--            left: 10px;-->
+<!--            width: 250px;-->
+<!--            height: 30px;-->
+<!--            line-height: 30px;-->
+<!--            text-align: center;-->
+<!--            background: #fff;-->
+<!--            box-shadow: 0 2px 6px 0 rgba(27, 142, 236, 0.5);-->
+<!--            border-radius: 7px;-->
+<!--            z-index: 99;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body class="white-bg">-->
+<!--    <div class="wrapper wrapper-content animated fadeInRight ibox-content">-->
+<!--        <form class="form-horizontal m" id="form-gps-houseaddress" th:object="${houseGPS}">-->
+<!--            <input name="id" th:field="*{id}" type="hidden">-->
+<!--            <div class="form-group">-->
+<!--                <div name="container" id="container"></div>-->
+<!--&lt;!&ndash;                <label class="col-sm-3 control-label">：</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="col-sm-8">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <input name="houseName" th:field="*{houseName}" class="form-control" type="text">&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--&lt;!&ndash;            <div class="form-group">    &ndash;&gt;-->
+<!--&lt;!&ndash;                <label class="col-sm-3 control-label">：</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="col-sm-8">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <input name="hostNumber" th:field="*{hostNumber}" class="form-control" type="text">&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="form-group">    &ndash;&gt;-->
+<!--&lt;!&ndash;                <label class="col-sm-3 control-label">：</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="col-sm-8">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <input name="address" th:field="*{address}" class="form-control" type="text">&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="form-group">    &ndash;&gt;-->
+<!--&lt;!&ndash;                <label class="col-sm-3 control-label">：</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="col-sm-8">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <input name="score" th:field="*{score}" class="form-control" type="text">&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="form-group">    &ndash;&gt;-->
+<!--&lt;!&ndash;                <label class="col-sm-3 control-label">：</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="col-sm-8">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="input-group date">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <input name="registerTime" th:value="${#dates.format(houseGPS.registerTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+
+
+<!--    <th:block th:include="include :: footer" />-->
+<!--    <th:block th:include="include :: datetimepicker-js" />-->
+<!--    <script src="https://api.map.baidu.com/api?v=1.0&type=webgl&ak=frhSyaiBg0LIz22SAcjFiCQR4zwvK8sK"></script>-->
+<!--    <script th:inline="javascript">-->
+<!--        var housename = "下关村民宿";-->
+<!--        var address = "北京市海淀区上地10街";-->
+<!--        var city = "北京市";-->
+<!--        var map = new BMapGL.Map("container");          // 创建地图实例-->
+<!--        var point = new BMapGL.Point(116.331398,39.897445);  // 创建点坐标-->
+<!--        map.centerAndZoom(point, 12);                 // 初始化地图，设置中心点坐标和地图级别-->
+<!--        map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放-->
+<!--        map.setHeading(64.5);   //设置地图旋转角度-->
+<!--        map.setTilt(73);       //设置地图的倾斜角度-->
+
+<!--        var marker ;-->
+<!--        //创建地址解析器实例-->
+<!--        var myGeo = new BMapGL.Geocoder();-->
+<!--        // 将地址解析结果显示在地图上，并调整地图视野-->
+<!--        myGeo.getPoint(address, function(point){-->
+<!--            if(point){-->
+<!--                map.centerAndZoom(point, 16);-->
+<!--                marker = new BMapGL.Marker(point, {title: address})-->
+<!--                map.addOverlay(marker);-->
+
+<!--                var opts = {-->
+<!--                    width : 200,     // 信息窗口宽度-->
+<!--                    height: 100,     // 信息窗口高度-->
+<!--                    title : housename  // 信息窗口标题-->
+<!--                            //message:"这里是故宫"-->
+<!--                }-->
+<!--                var infoWindow = new BMapGL.InfoWindow(address, opts);  // 创建信息窗口对象-->
+<!--                marker.addEventListener("click", function(){-->
+<!--                    map.openInfoWindow(infoWindow, point); //开启信息窗口-->
+<!--                });-->
+<!--            }else{-->
+<!--                alert('您选择的地址没有解析到结果！');-->
+<!--            }-->
+<!--        }, city)-->
+
+<!--    </script>-->
+
+
+
+
+
+
+<!--&lt;!&ndash;    <script th:inline="javascript">&ndash;&gt;-->
+<!--&lt;!&ndash;        var prefix = ctx + "housesgps/gps";&ndash;&gt;-->
+<!--&lt;!&ndash;        $("#form-gps-houseaddress").validate({&ndash;&gt;-->
+<!--&lt;!&ndash;            focusCleanup: true&ndash;&gt;-->
+<!--&lt;!&ndash;        });&ndash;&gt;-->
+
+<!--&lt;!&ndash;        function submitHandler() {&ndash;&gt;-->
+<!--&lt;!&ndash;            if ($.validate.form()) {&ndash;&gt;-->
+<!--&lt;!&ndash;                $.operate.save(prefix + "/edit", $('#form-gps-houseaddress').serialize());&ndash;&gt;-->
+<!--&lt;!&ndash;            }&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;    </script>&ndash;&gt;-->
+<!--</body>-->
+<!--</html>-->

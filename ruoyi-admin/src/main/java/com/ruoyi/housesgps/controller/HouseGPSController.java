@@ -1,6 +1,8 @@
 package com.ruoyi.housesgps.controller;
 
 import java.util.List;
+
+import com.ruoyi.clienthomeorder.domain.ClientRoomRecord;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -133,5 +135,36 @@ public class HouseGPSController extends BaseController
     public String baiduapi()
     {
         return prefix + "/baiduapi";
+    }
+
+    /**
+     * 查询位置
+     */
+    @RequiresPermissions("housesgps:gps:houseaddress")
+    @GetMapping("/houseaddress/{id}")
+    public String houseaddress(@PathVariable("id") Long id, ModelMap mmap)
+    {
+        HouseGPS houseGPS = houseGPSService.selectHouseGPSById(id);
+        mmap.put("houseGPS", houseGPS);
+        String housename = houseGPS.getHouseName();
+        String address = houseGPS.getAddress();
+        String city = houseGPS.getCity();
+        mmap.addAttribute("housename",housename);
+        mmap.addAttribute("address",address);
+        mmap.addAttribute("city",city);
+        System.out.println("==============================================================="+housename);
+        return prefix + "/houseaddress";
+    }
+
+    /**
+     * 保存位置
+     */
+    @RequiresPermissions("housesgps:gps:houseaddress")
+    @Log(title = "民宿订单", businessType = BusinessType.UPDATE)
+    @PostMapping("/houseaddress")
+    @ResponseBody
+    public AjaxResult houseaddressSave(HouseGPS houseGPS)
+    {
+        return toAjax(houseGPSService.updateHouseGPS(houseGPS));
     }
 }
