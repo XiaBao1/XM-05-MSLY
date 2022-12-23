@@ -32,6 +32,8 @@ public class HouseGPS extends BaseEntity
     @Excel(name = "")
     private String address;
 
+    private String city;
+
     /**  */
     @Excel(name = "")
     private BigDecimal score;
@@ -94,6 +96,16 @@ public class HouseGPS extends BaseEntity
         return registerTime;
     }
 
+    public void setCity(String city)
+    {
+        this.city = city;
+    }
+
+    public String getCity()
+    {
+        return city;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -103,6 +115,7 @@ public class HouseGPS extends BaseEntity
             .append("address", getAddress())
             .append("score", getScore())
             .append("registerTime", getRegisterTime())
+                .append("city", getCity())
             .toString();
     }
 }

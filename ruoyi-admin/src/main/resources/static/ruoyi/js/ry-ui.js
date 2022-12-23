@@ -1196,6 +1196,30 @@ var table = {
                 }
                 return url;
             },
+            houseaddressTab: function (id) {
+                table.set();
+                $.modal.openTab("查询" + table.options.modalName, $.operate.houseaddressUrl(id));
+            },
+            // 添加信息 全屏
+            houseaddressFull: function(id) {
+                table.set();
+                $.modal.openFull("查询" + table.options.modalName, $.operate.houseaddressUrl(id));
+            },
+            // 修改访问地址
+            houseaddressUrl: function(id) {
+                var url = "/404.html";
+                if ($.common.isNotEmpty(id)) {
+                    url = table.options.houseaddressUrl.replace("{id}", id);
+                } else {
+                    var id = $.common.isEmpty(table.options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(table.options.uniqueId);
+                    if (id.length == 0) {
+                        $.modal.alertWarning("请至少选择一条记录");
+                        return;
+                    }
+                    url = table.options.houseaddressUrl.replace("{id}", id);
+                }
+                return url;
+            },
             // 修改信息
             edit: function(id) {
                 table.set();
