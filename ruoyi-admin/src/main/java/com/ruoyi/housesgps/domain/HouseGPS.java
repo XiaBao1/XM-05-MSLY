@@ -22,20 +22,20 @@ public class HouseGPS extends BaseEntity
     private Long id;
 
     /**  */
-    @Excel(name = "")
+    @Excel(name = "民宿名称")
     private String houseName;
 
     /**  */
     private Long hostNumber;
 
     /**  */
-    @Excel(name = "")
+    @Excel(name = "所在地址")
     private String address;
-
+    @Excel(name = "城市")
     private String city;
 
     /**  */
-    @Excel(name = "")
+
     private BigDecimal score;
 
     /**  */
