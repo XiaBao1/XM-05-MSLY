@@ -1,6 +1,9 @@
 package com.ruoyi.web.system.service.impl;
 
-import java.util.List;
+import java.util.*;
+
+import io.swagger.models.auth.In;
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.web.system.mapper.HouseRoomMapper;
@@ -10,19 +13,19 @@ import com.ruoyi.common.core.text.Convert;
 
 /**
  * 房子管理Service业务层处理
- * 
+ *
  * @author ruoyi
  * @date 2022-12-02
  */
 @Service
-public class HouseRoomServiceImpl implements IHouseRoomService 
+public class HouseRoomServiceImpl implements IHouseRoomService
 {
     @Autowired
     private HouseRoomMapper houseRoomMapper;
 
     /**
      * 查询房子管理
-     * 
+     *
      * @param id 房子管理主键
      * @return 房子管理
      */
@@ -34,7 +37,7 @@ public class HouseRoomServiceImpl implements IHouseRoomService
 
     /**
      * 查询房子管理列表
-     * 
+     *
      * @param houseRoom 房子管理
      * @return 房子管理
      */
@@ -46,7 +49,7 @@ public class HouseRoomServiceImpl implements IHouseRoomService
 
     /**
      * 新增房子管理
-     * 
+     *
      * @param houseRoom 房子管理
      * @return 结果
      */
@@ -58,7 +61,7 @@ public class HouseRoomServiceImpl implements IHouseRoomService
 
     /**
      * 修改房子管理
-     * 
+     *
      * @param houseRoom 房子管理
      * @return 结果
      */
@@ -70,7 +73,7 @@ public class HouseRoomServiceImpl implements IHouseRoomService
 
     /**
      * 批量删除房子管理
-     * 
+     *
      * @param ids 需要删除的房子管理主键
      * @return 结果
      */
@@ -82,7 +85,7 @@ public class HouseRoomServiceImpl implements IHouseRoomService
 
     /**
      * 删除房子管理信息
-     * 
+     *
      * @param id 房子管理主键
      * @return 结果
      */
@@ -90,5 +93,24 @@ public class HouseRoomServiceImpl implements IHouseRoomService
     public int deleteHouseRoomById(Long id)
     {
         return houseRoomMapper.deleteHouseRoomById(id);
+    }
+
+    public List<Integer> getAppointmentData(HouseRoom houseRoom){
+        List<Integer> ans=new ArrayList<>();
+        ans.add(getAppointNumber(houseRoom));
+        ans.add(getUnappointNumber(houseRoom));
+        return ans;
+    }
+
+    Integer getAppointNumber(HouseRoom houseRoom){
+        return houseRoomMapper.getAppointNumber(houseRoom);
+    }
+
+    Integer getUnappointNumber(HouseRoom houseRoom){
+        return houseRoomMapper.getUnappointNumber(houseRoom);
+    }
+
+    public String getHouseNameById(Long id){
+        return houseRoomMapper.getHouseNameById(id);
     }
 }

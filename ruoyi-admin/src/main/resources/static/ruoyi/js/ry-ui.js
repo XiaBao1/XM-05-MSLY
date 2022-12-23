@@ -1235,6 +1235,11 @@ var table = {
                     $.modal.open("修改" + table.options.modalName, $.operate.editUrl(id));
                 }
             },
+            // buypage: function(id) {
+            //     table.set();
+            //     $.modal.open("详情页", $.operate.editUrl(id));
+            //
+            // },
             // 修改信息，以tab页展现
             editTab: function(id) {
                 table.set();
