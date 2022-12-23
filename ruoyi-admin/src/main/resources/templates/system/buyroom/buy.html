@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改房iii间订购')" />
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-buyRoom-buy" >
+        <!--    <form class="form-horizontal m" id="form-buyroom-buy" th:object="${buyRoom}">-->
+        <div class="form-group" hidden>
+            <label class="col-sm-3 control-label">房间ID：</label>
+            <div class="col-sm-8">
+                <input name="houseId"  class="form-control" th:value="${id}" type="text" id="id" required disabled >
+            </div>
+        </div>
+        <div class="form-group" hidden="">
+            <label class="col-sm-3 control-label">民宿ID：</label>
+            <div class="col-sm-8">
+                <input name="houseId"  class="form-control" th:value="查询中" type="text" id="houseId" required disabled >
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">民宿名称：</label>
+            <div class="col-sm-8">
+                <input name="houseName"  class="form-control" th:value="查询中" type="text" id="houseName" required disabled >
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">房间号：</label>
+            <div class="col-sm-8">
+                <input name="roomNumber" th:value="查询中" class="form-control" type="text" id="roomNumber" required disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">每日价格（￥）：</label>
+            <div class="col-sm-8">
+                <input name="pricePerDay" th:value="查询中" class="form-control" type="text" id="price" required disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">房间标准：</label>
+            <div class="col-sm-8">
+                <input name="standard" th:value="查询中" class="form-control" type="text" id="standard" required disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">是否空闲：</label>
+            <div class="col-sm-8">
+                <input name="isFree" th:value="查询中" class="form-control" type="text" id="isFree" required disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">评分：</label>
+            <div class="col-sm-8">
+                <input name="score" th:value="查询中" class="form-control" type="text" id="score" required disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">商家联系电话：</label>
+            <div class="col-sm-8">
+                <input name="isFree" class="form-control" th:value="查询中" type="text" id="phone" required disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">商家邮箱：</label>
+            <div class="col-sm-8">
+                <input name="isFree" class="form-control" th:value="查询中" type="text" id="mailbox" required disabled>
+            </div>
+        </div>
+        <div id="showImage">
+            <!--            <p style="text-align: center">-->
+            <!--                <img th:src="@{/img/minsu.jpg}" alt="无法显示图片" th:width="600" height="400">-->
+            <!--            </p>-->
+        </div>
+        <!--        <img src="http://localhost/profile/test.png">-->
+        <div>
+            <p style="text-align: center">
+                <font size="5" >民宿展示</font>
+            </p>
+        </div>
+        <div>
+            <p style="text-align: right">
+                <button th:style="'background:#1E90FF;border-style:none;color:#ffff;border-radius:10px;height:40px;width:70px'" name="dg" id="dg" onclick="dinggou()">我要订购</button>
+            </p>
+        </div>
+    </form>
+    <!--    <div><img src="https://pic1.zhimg.com/80/v2-b31f71b9dbfc90cd5897e052075c6a90_720w.webp"  class="img-circle" alt="User Image" th:width="50" height="50"/></div>-->
+    <div class="scroller" style="height: 341px;" data-always-visible="1" data-rail-visible1="1" id="showComment">
+        <!--        <ul class="chats">-->
+        <!--            <li class="in">-->
+        <!--                <img th:src="@{/img/profile.jpg}" class="img-circle" alt="User Image" th:width="50" height="50">-->
+        <!--                &lt;!&ndash;                    <img class="img-circle" th:width="50" height="50" alt="" src="../static/img/profile.jpg"/>&ndash;&gt;-->
+        <!--                <div class="message">-->
+        <!--                        <span class="arrow">-->
+        <!--                        </span>-->
+        <!--                    <a href="javascript:;" class="name" id="commentName">-->
+        <!--                        hhu </a>-->
+        <!--                    <span class="body" id="commentContent">-->
+        <!--                           hhhh </span>-->
+        <!--                </div>-->
+        <!--            </li>-->
+        <!--        </ul>-->
+    </div>
+</div>
+<!--    <script th:inline="javascript">-->
+<!--        var prefix = ctx + "system/buyroom";-->
+<!--        $("#form-buyroom-edit").validate({-->
+<!--            focusCleanup: true-->
+<!--        });-->
+
+<!--        function submitHandler() {-->
+<!--            if ($.validate.form()) {-->
+<!--                $.operate.save(prefix + "/edit", $('#form-buyroom-edit').serialize());-->
+<!--            }-->
+<!--        }-->
+<!--    </script>-->
+
+
+
+<!--    &lt;!&ndash;<script src="../../../static/js/jquery.min.js" type="text/javascript"></script>&ndash;&gt;-->
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: summernote-js" />
+<script th:inline="javascript" >
+    console.log("进入js");
+    var roomNumber,houseId,standard,price,isFree,phone,mailbox,houseName,score,imageUrl;
+    var id=$("#id").val();
+    console.log("id="+id);
+    var data={};
+    data.id=id;
+    $.ajax({//获取房间信息
+        type: 'post',
+        url: '/system/buyroom/getRoomInfo',
+        async: false,
+        data: data,
+        success: function(res) {
+            console.log(res);
+            let json = eval( "(" + res + ")" );
+            roomNumber= json.roomNumber;
+            houseId=json.houseId;
+            standard=json.standard;
+            price=json.pricePerDay;
+            isFree=json.isFree;
+            phone=json.phoneNumber;
+            mailbox=json.mailBox;
+            houseName=json.houseName;
+            imageUrl=json.imageUrl;
+        }
+    });
+    document.getElementById("roomNumber").value=roomNumber;
+    document.getElementById("houseId").value=houseId;
+    document.getElementById("standard").value=standard;
+    document.getElementById("price").value=price;
+    //document.getElementById("isFree").value=isFree;
+    if(isFree==0){
+        document.getElementById("isFree").value="否";
+    }
+    else{
+        document.getElementById("isFree").value="是";
+    }
+    document.getElementById("phone").value=phone;
+    document.getElementById("mailbox").value=mailbox;
+    document.getElementById("houseName").value=houseName;
+    var imageStr="<p style='text-align: center'>\n" +
+        "                <img src='"+imageUrl+"' alt='无法显示图片' th:width='600' height='400'>\n" +
+        "            </p>";
+    document.getElementById("showImage").innerHTML=imageStr;
+
+
+    $.ajax({//获取评价信息
+        type: 'post',
+        url: '/system/buyroom/getComment',
+        async: false,
+        data: data,
+        success: function(res) {
+            console.log(res);
+            let json = eval( "(" + res + ")" );
+            if(json.score==-1){
+                document.getElementById("score").value="暂无人评分";
+            }
+            else{
+                score=json.score;
+                score=score+"（已有"+json.scoreNumber+"人评分）";
+                document.getElementById("score").value=score;
+            }
+
+            var str="<ul class='chats'>\n";
+            for(var i=0;i<json.allComment.length;i++){
+                str=str+"<li class='in'>\n" +
+                    "                <img src='https://pic1.zhimg.com/80/v2-b31f71b9dbfc90cd5897e052075c6a90_720w.webp'  class='img-circle' alt='User Image' th:width='50' height='50'/>\n" +
+                    "                <div class='message'>\n" +
+                    "                        <span class='arrow'></span>\n" +
+                    "                    <a href='javascript:;' class='name' >"+json.allComment[i].name+"：</a>\n" +
+                    "                    <span class='body'>"+json.allComment[i].comment+"</span>\n" +
+                    "                </div>\n" +
+                    "            </li>\n";
+            }
+            str=str+" </ul>";
+
+            document.getElementById("showComment").innerHTML=str;
+        }
+    });
+
+
+
+    function dinggou() {
+        console.log("这里是订购函数");
+        if(isFree==0){
+            //alert("此房间已预定");
+            top.layer.alert("此房间已预定");
+        }
+        else{
+            // $.ajax({
+            //     type: 'post',
+            //     url: '/system/buyroom/pay',
+            //     async: false,
+            //     data: data,
+            //     success: function(res) {
+            //         console.log(res);
+            //         let json2 = eval( "(" + res + ")" );
+            //         if(json2.result_code==0){
+            //             top.layer.alert("预定成功");
+            //         }
+            //     }
+            // });
+            var url="system/buyroom/infopage/"+id;
+            $.modal.openTab("民宿订购",url);
+        }
+    }
+
+</script>
+
+
+</body>
+
+
+</html>

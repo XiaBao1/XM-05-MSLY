@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.system.mapper.BuyRoomMapper">
+
+    <resultMap type="BuyRoom" id="BuyRoomResult">
+        <result property="id"    column="id"    />
+        <result property="houseId"    column="house_id"    />
+        <result property="roomNumber"    column="room_number"    />
+        <result property="pricePerDay"    column="price_per_day"    />
+        <result property="standard"    column="standard"    />
+        <result property="isFree"    column="is_free"    />
+    </resultMap>
+
+    <resultMap id="LongResult" type="Long"></resultMap>
+
+    <resultMap id="DoubleResult" type="Double"></resultMap>
+
+    <resultMap id="StringResult" type="String"></resultMap>
+
+    <sql id="selectBuyRoomVo">
+        select id, house_id, room_number, price_per_day, standard, is_free from house_room
+    </sql>
+
+    <select id="selectBuyRoomList" parameterType="BuyRoom" resultMap="BuyRoomResult">
+        <include refid="selectBuyRoomVo"/>
+        <where>
+            <if test="houseId != null "> and A.house_id = #{houseId}</if>
+            <if test="roomNumber != null  and roomNumber != ''"> and A.room_number = #{roomNumber}</if>
+            <if test="pricePerDay != null "> and A.price_per_day = #{pricePerDay}</if>
+            <if test="standard != null  and standard != ''"> and standard = #{standard}</if>
+            <if test="isFree != null "> and A.is_free = #{isFree}</if>
+        </where>
+    </select>
+
+    <select id="getHostNumber" parameterType="Long" resultType="Long">
+        select host_number from landlord_house where id=#{houseId};
+    </select>
+
+    <select id="getPhoneNumber" parameterType="Long" resultType="String">
+        select phonenumber from sys_user where user_id=#{hostNumber};
+    </select>
+
+    <select id="getMailBox" parameterType="Long" resultType="String">
+        select email from sys_user where user_id=#{hostNumber};
+    </select>
+
+    <select id="selectBuyRoomById" parameterType="Long" resultMap="BuyRoomResult">
+        <include refid="selectBuyRoomVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="getPricePerDayById" parameterType="Long" resultType="Long">
+        select  price_per_day from house_room where id=#{id}
+    </select>
+
+    <select id="getHouseNameById" parameterType="Long" resultType="String">
+        select house_name from landlord_house where id=#{id}
+    </select>
+
+    <select id="getRecordId" parameterType="Long" resultMap="LongResult">
+        select id from client_room_comment where room_record_id in (select id from client_room_record where room_id=#{id})
+    </select>
+
+    <select id="getScore" parameterType="Long" resultMap="DoubleResult">
+        select score from client_room_comment where room_record_id in (select id from client_room_record where room_id=#{id})
+    </select>
+
+    <select id="getUserName" parameterType="Long" resultType="String">
+        select user_name from sys_user where user_id=(select client_number from client_room_record where id=(select room_record_id from client_room_comment where id=#{id}))
+    </select>
+
+    <select id="getUserComment" parameterType="Long" resultType="String">
+        select comment from client_room_comment where id=#{id}
+    </select>
+
+    <select id="getMoney" parameterType="Long" resultType="Long">
+        select money from sys_user where user_id=#{id}
+    </select>
+
+    <select id="getIsFreeById" parameterType="Long" resultType="Integer">
+        select is_free from house_room where id=#{id}
+    </select>
+
+    <select id="getImageUrlById" parameterType="Long" resultType="String">
+        select image_url from landlord_house where id=#{id}
+    </select>
+
+    <select id="getName" resultMap="StringResult">
+        select distinct house_name from landlord_house
+    </select>
+
+    <select id="getSellNumber" parameterType="String" resultType="Long">
+        select count(*) from client_room_record where (select house_name from landlord_house where id=(select house_id from house_room where house_room.id=client_room_record.room_id))=#{name}
+    </select>
+
+    <insert id="insertBuyRoom" parameterType="BuyRoom" useGeneratedKeys="true" keyProperty="id">
+        insert into house_room
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="houseId != null">house_id,</if>
+            <if test="roomNumber != null and roomNumber != ''">room_number,</if>
+            <if test="pricePerDay != null">price_per_day,</if>
+            <if test="standard != null and standard != ''">standard,</if>
+            <if test="isFree != null">is_free,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="houseId != null">#{houseId},</if>
+            <if test="roomNumber != null and roomNumber != ''">#{roomNumber},</if>
+            <if test="pricePerDay != null">#{pricePerDay},</if>
+            <if test="standard != null and standard != ''">#{standard},</if>
+            <if test="isFree != null">#{isFree},</if>
+        </trim>
+    </insert>
+
+    <insert id="insertRecord" parameterType="BuyRoom">
+        insert into client_room_record (client_number,room_id,buy_time,reserve_in_date,reserve_out_date,price,is_paid,is_done) values (#{userId},#{id},now(),#{standard},#{roomNumber},#{pricePerDay},1,0)
+    </insert>
+
+    <update id="setIsFreeById" parameterType="Long">
+        update house_room set is_free=0 where id=#{id}
+    </update>
+
+    <update id="updateMoney" parameterType="BuyRoom">
+        update sys_user set money=#{pricePerDay} where user_id=#{userId}
+    </update>
+
+    <update id="updateBuyRoom" parameterType="BuyRoom">
+        update house_room
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="houseId != null">house_id = #{houseId},</if>
+            <if test="roomNumber != null and roomNumber != ''">room_number = #{roomNumber},</if>
+            <if test="pricePerDay != null">price_per_day = #{pricePerDay},</if>
+            <if test="standard != null and standard != ''">standard = #{standard},</if>
+            <if test="isFree != null">is_free = #{isFree},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBuyRoomById" parameterType="Long">
+        delete from house_room where id = #{id}
+    </delete>
+
+    <delete id="deleteBuyRoomByIds" parameterType="String">
+        delete from house_room where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
