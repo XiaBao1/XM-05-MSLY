@@ -71,22 +71,22 @@ public class LandlordRoomRecord extends BaseEntity
 
     /** 预计入住时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "预计入住时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @Excel(name = "实际入住时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date checkInDate;
 
     /** 预计退房时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "预计退房时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @Excel(name = "实际退房时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date checkOutDate;
 
     /** 实际入住时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "实际入住时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @Excel(name = "预计入住时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date reserveInDate;
 
     /** 实际退房时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "实际退房时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @Excel(name = "预计退房时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date reserveOutDate;
 
     /** 价格 */

@@ -52,19 +52,19 @@
                             </li>
                             <li>
                                 <label>预计入住时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择预计入住时间" name="checkInDate"/>
+                                <input type="text" class="time-input" placeholder="请选择预计入住时间" name="reserveInDate"/>
                             </li>
                             <li>
                                 <label>预计退房时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择预计退房时间" name="checkOutDate"/>
+                                <input type="text" class="time-input" placeholder="请选择预计退房时间" name="reserveOutDate"/>
                             </li>
                             <li>
                                 <label>实际入住时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择实际入住时间" name="reserveInDate"/>
+                                <input type="text" class="time-input" placeholder="请选择实际入住时间" name="checkInDate"/>
                             </li>
                             <li>
                                 <label>实际退房时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择实际退房时间" name="reserveOutDate"/>
+                                <input type="text" class="time-input" placeholder="请选择实际退房时间" name="checkOutDate"/>
                             </li>
                             <li>
                                 <label>价格：</label>
@@ -98,7 +98,7 @@
                     <i class="fa fa-plus"></i> 添加
                 </a>
                 <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="landlordhomeorder:landlordorder:edit">
-                    <i class="fa fa-edit"></i> 修改
+                    <i class="fa fa-edit"></i> 前台操作
                 </a>
                 <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="landlordhomeorder:landlordorder:remove">
                     <i class="fa fa-remove"></i> 删除
@@ -106,7 +106,7 @@
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="landlordhomeorder:landlordorder:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
-                <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="xxxx:xxxx:print">
+                <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="landlordhomeorder:landlordorder:print">
                     <i class="glyphicon glyphicon-print icon-share"></i> 打印
                 </a>
                 <a class="btn btn-warning" onclick="$.modal.openTab('历史订单统计', '/landlordhomeorder/landlordorder/eCharts');" shiro:hasPermission="landlordhomeorder:landlordorder:eCharts">
@@ -159,7 +159,7 @@
                 {
                         field: 'clientName',
                         title: '用户名',
-                        sortable: 'true'
+                        sortable: true
                  },
                 {
                     field: 'roomId',
@@ -170,42 +170,42 @@
                 {
                     field: 'houseName',
                     title: '民宿名称',
-                    sortable: 'true'
+                    sortable: true
                 },
                 {
                     field: 'roomNumber',
                     title: '房间号',
-                    sortable: 'true'
+                    sortable: true
                 },
                 {
                     field: 'buyTime',
                     title: '下单时间',
-                    sortable: 'true'
-                },
-                {
-                    field: 'checkInDate',
-                    title: '预计入住时间',
-                    sortable: 'true'
-                },
-                {
-                    field: 'checkOutDate',
-                    title: '预计退房时间',
-                    sortable: 'true'
+                    sortable: true
                 },
                 {
                     field: 'reserveInDate',
-                    title: '实际入住时间',
-                    sortable: 'true'
+                    title: '预计入住时间',
+                    sortable: true
                 },
                 {
                     field: 'reserveOutDate',
-                    title: '实际退房时间',
-                    sortable: 'true'
+                    title: '预计退房时间',
+                    sortable: true
                 },
+                    {
+                        field: 'checkInDate',
+                        title: '实际入住时间',
+                        sortable: true
+                    },
+                    {
+                        field: 'checkOutDate',
+                        title: '实际退房时间',
+                        sortable: true
+                    },
                 {
                     field: 'price',
                     title: '价格',
-                    sortable: 'true'
+                    sortable: true
                 },
                 {
                     field: 'isPaid',

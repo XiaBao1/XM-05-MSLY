@@ -61,7 +61,7 @@
                                 <input type="text" class="time-input" placeholder="请选择订单完成时间" name="finishTime"/>
                             </li>
                             <li>
-                                <label>是否收获：</label>
+                                <label>是否收货：</label>
                                 <select name="isReceived" th:with="type=${@dict.getType('sys_user_is_received')}">
                                     <option value="">所有</option>
                                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>

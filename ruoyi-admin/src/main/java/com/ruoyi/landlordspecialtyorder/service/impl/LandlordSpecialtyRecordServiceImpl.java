@@ -78,7 +78,7 @@ public class LandlordSpecialtyRecordServiceImpl implements ILandlordSpecialtyRec
     @Override
     public int updateLandlordSpecialtyRecord(LandlordSpecialtyRecord landlordSpecialtyRecord)
     {
-        return landlordSpecialtyRecordMapper.updateLandlordSpecialtyCommentRecord(landlordSpecialtyRecord);
+        return landlordSpecialtyRecordMapper.updateLandlordSpecialtyRecord(landlordSpecialtyRecord);
     }
     @Override
     public int updateLandlordSpecialtyCommentRecord(LandlordSpecialtyRecord landlordSpecialtyRecord)
