@@ -106,14 +106,14 @@ public class LandlordSpecialtyRecordServiceImpl implements ILandlordSpecialtyRec
         }
 
         Calendar ca = Calendar.getInstance();
-        List<LandlordSpecialtyRecord> clientRoomRecord= landlordSpecialtyRecordMapper.selectLandlordSpecialtyRecordList(new LandlordSpecialtyRecord());
+        List<LandlordSpecialtyRecord> clientRoomRecord= landlordSpecialtyRecordMapper.selectLandlordSpecialtyRecordList2(new LandlordSpecialtyRecord());
         for (LandlordSpecialtyRecord user : clientRoomRecord) {
-            if ( !"1".equals(user.getIsDone()) ) {
-                ca.setTime(user.getFinishTime());
+
+                ca.setTime(user.getOrderTime());
                 int idx = ca.get(Calendar.MONTH);
                 int cur = list.get(idx);
                 list.set(idx, 1 + cur);
-            }
+
         }
 
         return list;
