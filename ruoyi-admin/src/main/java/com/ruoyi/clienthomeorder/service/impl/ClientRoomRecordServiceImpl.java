@@ -37,10 +37,10 @@ public class ClientRoomRecordServiceImpl implements IClientRoomRecordService
     }
 
     @Override
-    public ClientRoomRecord selectClientRoomCommentRecordById(Long id)
-    {
+    public ClientRoomRecord selectClientRoomCommentRecordById(Long id) {
         return clientRoomRecordMapper.selectClientRoomCommentRecordById(id);
     }
+
     /**
      * 查询民宿订单列表
      * 

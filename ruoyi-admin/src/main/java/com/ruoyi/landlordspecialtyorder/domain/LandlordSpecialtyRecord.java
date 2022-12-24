@@ -20,7 +20,7 @@ public class LandlordSpecialtyRecord extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 订单ID */
-    private Long id;
+    public Long id;
 
     /** 顾客ID */
     @Excel(name = "顾客ID")
@@ -44,15 +44,15 @@ public class LandlordSpecialtyRecord extends BaseEntity
 
     /** 特产订单ID */
     @Excel(name = "特产订单ID")
-    private Long specialtyRecordId;
+   public Long specialtyRecordId;
 
     /** 特产得分 */
     @Excel(name = "得分")
-    private BigDecimal score;
+    public BigDecimal score;
 
     /** 特产评价 */
     @Excel(name = "评价")
-    private String comment;
+    public String comment;
 
     /** 特产照片 */
     @Excel(name = "照片")

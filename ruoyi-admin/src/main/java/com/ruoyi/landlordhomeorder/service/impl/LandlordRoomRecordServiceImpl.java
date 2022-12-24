@@ -81,7 +81,7 @@ public class LandlordRoomRecordServiceImpl implements ILandlordRoomRecordService
     @Override
     public int updateLandlordRoomRecord(LandlordRoomRecord landlordRoomRecord)
     {
-        return landlordRoomRecordMapper.updateLandlordRoomRecord(landlordRoomRecord);
+        return landlordRoomRecordMapper.updateLandlordRoomCommentRecord(landlordRoomRecord);
     }
 
     @Override

@@ -1,6 +1,10 @@
 package com.ruoyi.landlordspecialtyorder.controller;
 
+import java.io.OutputStreamWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -157,8 +161,20 @@ public class LandlordSpecialtyRecordController extends BaseController
     @GetMapping("/querycomment/{id}")
     public String querycomment(@PathVariable("id") Long id, ModelMap mmap)
     {
+        System.out.println(id);
         LandlordSpecialtyRecord landlordSpecialtyRecord = landlordSpecialtyRecordService.selectLandlordSpecialtyCommentRecordById(id);
-        mmap.put("landlordSpecialtyRecord", landlordSpecialtyRecord);
+        System.out.println(landlordSpecialtyRecord);
+        if(landlordSpecialtyRecord==null){
+            System.out.println("hello___________________________________");
+            landlordSpecialtyRecord = landlordSpecialtyRecordService.selectLandlordSpecialtyCommentRecordById((long) 0);
+            mmap.put("landlordSpecialtyRecord",landlordSpecialtyRecord);
+
+            System.out.println(mmap);
+
+        }
+        else{
+            mmap.put("landlordSpecialtyRecord", landlordSpecialtyRecord);
+        }
         return prefix + "/querycomment";
     }
 
@@ -172,5 +188,6 @@ public class LandlordSpecialtyRecordController extends BaseController
     public AjaxResult querycommentSave(LandlordSpecialtyRecord landlordSpecialtyRecord)
     {
         return toAjax(landlordSpecialtyRecordService.updateLandlordSpecialtyCommentRecord(landlordSpecialtyRecord));
+
     }
 }

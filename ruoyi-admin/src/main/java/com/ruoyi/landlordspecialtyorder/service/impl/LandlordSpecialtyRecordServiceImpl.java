@@ -1,5 +1,6 @@
 package com.ruoyi.landlordspecialtyorder.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -77,7 +78,7 @@ public class LandlordSpecialtyRecordServiceImpl implements ILandlordSpecialtyRec
     @Override
     public int updateLandlordSpecialtyRecord(LandlordSpecialtyRecord landlordSpecialtyRecord)
     {
-        return landlordSpecialtyRecordMapper.updateLandlordSpecialtyRecord(landlordSpecialtyRecord);
+        return landlordSpecialtyRecordMapper.updateLandlordSpecialtyCommentRecord(landlordSpecialtyRecord);
     }
     @Override
     public int updateLandlordSpecialtyCommentRecord(LandlordSpecialtyRecord landlordSpecialtyRecord)
@@ -130,5 +131,22 @@ public class LandlordSpecialtyRecordServiceImpl implements ILandlordSpecialtyRec
         return landlordSpecialtyRecordMapper.deleteLandlordSpecialtyRecordById(id);
     }
 
+    public int getId(Long roomRecordId)
+    {
+        return  landlordSpecialtyRecordMapper.getId(roomRecordId);
+    }
+    public BigDecimal getScore(Long roomRecordId)
+    {
+        return  landlordSpecialtyRecordMapper.getScore(roomRecordId);
+    }
+    public String getComment(Long roomRecordId)
+    {
+        return  landlordSpecialtyRecordMapper.getComment(roomRecordId);
+    }
+
+    public String getPhoto(Long roomRecordId)
+    {
+        return  landlordSpecialtyRecordMapper.getPhoto(roomRecordId);
+    }
 
 }

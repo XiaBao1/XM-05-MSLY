@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.ruoyi.clienthomeorder.domain.ClientRoomRecord;
 import com.ruoyi.common.config.ServerConfig;
+import com.ruoyi.landlordhomeorder.domain.LandlordRoomRecord;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -221,5 +222,40 @@ public class ClientSpecialtyRecordController extends BaseController {
         return map;
     }
 
+    /**
+     * 修改民宿订单
+     */
+    @RequiresPermissions("clientspecialtyorder:clientorder:querycomment")
+    @GetMapping("/querycomment/{id}")
+    public String querycomment(@PathVariable("id") Long id, ModelMap mmap)
+    {
+        System.out.println(id);
+        ClientSpecialtyRecord clientSpecialtyRecord = clientSpecialtyRecordService.selectClientSpecialtyCommentRecordById(id);
+        System.out.println(clientSpecialtyRecord);
+        if(clientSpecialtyRecord==null){
+            System.out.println("hello___________________________________");
+            clientSpecialtyRecord = clientSpecialtyRecordService.selectClientSpecialtyCommentRecordById((long) 0);
+            mmap.put("clientSpecialtyRecord",clientSpecialtyRecord);
 
+            System.out.println(mmap);
+
+        }
+        else{
+            mmap.put("clientSpecialtyRecord",clientSpecialtyRecord);
+        }
+        return prefix + "/querycomment";
+    }
+
+    /**
+     * 修改保存民宿订单
+     */
+    @RequiresPermissions("clientspecialtyorder:clientorder:querycomment")
+    @Log(title = "查看评论", businessType = BusinessType.UPDATE)
+    @PostMapping("/querycomment")
+    @ResponseBody
+    public AjaxResult  querycommentSave(ClientSpecialtyRecord clientSpecialtyRecord)
+    {
+        System.out.println(clientSpecialtyRecord);
+        return toAjax(clientSpecialtyRecordService.updateClientSpecialtyCommentRecord(clientSpecialtyRecord));
+    }
 }
