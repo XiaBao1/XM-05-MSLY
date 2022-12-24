@@ -65,4 +65,5 @@ public interface HouseRoomMapper
 
     public String getHouseNameById(Long id);
 
+    String getHouseIdByHouseName(HouseRoom houseRoom);
 }

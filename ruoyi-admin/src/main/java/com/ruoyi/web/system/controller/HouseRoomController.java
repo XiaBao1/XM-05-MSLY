@@ -1,6 +1,8 @@
 package com.ruoyi.web.system.controller;
 
 import java.util.List;
+
+import com.ruoyi.framework.web.domain.server.Sys;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,6 +52,13 @@ public class HouseRoomController extends BaseController
     public TableDataInfo list(HouseRoom houseRoom)
     {
         startPage();
+
+        if(houseRoom.getHouseName()!=null&&(!houseRoom.getHouseName().equals(""))){
+            String id=houseRoomService.getHouseIdByHouseName(houseRoom);
+            Long houseId=Long.parseLong(id);
+            houseRoom.setHouseId(houseId);
+        }
+
         List<HouseRoom> list = houseRoomService.selectHouseRoomList(houseRoom);
         for(HouseRoom houseRoom1:list){
             houseRoom1.houseName=houseRoomService.getHouseNameById(houseRoom1.getHouseId());
@@ -89,6 +98,16 @@ public class HouseRoomController extends BaseController
     @ResponseBody
     public AjaxResult addSave(HouseRoom houseRoom)
     {
+        String id=houseRoomService.getHouseIdByHouseName(houseRoom);
+        System.out.println(houseRoom.getHouseName()+"    %%%%%%%%%%");
+        if(id==null||id.equals("")){
+            AjaxResult res=new AjaxResult();
+            res.put("msg","民宿名称有误");
+            return res;
+        }
+        System.out.println("yyyyyyyyyyyyyyyyyhhhhhhhhhhhhhhhhhhhhh&&&&&&&&&&&&&7");
+        Long houseId=Long.parseLong(id);
+        houseRoom.setHouseId(houseId);
         return toAjax(houseRoomService.insertHouseRoom(houseRoom));
     }
 

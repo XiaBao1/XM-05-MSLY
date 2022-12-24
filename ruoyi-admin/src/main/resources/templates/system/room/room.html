@@ -21,7 +21,7 @@
             margin: 0mm;
         }
     </style>
-    <th:block th:include="include :: header('房子管理列表')" />
+    <th:block th:include="include :: header('房间管理列表')" />
 </head>
 <body class="gray-bg">
 <div class="container-div">
@@ -31,8 +31,8 @@
                 <div class="select-list">
                     <ul>
                         <li>
-                            <label>民宿ID：</label>
-                            <input type="text" name="houseId"/>
+                            <label>民宿名称：</label>
+                            <input type="text" name="houseName"/>
                         </li>
                         <li>
                             <label>房间号：</label>
@@ -61,7 +61,7 @@
 
         <div class="btn-group-sm" id="toolbar" role="group">
             <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:room:add">
-                <i class="fa fa-plus"></i> 上传房源
+                <i class="fa fa-plus"></i> 上传房间
             </a>
             <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:room:edit">
                 <i class="fa fa-edit"></i> 修改
@@ -102,7 +102,7 @@
             updateUrl: prefix + "/edit/{id}",
             removeUrl: prefix + "/remove",
             exportUrl: prefix + "/export",
-            modalName: "房子管理",
+            modalName: "房间管理",
             columns: [{
                 checkbox: true
             },

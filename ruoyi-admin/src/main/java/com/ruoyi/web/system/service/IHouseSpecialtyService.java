@@ -66,4 +66,6 @@ public interface IHouseSpecialtyService
     public Long getSellNumber(String name);
 
     public Long getSoldNumber(String name);
+
+    public String getHouseIdByHouseName(HouseSpecialty houseSpecialty);
 }

@@ -66,4 +66,6 @@ public interface HouseSpecialtyMapper
     public Long getSellNumber(HouseSpecialty houseSpecialty);
 
     public Long getSoldNumber(HouseSpecialty houseSpecialty);
+
+    String getHouseIdByHouseName(HouseSpecialty houseSpecialty);
 }
