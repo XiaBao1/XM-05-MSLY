@@ -50,7 +50,7 @@ public class SysMenuServiceImpl implements ISysMenuService
         }
 
         for (SysRole role : roles) {
-            if (role.getRoleId() == 1) {
+            if (role.isFlag() && role.getRoleId() == 1) {
                 return true;
             }
         }
