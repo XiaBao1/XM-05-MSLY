@@ -99,7 +99,7 @@ where house_room.house_id = landlord_house.id and landlord_house.house_name=#{ho
         update client_room_record
         <trim prefix="SET" suffixOverrides=",">
             <if test="clientNumber != null">client_number = #{clientNumber},</if>
-
+            <if test="roomNumber != null">room_id = (select id from house_room where room_number=#{roomNumber} and  house_id = (select id from landlord_house where house_name=#{houseName})),</if>
             <if test="buyTime != null ">  buy_time = #{buyTime},</if>
             <if test="checkInDate != null">check_in_date = #{checkInDate},</if>
             <if test="checkOutDate != null">check_out_date = #{checkOutDate},</if>
