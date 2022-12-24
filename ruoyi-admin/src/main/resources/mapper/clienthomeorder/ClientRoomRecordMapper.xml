@@ -52,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="selectClientRoomCommentRecordById" parameterType="Long" resultMap="ClientRoomRecordResult">
-        select id,room_record_id, score, comment, photo from client_room_comment  where id = #{id}
+        select max(id) as id,room_record_id, max(score) as score, comment, photo from client_room_comment  where room_record_id = #{id}
     </select>
 
     <insert id="insertClientRoomRecord" parameterType="ClientRoomRecord" useGeneratedKeys="true" keyProperty="id">

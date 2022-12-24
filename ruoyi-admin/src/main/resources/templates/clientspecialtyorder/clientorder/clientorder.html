@@ -125,6 +125,7 @@
 <script th:inline="javascript">
     var editFlag = [[${@permission.hasPermi('clientspecialtyorder:clientorder:edit')}]];
     var removeFlag = [[${@permission.hasPermi('clientspecialtyorder:clientorder:remove')}]];
+    var querycommentsFlag = [[${@permission.hasPermi('landlordhomeorder:landlordorder:querycomment')}]];
     var commentsFlag = [[${@permission.hasPermi('clientspecialtyorder:clientorder:comment')}]];
     var isReceivedDatas = [[${@dict.getType('sys_user_is_received')}]];
     var isPaidDatas = [[${@dict.getType('sys_user_is_paid')}]];
@@ -138,6 +139,7 @@
             updateUrl: prefix + "/edit/{id}",
             // discussUrl:prefix + "/comment/{id}",
             discussUrl:prefix + "/comment",
+            queryUrl:prefix+"/querycomment/{id}",
             removeUrl: prefix + "/remove",
             exportUrl: prefix + "/export",
             modalName: "订单",
@@ -220,6 +222,7 @@
                     formatter: function(value, row, index) {
                         var actions = [];
                         actions.push('<a class="btn btn-success btn-xs ' + commentsFlag + '" href="javascript:void(0)" onclick="$.operate.comment(\'' + row.id + '\')"><i class="fa fa-edit"></i>评论</a> ');
+                        actions.push('<a class="btn btn-success btn-xs ' + querycommentsFlag + '" href="javascript:void(0)" onclick="$.operate.querycommentTab(\'' + row.id + '\')"><i class="fa fa-add"></i>查看评论</a>');
                         return actions.join('');
                     }
                 }]

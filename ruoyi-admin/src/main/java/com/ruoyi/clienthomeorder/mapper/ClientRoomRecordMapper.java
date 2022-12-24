@@ -20,7 +20,7 @@ public interface ClientRoomRecordMapper
      */
     public ClientRoomRecord selectClientRoomRecordById(Long id);
 
-    public ClientRoomRecord selectClientRoomCommentRecordById(Long id);
+    public ClientRoomRecord  selectClientRoomCommentRecordById(Long id);
     /**
      * 查询民宿订单列表
      * 

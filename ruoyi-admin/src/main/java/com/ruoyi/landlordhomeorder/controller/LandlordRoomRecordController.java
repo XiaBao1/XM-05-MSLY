@@ -157,8 +157,20 @@ public class LandlordRoomRecordController extends BaseController
     @GetMapping("/querycomment/{id}")
     public String querycomment(@PathVariable("id") Long id, ModelMap mmap)
     {
+        System.out.println(id);
         LandlordRoomRecord landlordRoomRecord = landlordRoomRecordService.selectLandlordRoomCommentRecordById(id);
-        mmap.put("landlordRoomRecord", landlordRoomRecord);
+        System.out.println(landlordRoomRecord);
+        if(landlordRoomRecord==null){
+            System.out.println("hello___________________________________");
+            landlordRoomRecord = landlordRoomRecordService.selectLandlordRoomCommentRecordById((long) 0);
+            mmap.put("landlordRoomRecord",landlordRoomRecord);
+
+            System.out.println(mmap);
+
+        }
+        else{
+            mmap.put("landlordRoomRecord", landlordRoomRecord);
+        }
         return prefix + "/querycomment";
     }
 
@@ -169,8 +181,9 @@ public class LandlordRoomRecordController extends BaseController
     @Log(title = "查看评论", businessType = BusinessType.UPDATE)
     @PostMapping("/querycomment")
     @ResponseBody
-    public AjaxResult querycommentSave(LandlordRoomRecord landlordRoomRecord)
+    public AjaxResult  querycommentSave(LandlordRoomRecord landlordRoomRecord)
     {
+        System.out.println(landlordRoomRecord);
         return toAjax(landlordRoomRecordService.updateLandlordRoomCommentRecord(landlordRoomRecord));
     }
 }

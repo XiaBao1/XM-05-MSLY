@@ -48,7 +48,7 @@
     </select>
 
     <select id="selectClientSpecialtyCommentRecordById" parameterType="Long" resultMap="ClientSpecialtyRecordResult">
-        select id,specialty_record_id, score, comment, photo from client_specialty_comment  where id = #{id}
+        select max(id) as id ,specialty_record_id, max(score) as score, comment, photo from client_specialty_comment  where specialty_record_id = #{id}
     </select>
 
     <insert id="insertClientSpecialtyRecord" parameterType="ClientSpecialtyRecord" useGeneratedKeys="true" keyProperty="id">
