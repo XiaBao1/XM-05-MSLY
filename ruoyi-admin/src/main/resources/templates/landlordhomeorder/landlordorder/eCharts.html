@@ -94,13 +94,13 @@
         var barChart = echarts.init(document.getElementById("echarts-bar-chart"));
         var baroption = {
             title : {
-                text: '每月该用户历史订单'
+                text: '每月该房东订单'
             },
             tooltip : {
                 trigger: 'axis'
             },
             legend: {
-                data:['历史订单数目']
+                data:['订单数目']
             },
             grid:{
                 x:30,
@@ -121,7 +121,7 @@
             ],
             series : [
                 {
-                    name:'历史订单数目',
+                    name:'订单数目',
                     type:'bar',
                     data: userCountByMonth,
                     markPoint : {

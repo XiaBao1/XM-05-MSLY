@@ -29,6 +29,7 @@ public interface LandlordSpecialtyRecordMapper
      * @return 订单集合
      */
     public List<LandlordSpecialtyRecord> selectLandlordSpecialtyRecordList(LandlordSpecialtyRecord landlordSpecialtyRecord);
+    public List<LandlordSpecialtyRecord> selectLandlordSpecialtyRecordList2(LandlordSpecialtyRecord landlordSpecialtyRecord);
 
     /**
      * 新增订单

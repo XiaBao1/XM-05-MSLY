@@ -116,14 +116,14 @@ public class ClientSpecialtyRecordServiceImpl implements IClientSpecialtyRecordS
         }
 
         Calendar ca = Calendar.getInstance();
-        List<ClientSpecialtyRecord> clientSpecialtyRecord= clientSpecialtyRecordMapper.selectClientSpecialtyRecordList(new ClientSpecialtyRecord());
+        List<ClientSpecialtyRecord> clientSpecialtyRecord= clientSpecialtyRecordMapper.selectClientSpecialtyRecordList2(new ClientSpecialtyRecord());
         for (ClientSpecialtyRecord user : clientSpecialtyRecord) {
-            if ( !"1".equals(user.getIsDone()) ) {
-                ca.setTime(user.getFinishTime());
+
+                ca.setTime(user.getOrderTime());
                 int idx = ca.get(Calendar.MONTH);
                 int cur = list.get(idx);
                 list.set(idx, 1 + cur);
-            }
+
         }
 
         return list;
