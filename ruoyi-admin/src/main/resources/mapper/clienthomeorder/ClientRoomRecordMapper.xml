@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectClientRoomRecordVo">
-    select client_room_record.id as id, user_name, room_id,room_number,house_name,buy_time,check_in_date, check_out_date, reserve_in_date, reserve_out_date, price, is_paid, is_done from (client_room_record join sys_user) join landlord_house join house_room where client_number = user_id and room_id =house_room.id and house_room.house_id = landlord_house.id
+    select client_room_record.id as id, user_name, room_id,room_number,house_name,buy_time,check_in_date, check_out_date, reserve_in_date, reserve_out_date, price, is_paid, is_done from (client_room_record join sys_user) join landlord_house join house_room where client_number = user_id and room_id =house_room.id and house_room.house_id = landlord_house.id  and user_name =#{userName}
     </sql>
 
     <select id="selectClientRoomRecordList" parameterType="ClientRoomRecord" resultMap="ClientRoomRecordResult">
@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </select>
 
     <select id="selectClientRoomRecordList2" parameterType="ClientRoomRecord" resultMap="ClientRoomRecordResult">
-        select id,buy_time,check_in_date, check_out_date, reserve_in_date, reserve_out_date, price, is_paid, is_done from client_room_record join sys_user where user_name = #{userName}
+        select client_room_record.id as id, user_name, room_id,room_number,house_name,buy_time,check_in_date, check_out_date, reserve_in_date, reserve_out_date, price, is_paid, is_done from (client_room_record join sys_user) join landlord_house join house_room where client_number = user_id and room_id =house_room.id and house_room.house_id = landlord_house.id and user_name =#{userName}
 
     </select>
     
