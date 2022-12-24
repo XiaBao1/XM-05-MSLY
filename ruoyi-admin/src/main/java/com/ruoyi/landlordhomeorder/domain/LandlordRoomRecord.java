@@ -36,7 +36,7 @@ public class LandlordRoomRecord extends BaseEntity
 
     /** 特产订单ID */
     @Excel(name = "特产订单ID")
-    private Long roomRecordId;
+    public Long roomRecordId;
 
     /** 房间号 */
     @Excel(name = "房间号")

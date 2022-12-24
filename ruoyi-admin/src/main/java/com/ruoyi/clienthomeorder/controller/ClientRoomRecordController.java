@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.ruoyi.clientspecialtyorder.domain.ClientSpecialtyRecord;
-import com.ruoyi.common.json.JSONObject;
-import com.ruoyi.system.service.ISysUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,8 +25,6 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -244,13 +240,27 @@ public class ClientRoomRecordController extends BaseController
 
     /**
      * 查询评论
+     * @return
      */
     @RequiresPermissions("clienthomeorder:homeorder:querycomment")
     @GetMapping("/querycomment/{id}")
+
     public String querycomment(@PathVariable("id") Long id, ModelMap mmap)
     {
+        System.out.println(id);
         ClientRoomRecord clientRoomRecord = clientRoomRecordService.selectClientRoomCommentRecordById(id);
-        mmap.put("clientRoomRecord", clientRoomRecord);
+        System.out.println(clientRoomRecord);
+        if(clientRoomRecord==null){
+            System.out.println("hello___________________________________");
+            clientRoomRecord = clientRoomRecordService.selectClientRoomCommentRecordById((long) 0);
+            mmap.put("clientRoomRecord",clientRoomRecord);
+
+            System.out.println(mmap);
+
+        }
+        else{
+            mmap.put("clientRoomRecord",clientRoomRecord);
+        }
         return prefix + "/querycomment";
     }
 
@@ -263,7 +273,8 @@ public class ClientRoomRecordController extends BaseController
     @ResponseBody
     public AjaxResult querycommentSave(ClientRoomRecord clientRoomRecord)
     {
-        return toAjax(clientRoomRecordService.updateClientRoomRecord(clientRoomRecord));
+        System.out.println(clientRoomRecord);
+        return toAjax(clientRoomRecordService.updateClientRoomCommentRecord(clientRoomRecord));
     }
 
 

@@ -1,5 +1,6 @@
 package com.ruoyi.landlordspecialtyorder.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import com.ruoyi.landlordspecialtyorder.domain.LandlordSpecialtyRecord;
 
@@ -63,4 +64,9 @@ public interface ILandlordSpecialtyRecordService
      * @return 结果
      */
     public int deleteLandlordSpecialtyRecordById(Long id);
+
+    public int getId(Long roomRecordId);
+    public BigDecimal getScore(Long roomRecordId);
+    public String getComment(Long roomRecordId);;
+    public String getPhoto(Long roomRecordId);
 }

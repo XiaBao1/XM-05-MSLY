@@ -110,10 +110,10 @@ where house_room.house_id = landlord_house.id and landlord_house.house_name=#{ho
     <update id="updateLandlordRoomCommentRecord" parameterType="LandlordRoomRecord">
         update client_room_comment
         <trim prefix="SET" suffixOverrides=",">
-            <if test="roomRecordId != null">room_record_id = #{roomRecordId},</if>
-            <if test="score != null">score = #{score},</if>
-            <if test="comment != null">comment = #{comment},</if>
-            <if test="photo != null">photo= #{photo},</if>
+            room_record_id = #{roomRecordId},
+            score = #{score},
+            comment= #{comment},
+            photo= #{photo},
         </trim>
         where id = #{id}
     </update>
