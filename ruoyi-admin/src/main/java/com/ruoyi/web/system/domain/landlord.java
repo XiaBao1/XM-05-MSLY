@@ -30,8 +30,12 @@ public class landlord extends BaseEntity
     private Long hostNumber;
 
     /**  */
-    @Excel(name = "民宿地址")
-    private String address;
+@Excel(name = "民宿地址")
+private String address;
+
+    /**  */
+    @Excel(name = "城市名称")
+    private String city;
 
     /**  */
     @Excel(name = "民宿评分")
@@ -83,6 +87,13 @@ public class landlord extends BaseEntity
     {
         return address;
     }
+
+    public void setCity(String city){this.city=city;}
+
+    public String getCity() {
+        return city;
+    }
+
     public void setScore(BigDecimal score)
     {
         this.score = score;
@@ -111,6 +122,7 @@ public class landlord extends BaseEntity
                 .append("id", getId())
                 .append("houseName", getHouseName())
                 .append("hostNumber", getHostNumber())
+                .append("city", getCity())
                 .append("address", getAddress())
                 .append("score", getScore())
                 .append("registerTime", getRegisterTime())

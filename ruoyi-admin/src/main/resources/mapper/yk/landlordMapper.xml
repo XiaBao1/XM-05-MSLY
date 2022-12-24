@@ -54,6 +54,7 @@
             <if test="score != null">score,</if>
             <if test="registerTime != null">register_time,</if>
             <if test="imageUrl != null">image_url,</if>
+            <if test="city != null">city,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="houseName != null">#{houseName},</if>
@@ -62,6 +63,7 @@
             <if test="score != null">#{score},</if>
             <if test="registerTime != null">#{registerTime},</if>
             <if test="imageUrl != null">#{imageUrl},</if>
+            <if test="city != null">#{city},</if>
         </trim>
     </insert>
 
@@ -74,6 +76,7 @@
             <if test="score != null">score = #{score},</if>
             <if test="registerTime != null">register_time = #{registerTime},</if>
             <if test="imageUrl != null">image_url = #{imageUrl},</if>
+            <if test="city != null">city = #{city},</if>
         </trim>
         where id = #{id}
     </update>
