@@ -125,7 +125,7 @@
 <script th:inline="javascript">
     var editFlag = [[${@permission.hasPermi('clientspecialtyorder:clientorder:edit')}]];
     var removeFlag = [[${@permission.hasPermi('clientspecialtyorder:clientorder:remove')}]];
-    var querycommentsFlag = [[${@permission.hasPermi('landlordhomeorder:landlordorder:querycomment')}]];
+    var querycommentsFlag = [[${@permission.hasPermi('clientspecialtyorder:clientorder:querycomment')}]];
     var commentsFlag = [[${@permission.hasPermi('clientspecialtyorder:clientorder:comment')}]];
     var isReceivedDatas = [[${@dict.getType('sys_user_is_received')}]];
     var isPaidDatas = [[${@dict.getType('sys_user_is_paid')}]];
