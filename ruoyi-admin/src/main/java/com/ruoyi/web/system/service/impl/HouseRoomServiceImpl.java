@@ -113,4 +113,8 @@ public class HouseRoomServiceImpl implements IHouseRoomService
     public String getHouseNameById(Long id){
         return houseRoomMapper.getHouseNameById(id);
     }
+
+    public String getHouseIdByHouseName(HouseRoom houseRoom){
+        return houseRoomMapper.getHouseIdByHouseName(houseRoom);
+    }
 }

@@ -65,6 +65,15 @@ public class HouseRoom extends BaseEntity
     {
         return houseId;
     }
+
+    public String getHouseName() {
+        return houseName;
+    }
+
+    public void setHouseName(String houseName) {
+        this.houseName = houseName;
+    }
+
     public void setRoomNumber(String roomNumber)
     {
         this.roomNumber = roomNumber;
@@ -108,6 +117,7 @@ public class HouseRoom extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
                 .append("id", getId())
                 .append("houseId", getHouseId())
+                .append("houseName",getHouseName())
                 .append("roomNumber", getRoomNumber())
                 .append("pricePerDay", getPricePerDay())
                 .append("standard", getStandard())

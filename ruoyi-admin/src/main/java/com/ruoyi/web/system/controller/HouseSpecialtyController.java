@@ -60,6 +60,13 @@ public class HouseSpecialtyController extends BaseController
     public TableDataInfo list(HouseSpecialty houseSpecialty)
     {
         startPage();
+
+        if(houseSpecialty.getHouseName()!=null&&(!houseSpecialty.getHouseName().equals(""))){
+            String id=houseSpecialtyService.getHouseIdByHouseName(houseSpecialty);
+            Long houseId=Long.parseLong(id);
+            houseSpecialty.setHouseId(houseId);
+        }
+
         List<HouseSpecialty> list = houseSpecialtyService.selectHouseSpecialtyList(houseSpecialty);
         for(HouseSpecialty h:list){
             h.setHouseName(houseSpecialtyService.getHouseNameById(h.getHouseId()));
@@ -100,7 +107,14 @@ public class HouseSpecialtyController extends BaseController
     public AjaxResult addSave(HouseSpecialty houseSpecialty)
     {
         //判断houseId
-
+        String id=houseSpecialtyService.getHouseIdByHouseName(houseSpecialty);
+        if(id==null||id.equals("")){
+            AjaxResult res=new AjaxResult();
+            res.put("msg","民宿名称有误");
+            return res;
+        }
+        Long houseId=Long.parseLong(id);
+        houseSpecialty.setHouseId(houseId);
         return toAjax(houseSpecialtyService.insertHouseSpecialty(houseSpecialty));
     }
 
