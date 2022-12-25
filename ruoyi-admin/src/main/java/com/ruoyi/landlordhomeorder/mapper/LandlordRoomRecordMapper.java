@@ -29,7 +29,7 @@ public interface LandlordRoomRecordMapper
      * @return 民宿订单集合
      */
     public List<LandlordRoomRecord> selectLandlordRoomRecordList(LandlordRoomRecord landlordRoomRecord);
-
+    public List<LandlordRoomRecord> selectLandlordRoomRecordList2(LandlordRoomRecord landlordRoomRecord);
     /**
      * 新增民宿订单
      * 

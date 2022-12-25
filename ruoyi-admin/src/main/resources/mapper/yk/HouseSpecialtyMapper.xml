@@ -55,6 +55,10 @@
         (select house_id from house_specialty where client_specialty_record.specialty_id=house_specialty.id) in (select id from landlord_house where host_number=#{userId})
     </select>
 
+    <select id="getHouseIdByHouseName" parameterType="HouseSpecialty" resultType="String">
+        select id from landlord_house where house_name=#{houseName} and host_number=#{userId}
+    </select>
+
     <insert id="insertHouseSpecialty" parameterType="HouseSpecialty" useGeneratedKeys="true" keyProperty="id">
         insert into house_specialty
         <trim prefix="(" suffix=")" suffixOverrides=",">

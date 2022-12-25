@@ -29,7 +29,7 @@ public interface ClientSpecialtyRecordMapper
      * @return 订单集合
      */
     public List<ClientSpecialtyRecord> selectClientSpecialtyRecordList(ClientSpecialtyRecord clientSpecialtyRecord);
-
+    public List<ClientSpecialtyRecord> selectClientSpecialtyRecordList2(ClientSpecialtyRecord clientSpecialtyRecord);
     /**
      * 新增订单
      *

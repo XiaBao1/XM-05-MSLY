@@ -43,6 +43,10 @@
             <if test="isDone != null "> and is_done = #{isDone}</if>
     </select>
 
+    <select id="selectClientSpecialtyRecordList2" parameterType="ClientSpecialtyRecord" resultMap="ClientSpecialtyRecordResult">
+        select client_specialty_record.id as id, user_name, specialty_id,specialty_name,house_name,quantity, client_specialty_record.price as price, order_time, finish_time, is_received, is_paid, is_done from client_specialty_record join sys_user join house_specialty join landlord_house where specialty_id =house_specialty.id and house_specialty.house_id=landlord_house.id and user_id = client_number and user_name =#{userName}
+    </select>
+
     <select id="selectClientSpecialtyRecordById" parameterType="Long" resultMap="ClientSpecialtyRecordResult">
         select id,client_number, specialty_id, quantity, price, order_time, finish_time, is_received, is_paid, is_done from client_specialty_record  where id = #{id}
     </select>
