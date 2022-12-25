@@ -46,6 +46,10 @@
         select house_name from landlord_house where id=#{id}
     </select>
 
+    <select id="getHouseIdByHouseName" parameterType="HouseRoom" resultType="String">
+        select id from landlord_house where house_name=#{houseName} and host_number=#{userId}
+    </select>
+
     <insert id="insertHouseRoom" parameterType="HouseRoom" useGeneratedKeys="true" keyProperty="id">
         insert into house_room
         <trim prefix="(" suffix=")" suffixOverrides=",">

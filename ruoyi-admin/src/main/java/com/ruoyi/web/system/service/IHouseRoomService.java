@@ -62,4 +62,6 @@ public interface IHouseRoomService
     public List<Integer> getAppointmentData(HouseRoom houseRoom);
 
     public String getHouseNameById(Long id);
+
+    String getHouseIdByHouseName(HouseRoom houseRoom);
 }
