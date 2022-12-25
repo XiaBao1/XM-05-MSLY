@@ -104,11 +104,14 @@ public class TopLandlordController extends BaseController {
         List<TopLandlordHouse> list = new ArrayList<TopLandlordHouse>();
         Connection connection = null;
         PreparedStatement pstmt = null;
-        String sql = "select LH.*, count(CRR.id) as sale " +
+        String sql = "select LH.id, LH.house_name, LH.host_number, LH.address, LH.register_time, LH.image_url, LH.city, count(CRR.id) as sale, AVG(CRC.score) as score " +
                 "from landlord_house LH " +
                 "   left JOIN house_room HR on LH.id = HR.house_id " +
                 "   left JOIN client_room_record CRR on HR.id = CRR.room_id " +
+                "   left JOIN client_room_comment CRC on CRR.id = CRC.room_record_id " +
                 "GROUP BY LH.id ";
+
+
         if (orderBy != null && ! orderBy.isEmpty()) {
             sql += "order by " + orderBy;
         }
