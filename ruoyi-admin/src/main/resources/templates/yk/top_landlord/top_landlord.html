@@ -77,29 +77,25 @@
             modalName: "最热民宿榜单",
             sortName: "sale",
             sortOrder: "desc",
-            columns: [
-                {
+            columns:
+                [{
                     field: 'id',
                     title: '民宿ID',
                     visible: false
-                },
-                {
+                }, {
                     title: '图片',
                     field: 'image',
                     align: 'center',
                     formatter: function (value, row, index) {
                         return '<img src="'+ row.imageUrl + '" style="width: 100px; height: 100px">';
                     }
-                },
-                {
+                }, {
                     field: 'houseName',
                     title: '民宿名称'
-                },
-                {
+                }, {
                     field: 'address',
                     title: '民宿地址',
-                },
-                {
+                }, {
                     field: 'sale',
                     title: '民宿销量',
                     sortable: true,
@@ -107,10 +103,25 @@
                     field: 'score',
                     title: '民宿得分',
                     sortable: true,
+                }, {
+                    title: '操作',
+                    field: 'caozuo',
+                    width: '150px',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push("<a class='btn btn-success btn-xs ' href='javascript:void(0)' onclick='detailClicked(" + row.id + ")'><i class='fa fa-search'></i>民宿详情</a>");
+                        return actions.join('');
+                    }
                 }]
         };
         $.table.init(options);
     });
+
+    function detailClicked(id) {
+        var url= prefix + "/detail/" + id;
+        $.modal.openTab("民宿详细",url);
+    }
 
     function printHtml() {
         $("#prints").removeClass("noprint");
