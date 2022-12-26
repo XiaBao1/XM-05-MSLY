@@ -3,7 +3,7 @@
 <view class='mine_info'>
   <image class='mine_banner' src='../../../image/earth.png'></image>
   <view class='mine_info_head'>
-    <view class='mine_head_left' bindtap='info'>
+    <view class='mine_head_left' bindtap='moneyClicked'>
       <image class='mine_head_leftPic' src='../../../image/restMoney.png'></image>
       <view class='mine_head_leftDes'>余额：{{money}}</view>
     </view>

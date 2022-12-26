@@ -15,7 +15,8 @@
     "pages/history/index/history_index",
     "pages/user/user_info/user_info",
     "pages/user/modify_info/modify_info",
-    "pages/info/landlord/statistics/statistics"
+    "pages/info/landlord/statistics/statistics",
+    "pages/user/money_add/money_add"
   ],
   "window": {
     "backgroundTextStyle": "light",

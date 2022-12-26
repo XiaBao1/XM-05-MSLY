@@ -38,6 +38,11 @@ Page({
       province: province
     })
   },
+  moneyClicked: function() {
+    wx.navigateTo({
+      url: '../money_add/money_add',
+    })
+  },
 
   userNameClicked: function() {
     wx.navigateTo({
