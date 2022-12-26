@@ -1,66 +1,37 @@
-// pages/info/room_order/room_order.js
+// pages/goods/goods.js
+let getCookie = require("../../../utils/util.js")['getCookie'];
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    //页面切换
+    //待入仓数据
+    loadList:[
+      {id:1,num:"D19060122",time:"2019-03-02"},
+      { id: 2, num: "D19060123", time: "2019-03-02" }
+    ],
+    HouseList: []
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad(options) {
-
+  onLoad: function() {
+    getCookie(this.getHouseList);
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
+  getHouseList: function(cookies) {
+    let that = this;
+    wx.request({
+      url: 'http://localhost/yk/top_landlord/list',
+      header: {'cookie': cookies.data.substring(0, 48)},
+      method: "post",
+      success: function(res) {
+        console.log(res);
+        that.setHouseList(res.data.rows)
+      }
+    });
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
+  setHouseList: function(data){
+    this.setData({
+      houseList: data
+    })
   }
 })
