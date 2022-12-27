@@ -170,4 +170,8 @@ public class BuyRoomServiceImpl implements IBuyRoomService
     public Long getSellNumber(String name){
         return buyRoomMapper.getSellNumber(name);
     }
+
+    public String getHouseIdByHouseName(String houseName){
+        return buyRoomMapper.getHouseIdByHouseName(houseName);
+    }
 }

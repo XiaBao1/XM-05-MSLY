@@ -64,6 +64,12 @@ public class BuyRoomController extends BaseController
     public TableDataInfo list(BuyRoom buyRoom)
     {
         startPage();
+
+        if(buyRoom.getHouseName()!=null&&(!buyRoom.getHouseName().equals(""))){
+            String id=buyRoomService.getHouseIdByHouseName(buyRoom.getHouseName());
+            buyRoom.setHouseId(Long.parseLong(id));
+        }
+
         List<BuyRoom> list = buyRoomService.selectBuyRoomList(buyRoom);
         for(BuyRoom buyroom1: list){
             buyroom1.houseName=buyRoomService.getHouseNameById(buyroom1.getHouseId());
@@ -81,6 +87,11 @@ public class BuyRoomController extends BaseController
     public AjaxResult export(BuyRoom buyRoom)
     {
         List<BuyRoom> list = buyRoomService.selectBuyRoomList(buyRoom);
+        for(BuyRoom buyroom1: list){
+            buyroom1.houseName=buyRoomService.getHouseNameById(buyroom1.getHouseId());
+            if(buyroom1.getIsFree()==1)buyroom1.setFree("是");
+            else buyroom1.setFree("否");
+        }
         ExcelUtil<BuyRoom> util = new ExcelUtil<BuyRoom>(BuyRoom.class);
         return util.exportExcel(list, "房间订购数据");
     }
@@ -400,6 +411,12 @@ public class BuyRoomController extends BaseController
         }
         res.put("house",s);
         return res.toString();
+    }
+
+    @GetMapping("/buyroom")
+    public String buyroom(ModelMap mmap)
+    {
+        return prefix + "/buyroom";
     }
 
 }

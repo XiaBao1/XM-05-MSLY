@@ -20,7 +20,7 @@ public class BuySpecialty extends BaseEntity
     private Long id;
 
     /** 民宿ID */
-    @Excel(name = "民宿ID")
+    //@Excel(name = "民宿ID")
     private Long houseId;
 
     @Excel(name = "民宿名称")

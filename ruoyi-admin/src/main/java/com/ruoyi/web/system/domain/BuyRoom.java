@@ -20,7 +20,7 @@ public class BuyRoom extends BaseEntity
     private Long id;
 
     /** 民宿ID */
-    @Excel(name = "民宿ID")
+    //@Excel(name = "民宿ID")
     private Long houseId;
 
     @Excel(name = "民宿名称")
@@ -39,10 +39,13 @@ public class BuyRoom extends BaseEntity
     private String standard;
 
     /** 空闲 */
-    @Excel(name = "空闲")
+    //@Excel(name = "空闲")
     private Integer isFree;
 
-    @Excel(name = "下单时间")
+    @Excel(name = "空闲")
+    private String free;
+
+    //@Excel(name = "下单时间")
     private String buyTime;
 
     public  Long userId= (Long) PermissionUtils.getPrincipalProperty("userId");
@@ -68,6 +71,15 @@ public class BuyRoom extends BaseEntity
     {
         return houseId;
     }
+
+    public String getHouseName() {
+        return houseName;
+    }
+
+    public void setHouseName(String houseName){
+        this.houseName=houseName;
+    }
+
     public void setRoomNumber(String roomNumber)
     {
         this.roomNumber = roomNumber;
@@ -105,11 +117,18 @@ public class BuyRoom extends BaseEntity
         return isFree;
     }
 
+    public String getFree(){return free;}
+
+    public void setFree(String free) {
+        this.free = free;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
                 .append("id", getId())
                 .append("houseId", getHouseId())
+                .append("houseName", getHouseName())
                 .append("roomNumber", getRoomNumber())
                 .append("pricePerDay", getPricePerDay())
                 .append("standard", getStandard())

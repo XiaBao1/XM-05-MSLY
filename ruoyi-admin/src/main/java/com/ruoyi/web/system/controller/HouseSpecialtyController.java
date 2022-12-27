@@ -84,6 +84,9 @@ public class HouseSpecialtyController extends BaseController
     public AjaxResult export(HouseSpecialty houseSpecialty)
     {
         List<HouseSpecialty> list = houseSpecialtyService.selectHouseSpecialtyList(houseSpecialty);
+        for(HouseSpecialty h:list){
+            h.setHouseName(houseSpecialtyService.getHouseNameById(h.getHouseId()));
+        }
         ExcelUtil<HouseSpecialty> util = new ExcelUtil<HouseSpecialty>(HouseSpecialty.class);
         return util.exportExcel(list, "我的特产数据");
     }

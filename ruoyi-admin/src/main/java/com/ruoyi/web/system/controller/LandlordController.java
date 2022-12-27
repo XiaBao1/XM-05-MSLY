@@ -77,7 +77,7 @@ public class LandlordController extends BaseController
     {
         List<landlord> list = landlordService.selectlandlordList(landlord);
         ExcelUtil<landlord> util = new ExcelUtil<landlord>(landlord.class);
-        return util.exportExcel(list, "民宿管理数据");
+        return util.exportExcel(list, "我的民宿数据");
     }
 
     /**
