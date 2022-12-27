@@ -21,7 +21,7 @@ public class HouseRoom extends BaseEntity
     private Long id;
 
     /** 民宿ID */
-    @Excel(name = "民宿ID")
+    //@Excel(name = "民宿ID")
     private Long houseId;
 
     @Excel(name = "民宿名称")
@@ -40,8 +40,11 @@ public class HouseRoom extends BaseEntity
     private String standard;
 
     /** 空闲 */
-    @Excel(name = "空闲")
+    //@Excel(name = "空闲")
     private Integer isFree;
+
+    @Excel(name = "空闲")
+    private String free;
 
     public  Long userId= (Long) PermissionUtils.getPrincipalProperty("userId");
 
@@ -111,6 +114,11 @@ public class HouseRoom extends BaseEntity
         return isFree;
     }
 
+    public String getFree(){return free;}
+
+    public void setFree(String free){
+        this.free=free;
+    }
 
     @Override
     public String toString() {

@@ -31,8 +31,8 @@
                 <div class="select-list">
                     <ul>
                         <li>
-                            <label>民宿ID：</label>
-                            <input type="text" name="houseId"/>
+                            <label>民宿名称：</label>
+                            <input type="text" name="houseName"/>
                         </li>
                         <li>
                             <label>房间号：</label>
@@ -44,12 +44,14 @@
                         </li>
                         <li>
                             <label>房间标准：</label>
-                            <input type="text" name="standard"/>
+                            <input type="text" name="standard" placeholder="单/双/三人间"/>
                         </li>
+                        <p>
                         <li>
                             <label>空闲：</label>
-                            <input type="text" name="isFree"/>
+                            <input type="number" name="isFree" oninput="if(value!=0)value=1" placeholder="是：1，否：0"/>
                         </li>
+                        </p>
                         <li>
                             <a class="btn btn-primary btn-rounded btn-sm noprint" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                             <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>

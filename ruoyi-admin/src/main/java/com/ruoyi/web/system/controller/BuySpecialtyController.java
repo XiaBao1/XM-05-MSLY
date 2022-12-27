@@ -58,6 +58,13 @@ public class BuySpecialtyController extends BaseController
     public TableDataInfo list(BuySpecialty buySpecialty)
     {
         startPage();
+
+        if(buySpecialty.getHouseName()!=null&&(!buySpecialty.getHouseName().equals(""))){
+            String id=buySpecialtyService.getHouseIdByHouseName(buySpecialty.getHouseName());
+            Long houseId=Long.parseLong(id);
+            buySpecialty.setHouseId(houseId);
+        }
+
         List<BuySpecialty> list = buySpecialtyService.selectBuySpecialtyList(buySpecialty);
         for(BuySpecialty b:list){
             b.setHouseName(buySpecialtyService.getHouseNameById(b.getHouseId()));
@@ -75,6 +82,9 @@ public class BuySpecialtyController extends BaseController
     public AjaxResult export(BuySpecialty buySpecialty)
     {
         List<BuySpecialty> list = buySpecialtyService.selectBuySpecialtyList(buySpecialty);
+        for(BuySpecialty b:list){
+            b.setHouseName(buySpecialtyService.getHouseNameById(b.getHouseId()));
+        }
         ExcelUtil<BuySpecialty> util = new ExcelUtil<BuySpecialty>(BuySpecialty.class);
         return util.exportExcel(list, "特产订购数据");
     }
@@ -301,4 +311,11 @@ public class BuySpecialtyController extends BaseController
         res.put("result_msg","下单成功");
         return res.toString();
     }
+
+    @GetMapping("/buySpecialty")
+    public String buySpecialty(ModelMap mmap)
+    {
+        return prefix + "/buySpecialty";
+    }
+
 }

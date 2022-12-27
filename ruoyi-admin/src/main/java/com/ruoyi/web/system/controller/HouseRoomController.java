@@ -76,8 +76,13 @@ public class HouseRoomController extends BaseController
     public AjaxResult export(HouseRoom houseRoom)
     {
         List<HouseRoom> list = houseRoomService.selectHouseRoomList(houseRoom);
+        for(HouseRoom houseRoom1:list){
+            houseRoom1.houseName=houseRoomService.getHouseNameById(houseRoom1.getHouseId());
+            if(houseRoom1.getIsFree()==1)houseRoom1.setFree("是");
+            else houseRoom1.setFree("否");
+        }
         ExcelUtil<HouseRoom> util = new ExcelUtil<HouseRoom>(HouseRoom.class);
-        return util.exportExcel(list, "房子管理数据");
+        return util.exportExcel(list, "我的房间数据");
     }
 
     /**

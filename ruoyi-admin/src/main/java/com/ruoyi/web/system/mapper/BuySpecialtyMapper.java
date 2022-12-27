@@ -84,4 +84,6 @@ public interface BuySpecialtyMapper
     public void updateMoney(BuySpecialty buySpecialty);
 
     public void insertRecord(BuySpecialty buySpecialty);
+
+    String getHouseIdByHouseName(String houseName);
 }

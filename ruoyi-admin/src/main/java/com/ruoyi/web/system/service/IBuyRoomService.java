@@ -94,4 +94,6 @@ public interface IBuyRoomService
     public List<String> getName();
 
     public Long getSellNumber(String name);
+
+    public String getHouseIdByHouseName(String houseName);
 }

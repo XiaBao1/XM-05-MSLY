@@ -26,11 +26,11 @@
     <select id="selectBuyRoomList" parameterType="BuyRoom" resultMap="BuyRoomResult">
         <include refid="selectBuyRoomVo"/>
         <where>
-            <if test="houseId != null "> and A.house_id = #{houseId}</if>
-            <if test="roomNumber != null  and roomNumber != ''"> and A.room_number = #{roomNumber}</if>
-            <if test="pricePerDay != null "> and A.price_per_day = #{pricePerDay}</if>
+            <if test="houseId != null "> and house_id = #{houseId}</if>
+            <if test="roomNumber != null  and roomNumber != ''"> and room_number = #{roomNumber}</if>
+            <if test="pricePerDay != null "> and price_per_day = #{pricePerDay}</if>
             <if test="standard != null  and standard != ''"> and standard = #{standard}</if>
-            <if test="isFree != null "> and A.is_free = #{isFree}</if>
+            <if test="isFree != null "> and is_free = #{isFree}</if>
         </where>
     </select>
 
@@ -93,6 +93,10 @@
 
     <select id="getSellNumber" parameterType="String" resultType="Long">
         select count(*) from client_room_record where (select house_name from landlord_house where id=(select house_id from house_room where house_room.id=client_room_record.room_id))=#{name}
+    </select>
+
+    <select id="getHouseIdByHouseName" parameterType="String" resultType="String">
+        select id from landlord_house where house_name=#{houseName}
     </select>
 
     <insert id="insertBuyRoom" parameterType="BuyRoom" useGeneratedKeys="true" keyProperty="id">
