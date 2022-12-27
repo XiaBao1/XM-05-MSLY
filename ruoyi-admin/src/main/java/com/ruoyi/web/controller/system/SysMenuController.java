@@ -66,8 +66,6 @@ public class SysMenuController extends BaseController
         Long userId = ShiroUtils.getUserId();
         List<SysMenu> menuList = menuService.selectMenuList(menu, userId);
 
-        System.out.println(menuList);
-
         ExcelUtil<SysMenu> util = new ExcelUtil<SysMenu>(SysMenu.class);
         return util.exportExcel(menuList, "菜单管理");
     }

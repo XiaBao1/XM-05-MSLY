@@ -68,6 +68,7 @@
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
         var prefix = ctx + "yk/top_speciality";
+        var buyFlag = [[${@permission.hasPermi('system:buySpecialty:buy')}]];
 
         $(function() {
             var options = {
@@ -76,8 +77,8 @@
                 modalName: "最热特产榜单",
                 sortName: "sale",
                 sortOrder: "desc",
-                columns: [
-                {
+                columns:
+                [{
                     field: 'id',
                     title: '特产ID',
                     visible: false
@@ -101,8 +102,7 @@
                     field: 'price',
                     title: '特产价格',
                     sortable: true
-                },
-                {
+                }, {
                     field: 'sale',
                     title: '特产销量',
                     sortable: true
@@ -112,10 +112,27 @@
                 },{
                     field: 'inventory',
                     title: '库存'
+                }, {
+                    title: '操作',
+                    field: 'caozuo',
+                    width: '150px',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        //actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        //actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        actions.push("<a class='btn btn-success btn-xs " + buyFlag + "' href='javascript:void(0)' onclick='buy(" + row.id + ")'><i class='fa fa-search'></i>详情页查看</a>");
+                        return actions.join('');
+                    }
                 }]
             };
             $.table.init(options);
         });
+
+        function buy(id) {
+            var url =  ctx + "system/buySpecialty" + '/buy/' + id;
+            $.modal.openTab("详情页", url);
+        }
 
         function printHtml() {
             $("#prints").removeClass("noprint");

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改房iii间订购')" />
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-buyRoom-buy" >
+        <!--    <form class="form-horizontal m" id="form-buyroom-buy" th:object="${buyRoom}">-->
+        <div align="center">
+            <img class='img-circle' th:src="${landlord.imageUrl}" />
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">民宿名称：</label>
+            <div class="col-sm-8">
+                <input name="houseName"  class="form-control" th:value="${landlord.houseName}" type="text" id="houseName" required disabled >
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">民宿地址：</label>
+            <div class="col-sm-8">
+                <input name="address" th:value="${landlord.address}" class="form-control" type="text" id="address" required disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">民宿评分：</label>
+            <div class="col-sm-8">
+                <input name="score" th:value="${landlord.score}" class="form-control" type="text" id="score" required disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">注册时间：</label>
+            <div class="col-sm-8">
+                <input name="register_time" th:value="${landlord.registerTime}" class="form-control" type="text" id="register_time" required disabled>
+            </div>
+        </div>
+    </form>
+
+    <hr>
+    <hr>
+
+    <h3 align="center" style="padding-top: 10px;padding-bottom: 5px;">民宿房间</h3>
+    <div class="col-sm-12 select-table table-striped noprint" style="width: 100%;">
+        <table id="bootstrap-table" style="width: 100%;word-break:break-all; word-wrap:break-all; "></table>
+    </div>
+</div>
+
+
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: summernote-js" />
+<script th:inline="javascript">
+    $(function() {
+        var options = {
+            url:  "/system/buyroom/list?houseId=" + [[${landlord.id}]],
+            columns:
+                [{
+                    field: 'id',
+                    title: '房间ID',
+                    visible: false
+                }, {
+                    title: '房间号',
+                    field: 'roomNumber',
+                    align: 'center'
+                }, {
+                    title: '每日价格',
+                    field: 'pricePerDay',
+                    align: 'center'
+                }, {
+                    field: 'standard',
+                    title: '标准'
+                }, {
+                    title: '操作',
+                    field: 'caozuo',
+                    width: '150px',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push("<a class='btn btn-success btn-xs ' href='javascript:void(0)' onclick='detailClicked(" + row.id + ")'><i class='fa fa-search'></i>房间详情</a>");
+                        return actions.join('');
+                    }
+                }]
+        };
+        $.table.init(options);
+    });
+
+    function detailClicked(id) {
+        var url= "/system/buyroom/buy/" + id;
+        $.modal.openTab("民宿详细",url);
+    }
+</script>
+
+
+</body>
+
+
+</html>
