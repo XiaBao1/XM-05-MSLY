@@ -2,5 +2,6 @@
   "backgroundTextStyle": "light",
   "navigationBarBackgroundColor": "#ffffff",
   "navigationBarTitleText": "热门民宿",
-  "navigationBarTextStyle": "black"
+  "navigationBarTextStyle": "black",
+  "enablePullDownRefresh": true
 }
