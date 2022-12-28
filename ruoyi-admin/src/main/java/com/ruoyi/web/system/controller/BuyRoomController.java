@@ -48,7 +48,7 @@ public class BuyRoomController extends BaseController
     @Autowired
     private IBuyRoomService buyRoomService;
 
-    @RequiresPermissions("system:buyroom:view")
+    //@RequiresPermissions("system:buyroom:view")
     @GetMapping()
     public String buyroom()
     {
@@ -58,7 +58,7 @@ public class BuyRoomController extends BaseController
     /**
      * 查询房间订购列表
      */
-    @RequiresPermissions("system:buyroom:list")
+    //@RequiresPermissions("system:buyroom:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(BuyRoom buyRoom)
@@ -80,7 +80,7 @@ public class BuyRoomController extends BaseController
     /**
      * 导出房间订购列表
      */
-    @RequiresPermissions("system:buyroom:export")
+    //@RequiresPermissions("system:buyroom:export")
     @Log(title = "房间订购", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
@@ -108,7 +108,7 @@ public class BuyRoomController extends BaseController
     /**
      * 新增保存房间订购
      */
-    @RequiresPermissions("system:buyroom:add")
+    //@RequiresPermissions("system:buyroom:add")
     @Log(title = "房间订购", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -120,7 +120,7 @@ public class BuyRoomController extends BaseController
     /**
      * 修改房间订购
      */
-    @RequiresPermissions("system:buyroom:edit")
+   // @RequiresPermissions("system:buyroom:edit")
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
@@ -132,7 +132,7 @@ public class BuyRoomController extends BaseController
     /**
      * 修改保存房间订购
      */
-    @RequiresPermissions("system:buyroom:edit")
+   // @RequiresPermissions("system:buyroom:edit")
     @Log(title = "房间订购", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -144,7 +144,7 @@ public class BuyRoomController extends BaseController
     /**
      * 删除房间订购
      */
-    @RequiresPermissions("system:buyroom:remove")
+    //@RequiresPermissions("system:buyroom:remove")
     @Log(title = "房间订购", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody
@@ -165,7 +165,7 @@ public class BuyRoomController extends BaseController
 //    }
 
 
-    @RequiresPermissions("system:buyroom:buy")
+    //@RequiresPermissions("system:buyroom:buy")
     @GetMapping("/buy/{id}")
     public String buypage(@PathVariable("id") Long id,ModelMap mmap)
     {
@@ -176,7 +176,7 @@ public class BuyRoomController extends BaseController
         return prefix + "/buy";
     }
 
-    @RequiresPermissions("system:buyroom:infopage")
+   // @RequiresPermissions("system:buyroom:infopage")
     @GetMapping("/infopage/{id}")
     public String infoPage(@PathVariable("id") Long id,ModelMap mmap)
     {
@@ -386,14 +386,14 @@ public class BuyRoomController extends BaseController
         return res.toString();
     }
 
-    @RequiresPermissions("system:buyroom:statistics")
+    //@RequiresPermissions("system:buyroom:statistics")
     @GetMapping("/statistics")
     public String statistics(ModelMap mmap)
     {
         return prefix + "/statistics";
     }
 
-    @RequiresPermissions("system:buyroom:statistics")
+    //@RequiresPermissions("system:buyroom:statistics")
     @Log(title = "民宿订购统计", businessType = BusinessType.INSERT)
     @PostMapping("/statistics")
     @ResponseBody

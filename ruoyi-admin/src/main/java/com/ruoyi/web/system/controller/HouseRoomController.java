@@ -36,7 +36,7 @@ public class HouseRoomController extends BaseController
     @Autowired
     private IHouseRoomService houseRoomService;
 
-    @RequiresPermissions("system:room:view")
+   //@RequiresPermissions("system:room:view")
     @GetMapping()
     public String room()
     {
@@ -46,7 +46,7 @@ public class HouseRoomController extends BaseController
     /**
      * 查询房子管理列表
      */
-    @RequiresPermissions("system:room:list")
+    //@RequiresPermissions("system:room:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(HouseRoom houseRoom)
@@ -69,7 +69,7 @@ public class HouseRoomController extends BaseController
     /**
      * 导出房子管理列表
      */
-    @RequiresPermissions("system:room:export")
+    //@RequiresPermissions("system:room:export")
     @Log(title = "房子管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
@@ -97,7 +97,7 @@ public class HouseRoomController extends BaseController
     /**
      * 新增保存房子管理
      */
-    @RequiresPermissions("system:room:add")
+    //@RequiresPermissions("system:room:add")
     @Log(title = "房子管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -119,7 +119,7 @@ public class HouseRoomController extends BaseController
     /**
      * 修改房子管理
      */
-    @RequiresPermissions("system:room:edit")
+    //@RequiresPermissions("system:room:edit")
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
@@ -131,7 +131,7 @@ public class HouseRoomController extends BaseController
     /**
      * 修改保存房子管理
      */
-    @RequiresPermissions("system:room:edit")
+    //@RequiresPermissions("system:room:edit")
     @Log(title = "房子管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -143,7 +143,7 @@ public class HouseRoomController extends BaseController
     /**
      * 删除房子管理
      */
-    @RequiresPermissions("system:room:remove")
+    //@RequiresPermissions("system:room:remove")
     @Log(title = "房子管理", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody
@@ -152,14 +152,14 @@ public class HouseRoomController extends BaseController
         return toAjax(houseRoomService.deleteHouseRoomByIds(ids));
     }
 
-    @RequiresPermissions("system:room:statistics")
+    //@RequiresPermissions("system:room:statistics")
     @GetMapping("/statistics")
     public String statistics(ModelMap mmap)
     {
         return prefix + "/statistics";
     }
 
-    @RequiresPermissions("system:room:statistics")
+    //@RequiresPermissions("system:room:statistics")
     @Log(title = "房源统计", businessType = BusinessType.INSERT)
     @PostMapping("/statistics")
     @ResponseBody

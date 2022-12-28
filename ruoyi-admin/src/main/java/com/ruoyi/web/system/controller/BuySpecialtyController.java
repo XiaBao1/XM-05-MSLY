@@ -42,7 +42,7 @@ public class BuySpecialtyController extends BaseController
     @Autowired
     private IBuySpecialtyService buySpecialtyService;
 
-    @RequiresPermissions("system:buySpecialty:view")
+    //@RequiresPermissions("system:buySpecialty:view")
     @GetMapping()
     public String buySpecialty()
     {
@@ -52,7 +52,7 @@ public class BuySpecialtyController extends BaseController
     /**
      * 查询特产订购列表
      */
-    @RequiresPermissions("system:buySpecialty:list")
+    //@RequiresPermissions("system:buySpecialty:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(BuySpecialty buySpecialty)
@@ -75,7 +75,7 @@ public class BuySpecialtyController extends BaseController
     /**
      * 导出特产订购列表
      */
-    @RequiresPermissions("system:buySpecialty:export")
+    //@RequiresPermissions("system:buySpecialty:export")
     @Log(title = "特产订购", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
@@ -101,7 +101,7 @@ public class BuySpecialtyController extends BaseController
     /**
      * 新增保存特产订购
      */
-    @RequiresPermissions("system:buySpecialty:add")
+    //@RequiresPermissions("system:buySpecialty:add")
     @Log(title = "特产订购", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -113,7 +113,7 @@ public class BuySpecialtyController extends BaseController
     /**
      * 修改特产订购
      */
-    @RequiresPermissions("system:buySpecialty:edit")
+    //@RequiresPermissions("system:buySpecialty:edit")
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
@@ -125,7 +125,7 @@ public class BuySpecialtyController extends BaseController
     /**
      * 修改保存特产订购
      */
-    @RequiresPermissions("system:buySpecialty:edit")
+    //@RequiresPermissions("system:buySpecialty:edit")
     @Log(title = "特产订购", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -137,7 +137,7 @@ public class BuySpecialtyController extends BaseController
     /**
      * 删除特产订购
      */
-    @RequiresPermissions("system:buySpecialty:remove")
+    //@RequiresPermissions("system:buySpecialty:remove")
     @Log(title = "特产订购", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody
@@ -147,7 +147,7 @@ public class BuySpecialtyController extends BaseController
     }
 
 
-    @RequiresPermissions("system:buySpecialty:buy")
+    //@RequiresPermissions("system:buySpecialty:buy")
     @GetMapping("/buy/{id}")
     public String buypage(@PathVariable("id") Long id,ModelMap mmap)
     {
@@ -158,14 +158,14 @@ public class BuySpecialtyController extends BaseController
         return prefix + "/buy";
     }
 
-    @RequiresPermissions("system:buySpecialty:statistics")
+    //@RequiresPermissions("system:buySpecialty:statistics")
     @GetMapping("/statistics")
     public String statistics(ModelMap mmap)
     {
         return prefix + "/statistics";
     }
 
-    @RequiresPermissions("system:buySpecialty:statistics")
+    //@RequiresPermissions("system:buySpecialty:statistics")
     @Log(title = "特产统计", businessType = BusinessType.INSERT)
     @PostMapping("/statistics")
     @ResponseBody
