@@ -3,7 +3,7 @@
   <view class='restMoney'>
     <view class='yue'>
       <view class='describe'>热门民宿榜单</view>
-      <view class='explain'>为您选取本平台最热门的5家民宿</view>
+      <view class='explain'>为您选取本平台的热门民宿</view>
       <button class='sbutton' bindtap='toStatistics'>
         查看统计图表
       </button>
@@ -35,9 +35,4 @@
       </view>
     </view>
   </view>
-  <!-- 热线 -->
-  <view class='rexian'>
-    <view class='tels'>服务热线：4008-888-999</view>
-  </view>
-  <!-- </view> -->
 </view>

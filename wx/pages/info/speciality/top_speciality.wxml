@@ -1,2 +1,48 @@
 <!--pages/info/speciality/top_speciality.wxml-->
-<text>pages/info/speciality/top_speciality.wxml</text>
+<view class='main'>
+  <view class='restMoney'>
+    <view class='yue'>
+      <view class='describe'>热门特产榜单</view>
+      <view class='explain'>为您选取本平台的热门特产</view>
+      <button class='sbutton' bindtap='toStatistics'>
+        查看统计图表
+      </button>
+    </view>
+  </view>
+  <view class="filter-flex">
+		<view class="filter-tab">
+			<text bindtap="setFilterPanel" data-findex="1" class="{{showfilterindex==1?'active':''}}">排序</text>
+		</view>
+		<view class="filter-content" wx:if="{{showfilter}}">
+			<view class="filter-panel filter-sort" wx:if="{{showfilterindex==1}}">
+				<view wx:for="{{filterdata.sort}}" wx:key="{{item.id}}" bindtap="setSort" data-sortindex="{{index}}" data-sortid="{{item.id}}" class="{{sortindex==index?'active':''}}">{{item.title}}</view>
+			</view>
+		</view>
+		<view class="filter-shadow" wx:if="{{showfilter}}" bindtap="hideFilter"></view>
+	</view>
+  <view class='tab-items'>
+    <view class='recharge' wx:for="{{servicelist}}" wx:key="{{item.id}}" wx:for-item="item">
+      <view class='record'>
+        <view class='list'>
+          <view class='housename'>{{item.specialtyName}}</view>
+          <view class="service-text">
+            <view class="service-tags">
+              <text>{{item.houseName}}</text>
+            </view>
+          </view>
+          <view class='address'>{{item.address}}</view>
+          <view class='word'>特产销量：{{item.sale}}</view>
+          <view class='word'>特产描述：{{item.description}}</view>
+          <view class='word'>库存仅剩{{item.inventory}}件！</view>
+        </view>
+        <view class='list'>
+          <view class="conference-item-img">
+              <text>{{item.price}}元/份</text>
+          </view>
+          <image class='img' src="{{item.imgurl}}" mode="aspectFit"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+

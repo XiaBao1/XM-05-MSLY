@@ -13,7 +13,8 @@
     "pages/info/speciality_order/speciality_order",
     "pages/info/index/info_index",
     "pages/history/index/history_index",
-    "pages/info/landlord/statistics/statistics"
+    "pages/info/landlord/statistics/statistics",
+    "pages/info/specialty/statistics/statistics"
   ],
   "window": {
     "backgroundTextStyle": "light",
