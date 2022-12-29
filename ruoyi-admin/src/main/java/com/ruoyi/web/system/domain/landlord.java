@@ -30,11 +30,11 @@ public class landlord extends BaseEntity
     private Long hostNumber;
 
     /**  */
-@Excel(name = "民宿地址")
-private String address;
+    @Excel(name = "民宿地址")
+    private String address;
 
     /**  */
-    @Excel(name = "城市名称")
+    //@Excel(name = "城市名称")
     private String city;
 
     /**  */
@@ -46,7 +46,7 @@ private String address;
 
     /**  */
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "", width = 30, dateFormat = "yyyy-MM-dd")
+    @Excel(name = "注册时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date registerTime;
 
     public  Long userId= (Long) PermissionUtils.getPrincipalProperty("userId");

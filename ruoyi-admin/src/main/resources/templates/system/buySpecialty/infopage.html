@@ -112,6 +112,7 @@
                 let json = eval( "(" + res + ")" );
                 if(json.result_code==0){
                     top.layer.alert("下单成功");
+                    $.modal.openTab('特产订购', '/system/buySpecialty/buySpecialty');
                 }
                 else{
                     top.layer.alert(json.result_msg);

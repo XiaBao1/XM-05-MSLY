@@ -82,6 +82,10 @@
         select money from sys_user where user_id=#{id}
     </select>
 
+    <select id="getHouseIdByHouseName" parameterType="String" resultType="String">
+        select id from landlord_house where house_name=#{houseName}
+    </select>
+
     <insert id="insertBuySpecialty" parameterType="BuySpecialty" useGeneratedKeys="true" keyProperty="id">
         insert into house_specialty
         <trim prefix="(" suffix=")" suffixOverrides=",">
