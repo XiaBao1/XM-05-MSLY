@@ -5,7 +5,7 @@
   </view>
 
   <view class='icon-text' bindtap='toSpecialityHistory'>
-    <image class='icon' src='/image/icon/food.png'></image>
+    <image class='icon-food' src='/image/icon/food.png'></image>
     <view class='text'>特产订单</view>
   </view>
 </view>
