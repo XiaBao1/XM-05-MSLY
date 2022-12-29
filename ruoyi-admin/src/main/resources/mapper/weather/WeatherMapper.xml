@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectWeatherList" parameterType="Weather" resultMap="WeatherResult">
         <include refid="selectWeatherVo"/>
         <where>  
-            <if test="city != null  and city != ''"> and city = #{city}</if>
+            <if test="city != null  and city != ''"> and city like concat('%',#{city},'%')</if>
             <if test="params.beginWeatherDate != null and params.beginWeatherDate != '' and params.endWeatherDate != null and params.endWeatherDate != ''"> and weather_date between #{params.beginWeatherDate} and #{params.endWeatherDate}</if>
             <if test="params.beginLowT != null and params.beginLowT != '' and params.endLowT != null and params.endLowT != ''"> and low_t between #{params.beginLowT} and #{params.endLowT}</if>
             <if test="params.beginHighT != null and params.beginHighT != '' and params.endHighT != null and params.endHighT != ''"> and high_t between #{params.beginHighT} and #{params.endHighT}</if>
