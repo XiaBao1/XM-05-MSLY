@@ -94,16 +94,16 @@ page{
   margin: auto;
 }
 .state{
-  width: 140rpx;
-  height: 54rpx;
-  background: #3d4663;
-  font-size: 26rpx;
+  width: 180rpx;
+  height: 50rpx;
+  background:rgb(150, 102, 0);
+  font-size: 34rpx;
   line-height: 54rpx;
   text-align: center;
   color:#ffffff;
   border-top-left-radius: 27rpx;
   border-bottom-left-radius: 27rpx;
-  margin-top: 34rpx;
+  margin-top: 18rpx;
 }
 .loadBtn{
   width: 392rpx;

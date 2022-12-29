@@ -16,7 +16,9 @@
     "pages/user/user_info/user_info",
     "pages/user/modify_info/modify_info",
     "pages/info/landlord/statistics/statistics",
-    "pages/user/money_add/money_add"
+    "pages/user/money_add/money_add",
+    "pages/info/room_order/house_detail",
+    "pages/info/room_order/room_detail"
   ],
   "window": {
     "backgroundTextStyle": "light",

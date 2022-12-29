@@ -1,0 +1,51 @@
+<!--pages/loadEdit/loadEdit.wxml-->
+<view class='main'>
+  <form>
+    <view class='editInfo'>
+      <view class='editInfo_left'>
+        <view class='bianhao'>
+          <view class='num'>{{houseName}}{{roomNumber}}号房</view>
+          <view class='time'>{{standard}}</view> 
+        </view>
+      </view>
+      <view class='editInfo_right'>{{pricePerDay}}元/天</view>
+    </view>
+
+    <view class='else' wx:if="{{isFree>0}}">
+      <view class='lists'>
+        <view class='list_name'>入仓物流公司</view>
+        <view class='list_items'>
+          <input class='inputInfo' placeholder='圆通速递' placeholder-class='inputStyle'></input>
+          <image class='editPic' src='/image/edit.png'></image>
+        </view>
+      </view>
+      <view class='lists'>
+        <view class='list_name'>入仓物流单号</view>
+        <view class='list_items'>
+          <input class='inputInfo' placeholder='479834693769363946' placeholder-class='inputStyle'></input> 
+          <image class='editPic' src='/image/edit.png'></image>
+        </view>
+      </view>
+      <view class='lists'>
+        <view class='list_name'>寄件人姓名</view>
+        <view class='list_items'>
+          <input class='inputInfo' placeholder='张三' placeholder-class='inputStyle'></input> 
+          <image class='editPic' src='/image/edit.png'></image>
+        </view>
+      </view>
+      <view class='list'>
+        <view class='list_name'>预约租期</view>
+        <view class='list_item'>
+          3个/月
+        </view>
+      </view>
+    </view>
+    <view class='list_name' style='text-align: center;' wx:else>
+      抱歉，该房间已被预定
+    </view>
+    <!-- 提交修改 -->
+    <view class='confirm' wx:if="{{isFree>0}}">
+      <button class='confirmBtn' form-type='submit'>提交修改</button>
+    </view>
+  </form>
+</view>

@@ -33,5 +33,12 @@ Page({
     this.setData({
       houseList: data
     })
+  },
+  houseClicked: function(e) {
+    let id = e.currentTarget.dataset.id;
+    let data = this.data.houseList[id];
+    wx.navigateTo({
+      url: './house_detail?houseInfo=' + JSON.stringify(data),
+    })
   }
 })

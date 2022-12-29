@@ -1,0 +1,24 @@
+<!--pages/finishDetails/finishDetails.wxml-->
+
+<image class='numPic' src='{{imageUrl}}'></image>
+<view class='main'>
+  <view class='finishInfo'>
+    <view class='finishInfo_left'>
+      <view class='bianhao'>
+        <view class='num'>{{houseName}}</view>
+      </view>
+      <view class='time'>{{address}}</view>  
+    </view>
+    <view class="finishInfo_right">
+      <text>销量：{{sale}}</text>
+      <text>评分：{{score}}</text>
+    </view>
+  </view>
+  <!-- 物流公司 -->
+  <view class='express' wx:for="{{roomList}}" wx:for-item="item">
+    <view class='list' bindtap="roomClicked" data-roomId="{{item.id}}">
+      <view class='list_name'>{{item.standard}}（{{item.isFree>0 ? "空闲" : "已预定"}}）</view>
+      <view class='list_item'>{{item.pricePerDay}}元/天</view>
+    </view>
+  </view>
+</view>
