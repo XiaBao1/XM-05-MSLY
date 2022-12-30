@@ -1,2 +1,31 @@
-<!--pages/user/todo/todo.wxml-->
-<text>pages/user/todo/todo.wxml</text>
+<view class="main">
+  <view class='restMoney'>
+    <view class='yue'>
+      <view class='describe'>我的待办事项</view>
+      <view class='explain'>为您统计已完成和未完成的事项数量</view>
+      <button class='sbutton' bindtap='toStatistics'>
+        查看统计图表
+      </button>
+    </view>
+  </view>
+
+
+  <view class='tab-items'>
+    <view class='recharge' wx:for="{{servicelist}}" wx:key="{{item.id}}" wx:for-item="item">
+      <!-- <view class='recharge' > -->
+      <view class='record'>
+        <view class='list'>
+          <view class='username'>{{item.userName}}</view>
+          <view class='word'>代办事项：{{item.content}}</view>
+          <view class='word'>截止时间：{{item.ddlTime}}</view>
+          <view class='word'>完成状态：{{item.status}}
+            <image class='img' style="height:15px;width:15px;" src="{{item.imgUrl}}" mode="scaleToFill"></image>
+          </view>
+        </view>
+        <view class="image">
+          <image class='img' src="../../../image/R-C.jpg" mode="aspectFit"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
