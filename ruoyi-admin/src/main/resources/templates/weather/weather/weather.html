@@ -43,35 +43,66 @@
                             </li>
                             <li>
                                 <label>低温：</label>
-                                <input type="text" placeholder="下限" name="params[beginLowT]"/>
+                                <input type="number" placeholder="下限" name="params[beginLowT]"/>
                                 <span>-</span>
-                                <input type="text" placeholder="上限" name="params[endLowT]"/>
+                                <input type="number" placeholder="上限" name="params[endLowT]"/>
                             </li>
                             <li>
                                 <label>高温：</label>
-                                <input type="text" placeholder="下限" name="params[beginHighT]"/>
+                                <input type="number" placeholder="下限" name="params[beginHighT]"/>
                                 <span>-</span>
-                                <input type="text" placeholder="上限" name="params[endHighT]"/>
+                                <input type="number" placeholder="上限" name="params[endHighT]"/>
                             </li>
                             <li>
                                 <label>风向：</label>
-                                <input type="text" name="windDirection"/>
+                                <select class="form-control" name="windDirection" placeholder="请选择风向" type="text">
+                                    <option value="">--请选择风向--</option>
+                                    <option value="北">北</option>
+                                    <option value="东北">东北</option>
+                                    <option value="东">东</option>
+                                    <option value="东南">东南</option>
+                                    <option value="南">南</option>
+                                    <option value="西南">西南</option>
+                                    <option value="西">西</option>
+                                    <option value="西北">西北</option>
+                                </select>
                             </li>
                             <li>
                                 <label>风速：</label>
-                                <input type="text" placeholder="下限" name="params[beginWindSpeed]"/>
+                                <input type="number" placeholder="下限" name="params[beginWindSpeed]"/>
                                 <span>-</span>
-                                <input type="text" placeholder="上限" name="params[endWindSpeed]"/>
+                                <input type="number" placeholder="上限" name="params[endWindSpeed]"/>
                             </li>
                             <li>
                                 <label>风力：</label>
-                                <input type="text" name="windScale"/>
+                                <select name="windScale" class="form-control" type="text">
+                                    <option value="">--请选择风力等级--</option>
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                </select>
                             </li>
                             <li>
                                 <label>湿度：</label>
-                                <input type="text" placeholder="下限" name="params[beginHumidity]"/>
+                                <input type="number" placeholder="下限" name="params[beginHumidity]"/>
                                 <span>-</span>
-                                <input type="text" placeholder="上限" name="params[endHumidity]"/>
+                                <input type="number" placeholder="上限" name="params[endHumidity]"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -223,6 +254,27 @@
             $.table.showColumn("caozuo");
             $.table.showColumn("checkbox");
         }
+
+        $("#formId").validate({
+            rules: {
+                city: {
+                    required: true,
+                },
+                humidity: {
+                    required: true,
+                    range:[0,100]
+                }
+            },
+            messages: {
+                city: {
+                    required: "请输入城市名",
+                },
+                humidity: {
+                    required: "请输入湿度",
+                    range: "请输入0~100的整数"
+                }
+            }
+        });
     </script>
 </body>
 </html>
