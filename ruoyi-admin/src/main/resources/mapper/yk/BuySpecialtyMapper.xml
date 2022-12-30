@@ -32,6 +32,10 @@
             <if test="description != null  and description != ''"> and description like concat('%', #{description}, '%')</if>
             <if test="price != null "> and price = #{price}</if>
             <if test="inventory != null "> and inventory = #{inventory}</if>
+            <if test="priceUp != null "> and #{priceUp} >= price</if>
+            <if test="priceDown != null "> and price >= #{priceDown}</if>
+            <if test="inventoryUp != null "> and #{inventoryUp} >= inventory</if>
+            <if test="inventoryDown != null "> and inventory >= #{inventoryDown}</if>
         </where>
     </select>
 
@@ -82,8 +86,8 @@
         select money from sys_user where user_id=#{id}
     </select>
 
-    <select id="getHouseIdByHouseName" parameterType="String" resultType="String">
-        select id from landlord_house where house_name=#{houseName}
+    <select id="getHouseIdByHouseName" parameterType="String" resultMap="StringResult">
+        select id from landlord_house where house_name like concat('%',#{houseName},'%')
     </select>
 
     <insert id="insertBuySpecialty" parameterType="BuySpecialty" useGeneratedKeys="true" keyProperty="id">

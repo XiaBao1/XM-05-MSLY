@@ -1,11 +1,13 @@
 package com.ruoyi.web.system.controller;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.alibaba.fastjson.JSONArray;
 import com.ruoyi.common.json.JSONObject;
+import com.ruoyi.web.system.domain.BuyRoom;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
@@ -59,10 +61,37 @@ public class BuySpecialtyController extends BaseController
     {
         startPage();
 
+        BuySpecialty houseRoom=buySpecialty;
+
+        if(houseRoom.getPriceUp()!=null&&houseRoom.getPriceDown()!=null&&(houseRoom.getPriceUp()<houseRoom.getPriceDown())){
+            int down=houseRoom.getPriceUp();
+            houseRoom.setPriceUp(houseRoom.getPriceDown());
+            houseRoom.setPriceDown(down);
+        }
+
+        if(houseRoom.getInventoryUp()!=null&&houseRoom.getInventoryDown()!=null&&(houseRoom.getInventoryUp()<houseRoom.getInventoryDown())){
+            int down=houseRoom.getInventoryUp();
+            houseRoom.setInventoryUp(houseRoom.getInventoryDown());
+            houseRoom.setInventoryDown(down);
+        }
+
+        buySpecialty=houseRoom;
+
         if(buySpecialty.getHouseName()!=null&&(!buySpecialty.getHouseName().equals(""))){
-            String id=buySpecialtyService.getHouseIdByHouseName(buySpecialty.getHouseName());
-            Long houseId=Long.parseLong(id);
-            buySpecialty.setHouseId(houseId);
+            List<String> idList=buySpecialtyService.getHouseIdByHouseName(buySpecialty.getHouseName());
+            List<BuySpecialty> ans = new ArrayList<>();
+            System.out.println(idList);
+            for(String id:idList){
+                buySpecialty.setHouseId(Long.parseLong(id));
+                List<BuySpecialty> li=buySpecialtyService.selectBuySpecialtyList(buySpecialty);;
+                for(BuySpecialty bb: li){
+                    ans.add(bb);
+                }
+            }
+            for(BuySpecialty buySpecialty1: ans){
+                buySpecialty1.houseName=buySpecialtyService.getHouseNameById(buySpecialty1.getHouseId());
+            }
+            return getDataTable(ans);
         }
 
         List<BuySpecialty> list = buySpecialtyService.selectBuySpecialtyList(buySpecialty);

@@ -9,6 +9,8 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSONArray;
 import com.ruoyi.common.json.JSONObject;
+import com.ruoyi.web.system.domain.BuyRoom;
+import com.ruoyi.web.system.domain.BuySpecialty;
 import com.ruoyi.web.system.domain.landlord;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,10 +63,37 @@ public class HouseSpecialtyController extends BaseController
     {
         startPage();
 
+        HouseSpecialty houseRoom=houseSpecialty;
+
+        if(houseRoom.getPriceUp()!=null&&houseRoom.getPriceDown()!=null&&(houseRoom.getPriceUp()<houseRoom.getPriceDown())){
+            int down=houseRoom.getPriceUp();
+            houseRoom.setPriceUp(houseRoom.getPriceDown());
+            houseRoom.setPriceDown(down);
+        }
+
+        if(houseRoom.getInventoryUp()!=null&&houseRoom.getInventoryDown()!=null&&(houseRoom.getInventoryUp()<houseRoom.getInventoryDown())){
+            int down=houseRoom.getInventoryUp();
+            houseRoom.setInventoryUp(houseRoom.getInventoryDown());
+            houseRoom.setInventoryDown(down);
+        }
+
+        houseSpecialty=houseRoom;
+
         if(houseSpecialty.getHouseName()!=null&&(!houseSpecialty.getHouseName().equals(""))){
-            String id=houseSpecialtyService.getHouseIdByHouseName(houseSpecialty);
-            Long houseId=Long.parseLong(id);
-            houseSpecialty.setHouseId(houseId);
+            List<String> idList=houseSpecialtyService.getHouseIdByHouseName(houseSpecialty);
+            List<HouseSpecialty> ans = new ArrayList<>();
+            System.out.println(idList);
+            for(String id:idList){
+                houseSpecialty.setHouseId(Long.parseLong(id));
+                List<HouseSpecialty> li=houseSpecialtyService.selectHouseSpecialtyList(houseSpecialty);;
+                for(HouseSpecialty bb: li){
+                    ans.add(bb);
+                }
+            }
+            for(HouseSpecialty buyroom1: ans){
+                buyroom1.setHouseName(houseSpecialtyService.getHouseNameById(buyroom1.getHouseId()));
+            }
+            return getDataTable(ans);
         }
 
         List<HouseSpecialty> list = houseSpecialtyService.selectHouseSpecialtyList(houseSpecialty);
@@ -110,14 +139,16 @@ public class HouseSpecialtyController extends BaseController
     public AjaxResult addSave(HouseSpecialty houseSpecialty)
     {
         //判断houseId
-        String id=houseSpecialtyService.getHouseIdByHouseName(houseSpecialty);
-        if(id==null||id.equals("")){
+        List<String> idList=houseSpecialtyService.getHouseIdByExactHouseName(houseSpecialty);
+        if(idList.size()!=1){
             AjaxResult res=new AjaxResult();
             res.put("msg","民宿名称有误");
             return res;
         }
-        Long houseId=Long.parseLong(id);
-        houseSpecialty.setHouseId(houseId);
+        for(String id:idList) {
+            Long houseId=Long.parseLong(id);
+            houseSpecialty.setHouseId(houseId);
+        }
         return toAjax(houseSpecialtyService.insertHouseSpecialty(houseSpecialty));
     }
 

@@ -113,7 +113,11 @@ public class HouseSpecialtyServiceImpl implements IHouseSpecialtyService
         return houseSpecialtyMapper.getSoldNumber(hh);
     }
 
-    public String getHouseIdByHouseName(HouseSpecialty houseSpecialty){
+    public List<String> getHouseIdByHouseName(HouseSpecialty houseSpecialty){
         return houseSpecialtyMapper.getHouseIdByHouseName(houseSpecialty);
+    }
+
+    public List<String> getHouseIdByExactHouseName(HouseSpecialty houseSpecialty){
+        return houseSpecialtyMapper.getHouseIdByExactHouseName(houseSpecialty);
     }
 }

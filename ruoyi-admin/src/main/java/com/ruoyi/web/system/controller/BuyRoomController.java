@@ -65,9 +65,31 @@ public class BuyRoomController extends BaseController
     {
         startPage();
 
+        BuyRoom houseRoom=buyRoom;
+
+        if(houseRoom.getPricePerDayUp()!=null&&houseRoom.getPricePerDayDown()!=null&&(houseRoom.getPricePerDayUp()<houseRoom.getPricePerDayDown())){
+            int down=houseRoom.getPricePerDayUp();
+            houseRoom.setPricePerDayUp(houseRoom.getPricePerDayDown());
+            houseRoom.setPricePerDayDown(down);
+        }
+
+        buyRoom=houseRoom;
+
         if(buyRoom.getHouseName()!=null&&(!buyRoom.getHouseName().equals(""))){
-            String id=buyRoomService.getHouseIdByHouseName(buyRoom.getHouseName());
-            buyRoom.setHouseId(Long.parseLong(id));
+            List<String> idList=buyRoomService.getHouseIdByHouseName(buyRoom.getHouseName());
+            List<BuyRoom> ans = new ArrayList<>();
+            System.out.println(idList);
+            for(String id:idList){
+                buyRoom.setHouseId(Long.parseLong(id));
+                List<BuyRoom> li=buyRoomService.selectBuyRoomList(buyRoom);;
+                for(BuyRoom bb: li){
+                    ans.add(bb);
+                }
+            }
+            for(BuyRoom buyroom1: ans){
+                buyroom1.houseName=buyRoomService.getHouseNameById(buyroom1.getHouseId());
+            }
+            return getDataTable(ans);
         }
 
         List<BuyRoom> list = buyRoomService.selectBuyRoomList(buyRoom);

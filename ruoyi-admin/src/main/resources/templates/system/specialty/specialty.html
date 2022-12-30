@@ -42,17 +42,23 @@
                             <label>特产描述：</label>
                             <input type="text" name="description"/>
                         </li>
+<!--                        <li>-->
+<!--                            <label>特产单价：</label>-->
+<!--                            <input type="text" name="price"/>-->
+<!--                        </li>-->
                         <li>
-                            <label>特产单价：</label>
-                            <input type="text" name="price"/>
+                            <label>库存量范围：</label>
+                            <input type="number" name="inventoryDown" style="width:80px" value="0" oninput="if(value<0)value=0;if(value>9999)value=9999"/>到
+                            <input type="number" name="inventoryUp" style="width:80px" value="9999" oninput="if(value<0)value=0;if(value>9999)value=9999"/>
                         </li>
+<!--                        <li hidden>-->
+<!--                            <label>特产链接：</label>-->
+<!--                            <input type="text" name="imageUrl"/>-->
+<!--                        </li>-->
                         <li>
-                            <label>库存量：</label>
-                            <input type="text" name="inventory"/>
-                        </li>
-                        <li hidden>
-                            <label>特产链接：</label>
-                            <input type="text" name="imageUrl"/>
+                            <label>单价范围：</label>
+                            <input type="number" name="priceDown" style="width:80px" value="1" oninput="if(value<1)value=1;if(value>9999)value=9999"/>元      到
+                            <input type="number" name="priceUp" style="width:80px" value="9999" oninput="if(value<1)value=1;if(value>9999)value=9999"/>元
                         </li>
                         <li>
                             <a class="btn btn-primary btn-rounded btn-sm noprint" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>

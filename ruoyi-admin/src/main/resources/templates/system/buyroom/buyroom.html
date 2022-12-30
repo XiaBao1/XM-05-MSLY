@@ -38,20 +38,32 @@
                             <label>房间号：</label>
                             <input type="text" name="roomNumber"/>
                         </li>
-                        <li>
-                            <label>每日价格：</label>
-                            <input type="text" name="pricePerDay"/>
-                        </li>
+<!--                        <li>-->
+<!--                            <label>每日价格：</label>-->
+<!--                            <input type="text" name="pricePerDay"/>-->
+<!--                        </li>-->
                         <li>
                             <label>房间标准：</label>
-                            <input type="text" name="standard" placeholder="单/双/三人间"/>
+                            <select class="form-control"  name="standard">
+                                <option value="">请选择</option>
+                                <option value="单人间">单人间</option>
+                                <option value="双人间">双人间</option>
+                                <option value="三人间">三人间</option>
+                            </select>
                         </li>
-                        <p>
                         <li>
                             <label>空闲：</label>
-                            <input type="number" name="isFree" oninput="if(value!=0)value=1" placeholder="是：1，否：0"/>
+                            <select class="form-control"  name="isFree">
+                                <option value="">请选择</option>
+                                <option value=1>是</option>
+                                <option value=0>否</option>
+                            </select>
                         </li>
-                        </p>
+                        <li>
+                            <label>每日价格范围：</label>
+                            <input type="number" name="pricePerDayDown" style="width:80px" value="1" oninput="if(value<1)value=1;if(value>9999)value=9999"/>元      到
+                            <input type="number" name="pricePerDayUp" style="width:80px" value="9999" oninput="if(value<1)value=1;if(value>9999)value=9999"/>元
+                        </li>
                         <li>
                             <a class="btn btn-primary btn-rounded btn-sm noprint" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                             <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
