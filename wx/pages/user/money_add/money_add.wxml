@@ -1,0 +1,16 @@
+<!--pages/chongzhi/chongzhi.wxml-->
+<view class='main'>
+  <form>
+    <view class='panel'>
+      <view class='recharge'>充值金额</view>
+      <view class='rechargeInput'>
+        <label for="sum">¥</label>
+        <input type="number" value="{{money_add}}" bindinput="inputMoney"></input>
+      </view>
+    </view>
+    <button class='submit' bindtap="submitClicked">支付</button>
+  </form>
+</view>
+
+
+

@@ -1,0 +1,31 @@
+<!--pages/realName/realName.wxml-->
+<view class='main'>
+  <view class='form'> 
+    <view class='inputBox'>
+      <label >用户名</label>
+      <input class="value" type="text" value="{{userName}}" bindinput="inputName"></input>
+    </view>
+    <view class='inputBox'>
+      <label >手机号码</label>
+      <input class="value" type="tel" value="{{phonenumber}}" bindinput="inputPhone"></input>
+    </view>
+    <view class='inputBox'>
+      <label >邮箱</label>
+      <input class="value" type="email" value="{{email}}" bindinput="inputEmail"></input>
+    </view>
+    <view class='inputBox'>
+      <label >省份</label>
+      <input class="value" type="text" value="{{province}}" bindinput="inputProvince"></input>
+    </view>
+    <view class='inputBox'>
+      <label class="sex-label">性别</label>
+      <radio-group bindchange="radioChange">
+        <text class="value">男</text>
+        <radio value="0" checked="{{sex=='0'}}"></radio>
+        <text class="value">女</text>
+        <radio value="1" checked="{{sex=='1'}}"></radio>
+      </radio-group>
+    </view>
+  </view>
+</view>
+<button class='submit' bindtap="submitBtnClicked">确认提交</button>

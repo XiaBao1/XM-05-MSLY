@@ -1,6 +1,6 @@
 // pages/info/index/info_index.js
 const app = getApp()
-
+let getCookie = require("../../../utils/util.js")['getCookie'];
 Page({
 
   /**
@@ -17,11 +17,7 @@ Page({
   },
 
   onLoad: function() {
-    let that = this;
-    wx.getStorage({
-      key: "cookies",
-      success: that.getTopSpeciality
-    });
+    getCookie(this.getTopSpeciality);
   },
   getTopSpeciality: function(cookies) {
     let that = this;

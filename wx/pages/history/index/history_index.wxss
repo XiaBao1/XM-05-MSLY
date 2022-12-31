@@ -10,6 +10,11 @@
   width: 400rpx;
   height: 400rpx;
 }
+.icon-food {
+  width: 400rpx;
+  height: 300rpx;
+  margin-top: 100rpx;
+}
 .text{
   text-align: center;
 }
