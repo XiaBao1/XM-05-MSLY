@@ -7,66 +7,79 @@ function initChart(canvas, width, height, dpr) {
     devicePixelRatio: dpr // 解决小程序视图模糊的问题，必写
   });
   wx.getStorage({
-    key: 'landlordSta',
+    key: 'specialitySta',
     success: function(res) {
-      console.log('get landlordSta');
+      console.log('get specialitySta');
       console.log(res);
       canvas.setChart(chart);
     
       var option = {
         title: {
-          text: '热门民宿统计图',
+          text: '特产价格与销量统计图',
           left: 'left'   // 设置标题位置
         },
         legend: {
-          data: ['销量']
+          data: ['特产']
         },
         grid: {
-          containLabel: true
+          containLabel: true,
+          x:45,
+          x2:40,
+          y2:24
         },
         tooltip: {
           show: true,
-          trigger: 'axis'
+          trigger: 'axis',
+          showDelay : 0,
+          axisPointer:{
+              type : 'cross',
+              lineStyle: {
+                  type : 'dashed',
+                  width : 1
+              }
+          }
         },
         xAxis: [
           {
-            type: 'category',
+            type: 'value',
             axisTick: { show: false },
-            data: res.data.name,
+            scale:true,
             axisLine: {
               lineStyle: {
                 color: '#999'
               }
             },
             axisLabel: {
-              color: '#666'
+              color: '#666',
+              formatter: '{value} 元'
             }
           }
         ],
         yAxis: [
           {
             type: 'value',
+            scale:true,
             axisLine: {
               lineStyle: {
                 color: '#999'
               }
             },
             axisLabel: {
-              color: '#666'
+              color: '#666',
+              formatter: '{value} 个'
             }
           }
         ],
         series: [{
-          name: '销量',
-          type: 'bar',
-          smooth: true,
+          name: '特产销量',
+          type: 'scatter',
           label: {
             normal: {
               show: true,
               position: 'inside'
             }
           },
-          data: res.data.sale
+          data: res.data
         }]
       };
     
@@ -78,7 +91,6 @@ function initChart(canvas, width, height, dpr) {
 
 Page({
   data: {
-    landlordname: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
     ec: {
       onInit: initChart
     }

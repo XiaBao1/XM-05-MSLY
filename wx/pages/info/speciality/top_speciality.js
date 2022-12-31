@@ -45,9 +45,15 @@ Page({
       success: function(res) {
         console.log(res);
         console.log('set storage');
+        var specialityData = [];
+        for (let i = 0; i < res.data.length; i += 2) {
+          specialityData.push([res.data[i], res.data[i+1]]);
+        }
+        console.log('处理过')
+        console.log(specialityData);
         wx.setStorage({
           key:"specialitySta",
-          data: res.data
+          data: specialityData
         });
       }
     });

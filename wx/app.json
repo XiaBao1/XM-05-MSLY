@@ -14,7 +14,8 @@
     "pages/info/index/info_index",
     "pages/history/index/history_index",
     "pages/info/landlord/statistics/statistics",
-    "pages/info/specialty/statistics/statistics"
+    "pages/info/specialty/statistics/statistics",
+    "pages/info/speciality/statistics/statistics"
   ],
   "window": {
     "backgroundTextStyle": "light",
