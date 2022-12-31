@@ -1,4 +1,4 @@
-/* pages/info/landlord/statistics/statistics.wxss */
+/* pages/info/speciality/statistics/statistics.wxss */
 .index{
   width: 100%;
   height: 100vh;
