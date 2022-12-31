@@ -13,8 +13,10 @@
     "pages/info/speciality_order/speciality_order",
     "pages/info/index/info_index",
     "pages/history/index/history_index",
+    "pages/user/user_info/user_info",
+    "pages/user/modify_info/modify_info",
     "pages/info/landlord/statistics/statistics",
-    "pages/info/speciality/statistics/statistics"
+    "pages/user/money_add/money_add"
   ],
   "window": {
     "backgroundTextStyle": "light",
