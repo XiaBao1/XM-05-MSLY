@@ -1,17 +1,8 @@
 // pages/goods/goods.js
 let getCookie = require("../../../utils/util.js")['getCookie'];
+let sortName = 'sale';
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-    //页面切换
-    //待入仓数据
-    loadList:[
-      {id:1,num:"D19060122",time:"2019-03-02"},
-      { id: 2, num: "D19060123", time: "2019-03-02" }
-    ],
     HouseList: []
   },
   onLoad: function() {
@@ -21,8 +12,9 @@ Page({
     let that = this;
     wx.request({
       url: 'http://localhost/yk/top_landlord/list',
-      header: {'cookie': cookies.data.substring(0, 48)},
+      header: {'cookie': cookies.data.substring(0, 48), 'Content-Type': 'application/x-www-form-urlencoded'},
       method: "post",
+      data: {orderByColumn: sortName, isAsc: 'desc'},
       success: function(res) {
         console.log(res);
         that.setHouseList(res.data.rows)
@@ -40,5 +32,13 @@ Page({
     wx.navigateTo({
       url: './house_detail?houseInfo=' + JSON.stringify(data),
     })
+  },
+  saleOrderClicked: function() {
+    sortName = 'sale';
+    getCookie(this.getHouseList);
+  },
+  scoreOrderClicked: function() {
+    sortName = 'score';
+    getCookie(this.getHouseList);
   }
 })

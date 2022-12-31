@@ -3,6 +3,7 @@ let getCookie = require("../../../utils/util.js")['getCookie'];
 Page({
   data: {
     roomId: -1,
+
     houseName: "",
     imageUrl: "",
     isFree: 0,
@@ -10,11 +11,22 @@ Page({
     phoneNumber: "",
     pricePerDay: -1,
     roomNumber: "",
-    standard: ""
+    standard: "",
+
+    date: '2023-02-02',
+    arriveTime: 18,
+    liveTime: 5,
+    passwd: '',
+
+    curDate: '2022-12-31',
+    arriveTimeList: [...Array(24).keys()],
+    liveTimeList: [...Array(30).keys()]
+
   },
   onLoad: function (options) {
     this.setData({
-      roomId: options.id
+      roomId: options.id,
+      curDate: new Date().toJSON().substring(0, 10)
     })
     getCookie(this.getRoomInfo)
   },  
@@ -42,5 +54,53 @@ Page({
       roomNumber: data.roomNumber,
       standard: data.standard
     })
-  }
+  },
+  bindDateChange: function(e) {
+    this.setData({
+      date: e.detail.value
+    })
+  },
+  bindArriveTimeChange: function(e) {
+    this.setData({
+      arriveTime: e.detail.value
+    })
+  },
+  bindLiveTimeChange: function(e) {
+    this.setData({
+      liveTime: e.detail.value
+    })
+  },
+  inputPasswd: function(e){
+    this.setData({
+      passwd: e.detail.value
+    })
+  },
+  commitOrderClicked: function() {
+    getCookie(this.commitOrder)
+  },
+  commitOrder: function(cookies) {
+    let that = this;
+    let data = {
+      id: parseInt(this.data.roomId),
+      year: parseInt(this.data.date.substring(0, 4)),
+      month: parseInt(this.data.date.substring(5, 7)),
+      day: parseInt(this.data.date.substring(8, 10)),
+      hour: parseInt(this.data.arriveTime),
+      last: parseInt(this.data.liveTime),
+      pwd: 123456
+    }
+    console.log(JSON.stringify(data))
+    wx.request({
+      url: 'http://localhost/system/buyroom/pay',
+      header: {'cookie': cookies.data.substring(0, 48), 'Content-Type': 'application/x-www-form-urlencoded'},
+      method: "post",
+      data: data,
+      success: function(res) {
+        console.log(res)
+        wx.reLaunch({
+          url: '../index/info_index',
+        })
+      }
+    });
+  },
 })

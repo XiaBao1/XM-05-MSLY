@@ -1,21 +1,27 @@
+<view class='yue'>
+  <button class='sbutton' bindtap="saleOrderClicked">
+    按销量排序
+  </button>
+  <button class='sbutton' bindtap="scoreOrderClicked">
+    按评分排序
+  </button>
+</view>
 <view class='tab-items'>
-    <!-- 待入仓 -->  
-    
-    <view class='show'>
-      <view class='list' wx:for="{{houseList}}" wx:for-item="item" wx:key='id'>
-        <view class='list_top' bindtap="houseClicked" data-id="{{index}}">
-          <view class='numAndTime'>
-            <image class='numPic' src='{{item.imageUrl}}'></image>
-            <view  class='numInfo'>
-              <view class='num'>{{item.houseName}}</view>
-              <view class='time'>{{item.address}}</view>
-            </view>
+  <view class='show'>
+    <view class='list' wx:for="{{houseList}}" wx:for-item="item" wx:key='id'>
+      <view class='list_top' bindtap="houseClicked" data-id="{{index}}">
+        <view class='numAndTime'>
+          <image class='numPic' src='{{item.imageUrl}}'></image>
+          <view  class='numInfo'>
+            <view class='num'>{{item.houseName}}</view>
+            <view class='time'>{{item.address}}</view>
           </view>
-          <view>
-            <view class='state'>销量：{{item.sale}}</view>
-            <view class='state'>评分：{{item.score}}</view>
-          </view>
+        </view>
+        <view>
+          <view class='state'>销量：{{item.sale}}</view>
+          <view class='state'>评分：{{item.score}}</view>
         </view>
       </view>
     </view>
+  </view>
 </view>

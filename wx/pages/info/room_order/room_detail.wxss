@@ -2,6 +2,16 @@
 page{
   background: #ededed;
  }
+.picture{
+  width: 100%;
+  height: 300rpx;
+}
+.main{
+  width: 100%;
+  position: relative;
+  top: -50rpx;
+}
+
  .editInfo{
    width: 94%;
    height: 130rpx;
@@ -121,7 +131,7 @@ page{
  }
  .else{
    width: 94%;
-   height: 366rpx;
+   height: 400rpx;
    margin: 16rpx auto 0;
    background: #ffffff;
    border-radius: 8rpx;
@@ -152,7 +162,8 @@ page{
    float: right;
    margin: 22rpx 24rpx 0 0;
    text-align: center;
-   color: #999999;
+   color: #ffffff;
+   background-color: #f3b328;
  }
  .confirmBtn::after{
    border:none;

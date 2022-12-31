@@ -1,4 +1,5 @@
 <!--pages/loadEdit/loadEdit.wxml-->
+<image class='picture' src='{{imageUrl}}'></image>
 <view class='main'>
   <form>
     <view class='editInfo'>
@@ -13,39 +14,52 @@
 
     <view class='else' wx:if="{{isFree>0}}">
       <view class='lists'>
-        <view class='list_name'>入仓物流公司</view>
+        <view class='list_name'>入住时间</view>
         <view class='list_items'>
-          <input class='inputInfo' placeholder='圆通速递' placeholder-class='inputStyle'></input>
+          <picker mode="date" value="{{date}}" start="{{curDate}}" end="2023-12-31" bindchange="bindDateChange">
+            <view class="inputInfo">
+              {{date}}
+            </view>
+          </picker>
           <image class='editPic' src='/image/edit.png'></image>
         </view>
       </view>
       <view class='lists'>
-        <view class='list_name'>入仓物流单号</view>
+        <view class='list_name'>到店时刻</view>
         <view class='list_items'>
-          <input class='inputInfo' placeholder='479834693769363946' placeholder-class='inputStyle'></input> 
+          <picker mode="selector" value="{{arriveTime}}" range="{{arriveTimeList}}" bindchange="bindArriveTimeChange">
+            <view class="inputInfo">
+              {{arriveTime}}
+            </view>
+          </picker>
           <image class='editPic' src='/image/edit.png'></image>
         </view>
       </view>
       <view class='lists'>
-        <view class='list_name'>寄件人姓名</view>
-        <view class='list_items'>
-          <input class='inputInfo' placeholder='张三' placeholder-class='inputStyle'></input> 
-          <image class='editPic' src='/image/edit.png'></image>
-        </view>
-      </view>
-      <view class='list'>
         <view class='list_name'>预约租期</view>
-        <view class='list_item'>
-          3个/月
+        <view class='list_items'>
+          <picker mode="selector" value="{{liveTime}}" range="{{liveTimeList}}" bindchange="bindLiveTimeChange">
+            <view class="inputInfo">
+              {{liveTime}}
+            </view>
+          </picker>
+          <image class='editPic' src='/image/edit.png'></image>
         </view>
       </view>
+      <!-- <view class='lists'>
+        <view class='list_name'>支付密码</view>
+        <view class='list_items'>
+          <input type="number" class="inputInfo" bindinput="inputPasswd" password="{{passwd}}"/>
+          <image class='editPic' src='/image/edit.png'></image>
+        </view>
+      </view> -->
     </view>
     <view class='list_name' style='text-align: center;' wx:else>
       抱歉，该房间已被预定
     </view>
-    <!-- 提交修改 -->
-    <view class='confirm' wx:if="{{isFree>0}}">
-      <button class='confirmBtn' form-type='submit'>提交修改</button>
-    </view>
   </form>
+</view>
+<!-- 提交修改 -->
+<view class='confirm' wx:if="{{isFree>0}}">
+  <button class='confirmBtn' bindtap="commitOrderClicked">提交订单</button>
 </view>

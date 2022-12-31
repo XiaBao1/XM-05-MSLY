@@ -18,7 +18,10 @@
     "pages/info/landlord/statistics/statistics",
     "pages/user/money_add/money_add",
     "pages/info/room_order/house_detail",
-    "pages/info/room_order/room_detail"
+    "pages/info/room_order/room_detail",
+    "pages/user/todo/add/add_todo",
+    "pages/user/todo/statistics/todo_statistics",
+    "pages/user/todo/modify/modify_todo"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -7,7 +7,7 @@
       <view class='bianhao'>
         <view class='num'>{{houseName}}</view>
       </view>
-      <view class='time'>{{address}}</view>  
+      <view class='time'>{{address}}</view> 
     </view>
     <view class="finishInfo_right">
       <text>销量：{{sale}}</text>
