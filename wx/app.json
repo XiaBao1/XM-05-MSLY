@@ -21,7 +21,10 @@
     "pages/info/room_order/room_detail",
     "pages/user/todo/add/add_todo",
     "pages/user/todo/statistics/todo_statistics",
-    "pages/user/todo/modify/modify_todo"
+    "pages/user/todo/modify/modify_todo",
+    "pages/user/comment/detail/comment_detail",
+    "pages/user/comment/add/comment_add",
+    "pages/user/comment/statistics/statistics"
   ],
   "window": {
     "backgroundTextStyle": "light",

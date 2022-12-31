@@ -10,25 +10,15 @@ Page({
   onLoad: function(options) {
     this.ecComponent = this.selectComponent("#mychart-dom-line")
     chartOption = {
-      tooltip: {
-        trigger: 'item'
+      title: {
+        text: '平台反馈统计',
+        left: 'center'
       },
       legend: {
-        top: '5%',
-        left: 'center'
-      },
-      title: {
-        text: '代办事项统计',
-        left: 'center'
+        orient: 'vertical',
+        left: 'left'
       },
       backgroundColor: "#ffffff",
-      emphasis: {
-        itemStyle: {
-          shadowBlur: 10,
-          shadowOffsetX: 0,
-          shadowColor: 'rgba(0, 0, 0, 0.5)'
-        }
-      },
       series: [{
         label: {
           normal: {
@@ -36,15 +26,21 @@ Page({
           }
         },
         type: 'pie',
-        center: ['50%', '50%'],
-        radius: ['20%', '40%'],
+        center: '50%',
+        radius: '50%',
         data: [{
           value: options.doneRatio,
-          name: '已完成'
+          name: '已回复',
+          itemStyle: {
+            color:  '#aaff32'
+          }
         }, {
           value: 1 - options.doneRatio,
-          name: '未完成'
-        }]
+          name: '未回复',
+          itemStyle: {
+            color:  '#ef4026'
+          }
+        }],
       }]
     };
     this.init();

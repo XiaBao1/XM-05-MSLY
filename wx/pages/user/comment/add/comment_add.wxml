@@ -1,0 +1,24 @@
+<!--pages/loadEdit/loadEdit.wxml-->
+<view class='main'>
+  <form>
+    <view class='else'>
+      <view class='lists'>
+        <view class='list_name'>反馈时间</view>
+        <view class='list_items'>
+          <picker mode="date" value="{{curDate}}" start="{{curDate}}" end="{{curDate}}">
+            <view class="inputInfo">
+              {{curDate}}
+            </view>
+          </picker>
+        </view>
+      </view>
+      <view class='lists'>
+        <view class='list_name'>反馈内容</view>
+      </view>
+      <input type="text" class="todo-contents" placeholder="请输入反馈内容" bindinput="inputContents"/>
+    </view>
+  </form>
+</view>
+<view class='confirm'>
+  <button class='confirmBtn' bindtap="commitClicked">添加</button>
+</view>

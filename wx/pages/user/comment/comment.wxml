@@ -1,2 +1,33 @@
-<!--pages/user/comment/comment.wxml-->
-<text>pages/user/comment/comment.wxml</text>
+<view class='yue'>
+  <button class='sbutton' style="background-color: #8ffe09; color: white;" bindtap="addClicked">
+    添加反馈
+  </button>
+  <button class='sbutton' style="background-color: #04f489; color: white;" bindtap="statisticsClicked">
+    反馈统计
+  </button>
+  <button class='sbutton' style="background-color: #8ffe09; color: white;" bindtap="orderTimeClicked">
+    按反馈时间排序
+  </button>
+  <button class='sbutton' style="background-color: #04f489; color: white;" bindtap="orderStatusClicked">
+    按状态排序
+  </button>
+</view>
+<view class='tab-items'>
+  <view class='show'>
+    <view class='list' wx:for="{{feedbackList}}" wx:for-item="item" wx:key='id'>
+      <view class='list_top'>
+        <view class='numAndTime'>
+          <view  class='numInfo' bindtap="feedbackDetailClicked" data-idx="{{index}}">
+            <view class='num'>{{item.feedbackContent}}</view>
+            <view class='time'>{{item.feedbackTime}}</view>
+          </view>
+        </view>
+        <view>
+          <view class='doing' wx:if="{{item.adminAnswer == null || item.adminAnswer == ''}}">未回复</view>
+          <view class="done" wx:else>已回复</view>
+          <view class='delete' bindtap="deleteFeedbackClicked" data-idx="{{index}}">删除</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
