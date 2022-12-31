@@ -101,12 +101,18 @@
         $("#form-weather-edit").validate({
             focusCleanup: true,
             rules: {
+                city: {
+                    required: true,
+                },
                 humidity: {
                     required: true,
                     range:[0,100]
                 }
             },
             messages: {
+                city: {
+                    required: "请输入城市名",
+                },
                 humidity: {
                     required: "请输入湿度",
                     range: "请输入0~100的整数"
