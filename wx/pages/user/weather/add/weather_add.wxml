@@ -1,0 +1,35 @@
+<!--pages/user/weather/add/weather_add.wxml-->
+<view class='main'>
+  <view class='form'>
+    <view class='inputBox'>
+      <label>城市</label>
+      <text class="value" >{{city}}</text>
+    </view>    
+    <view class='inputBox'>
+      <label>低温（℃）</label>
+      <text class="value" >{{lowT}}</text>
+    </view>
+    <view class='inputBox'>
+      <label>高温（℃）：</label>
+      <text class="value">{{highT}}</text>
+    </view>
+    <view class='inputBox'>
+      <label>白天天气</label>
+      <text class="value">{{dayType}}</text>
+    </view>
+    <view class='inputBox'>
+      <label>夜晚天气</label>
+      <text class="value">{{nightType}}</text>
+    </view>
+    <view class='inputBox'>
+      <label >风速（m/s）</label>
+      <text class="value">{{windSpeed}}</text>
+    </view>
+    <view class='inputBox'>
+      <label>湿度（%）</label>
+      <text class="value">{{humidity}}</text>
+    </view>
+    <Select prop-array='{{dirDict}}' isDisabled="{{!dirBtnStatus}}" arrayKeyStr="value" arrayValueStr="label" defalutKey="{{weatherData.windDirection}}" selectColor="#36CBB7" id="dirSelect" bind:handledata="dirChange"></Select>
+  </view>
+</view>
+

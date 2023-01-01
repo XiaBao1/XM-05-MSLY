@@ -7,7 +7,7 @@ Page({
     sortindex:0,  //排序索引
     sortid:0,  //排序id
     filter:{},
-    returnData: "",
+    returnData: [],
     returnDataSta: "",
     servicelist:[],
   },
@@ -17,24 +17,26 @@ Page({
       key: "cookies",
       success: that.fetchWeatherData
     });
-    that.fetchSortData();
+    that.fetchFilterData();
   },
-  fetchSortData:function(){ //获取筛选条件
+  fetchFilterData:function(){ //获取筛选条件
     this.setData({
-      "sort": [
-          {
-              "id": 0,
-              "title": "时间最近"
-          },
-          {
-              "id": 1,
-              "title": "低温最低"
-          },
-          {
-              "id": 2,
-              "title": "高温最高"
-          },
-      ]
+      filterdata:{
+        "sort": [
+            {
+                "id": 0,
+                "title": "时间最近"
+            },
+            {
+                "id": 1,
+                "title": "温差最大"
+            },
+            {
+                "id": 2,
+                "title": "湿度最高"
+            },
+        ]
+      }
     })
   },
   fetchWeatherData: function(cookies){
@@ -43,12 +45,10 @@ Page({
       url: 'http://localhost/weather/weather/list',
       header: {'cookie': cookies.data.substring(0, 48), 'Content-Type': 'application/x-www-form-urlencoded'},
       method: "post",
+      data: {orderByColumn: 'weatherDate', isAsc: 'desc', pageSize: 1000},
       success: function(res) {
         console.log(res);
         that.handleWeatherData(res.data);
-        that.setData({
-          returnData: res.data
-        });
       }
     });
   },
@@ -56,9 +56,10 @@ Page({
     let _this = this;
     wx.showToast({
       title: '加载中',
-      icon: 'loading'
+      icon: 'loading',
     })
     let newlist = [];
+    let newlist0=[];
     for(var i=0;i<data.rows.length;i++){
       let id=data.rows[i].id;
       let city=data.rows[i].city;
@@ -71,6 +72,7 @@ Page({
       let weatherDate=data.rows[i].weatherDate;
       let windScale=data.rows[i].windScale;
       let windSpeed=data.rows[i].windSpeed;
+      let collectTime=data.rows[i].collectTime;
       newlist.push({
         "id":id,
         "city":city,
@@ -82,21 +84,75 @@ Page({
         "nightType":nightType,
         "weatherDate":weatherDate,
         "windScale":windScale,
-        "windSpeed":windSpeed
+        "windSpeed":windSpeed,
+        "collectTime":collectTime
+      })
+      newlist0.push({
+        "id":id,
+        "city":city,
+        "windDirection":windDirection,
+        "dayType":dayType,
+        "highT":highT,
+        "lowT":lowT,
+        "humidity":humidity,
+        "nightType":nightType,
+        "weatherDate":weatherDate,
+        "windScale":windScale,
+        "windSpeed":windSpeed,
+        "collectTime":collectTime
       })
     }
-    newlist=newlist.sort(function(obj1, obj2) {
-      var lhs1 = obj1["weatherDate"];
-      var rhs1 = obj2["weatherDate"];
-      return lhs1 - rhs1;
-    });
     setTimeout(()=>{
-     _this.setData({
-       servicelist:_this.data.servicelist.concat(newlist)
-     })
-    },5000)
+      _this.setData({
+        servicelist: newlist,
+        returnData: newlist0
+      })
+    },1000)
   },
-  setSortBy:function(e){ //选择排序方式
+  toStatistics: function(){
+    let that = this;
+    wx.getStorage({
+      key: "cookies",
+      success: that.getWeatherSta
+    });
+    wx.navigateTo({
+      url: './statistics/weather_sta',
+    })
+  },
+  toAdd: function(){
+    wx.navigateTo({
+      url: './add/weather_add'
+    })
+  },
+  getWeatherSta: function(cookies) {
+    let that = this;
+    wx.request({
+      url: 'http://localhost/weather/weather/statistics',
+      header: {'cookie': cookies.data.substring(0, 48), 'Content-Type': 'application/x-www-form-urlencoded'},
+      method: "post",
+      success: function(res) {
+        console.log(res);
+        console.log('set storage');
+        wx.setStorage({
+          key:"weatherSta",
+          data: res.data
+        });
+      }
+    });
+  },
+  setFilterPanel: function(e){ //展开筛选面板
+    const d = this.data;
+    const i = e.currentTarget.dataset.findex;
+    if(d.showfilterindex == i){
+      this.hideFilter();
+    }else{
+      this.setData({
+        showfilter: true,
+        showfilterindex:i,
+      })
+    }
+  },
+  setSort:function(e){ //选择排序方式
     const d= this.data;
     const dataset = e.currentTarget.dataset;
     this.setData({
@@ -104,30 +160,49 @@ Page({
       sortid:dataset.sortid
     })
     console.log('排序方式id：'+this.data.sortid);
+    this.goSort();
+    this.hideFilter();
   },
-  setStatusClass:function(e){ //设置状态颜色
-    console.log(e);
-  },
-  scrollHandle:function(e){ //滚动事件
+  hideFilter: function(){ //关闭筛选面板
     this.setData({
-      scrolltop:e.detail.scrollTop
+      showfilter: false,
+      showfilterindex: null
     })
   },
-  goToTop:function(){ //回到顶部
-    this.setData({
-      scrolltop:0
-    })
-  },
-  scrollLoading:function(){ //滚动加载
-    this.fetchConferenceData();
+  goSort:function() {
+    var newlist;
+    if(this.data.sortid=='0') {
+      newlist=JSON.parse(JSON.stringify(this.data.returnData));
+    }
+    else {
+      if(this.data.sortid=='1') {
+        newlist=this.data.servicelist.sort(function(obj1, obj2) {
+          var lhs1 = obj1["highT"]-obj1["lowT"];
+          var rhs1 = obj2["highT"]-obj2["lowT"];
+          return rhs1 - lhs1;
+        });
+      }
+      else {
+        newlist=this.data.servicelist.sort(function(obj1, obj2) {
+          var lhs1 = obj1["humidity"];
+          var rhs1 = obj2["humidity"];
+          return rhs1 - lhs1;
+        });
+      }
+    }
+    console.log(newlist);
+    setTimeout(()=>{
+      this.setData({
+        servicelist:newlist
+      })
+     },1500)
   },
   onPullDownRefresh:function(){ //下拉刷新
     this.setData({
       page:0,
-      activitylist:[]
+      servicelist:[]
     })
-    this.fetchConferenceData();
-    this.fetchSortData();
+    this.onLoad();
     setTimeout(()=>{
       wx.stopPullDownRefresh()
     },1000)

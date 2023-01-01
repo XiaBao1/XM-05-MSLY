@@ -33,7 +33,7 @@ Page({
       success: that.getTopSpecialitySta
     });
     wx.navigateTo({
-      url: './statistics/statistics',
+      url: './statistics/top_specialty_sta',
     })
   },
   getTopSpecialitySta: function(cookies) {

@@ -1,23 +1,31 @@
 <!--pages/user/weather/weather.wxml-->
 <view class="main">
-  <view class="filter-tab sort-tab">
-    <text bindtap="setSortBy" data-sortindex="{{index}}" data-sortid="{{item.id}}" class="{{sortindex==index?'active':''}}" wx:for="{{sort}}" wx:key="{{item.id}}">{{item.title}}</text>
-  </view>
+  <view class="filter-flex">
+		<view class="filter-tab">
+			<text bindtap="setFilterPanel" data-findex="1" class="{{showfilterindex==1?'active':''}}">排序</text>
+		</view>
+		<view class="filter-content" wx:if="{{showfilter}}">
+			<view class="filter-panel filter-sort" wx:if="{{showfilterindex==1}}">
+				<view wx:for="{{filterdata.sort}}" wx:key="{{item.id}}" bindtap="setSort" data-sortindex="{{index}}" data-sortid="{{item.id}}" class="{{sortindex==index?'active':''}}">{{item.title}}</view>
+			</view>
+		</view>
+		<view class="filter-shadow" wx:if="{{showfilter}}" bindtap="hideFilter"></view>
+	</view>
+  <button type='primary' bindtap='toAdd'>
+    添加一条天气数据
+  </button>
   <button type='primary' bindtap='toStatistics'>
-        查看本月天气统计
-      </button>
+    查看本月天气统计
+  </button>
 	<view class="conference-list">
     <navigator class="conference-item" wx:for="{{servicelist}}" wx:key="{{item.id}}">
       <view class="conference-item-text">
         <view class="conference-item-title">
-        {{item.city}}
-        <text class="icon-time">{{item.weatherDate}}</text>
+        {{item.city}}</view>
+        <view class="service-tags">
+          <text>{{item.weatherDate}}</text>
         </view>
-        <view class="conference-item-info activity-item-info">
-          <view class="icon-zuobiao">{{item.lowT}}~{{item.highT}}℃</view>
-          <view class="icon-xinxi">白天{{item.dayType}}，夜晚{{item.nightType}}</view>
-          <view class="icon-xinxi">{{item.windDirection}}风{{item.windScale}}级</view>
-        </view>
+        <view class="icon-zuobiao">气温{{item.lowT}}~{{item.highT}}℃，白天{{item.dayType}}，夜晚{{item.nightType}},{{item.windDirection}}风{{item.windScale}}级,空气湿度{{item.humidity}}%</view>
       </view>
     </navigator>
   </view>

@@ -1,80 +1,11 @@
 button{
-	font-size: 32rpx;
+	font-size: 22rpx;
 	line-height: 72rpx;
 }
 textarea{
 	width: 100%;
 	padding: 20rpx;
 	box-sizing: border-box;
-}
-radio-group radio{
-	position:absolute;
-    left: -999em;
-}
-radio-group label{
-	margin-right: 16rpx;
-}
-radio-group label:before{
-	content: '';
-	display: inline-block;
-	width: 40rpx;
-	height: 40rpx;
-	vertical-align: -8rpx;
-	margin-right: 4rpx;
-}
-.btn-submit{
-	padding: 20rpx;
-}
-.btn-block{
-	width: 100%;
-	line-height: 88rpx;
-}
-.btn-orange{
-	background: #f7982a;
-	color: #fff;
-}
-.btn-gray{
-	background: #e8e8e8;
-	color: #333;
-}
-.search-flex{
-	display: flex;
-	padding: 20rpx;
-	border-bottom: 1rpx solid #ddd;
-	position: relative;
-	z-index: 13;
-	background: #f9f9f9;
-	/* transform:  translateY(-100%); */
-	margin-top: 0;
-	transition: all 0.3s;
-}
-.search-flex.tophide{
-	margin-top: -117rpx;
-}
-.search-flex button{
-	background: #f7982a;
-	color: #fff;
-	line-height: 72rpx;
-	height: 72rpx;
-	font-size: 30rpx;
-	border-radius: 6rpx;
-}
-.search-bar{
-	flex: 1;
-	display: flex;
-	border: 1rpx solid #e8e8e8;
-	border-radius: 6rpx;
-}
-.search-bar input{
-	flex: 1;
-	height: 72rpx;
-	line-height: 72rpx;
-	padding: 0 10rpx;
-	background: #fff;
-}
-.search-extra-btn{
-	margin-left: 20rpx;
-	white-space: nowrap;
 }
 .filter-tab{
 	display: flex;
@@ -145,67 +76,6 @@ radio-group label:before{
 	z-index: 1;
 	background: rgba(0,0,0,.5);
 }
-.gototop{
-	width: 70rpx;
-	height: 70rpx;
-	position: fixed;
-	bottom: 20rpx;
-	right: 20rpx;
-	transition: all 0.3s;
-	opacity: 0;
-	transform: translateY(200rpx);
-}
-.gototop.active{
-	opacity: 1;
-	transform: translateY(0);
-}
-.group{
-	display: block;
-	width: 100%;
-}
-.group-header{
-	line-height: 70rpx;
-	display: flex;
-	padding: 0 20rpx;
-	background: #f9f9f9;
-}
-.group-body{
-	background: #fff;
-	border-top: 1rpx solid #ddd;
-	border-bottom: 1rpx solid #ddd;
-}
-.group-body .input-list{
-	margin: 0;
-	border: none;
-}
-.img-upload{
-	padding: 20rpx;
-	font-size: 0;
-	overflow: hidden;
-}
-.img-upload .img-item,
-.img-upload .img-add{
-	width: 100rpx;
-	height: 100rpx;
-	float: left;
-	margin: 10rpx;
-	border: 1rpx solid transparent;
-}
-.img-upload .img-add{
-	border: 1rpx dashed #ddd;
-}
-.img-upload .img-item image{
-	width: 100rpx;
-	height: 100rpx;
-}
-.img-upload .img-item{
-	position: relative;
-}
-.img-upload .img-item icon{
-	position: absolute;
-	right: -12rpx;
-	top: -12rpx;
-}
 .filter-sort{
 	display: block;
 	background: #fff;
@@ -221,45 +91,10 @@ radio-group label:before{
 .filter-sort view.active{
 	color: #f7982a;
 }
-.filter-multiple{
-	flex-direction: column;
-}
-.filter-multiple .group{
-	max-height: 700rpx;
-	overflow: auto;
-}
-.filter-tags{
-	padding: 20rpx;
-}
-.filter-tags text{
-	padding: 20rpx 26rpx;
-	border: 1rpx solid #ddd;
-	display: inline-block;
-	line-height: 1;
-	color: #666;
-	font-size: 28rpx;
-	border-radius: 4rpx;
-	margin: 10rpx;
-	white-space: nowrap;
-}
-.filter-tags text.active{
-	background: #f7982a;
-	color: #fff;
-	border-color: #f7982a;
-}
-.filter-btns{
-	display: flex;
-	padding: 20rpx;
-	border-top: 1rpx solid #ddd;
-	margin-top: -1rpx;
-}
-.filter-btns button{
-	margin: 0 10rpx;
-	line-height: 80rpx;
-}
+
 .conference-item{
 	padding: 20rpx;
-	border-bottom: 1rpx solid #e8e8e8;
+	border-top: 1rpx solid #e8e8e8;
 }
 .conference-item-img{
 	width: 100%;
@@ -281,7 +116,8 @@ radio-group label:before{
 }
 .conference-item-title{
 	font-size: 38rpx;
-	color: #000;
+  color: #000;
+  font-weight: bold;
 }
 .conference-item-info{
 	display: flex;
@@ -289,10 +125,10 @@ radio-group label:before{
 .conference-item-info text{
 	flex: 1;
 }
-.conference-item-tags:not(:empty){
-	margin-top: 10rpx;
+.service-tags{
+	margin: 26rpx 0;
 }
-.conference-item-tags text{
+.service-tags text{
 	padding: 6rpx 16rpx;
 	border: 1rpx solid #f7982a;
 	line-height: 1;
@@ -300,11 +136,12 @@ radio-group label:before{
 	font-size: 28rpx;
 	border-radius: 4rpx;
 	margin-right: 10rpx;
+	margin-bottom: 10rpx;
 	white-space: nowrap;
 }
 
 .activity-item-info{
-    justify-content: space-between;
+  justify-content: space-between;
 }
 .activity-item-info text{
 	flex: none;

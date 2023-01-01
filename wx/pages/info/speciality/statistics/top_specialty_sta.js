@@ -11,8 +11,7 @@ function initChart(canvas, width, height, dpr) {
     success: function(res) {
       console.log('get specialitySta');
       console.log(res);
-      canvas.setChart(chart);
-    
+      canvas.setChart(chart);    
       var option = {
         title: {
           text: '特产价格与销量统计图',
@@ -82,8 +81,13 @@ function initChart(canvas, width, height, dpr) {
           data: res.data
         }]
       };
-    
       chart.setOption(option);
+      wx.removeStorage({
+        key: 'specialitySta',
+        success: function() {
+          console.log('清除缓存specialitySta');
+        }
+      })
     }
   });
   return chart;
