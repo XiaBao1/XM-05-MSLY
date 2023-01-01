@@ -59,6 +59,7 @@
     <div>
         <p style="text-align: right">
             <button th:style="'background:#1E90FF;border-style:none;color:#ffff;border-radius:5px;height:30px;width:50px'" name="dg" id="dg" onclick="confirm()">确认</button>
+            <button th:style="'background:#DCDCDC;border-style:none;color:#ffff;border-radius:5px;height:30px;width:50px'" name="qx" id="qx" onclick="cancel()">取消</button>
         </p>
     </div>
 
@@ -102,6 +103,8 @@
         data.buyNumber=$("#buyNumber").val();
         console.log(data);
 
+        const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
+
         $.ajax({
             type: 'post',
             url: '/system/buySpecialty/pay',
@@ -111,14 +114,19 @@
                 console.log(res);
                 let json = eval( "(" + res + ")" );
                 if(json.result_code==0){
-                    top.layer.alert("下单成功");
-                    $.modal.openTab('特产订购', '/system/buySpecialty/buySpecialty');
+                    top.layer.alert("下单成功，页面即将跳转...");
+                    sleep(9999999);
+                    parent.location.reload();
                 }
                 else{
                     top.layer.alert(json.result_msg);
                 }
             }
         });
+    }
+
+    function cancel() {
+        parent.location.reload();
     }
 
 

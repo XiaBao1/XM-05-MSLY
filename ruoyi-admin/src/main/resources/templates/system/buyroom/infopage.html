@@ -2,10 +2,14 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <th:block th:include="include :: header('修改房iii间订购')" />
+    <link href="../static/css/login.min.css" th:href="@{/css/login.css}" rel="stylesheet"/>
 </head>
-<body class="white-bg">
-<div class="wrapper wrapper-content animated fadeInRight ibox-content">
-    <form class="form-horizontal m" id="form-buyRoom-buy" >
+<!--<body class="signin">-->
+<!--<body class="white-bg">-->
+<body  id="bdpg" background="http://localhost/profile/back0.jpg" style="background-repeat:no-repeat;background-attachment:fixed; background-size:100% 100%;">
+<!--<div class="wrapper wrapper-content animated fadeInRight ibox-content">-->
+<div class="wrapper wrapper-content animated fadeInRight pchpanel">
+    <form class="form-horizontal m" id="form-buyRoom-buy">
         <!--    <form class="form-horizontal m" id="form-buyroom-buy" th:object="${buyRoom}">-->
         <div class="form-group" hidden>
             <label class="col-sm-3 control-label">房间ID：</label>
@@ -14,45 +18,53 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label">入住年份（年）：</label>
+            <label class="col-sm-3 control-label"></label>
             <div class="col-sm-8">
-                <input name="houseId"  class="form-control" th:value="2023" type="number" id="year" required disabled >
+                <input name="houseName"  class="form-control" th:value="查询中" type="text" id="houseName" required disabled style= "background-color:transparent;border:0px;font-size: 25px;font-family: 楷体;color: white">
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label">入住月份（月）：</label>
+            <label class="col-sm-3 control-label "></label>
             <div class="col-sm-8">
-                <input name="houseId"  class="form-control" type="number" id="month" oninput="if(value>12)value=12;if(value<1)value=1" placeholder="请输入1~12的整数">
+                <input name="roomNumber" th:value="查询中" class="form-control" type="text" id="roomNumber" required disabled style= "background-color:transparent;border:0px;font-size: 25px;font-family: 楷体;color: white">
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label">入住日期（日）：</label>
+            <label class="col-sm-3 control-label "></label>
             <div class="col-sm-8">
-                <input name="houseName"  class="form-control" type="number" id="day" oninput="if(value>31)value=31;if(value<1)value=1" placeholder="请输入1~31的整数" >
+                <input name="pricePerDay" th:value="查询中" class="form-control" type="text" id="price" required disabled style= "background-color:transparent;border:0px;font-size: 15px;font-family: 楷体;color: white">
+            </div>
+        </div>
+        <div class="form-group" hidden>
+            <label class="col-sm-3 control-label "></label>
+            <div class="col-sm-8">
+                <input name="standard" th:value="查询中" class="form-control" type="text" id="standard" required disabled style= "background-color:transparent;border:0px;font-size: 15px;font-family: 楷体;color: white">
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label ">入住时刻（小时）：</label>
-            <div class="col-sm-8">
-                <input name="roomNumber" class="form-control" type="number" id="hour" oninput="if(value>23)value=23;if(value<0)value=0" placeholder="请输入0~23的整数">
+            <label class="col-sm-3 control-label " style="color: white">入住日期：</label>
+            <div class="col-sm-5">
+                <input type="datetime-local" class="form-control"  placeholder="请选择预计入住时间" name="checkInDate" id="checkInDate"  required max="2023-12-31 23:59" value="2023-01-01 00:00"/>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label ">入住时长（天）：</label>
-            <div class="col-sm-8">
-                <input name="roomNumber" class="form-control" type="number" id="last" oninput="if(value>30)value=30;if(value<1)value=1" placeholder="请输入1~30的整数">
+            <label class="col-sm-3 control-label " style="color: white">入住时长（天）：</label>
+            <div class="col-sm-5">
+                <input name="roomNumber" class="form-control" type="number" id="last" oninput="if(value>30)value=30;if(value<1)value=1" placeholder="请输入1~30的整数" required>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label " th:size="10">支付密码(开启安全支付)：</label>
-            <div class="col-sm-8">
-                <input name="pricePerDay" class="form-control" type="password" id="pwd" maxlength="6" minlength="6" placeholder="请输入6位支付密码" >
+            <label class="col-sm-3 control-label " style="color: green" th:size="10">支付密码(安全支付)：</label>
+            <div class="col-sm-5">
+                <input name="pricePerDay" class="form-control" type="password" id="pwd" maxlength="6" minlength="6" placeholder="请输入6位支付密码" required>
             </div>
         </div>
+        <div id="my" ><label style="font-family: 楷体;color:lightblue" >人生不过是一场旅行，你路过我，我路过你，然后各自修行，各自向前。</label></div>
     </form>
     <div>
         <p style="text-align: right">
-            <button th:style="'background:#1E90FF;border-style:none;color:#ffff;border-radius:5px;height:30px;width:50px'" name="dg" id="dg" onclick="confirm()">确认</button>
+            <button th:style="'background:#1E90FF;border-style:none;color:#ffff;border-radius:5px;height:40px;width:70px;opacity:70%'" name="dg" id="dg" onclick="confirm()">确认支付</button>
+            <button th:style="'background:#DCDCDC;border-style:none;color:#ffff;border-radius:5px;height:40px;width:70px;opacity:70%'" name="qx" id="qx" onclick="cancel()">取消</button>
         </p>
     </div>
 
@@ -65,17 +77,100 @@
 <script th:inline="javascript" >
     console.log("进入infopage的js");
 
+    window.onload=function(){
+        var imgs =["http://localhost/profile/back0.jpg",
+            "http://localhost/profile/back9.jpg",
+            "http://localhost/profile/back3.jpg",
+            "http://localhost/profile/back4.jpg",
+            "http://localhost/profile/back5.jpg",
+            "http://localhost/profile/back6.jpg",
+            "http://localhost/profile/back7.jpg",
+            "http://localhost/profile/back8.jpg",
+            "http://localhost/profile/back1.jpg",
+            "http://localhost/profile/back10.jpg",
+            "http://localhost/profile/back11.jpg",
+            "http://localhost/profile/back2.jpg",
+            "http://localhost/profile/back12.jpg",
+            "http://localhost/profile/back13.jpg"];//（设定想要显示的图片）
+        var mottos=["人生不过是一场旅行，你路过我，我路过你，然后各自修行，各自向前。",
+            "想有一只黑色的猫，陪我去旅行。",
+            "旅行有时候是虚无缥缈的，但梦想不是。",
+            "一个人的快乐，不是因为他拥有的多，而是他计较的少。",
+            "我们活着不能与草木同腐，不能醉生梦死，枉度人生，要有所作为。",
+            "人的全部本领无非是耐心和时间的混合物",
+            "我去旅行，是因为我决定了要去，并不是因为对风景的兴趣。 洗澡、死亡、旅途是三个顿悟人生的时刻。我不是鱼，还不想死，我要去旅行。",
+            "要想结为夫妻，先去旅行一次。",
+            "做一个世界的水手，游遍每一个港口。",
+            "人生本来就是一场独自旅行，或许中途曾有人同路，但终将各自走散。这就是时间给我们的答案。",
+            "旅行是消除无知和仇恨的最好方法。",
+            "没有旅行的生活，只能称之为生存。一生中至少要有两次冲动，一次为奋不顾身的爱情，一次为说走就走的旅行。",
+            "如果问我旅行的意义是什么，我也不知道，假如你还没有出发，不如一起走走。",
+            "我只是你世界中的一位旅行者，而你却是我心中的蓝天。"
+        ];
+
+        var i =0;
+        var head=document.getElementById("bdpg");//获取DIV对象
+        var my=document.getElementById("my");//获取DIV对象
+        my.style.fontFamily="楷体";
+        my.style.color="lightblue";
+        function time(){
+            i++;
+            i=i%14;
+            head.background=imgs[i];
+            my.innerText=mottos[i];
+        }
+            setInterval(time,7000);
+    };
+
+    var roomNumber,standard,price,houseName;
+    var id=$("#id").val();
+    console.log("id="+id);
+    var data={};
+    data.id=id;
+    $.ajax({//获取房间信息
+        type: 'post',
+        url: '/system/buyroom/getRoomInfo',
+        async: false,
+        data: data,
+        success: function(res) {
+            console.log(res);
+            let json = eval( "(" + res + ")" );
+            roomNumber= json.roomNumber;
+            roomNumber=roomNumber+"号房间";
+            standard=json.standard;
+            price=json.pricePerDay;
+            price=price+"元/日";
+            price=standard+" "+price;
+            houseName=json.houseName;
+        }
+    });
+    document.getElementById("roomNumber").value=roomNumber;
+    document.getElementById("standard").value=standard;
+    document.getElementById("price").value=price;
+    document.getElementById("houseName").value=houseName;
+
+
     function confirm() {
         console.log("进入confirm")
         var data={};
         data.id=$("#id").val();
-        data.year=$("#year").val();
-        data.month=$("#month").val();
-        data.day=$("#day").val();
-        data.hour=$("#hour").val();
+        data.checkInDate=$("#checkInDate").val();
         data.last=$("#last").val();
         data.pwd=$("#pwd").val();
-        console.log(data);
+
+        console.log(data.checkInDate);
+
+        var date=Date.parse(data.checkInDate);
+        var now=new Date();
+        if(date<=now){
+            top.layer.alert("请选择合适（未来）的入住时间");
+            return;
+        }
+
+        data.checkInDate=data.checkInDate+":00";
+        console.log(data.checkInDate);
+
+        const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 
         $.ajax({
             type: 'post',
@@ -86,8 +181,10 @@
                 console.log(res);
                 let json = eval( "(" + res + ")" );
                 if(json.result_code==0){
-                    top.layer.alert("预定成功");
-                    $.modal.openTab('民宿订购', '/system/buyroom/buyroom');
+                    top.layer.alert("预定成功，页面即将跳转...");
+                    sleep(9999999);
+                    parent.location.reload();
+                    //$.modal.openTab('民宿订购', '/system/buyroom/buyroom');
                 }
                 else{
                     top.layer.alert(json.result_msg);
@@ -95,6 +192,11 @@
             }
         });
     }
+
+    function cancel() {
+        parent.location.reload();
+    }
+
 
 
 </script>
