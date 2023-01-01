@@ -85,5 +85,5 @@ public interface BuySpecialtyMapper
 
     public void insertRecord(BuySpecialty buySpecialty);
 
-    String getHouseIdByHouseName(String houseName);
+    List<String> getHouseIdByHouseName(String houseName);
 }

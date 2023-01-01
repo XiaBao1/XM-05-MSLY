@@ -48,6 +48,10 @@ public class BuyRoom extends BaseEntity
     //@Excel(name = "下单时间")
     private String buyTime;
 
+    private Integer pricePerDayDown;
+
+    private Integer pricePerDayUp;
+
     public  Long userId= (Long) PermissionUtils.getPrincipalProperty("userId");
 
     public void setId(Long id)
@@ -123,6 +127,18 @@ public class BuyRoom extends BaseEntity
         this.free = free;
     }
 
+    public Integer getPricePerDayDown(){return pricePerDayDown;}
+
+    public void setPricePerDayDown(Integer pricePerDayDown){
+        this.pricePerDayDown=pricePerDayDown;
+    }
+
+    public Integer getPricePerDayUp(){return pricePerDayUp;}
+
+    public void setPricePerDayUp(Integer pricePerDayUp){
+        this.pricePerDayUp=pricePerDayUp;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -133,6 +149,8 @@ public class BuyRoom extends BaseEntity
                 .append("pricePerDay", getPricePerDay())
                 .append("standard", getStandard())
                 .append("isFree", getIsFree())
+                .append("pricePerDayDown", getPricePerDayDown())
+                .append("pricePerDayUp", getPricePerDayUp())
                 .toString();
     }
 }

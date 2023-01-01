@@ -42,13 +42,19 @@
                             <label>特产描述：</label>
                             <input type="text" name="description"/>
                         </li>
+<!--                        <li>-->
+<!--                            <label>特产单价：</label>-->
+<!--                            <input type="text" name="price"/>-->
+<!--                        </li>-->
                         <li>
-                            <label>特产单价：</label>
-                            <input type="text" name="price"/>
+                            <label>库存量范围：</label>
+                            <input type="number" name="inventoryDown" style="width:80px" value="0" oninput="if(value<0)value=0;if(value>9999)value=9999"/>到
+                            <input type="number" name="inventoryUp" style="width:80px" value="9999" oninput="if(value<0)value=0;if(value>9999)value=9999"/>
                         </li>
                         <li>
-                            <label>库存量：</label>
-                            <input type="text" name="inventory"/>
+                            <label>单价范围：</label>
+                            <input type="number" name="priceDown" style="width:80px" value="1" oninput="if(value<1)value=1;if(value>9999)value=9999"/>元      到
+                            <input type="number" name="priceUp" style="width:80px" value="9999" oninput="if(value<1)value=1;if(value>9999)value=9999"/>元
                         </li>
                         <li>
                             <a class="btn btn-primary btn-rounded btn-sm noprint" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -69,13 +75,13 @@
             <!--                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:buySpecialty:remove">-->
             <!--                    <i class="fa fa-remove"></i> 删除-->
             <!--                </a>-->
-            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:buySpecialty:export">
+            <a class="btn btn-warning" onclick="$.table.exportExcel()">
                 <i class="fa fa-download"></i> 导出
             </a>
-            <a class="btn btn-success" onclick="$.modal.openTab('特产销售统计', '/system/buySpecialty/statistics');" shiro:hasPermission="system:buySpecialty:statistics">
+            <a class="btn btn-success" onclick="$.modal.openTab('特产销售统计', '/system/buySpecialty/statistics');">
                 <i class="fa fa-plus"></i> 统计
             </a>
-            <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="xxxx:xxxx:print">
+            <a class="btn btn-success" onclick="printHtml();" >
                 <i class="glyphicon glyphicon-print icon-share"></i> 打印
             </a>
         </div>
@@ -159,7 +165,7 @@
                         var actions = [];
                         //actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                         //actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
-                        actions.push("<a class='btn btn-success btn-xs " + buyFlag + "' href='javascript:void(0)' onclick='buy(" + row.id + ")'><i class='fa fa-search'></i>详情页查看</a>");
+                        actions.push("<a class='btn btn-success btn-xs ' href='javascript:void(0)' onclick='buy(" + row.id + ")'><i class='fa fa-search'></i>详情页查看</a>");
                         return actions.join('');
                     }
                 }]

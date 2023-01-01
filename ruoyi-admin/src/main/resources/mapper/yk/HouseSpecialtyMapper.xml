@@ -26,10 +26,14 @@
             house_id in (select id from landlord_house where host_number=#{userId})
             <if test="houseId != null "> and house_id = #{houseId}</if>
             <if test="specialtyName != null  and specialtyName != ''"> and specialty_name like concat('%', #{specialtyName}, '%')</if>
-            <if test="description != null  and description != ''"> and description = #{description}</if>
+            <if test="description != null  and description != ''"> and description like concat('%', #{description}, '%')</if>
             <if test="price != null "> and price = #{price}</if>
             <if test="inventory != null "> and inventory = #{inventory}</if>
             <if test="imageUrl != null  and imageUrl != ''"> and image_url = #{imageUrl}</if>
+            <if test="priceUp != null "> and #{priceUp} >= price</if>
+            <if test="priceDown != null "> and price >= #{priceDown}</if>
+            <if test="inventoryUp != null "> and #{inventoryUp} >= inventory</if>
+            <if test="inventoryDown != null "> and inventory >= #{inventoryDown}</if>
         </where>
     </select>
 
@@ -55,8 +59,12 @@
         (select house_id from house_specialty where client_specialty_record.specialty_id=house_specialty.id) in (select id from landlord_house where host_number=#{userId})
     </select>
 
-    <select id="getHouseIdByHouseName" parameterType="HouseSpecialty" resultType="String">
-        select id from landlord_house where house_name=#{houseName} and host_number=#{userId}
+    <select id="getHouseIdByHouseName" parameterType="HouseSpecialty" resultMap="StringResult">
+        select id from landlord_house where house_name like concat('%',#{houseName},'%') and host_number=#{userId}
+    </select>
+
+    <select id="getHouseIdByExactHouseName" parameterType="HouseSpecialty" resultMap="StringResult">
+        select id from landlord_house where house_name =#{houseName} and host_number=#{userId}
     </select>
 
     <insert id="insertHouseSpecialty" parameterType="HouseSpecialty" useGeneratedKeys="true" keyProperty="id">

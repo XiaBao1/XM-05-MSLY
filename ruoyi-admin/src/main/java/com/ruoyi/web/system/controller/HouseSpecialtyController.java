@@ -9,6 +9,8 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSONArray;
 import com.ruoyi.common.json.JSONObject;
+import com.ruoyi.web.system.domain.BuyRoom;
+import com.ruoyi.web.system.domain.BuySpecialty;
 import com.ruoyi.web.system.domain.landlord;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +46,7 @@ public class HouseSpecialtyController extends BaseController
     @Autowired
     private IHouseSpecialtyService houseSpecialtyService;
 
-    @RequiresPermissions("system:specialty:view")
+    //@RequiresPermissions("system:specialty:view")
     @GetMapping()
     public String specialty()
     {
@@ -54,17 +56,44 @@ public class HouseSpecialtyController extends BaseController
     /**
      * 查询我的特产列表
      */
-    @RequiresPermissions("system:specialty:list")
+    //@RequiresPermissions("system:specialty:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(HouseSpecialty houseSpecialty)
     {
         startPage();
 
+        HouseSpecialty houseRoom=houseSpecialty;
+
+        if(houseRoom.getPriceUp()!=null&&houseRoom.getPriceDown()!=null&&(houseRoom.getPriceUp()<houseRoom.getPriceDown())){
+            int down=houseRoom.getPriceUp();
+            houseRoom.setPriceUp(houseRoom.getPriceDown());
+            houseRoom.setPriceDown(down);
+        }
+
+        if(houseRoom.getInventoryUp()!=null&&houseRoom.getInventoryDown()!=null&&(houseRoom.getInventoryUp()<houseRoom.getInventoryDown())){
+            int down=houseRoom.getInventoryUp();
+            houseRoom.setInventoryUp(houseRoom.getInventoryDown());
+            houseRoom.setInventoryDown(down);
+        }
+
+        houseSpecialty=houseRoom;
+
         if(houseSpecialty.getHouseName()!=null&&(!houseSpecialty.getHouseName().equals(""))){
-            String id=houseSpecialtyService.getHouseIdByHouseName(houseSpecialty);
-            Long houseId=Long.parseLong(id);
-            houseSpecialty.setHouseId(houseId);
+            List<String> idList=houseSpecialtyService.getHouseIdByHouseName(houseSpecialty);
+            List<HouseSpecialty> ans = new ArrayList<>();
+            System.out.println(idList);
+            for(String id:idList){
+                houseSpecialty.setHouseId(Long.parseLong(id));
+                List<HouseSpecialty> li=houseSpecialtyService.selectHouseSpecialtyList(houseSpecialty);;
+                for(HouseSpecialty bb: li){
+                    ans.add(bb);
+                }
+            }
+            for(HouseSpecialty buyroom1: ans){
+                buyroom1.setHouseName(houseSpecialtyService.getHouseNameById(buyroom1.getHouseId()));
+            }
+            return getDataTable(ans);
         }
 
         List<HouseSpecialty> list = houseSpecialtyService.selectHouseSpecialtyList(houseSpecialty);
@@ -77,7 +106,7 @@ public class HouseSpecialtyController extends BaseController
     /**
      * 导出我的特产列表
      */
-    @RequiresPermissions("system:specialty:export")
+    //@RequiresPermissions("system:specialty:export")
     @Log(title = "我的特产", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
@@ -103,28 +132,30 @@ public class HouseSpecialtyController extends BaseController
     /**
      * 新增保存我的特产
      */
-    @RequiresPermissions("system:specialty:add")
+   //@RequiresPermissions("system:specialty:add")
     @Log(title = "我的特产", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(HouseSpecialty houseSpecialty)
     {
         //判断houseId
-        String id=houseSpecialtyService.getHouseIdByHouseName(houseSpecialty);
-        if(id==null||id.equals("")){
+        List<String> idList=houseSpecialtyService.getHouseIdByExactHouseName(houseSpecialty);
+        if(idList.size()!=1){
             AjaxResult res=new AjaxResult();
             res.put("msg","民宿名称有误");
             return res;
         }
-        Long houseId=Long.parseLong(id);
-        houseSpecialty.setHouseId(houseId);
+        for(String id:idList) {
+            Long houseId=Long.parseLong(id);
+            houseSpecialty.setHouseId(houseId);
+        }
         return toAjax(houseSpecialtyService.insertHouseSpecialty(houseSpecialty));
     }
 
     /**
      * 修改我的特产
      */
-    @RequiresPermissions("system:specialty:edit")
+    //@RequiresPermissions("system:specialty:edit")
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
@@ -136,7 +167,7 @@ public class HouseSpecialtyController extends BaseController
     /**
      * 修改保存我的特产
      */
-    @RequiresPermissions("system:specialty:edit")
+    //@RequiresPermissions("system:specialty:edit")
     @Log(title = "我的特产", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -149,7 +180,7 @@ public class HouseSpecialtyController extends BaseController
     /**
      * 删除我的特产
      */
-    @RequiresPermissions("system:specialty:remove")
+    //@RequiresPermissions("system:specialty:remove")
     @Log(title = "我的特产", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody
@@ -158,14 +189,14 @@ public class HouseSpecialtyController extends BaseController
         return toAjax(houseSpecialtyService.deleteHouseSpecialtyByIds(ids));
     }
 
-    @RequiresPermissions("system:specialty:statistics")
+    //@RequiresPermissions("system:specialty:statistics")
     @GetMapping("/statistics")
     public String statistics(ModelMap mmap)
     {
         return prefix + "/statistics";
     }
 
-    @RequiresPermissions("system:specialty:statistics")
+    //@RequiresPermissions("system:specialty:statistics")
     @Log(title = "特产统计", businessType = BusinessType.INSERT)
     @PostMapping("/statistics")
     @ResponseBody
