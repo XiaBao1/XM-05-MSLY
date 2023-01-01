@@ -43,7 +43,7 @@ public class LandlordController extends BaseController
     @Autowired
     private IlandlordService landlordService;
 
-    @RequiresPermissions("system:landlord:view")
+    //@RequiresPermissions("system:landlord:view")
     @GetMapping()
     public String landlord()
     {
@@ -53,7 +53,7 @@ public class LandlordController extends BaseController
     /**
      * 查询民宿管理列表
      */
-    @RequiresPermissions("system:landlord:list")
+    //@RequiresPermissions("system:landlord:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(landlord landlord)
@@ -69,7 +69,7 @@ public class LandlordController extends BaseController
     /**
      * 导出民宿管理列表
      */
-    @RequiresPermissions("system:landlord:export")
+    //@RequiresPermissions("system:landlord:export")
     @Log(title = "民宿管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
@@ -92,7 +92,7 @@ public class LandlordController extends BaseController
     /**
      * 新增保存民宿管理
      */
-    @RequiresPermissions("system:landlord:add")
+    //@RequiresPermissions("system:landlord:add")
     @Log(title = "民宿管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -108,7 +108,7 @@ public class LandlordController extends BaseController
     /**
      * 修改民宿管理
      */
-    @RequiresPermissions("system:landlord:edit")
+    //@RequiresPermissions("system:landlord:edit")
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
@@ -120,7 +120,7 @@ public class LandlordController extends BaseController
     /**
      * 修改保存民宿管理
      */
-    @RequiresPermissions("system:landlord:edit")
+   // @RequiresPermissions("system:landlord:edit")
     @Log(title = "民宿管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -135,7 +135,7 @@ public class LandlordController extends BaseController
     /**
      * 删除民宿管理
      */
-    @RequiresPermissions("system:landlord:remove")
+    //@RequiresPermissions("system:landlord:remove")
     @Log(title = "民宿管理", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody
@@ -144,14 +144,14 @@ public class LandlordController extends BaseController
         return toAjax(landlordService.deletelandlordByIds(ids));
     }
 
-    @RequiresPermissions("system:landlord:statistics")
+   // @RequiresPermissions("system:landlord:statistics")
     @GetMapping("/statistics")
     public String statistics(ModelMap mmap)
     {
         return prefix + "/statistics";
     }
 
-    @RequiresPermissions("system:landlord:statistics")
+   // @RequiresPermissions("system:landlord:statistics")
     @Log(title = "民宿统计", businessType = BusinessType.INSERT)
     @PostMapping("/statistics")
     @ResponseBody

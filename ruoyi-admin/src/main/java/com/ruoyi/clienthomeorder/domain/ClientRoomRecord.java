@@ -26,7 +26,7 @@ public class ClientRoomRecord extends BaseEntity
     private Long id;
 
     /** 顾客账号 */
-    @Excel(name = "顾客账号")
+
     private Long clientNumber;
 
     /** 民宿ID */
@@ -43,22 +43,22 @@ public class ClientRoomRecord extends BaseEntity
     @Excel(name = "用户昵称")
     private String userName;
 
-    @Excel(name = "得分")
+
     private BigDecimal score;
 
-    @Excel(name = "评论")
+
     private String comment;
 
-    @Excel(name = "照片")
+
     public String photo;
 
-    @Excel(name = "照片路径")
+
     public String path;
 
-    @Excel(name = "照片文件")
+
     public MultipartFile newsMenuIconFile;
 
-    @Excel(name = "订单ID")
+
     private Long roomRecordId;
 
     /** 下单时间 */

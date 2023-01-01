@@ -107,7 +107,7 @@
             <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="clientspecialtyorder:clientorder:export">
                 <i class="fa fa-download"></i> 导出
             </a>
-            <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="xxxx:xxxx:print">
+            <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="clientspecialtyorder:clientorder:print">
                 <i class="glyphicon glyphicon-print icon-share"></i> 打印
             </a>
             <a class="btn btn-warning" onclick="$.modal.openTab('用户历史订单统计', '/clientspecialtyorder/clientorder/eCharts');" shiro:hasPermission="clientspecialtyorder:clientorder:eCharts">
@@ -126,6 +126,7 @@
     var editFlag = [[${@permission.hasPermi('clientspecialtyorder:clientorder:edit')}]];
     var removeFlag = [[${@permission.hasPermi('clientspecialtyorder:clientorder:remove')}]];
     var querycommentsFlag = [[${@permission.hasPermi('clientspecialtyorder:clientorder:querycomment')}]];
+    var printFlag = [[${@permission.hasPermi('clientspecialtyorder:clientorder:print')}]];
     var commentsFlag = [[${@permission.hasPermi('clientspecialtyorder:clientorder:comment')}]];
     var isReceivedDatas = [[${@dict.getType('sys_user_is_received')}]];
     var isPaidDatas = [[${@dict.getType('sys_user_is_paid')}]];
