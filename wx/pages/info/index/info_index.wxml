@@ -27,7 +27,7 @@
   <view class='icon-list'>
     <view class='icon-text' bindtap='toTodoList'>
       <image class='icon' src='/image/icon/todo.png'></image>
-      <view class='text'>代办事项</view>
+      <view class='text'>待办事项</view>
     </view>
     <view class='icon-text' bindtap='toTopSpeciality'>
       <image src='/image/icon/topspeciality.png' class='icon'></image>

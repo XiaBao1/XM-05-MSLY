@@ -29,7 +29,7 @@
     </view>
     <image src='../../../image//jiantou.png' class='jiantou'></image>
   </view>
-  <view class='list' bindtap='view'>
+  <view class='list' bindtap='commentClicked'>
     <view class='list_left'>
       <image class='listIcon' src='../../../image//view.png'></image>
       <view class='listName'>意见反馈</view>

@@ -54,10 +54,15 @@ Page({
       url: '../modify_info/modify_info?data=' + JSON.stringify(userData),
     })
   },
+  commentClicked: function() {
+    wx.navigateTo({
+      url: '../comment/comment',
+    })
+  },
 
   //退出登录
   signOutClicked(){
-    this.getCookie(this.logout);
+    getCookie(this.logout);
   },
   logout: function(cookies) {
     let that = this;

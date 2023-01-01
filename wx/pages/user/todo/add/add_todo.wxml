@@ -1,0 +1,25 @@
+<!--pages/loadEdit/loadEdit.wxml-->
+<view class='main'>
+  <form>
+    <view class='else'>
+      <view class='lists'>
+        <view class='list_name'>截止时间</view>
+        <view class='list_items'>
+          <picker mode="date" value="{{ddl}}" start="{{curDate}}" end="2023-12-31" bindchange="bindDDLChange">
+            <view class="inputInfo">
+              {{ddl}}
+            </view>
+          </picker>
+          <image class='editPic' src='/image/edit.png'></image>
+        </view>
+      </view>
+      <view class='lists'>
+        <view class='list_name'>事项内容</view>
+      </view>
+      <input type="text" class="todo-contents" placeholder="请输入事项内容" bindinput="inputContents"/>
+    </view>
+  </form>
+</view>
+<view class='confirm'>
+  <button class='confirmBtn' bindtap="commitClicked">添加</button>
+</view>
