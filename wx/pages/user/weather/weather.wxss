@@ -317,3 +317,7 @@ radio-group label:before{
 	vertical-align: -2rpx;
 	margin-right: 6rpx;
 }
+button{
+  margin-top: 30rpx;
+  margin-bottom: 30rpx;
+}

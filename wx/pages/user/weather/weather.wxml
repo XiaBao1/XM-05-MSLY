@@ -3,16 +3,20 @@
   <view class="filter-tab sort-tab">
     <text bindtap="setSortBy" data-sortindex="{{index}}" data-sortid="{{item.id}}" class="{{sortindex==index?'active':''}}" wx:for="{{sort}}" wx:key="{{item.id}}">{{item.title}}</text>
   </view>
+  <button type='primary' bindtap='toStatistics'>
+        查看本月天气统计
+      </button>
 	<view class="conference-list">
-    <navigator class="conference-item" wx:for="{{activitylist}}" wx:key="{{item.id}}">
+    <navigator class="conference-item" wx:for="{{servicelist}}" wx:key="{{item.id}}">
       <view class="conference-item-text">
-        <view class="conference-item-title">{{item.name}}</view>
-        <view class="conference-item-info activity-item-info">
-          <text class="icon-time">{{item.time}}</text>
-          <text class="icon-xinxi">{{item.coments}}</text>
+        <view class="conference-item-title">
+        {{item.city}}
+        <text class="icon-time">{{item.weatherDate}}</text>
         </view>
-        <view class="conference-item-info">
-          <text class="icon-zuobiao">{{item.address}}</text>
+        <view class="conference-item-info activity-item-info">
+          <view class="icon-zuobiao">{{item.lowT}}~{{item.highT}}℃</view>
+          <view class="icon-xinxi">白天{{item.dayType}}，夜晚{{item.nightType}}</view>
+          <view class="icon-xinxi">{{item.windDirection}}风{{item.windScale}}级</view>
         </view>
       </view>
     </navigator>

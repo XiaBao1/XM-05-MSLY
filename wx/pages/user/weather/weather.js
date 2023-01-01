@@ -1,56 +1,100 @@
 import util from './../../../utils/util.js';
 Page({
   data: {
+    filterdata:{},  //筛选条件数据
+    showfilter:false, //是否显示下拉筛选
+    showfilterindex:null, //显示哪个筛选类目
     sortindex:0,  //排序索引
-    sortid:null,  //排序id
-    sort:[],
-    activitylist:[], //会议室列表列表
-    scrolltop:null, //滚动位置
-    page: 0  //分页
+    sortid:0,  //排序id
+    filter:{},
+    returnData: "",
+    returnDataSta: "",
+    servicelist:[],
   },
-  onLoad: function () { //加载数据渲染页面
-    this.fetchConferenceData();
-    this.fetchSortData();
+  onLoad(options) { //加载数据渲染页面
+    let that = this;
+    wx.getStorage({
+      key: "cookies",
+      success: that.fetchWeatherData
+    });
+    that.fetchSortData();
   },
   fetchSortData:function(){ //获取筛选条件
     this.setData({
       "sort": [
           {
               "id": 0,
-              "title": "热门点击"
+              "title": "时间最近"
           },
           {
               "id": 1,
-              "title": "最新发布"
+              "title": "低温最低"
           },
           {
               "id": 2,
-              "title": "最多参与"
+              "title": "高温最高"
           },
       ]
     })
   },
-  fetchConferenceData:function(){  //获取会议室列表
-    const perpage = 10;
-    this.setData({
-      page:this.data.page+1
+  fetchWeatherData: function(cookies){
+    let that = this;
+    wx.request({
+      url: 'http://localhost/weather/weather/list',
+      header: {'cookie': cookies.data.substring(0, 48), 'Content-Type': 'application/x-www-form-urlencoded'},
+      method: "post",
+      success: function(res) {
+        console.log(res);
+        that.handleWeatherData(res.data);
+        that.setData({
+          returnData: res.data
+        });
+      }
+    });
+  },
+  handleWeatherData(data){
+    let _this = this;
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading'
     })
-    const page = this.data.page;
-    const newlist = [];
-    for (var i = (page-1)*perpage; i < page*perpage; i++) {
+    let newlist = [];
+    for(var i=0;i<data.rows.length;i++){
+      let id=data.rows[i].id;
+      let city=data.rows[i].city;
+      let windDirection=data.rows[i].windDirection;
+      let dayType=data.rows[i].dayType;
+      let highT=data.rows[i].highT;
+      let humidity=data.rows[i].humidity;
+      let lowT=data.rows[i].lowT;
+      let nightType=data.rows[i].nightType;
+      let weatherDate=data.rows[i].weatherDate;
+      let windScale=data.rows[i].windScale;
+      let windSpeed=data.rows[i].windSpeed;
       newlist.push({
-        "id":i+1,
-        "name":"云栖技术分享日（云栖TechDay"+(i+1)+"）",
-        "status": "进行中",
-        "time": "2016/07/12 14:00",
-        "coments": Math.floor(Math.random()*1000),
-        "address":"杭州云栖小镇咖啡馆  （杭州云计算产业园内）",
-        "imgurl":"http://pic.58pic.com/58pic/12/34/51/85d58PICkjf.jpg"
+        "id":id,
+        "city":city,
+        "windDirection":windDirection,
+        "dayType":dayType,
+        "highT":highT,
+        "lowT":lowT,
+        "humidity":humidity,
+        "nightType":nightType,
+        "weatherDate":weatherDate,
+        "windScale":windScale,
+        "windSpeed":windSpeed
       })
     }
-    this.setData({
-      activitylist:this.data.activitylist.concat(newlist)
-    })
+    newlist=newlist.sort(function(obj1, obj2) {
+      var lhs1 = obj1["weatherDate"];
+      var rhs1 = obj2["weatherDate"];
+      return lhs1 - rhs1;
+    });
+    setTimeout(()=>{
+     _this.setData({
+       servicelist:_this.data.servicelist.concat(newlist)
+     })
+    },5000)
   },
   setSortBy:function(e){ //选择排序方式
     const d= this.data;
