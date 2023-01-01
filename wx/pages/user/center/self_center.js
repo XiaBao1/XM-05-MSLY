@@ -62,7 +62,7 @@ Page({
 
   //退出登录
   signOutClicked(){
-    this.getCookie(this.logout);
+    getCookie(this.logout);
   },
   logout: function(cookies) {
     let that = this;

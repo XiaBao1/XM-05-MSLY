@@ -4,18 +4,23 @@ page{
   height: 100%;
 }
 .yue{
-  height: 250rpx;
+  height: 150rpx;
+  margin-top: 10rpx;
   margin-left: 30rpx;
   margin-right: 30rpx;
   display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+  flex-direction: row;
 }
-.sbutton{
-  height: 80rpx;
+.sbutton1{
+  height: 120rpx;
   font-size: 30rpx;
-  line-height: 30%;
-  margin-top: 5rpx;
+  width: 10rpx;
+  background: #f3b328;
+}
+.sbutton2{
+  height: 120rpx;
+  font-size: 30rpx;
+  width: 20rpx;
   background: #f3b328;
 }
 .swiper-tab{ 
@@ -109,7 +114,7 @@ page{
   color:#ffffff;
   border-top-left-radius: 27rpx;
   border-bottom-left-radius: 27rpx;
-  margin-top: 18rpx;
+  margin-top: 40rpx;
 }
 .doing{
   width: 180rpx;
