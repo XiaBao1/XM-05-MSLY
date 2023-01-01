@@ -1,0 +1,65 @@
+<!--pages/loadEdit/loadEdit.wxml-->
+<image class='picture' src='{{imageUrl}}'></image>
+<view class='main'>
+  <form>
+    <view class='editInfo'>
+      <view class='editInfo_left'>
+        <view class='bianhao'>
+          <view class='num'>{{houseName}}{{roomNumber}}号房</view>
+          <view class='time'>{{standard}}</view> 
+        </view>
+      </view>
+      <view class='editInfo_right'>{{pricePerDay}}元/天</view>
+    </view>
+
+    <view class='else' wx:if="{{isFree>0}}">
+      <view class='lists'>
+        <view class='list_name'>入住时间</view>
+        <view class='list_items'>
+          <picker mode="date" value="{{date}}" start="{{curDate}}" end="2023-12-31" bindchange="bindDateChange">
+            <view class="inputInfo">
+              {{date}}
+            </view>
+          </picker>
+          <image class='editPic' src='/image/edit.png'></image>
+        </view>
+      </view>
+      <view class='lists'>
+        <view class='list_name'>到店时刻</view>
+        <view class='list_items'>
+          <picker mode="selector" value="{{arriveTime}}" range="{{arriveTimeList}}" bindchange="bindArriveTimeChange">
+            <view class="inputInfo">
+              {{arriveTime}}
+            </view>
+          </picker>
+          <image class='editPic' src='/image/edit.png'></image>
+        </view>
+      </view>
+      <view class='lists'>
+        <view class='list_name'>预约租期</view>
+        <view class='list_items'>
+          <picker mode="selector" value="{{liveTime}}" range="{{liveTimeList}}" bindchange="bindLiveTimeChange">
+            <view class="inputInfo">
+              {{liveTime}}
+            </view>
+          </picker>
+          <image class='editPic' src='/image/edit.png'></image>
+        </view>
+      </view>
+      <!-- <view class='lists'>
+        <view class='list_name'>支付密码</view>
+        <view class='list_items'>
+          <input type="number" class="inputInfo" bindinput="inputPasswd" password="{{passwd}}"/>
+          <image class='editPic' src='/image/edit.png'></image>
+        </view>
+      </view> -->
+    </view>
+    <view class='list_name' style='text-align: center;' wx:else>
+      抱歉，该房间已被预定
+    </view>
+  </form>
+</view>
+<!-- 提交修改 -->
+<view class='confirm' wx:if="{{isFree>0}}">
+  <button class='confirmBtn' bindtap="commitOrderClicked">提交订单</button>
+</view>

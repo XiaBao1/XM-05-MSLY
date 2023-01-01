@@ -1,66 +1,78 @@
-// pages/user/todo/todo.js
+// pages/goods/goods.js
+let getCookie = require("../../../utils/util.js")['getCookie'];
+let sortName = 'ddlTime';
+let curIdx = 0;
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    todoList: []
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad(options) {
-
+  onShow: function() {
+    getCookie(this.getTodoList);
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
+  getTodoList: function(cookies) {
+    let that = this;
+    wx.request({
+      url: 'http://localhost/usertodolist/todolist/list',
+      header: {'cookie': cookies.data.substring(0, 48), 'Content-Type': 'application/x-www-form-urlencoded'},
+      method: "post",
+      data: {orderByColumn: sortName, isAsc: 'asc'},
+      success: function(res) {
+        console.log(res);
+        that.setTodoList(res.data.rows)
+      }
+    });
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
+  setTodoList: function(data){
+    this.setData({
+      todoList: data
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
+  orderDDLClicked: function() {
+    sortName = 'ddlTime';
+    getCookie(this.getTodoList);
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
+  orderStatusClicked: function() {
+    sortName = 'status';
+    getCookie(this.getTodoList);
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
+  addClicked: function() {
+    wx.navigateTo({
+      url: './add/add_todo',
+    })
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
+  statisticsClicked: function() {
+    let numTodo = this.data.todoList.length;
+    let numDone = 0;
+    for (let i = 0; i < numTodo; i++) {
+      if (this.data.todoList[i].status == "1") {
+        numDone++
+      }
+    }
+    wx.navigateTo({
+      url: './statistics/todo_statistics?doneRatio=' + (numDone / numTodo),
+    })
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
+  deleteTodoClicked: function(e) {
+    curIdx = e.currentTarget.dataset.idx;
+    getCookie(this.deleteTodo)
+  },
+  deleteTodo: function(cookies) {
+    let that = this;
+    wx.request({
+      url: 'http://localhost/usertodolist/todolist/remove',
+      header: {'cookie': cookies.data.substring(0, 48), 'Content-Type': 'application/x-www-form-urlencoded'},
+      method: "post",
+      data: {ids: this.data.todoList[curIdx].id},
+      success: function(res) {
+        console.log(res);
+        that.onShow()
+      }
+    });
+  },
+  modifyTodoClicked: function(e) {
+    let idx = e.currentTarget.dataset.idx;
+    wx.navigateTo({
+      url: './modify/modify_todo?item=' + JSON.stringify(this.data.todoList[idx]),
+    })
   }
 })
