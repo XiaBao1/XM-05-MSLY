@@ -32,8 +32,8 @@
         <include refid="selectClientSpecialtyRecordVo"/>
             <if test="id != null "> and id = #{id}</if>
             <if test="specialtyId != null "> and specialty_id = #{specialtyId}</if>
-            <if test="specialtyName != '' "> and specialty_name = #{specialtyName}</if>
-            <if test="houseName != '' "> and house_name = #{houseName}</if>
+            <if test="specialtyName != '' ">and specialty_name like concat('%', #{specialtyName}, '%')</if>
+            <if test="houseName != '' "> and house_name like concat('%', #{houseName}, '%')</if>
             <if test="quantity != null "> and quantity = #{quantity}</if>
             <if test="price != null "> and price = #{price}</if>
             <if test="orderTime != null "> and order_time = #{orderTime}</if>

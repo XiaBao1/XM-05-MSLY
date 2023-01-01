@@ -27,7 +27,7 @@ public class LandlordSpecialtyRecord extends BaseEntity
     private Long clientNumber;
 
     /** 用户名 */
-    @Excel(name = "用户名")
+
     private String userName;
 
     /** 特产名 */
@@ -43,22 +43,22 @@ public class LandlordSpecialtyRecord extends BaseEntity
     private String clientName;
 
     /** 特产订单ID */
-    @Excel(name = "特产订单ID")
+
    public Long specialtyRecordId;
 
     /** 特产得分 */
-    @Excel(name = "得分")
+
     public BigDecimal score;
 
     /** 特产评价 */
-    @Excel(name = "评价")
+
     public String comment;
 
     /** 特产照片 */
-    @Excel(name = "照片")
+
     public String photo;
 
-    @Excel(name = "照片地址")
+
     private String path;
 
     /** 特产ID */

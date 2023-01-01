@@ -106,7 +106,7 @@
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="landlordhomeorder:landlordorder:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
-                <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="xxxx:xxxx:print">
+                <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="landlordhomeorder:landlordorder:print">
                     <i class="glyphicon glyphicon-print icon-share"></i> 打印
                 </a>
                 <a class="btn btn-warning" onclick="$.modal.openTab('历史订单统计', '/landlordhomeorder/landlordorder/eCharts');" shiro:hasPermission="landlordhomeorder:landlordorder:eCharts">
@@ -130,6 +130,7 @@
         var removeFlag = [[${@permission.hasPermi('landlordhomeorder:landlordorder:remove')}]];
         var querycommentsFlag = [[${@permission.hasPermi('landlordhomeorder:landlordorder:querycomment')}]];
         var isPaidDatas = [[${@dict.getType('sys_user_is_paid')}]];
+        var printFlag =[[${@permission.hasPermi('landlordhomeorder:landlordorder:print')}]];
         var isDoneDatas = [[${@dict.getType('sys_user_is_done')}]];
         var prefix = ctx + "landlordhomeorder/landlordorder";
 
