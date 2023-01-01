@@ -1,6 +1,8 @@
 package com.ruoyi.web.system.mapper;
 
 import java.util.List;
+
+import com.ruoyi.web.system.domain.HouseRoom;
 import com.ruoyi.web.system.domain.HouseSpecialty;
 
 /**
@@ -67,5 +69,7 @@ public interface HouseSpecialtyMapper
 
     public Long getSoldNumber(HouseSpecialty houseSpecialty);
 
-    String getHouseIdByHouseName(HouseSpecialty houseSpecialty);
+    List<String> getHouseIdByHouseName(HouseSpecialty houseSpecialty);
+
+    List<String> getHouseIdByExactHouseName(HouseSpecialty houseSpecialty);
 }

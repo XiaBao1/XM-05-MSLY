@@ -171,7 +171,7 @@ public class BuyRoomServiceImpl implements IBuyRoomService
         return buyRoomMapper.getSellNumber(name);
     }
 
-    public String getHouseIdByHouseName(String houseName){
+    public List<String> getHouseIdByHouseName(String houseName){
         return buyRoomMapper.getHouseIdByHouseName(houseName);
     }
 }

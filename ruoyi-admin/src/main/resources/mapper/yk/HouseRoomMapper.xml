@@ -13,6 +13,8 @@
         <result property="isFree"    column="is_free"    />
     </resultMap>
 
+    <resultMap id="StringResult" type="String"></resultMap>
+
     <sql id="selectHouseRoomVo">
         select id, house_id, room_number, price_per_day, standard, is_free from house_room
     </sql>
@@ -24,8 +26,10 @@
             <if test="houseId != null"> and house_id = #{houseId}</if>
             <if test="roomNumber != null  and roomNumber != ''"> and room_number = #{roomNumber}</if>
             <if test="pricePerDay != null "> and price_per_day = #{pricePerDay}</if>
-            <if test="standard != null  and standard != ''"> and standard = #{standard}</if>
+            <if test="standard != null  and standard != ''"> and standard like concat('%', #{standard}, '%')</if>
             <if test="isFree != null "> and is_free = #{isFree}</if>
+            <if test="pricePerDayUp != null "> and #{pricePerDayUp} >= price_per_day</if>
+            <if test="pricePerDayDown != null "> and price_per_day >= #{pricePerDayDown}</if>
         </where>
     </select>
 
@@ -46,7 +50,11 @@
         select house_name from landlord_house where id=#{id}
     </select>
 
-    <select id="getHouseIdByHouseName" parameterType="HouseRoom" resultType="String">
+    <select id="getHouseIdByHouseName" parameterType="HouseRoom" resultMap="StringResult">
+        select id from landlord_house where house_name like concat('%',#{houseName},'%') and host_number=#{userId}
+    </select>
+
+    <select id="getHouseIdByExactHouseName" parameterType="HouseRoom" resultMap="StringResult">
         select id from landlord_house where house_name=#{houseName} and host_number=#{userId}
     </select>
 

@@ -46,6 +46,10 @@ public class HouseRoom extends BaseEntity
     @Excel(name = "空闲")
     private String free;
 
+    private Integer pricePerDayDown;
+
+    private Integer pricePerDayUp;
+
     public  Long userId= (Long) PermissionUtils.getPrincipalProperty("userId");
 
     //private Long userId= SecurityUtils.getUserId();
@@ -120,6 +124,18 @@ public class HouseRoom extends BaseEntity
         this.free=free;
     }
 
+    public Integer getPricePerDayDown(){return pricePerDayDown;}
+
+    public void setPricePerDayDown(Integer pricePerDayDown){
+        this.pricePerDayDown=pricePerDayDown;
+    }
+
+    public Integer getPricePerDayUp(){return pricePerDayUp;}
+
+    public void setPricePerDayUp(Integer pricePerDayUp){
+        this.pricePerDayUp=pricePerDayUp;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -130,6 +146,8 @@ public class HouseRoom extends BaseEntity
                 .append("pricePerDay", getPricePerDay())
                 .append("standard", getStandard())
                 .append("isFree", getIsFree())
+                .append("pricePerDayDown", getPricePerDayDown())
+                .append("pricePerDayUp", getPricePerDayUp())
                 .toString();
     }
 
