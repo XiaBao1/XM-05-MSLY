@@ -3,32 +3,48 @@
   <view class='form'>
     <view class='inputBox'>
       <label>城市</label>
-      <input class="value" type="text" value="{{city}}" bindinput="inputCity"></input>
+      <input class="value" type="text" value="{{city}}" bindinput="inputCity" placeholder="请输入城市名称"></input>
     </view>    
     <view class='inputBox'>
-      <label>低温（℃）</label>
-      <text class="value" >{{lowT}}</text>
+      <label>天气时间</label>
+      <picker class="value" mode="date" header-text="选择时间" value="{{weatherDate}}" bindchange="bindDateChange" placeholder="请选择天气时间">
+          <text>{{weatherDate}}</text>
+          <text>▼</text>
+      </picker>
     </view>
     <view class='inputBox'>
-      <label>高温（℃）：</label>
-      <text class="value">{{highT}}</text>
+      <label>低温（℃）</label>
+      <input class="value" type="number" value="{{lowT}}" bindinput="inputLowT" placeholder="请输入当日低温"></input>
+    </view>
+    <view class='inputBox'>
+      <label>高温（℃）</label>
+      <input class="value" type="number" value="{{highT}}" bindinput="inputHighT" placeholder="请输入当日高温"></input>
     </view>
     <view class='inputBox'>
       <label>白天天气</label>
-      <text class="value">{{dayType}}</text>
+      <input class="value" type="text" value="{{dayType}}" bindinput="inputDayType" placeholder="请输入白天天气"></input>
     </view>
     <view class='inputBox'>
       <label>夜晚天气</label>
-      <text class="value">{{nightType}}</text>
+      <input class="value" type="text" value="{{nightType}}" bindinput="inputNightType" placeholder="请输入夜晚天气"></input>
     </view>
     <view class='inputBox'>
       <label >风速（m/s）</label>
-      <text class="value">{{windSpeed}}</text>
+      <input class="value" type="digit" value="{{windSpeed}}" bindinput="inputWindSpeed" placeholder="请输入当日风速"></input>
+    </view>
+    <view class='inputBox'>
+      <label >风力（级）</label>
+      <input class="value" type="number" value="{{windScale}}" bindinput="inputWindScale" placeholder="请输入当日风力"></input>
     </view>
     <view class='inputBox'>
       <label>湿度（%）</label>
-      <text class="value">{{humidity}}</text>
+      <input class="value" type="number" value="{{humidity}}" bindinput="inputHumidity" placeholder="请输入空气湿度"></input>
     </view>
   </view>
+  <view class='confirm'>
+    <button class='confirmBtn' bindtap="submitBtnClicked">确认添加</button>
+  </view>
 </view>
+
+
 

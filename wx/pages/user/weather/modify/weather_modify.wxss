@@ -23,15 +23,11 @@ label{
   font-weight: bold;
   line-height: 90rpx;
 }
-radio{
-  margin-top: 30rpx;
-  margin-right: 30rpx;
-}
 .value{
-  width: 70%;
+  width: 60%;
   height: 90rpx;
   margin-right: 30rpx;
-  text-align: right;
+  text-align: left;
   margin-top: 10rpx;
   font-size: 30rpx;
   color: #999999;

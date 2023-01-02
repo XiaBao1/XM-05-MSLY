@@ -68,6 +68,11 @@ Page({
       windSpeed: e.detail.value
     })
   },
+  inputWindScale: function(e) {
+    this.setData({
+      windScale: e.detail.value
+    })
+  },
   inputHumidity: function(e) {
     this.setData({
       humidity: e.detail.value
@@ -90,6 +95,12 @@ Page({
       }
     });
 
+  },
+  bindDateChange: function(e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      weatherDate: e.detail.value
+    })
   }
 
 });

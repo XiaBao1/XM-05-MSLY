@@ -12,7 +12,7 @@ Page({
     returnDataSta: "",
     servicelist:[],
   },
-  onLoad() { //加载数据渲染页面
+  onShow() { //加载数据渲染页面
     let that = this;
     wx.getStorage({
       key: "cookies",
@@ -203,7 +203,7 @@ Page({
       page:0,
       servicelist:[]
     })
-    this.onLoad();
+    this.onShow();
     setTimeout(()=>{
       wx.stopPullDownRefresh()
     },1000)
@@ -222,7 +222,7 @@ Page({
       data: {ids: curIdx},
       success: function(res) {
         console.log(res);
-        that.onLoad();
+        that.onShow();
       }
     });
   },

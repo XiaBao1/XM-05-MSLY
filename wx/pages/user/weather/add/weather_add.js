@@ -1,14 +1,12 @@
-// pages/user/weather/add/weather_add.js
+// pages/user/weather/modify/weather_add.js
+let getCookie = require("../../../../utils/util.js")['getCookie'];
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
-    weatherData: {
-      id: 1,
       city: '',
-      windDirection: '北',
+      windDirection: '',
       dayType: '',
       highT: null,
       lowT: null,
@@ -17,61 +15,76 @@ Page({
       weatherDate: '',
       windScale: null,
       windSpeed: null,
-    }
+      collectTime: null,
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
   },
-  inputName: function(e) {
+  inputCity: function(e) {
     this.setData({
-      userName: e.detail.value
+      city: e.detail.value
     });
   },
-  inputPhone: function(e) {
+  inputLowT: function(e) {
     this.setData({
-      phonenumber: e.detail.value
+      lowT: e.detail.value
     })
   },
-  inputEmail: function(e) {
+  inputHighT: function(e) {
     this.setData({
-      email: e.detail.value
+      highT: e.detail.value
     })
   },  
-  inputProvince: function(e) {
+  inputDayType: function(e) {
     this.setData({
-      province: e.detail.value
+      dayType: e.detail.value
     })
   },
-  radioChange: function(e) {
+  inputNightType: function(e) {
     this.setData({
-      sex: e.detail.value
+      nightType: e.detail.value
     })
   },
-
+  inputWindSpeed: function(e) {
+    this.setData({
+      windSpeed: e.detail.value
+    })
+  },
+  inputWindScale: function(e) {
+    this.setData({
+      windScale: e.detail.value
+    })
+  },
+  inputHumidity: function(e) {
+    this.setData({
+      humidity: e.detail.value
+    })
+  },
   submitBtnClicked: function() {
     getCookie(this.submitForm);
   },
   submitForm: function(cookies) {
-    let that = this;
     console.log(this.data)
-    
-    // wx.request({
-    //   url: 'http://localhost/system/user/profile/update',
-    //   header: {'cookie': cookies.data.substring(0, 48), 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
-    //   method: "post",
-    //   data: this.data,
-    //   success: function(res) {
-    //     console.log("modify return")
-    //     console.log(res);
-    //     wx.reLaunch({
-    //       url: '../center/self_center',
-    //     })
-    //   }
-    // });
+    wx.request({
+      url: 'http://localhost/weather/weather/add',
+      header: {'cookie': cookies.data.substring(0, 48), 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+      method: "post",
+      data: this.data,
+      success: function(res) {
+        console.log("天气添加成功")
+        console.log(res);
+        wx.navigateBack();
+      }
+    });
 
+  },
+  bindDateChange: function(e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      weatherDate: e.detail.value
+    })
   }
 
 });

@@ -1,4 +1,4 @@
-/* pages/user/weather/add/weather_add.wxss */
+/* pages/user/weather/modify/weather_add.wxss */
 page{
   background: #ededed;
   height: auto;
@@ -23,29 +23,40 @@ label{
   font-weight: bold;
   line-height: 90rpx;
 }
-radio{
-  margin-top: 30rpx;
-  margin-right: 30rpx;
-}
 .value{
-  width: 70%;
+  width: 60%;
   height: 90rpx;
   margin-right: 30rpx;
-  text-align: right;
+  text-align: left;
   margin-top: 10rpx;
   font-size: 30rpx;
   color: #999999;
 }
-.submit{
-  width: 100%;
-  height: 100rpx;
+.confirm{
   position: absolute;
-  bottom:0;
+  bottom: 0;
   left: 0;
-  background: #3d4663;
-  color: #ffffff;
-  font-size: 30rpx;
-  line-height: 70rpx;
+  width: 100%;
+  height: 98rpx;
+  border-top: 2rpx solid #cccccc;
+  margin-top: 176rpx;
+  background: #ffffff;
+}
+.confirmBtn{
+  width: 160rpx;
+  height: 60rpx;
+  font-size: 26rpx;
+  line-height: 30rpx;
+  display: block;
+  /* border:2rpx solid #e6e6e6; */
+  border-radius: 26rpx;
+  float: right;
+  margin: 22rpx 24rpx 0 0;
   text-align: center;
-  border-radius: 0;
+  color: #ffffff;
+  background-color: #f3b328;
+}
+.confirmBtn::after{
+  border:none;
+  border:2rpx solid #e6e6e6;
 }
