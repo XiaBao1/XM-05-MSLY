@@ -207,6 +207,44 @@ Page({
      },1500)
   },
 
+  toAdd: function(){
+    wx.navigateTo({
+      url: './add/add_room_history'
+    })
+  },
+
+  onDeleteTap:function(e) {
+    curIdx = e.currentTarget.dataset.itemid;
+    console.log('删除'+curIdx);
+    getCookie(this.deleteById);
+  },
+  deleteById:function(cookies){
+    let that = this;
+    wx.request({
+      url: 'http://localhost/weather/weather/remove',
+      header: {'cookie': cookies.data.substring(0, 48), 'Content-Type': 'application/x-www-form-urlencoded'},
+      method: "post",
+      data: {ids: curIdx},
+      success: function(res) {
+        console.log(res);
+        that.onShow();
+      }
+    });
+  },
+  onModifyTap:function(e) {
+    curIdx = e.currentTarget.dataset.idx;
+    console.log('修改index'+curIdx);
+    console.log(this.data.servicelist[curIdx])
+    wx.setStorage({
+      key: "roomorderdat",
+      data: this.data.servicelist[curIdx]
+    });
+    wx.navigateTo({
+      url: './modify/modify_room_history',
+    });
+  },
+
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
