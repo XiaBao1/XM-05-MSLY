@@ -1,9 +1,8 @@
-<wxs module="unit" src="./../typeFilter.wxs"></wxs>
 <view class='main'>
   <view class='form'>
     <view class='inputBox'>
       <label>订单完成情况</label>
-      <text class="value" bindtap="isDoneTap" style="color:{{unit.orderFilter(isDone).y}}">{{unit.orderFilter(isDone).x}}</text>
+      <text class="value"></text>
     </view>
   </view>
   <view class='confirm'>

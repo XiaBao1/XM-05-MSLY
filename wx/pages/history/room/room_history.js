@@ -221,7 +221,7 @@ Page({
   deleteById:function(cookies){
     let that = this;
     wx.request({
-      url: 'http://localhost/weather/weather/remove',
+      url: 'http://localhost/clienthomeorder/homeorder/remove',
       header: {'cookie': cookies.data.substring(0, 48), 'Content-Type': 'application/x-www-form-urlencoded'},
       method: "post",
       data: {ids: curIdx},
@@ -244,6 +244,40 @@ Page({
     });
   },
 
+  onQueryCommentTap:function(e) {
+    curIdx = e.currentTarget.dataset.itemid;
+    console.log('查看评论'+curIdx);
+    getCookie(this.queryCommentById);
+  },
+  queryCommentById:function(cookies){
+    let that = this;
+    wx.request({
+      url: 'http://localhost/clienthomeorder/homeorder/appquerycomment',
+      header: {'cookie': cookies.data.substring(0, 48), 'Content-Type': 'application/x-www-form-urlencoded'},
+      method: "post",
+      data: {id: curIdx},
+      success: function(res) {
+        console.log(res);
+        if(res.data[0].id == 0){
+          console.log('无评论');
+          wx.showToast({  
+            title: '还没有评论',  
+            icon: 'error',  
+            duration: 3000  
+          }) 
+        }
+        else {
+          wx.setStorage({
+            key:"querycommentdat",
+            data: res.data[0]
+          });
+          wx.navigateTo({
+            url: './comment/cmt_room',
+          })
+        }
+      }
+    });
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成

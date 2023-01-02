@@ -1,0 +1,17 @@
+<view class='main'>
+  <view class='form'>
+    <view class='inputBox'>
+      <label>评分</label>
+      <text class="value">{{score}}</text>
+    </view>
+    <view class='inputBox'>
+      <label>评论</label>
+      <text class="value">{{comment}}</text>
+    </view>
+    <view class='image'>
+      <label>照片</label>
+      <!-- <image class='img' src="{{photo}}" mode="aspectFit"></image> -->
+      <image class='img' src="http://localhost/profile/1672669920136750.png" mode="aspectFit"></image>
+    </view>
+  </view>
+</view>

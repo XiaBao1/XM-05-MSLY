@@ -42,8 +42,8 @@
             <text bindtap="onDeleteTap" data-itemid="{{item.id}}">删除</text>
           </view>
           <view class="button-tags">
-            <text bindtap="onCommentTap" data-idx="{{index}}">评论</text>
-            <text bindtap="onDeleteTap" data-itemid="{{item.id}}">查看评论</text>
+            <text bindtap="onCommentTap" data-idx="{{item.id}}">评论</text>
+            <text bindtap="onQueryCommentTap" data-itemid="{{item.id}}">查看评论</text>
           </view>
         </view>
       </view>

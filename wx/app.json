@@ -30,7 +30,8 @@
     "pages/user/weather/add/weather_add",
     "pages/user/weather/modify/weather_modify",
     "pages/history/room/statistics/sta_room_history",
-    "pages/history/room/modify/modify_room_history"
+    "pages/history/room/modify/modify_room_history",
+    "pages/history/room/comment/cmt_room"
   ],
   "window": {
     "backgroundTextStyle": "light",
