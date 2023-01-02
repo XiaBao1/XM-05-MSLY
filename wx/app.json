@@ -28,7 +28,8 @@
     "pages/info/speciality/statistics/top_specialty_sta",
     "pages/user/weather/statistics/weather_sta",
     "pages/user/weather/add/weather_add",
-    "pages/user/weather/modify/weather_modify"
+    "pages/user/weather/modify/weather_modify",
+    "pages/history/room/statistics/sta_room_history"
   ],
   "window": {
     "backgroundTextStyle": "light",

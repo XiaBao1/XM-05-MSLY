@@ -50,23 +50,23 @@ Page({
     let that = this;
     wx.getStorage({
       key: "cookies",
-      success: that.getTopLandlordSta
+      success: that.getRoomOrderSta
     });
     wx.navigateTo({
-      url: './statistics/statistics',
+      url: './statistics/sta_room_history',
     })
   },
-  getTopLandlordSta: function(cookies) {
+  getRoomOrderSta: function(cookies) {
     let that = this;
     wx.request({
-      url: 'http://localhost/yk/top_landlord/statistics',
+      url: 'http://localhost/clienthomeorder/homeorder/eCharts',
       header: {'cookie': cookies.data.substring(0, 48), 'Content-Type': 'application/x-www-form-urlencoded'},
       method: "post",
       success: function(res) {
         console.log(res);
         console.log('set storage');
         wx.setStorage({
-          key:"landlordSta",
+          key:"RoomOrderSta",
           data: res.data
         });
       }
