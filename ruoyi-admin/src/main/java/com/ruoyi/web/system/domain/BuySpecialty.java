@@ -24,7 +24,7 @@ public class BuySpecialty extends BaseEntity
     private Long houseId;
 
     @Excel(name = "民宿名称")
-    private String houseName;
+    public String houseName;
 
     /** 特产名称 */
     @Excel(name = "特产名称")
@@ -53,6 +53,14 @@ public class BuySpecialty extends BaseEntity
     public Long money;
 
     public Long quantity;
+
+    private Integer priceDown;
+
+    private Integer priceUp;
+
+    private Integer inventoryDown;
+
+    private Integer inventoryUp;
 
     public void setId(Long id)
     {
@@ -126,6 +134,30 @@ public class BuySpecialty extends BaseEntity
         return imageUrl;
     }
 
+    public Integer getPriceDown(){return priceDown;}
+
+    public void setPriceDown(Integer priceDown){
+        this.priceDown=priceDown;
+    }
+
+    public Integer getPriceUp(){return priceUp;}
+
+    public void setPriceUp(Integer priceUp){
+        this.priceUp=priceUp;
+    }
+
+    public Integer getInventoryDown(){return inventoryDown;}
+
+    public void setInventoryDown(Integer inventoryDown){
+        this.inventoryDown=inventoryDown;
+    }
+
+    public Integer getInventoryUp(){return inventoryUp;}
+
+    public void setInventoryUp(Integer inventoryUp){
+        this.inventoryUp=inventoryUp;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -137,6 +169,10 @@ public class BuySpecialty extends BaseEntity
                 .append("price", getPrice())
                 .append("inventory", getInventory())
                 .append("imageUrl", getImageUrl())
+                .append("priceDown", getPriceDown())
+                .append("priceUp", getPriceUp())
+                .append("inventoryDown", getInventoryDown())
+                .append("inventoryUp", getInventoryUp())
                 .toString();
     }
 }

@@ -2,6 +2,7 @@ package com.ruoyi.web.system.controller;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,7 +49,7 @@ public class BuyRoomController extends BaseController
     @Autowired
     private IBuyRoomService buyRoomService;
 
-    @RequiresPermissions("system:buyroom:view")
+    //@RequiresPermissions("system:buyroom:view")
     @GetMapping()
     public String buyroom()
     {
@@ -58,16 +59,38 @@ public class BuyRoomController extends BaseController
     /**
      * 查询房间订购列表
      */
-    @RequiresPermissions("system:buyroom:list")
+    //@RequiresPermissions("system:buyroom:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(BuyRoom buyRoom)
     {
         startPage();
 
+        BuyRoom houseRoom=buyRoom;
+
+        if(houseRoom.getPricePerDayUp()!=null&&houseRoom.getPricePerDayDown()!=null&&(houseRoom.getPricePerDayUp()<houseRoom.getPricePerDayDown())){
+            int down=houseRoom.getPricePerDayUp();
+            houseRoom.setPricePerDayUp(houseRoom.getPricePerDayDown());
+            houseRoom.setPricePerDayDown(down);
+        }
+
+        buyRoom=houseRoom;
+
         if(buyRoom.getHouseName()!=null&&(!buyRoom.getHouseName().equals(""))){
-            String id=buyRoomService.getHouseIdByHouseName(buyRoom.getHouseName());
-            buyRoom.setHouseId(Long.parseLong(id));
+            List<String> idList=buyRoomService.getHouseIdByHouseName(buyRoom.getHouseName());
+            List<BuyRoom> ans = new ArrayList<>();
+            System.out.println(idList);
+            for(String id:idList){
+                buyRoom.setHouseId(Long.parseLong(id));
+                List<BuyRoom> li=buyRoomService.selectBuyRoomList(buyRoom);;
+                for(BuyRoom bb: li){
+                    ans.add(bb);
+                }
+            }
+            for(BuyRoom buyroom1: ans){
+                buyroom1.houseName=buyRoomService.getHouseNameById(buyroom1.getHouseId());
+            }
+            return getDataTable(ans);
         }
 
         List<BuyRoom> list = buyRoomService.selectBuyRoomList(buyRoom);
@@ -80,7 +103,7 @@ public class BuyRoomController extends BaseController
     /**
      * 导出房间订购列表
      */
-    @RequiresPermissions("system:buyroom:export")
+    //@RequiresPermissions("system:buyroom:export")
     @Log(title = "房间订购", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
@@ -108,7 +131,7 @@ public class BuyRoomController extends BaseController
     /**
      * 新增保存房间订购
      */
-    @RequiresPermissions("system:buyroom:add")
+    //@RequiresPermissions("system:buyroom:add")
     @Log(title = "房间订购", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -120,7 +143,7 @@ public class BuyRoomController extends BaseController
     /**
      * 修改房间订购
      */
-    @RequiresPermissions("system:buyroom:edit")
+   // @RequiresPermissions("system:buyroom:edit")
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
@@ -132,7 +155,7 @@ public class BuyRoomController extends BaseController
     /**
      * 修改保存房间订购
      */
-    @RequiresPermissions("system:buyroom:edit")
+   // @RequiresPermissions("system:buyroom:edit")
     @Log(title = "房间订购", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -144,7 +167,7 @@ public class BuyRoomController extends BaseController
     /**
      * 删除房间订购
      */
-    @RequiresPermissions("system:buyroom:remove")
+    //@RequiresPermissions("system:buyroom:remove")
     @Log(title = "房间订购", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody
@@ -165,7 +188,7 @@ public class BuyRoomController extends BaseController
 //    }
 
 
-    @RequiresPermissions("system:buyroom:buy")
+    //@RequiresPermissions("system:buyroom:buy")
     @GetMapping("/buy/{id}")
     public String buypage(@PathVariable("id") Long id,ModelMap mmap)
     {
@@ -176,7 +199,7 @@ public class BuyRoomController extends BaseController
         return prefix + "/buy";
     }
 
-    @RequiresPermissions("system:buyroom:infopage")
+   // @RequiresPermissions("system:buyroom:infopage")
     @GetMapping("/infopage/{id}")
     public String infoPage(@PathVariable("id") Long id,ModelMap mmap)
     {
@@ -215,36 +238,21 @@ public class BuyRoomController extends BaseController
 
     @PostMapping("/pay")
     @ResponseBody
-    public String pay(HttpServletRequest request){
+    public String pay(HttpServletRequest request) throws ParseException {
         String id=request.getParameter("id");
         System.out.println("运行到pay-----------controller,id="+id);
         Long idd=Long.parseLong(id);
         JSONObject res=new JSONObject();
         System.out.println("接下来检查输入格式");
-        int year=Integer.parseInt(request.getParameter("year"));
-        if(request.getParameter("month").isEmpty()){
-            res.put("result_code",1);
-            res.put("result_msg","入住月份不能为空");
-            return res.toString();
-        }
-        int month=Integer.parseInt(request.getParameter("month"));
-        if(request.getParameter("day").isEmpty()){
-            res.put("result_code",1);
-            res.put("result_msg","入住日期不能为空");
-            return res.toString();
-        }
-        int day=Integer.parseInt(request.getParameter("day"));
-        if(request.getParameter("hour").isEmpty()){
-            res.put("result_code",1);
-            res.put("result_msg","入住时刻不能为空");
-            return res.toString();
-        }
-        int hour=Integer.parseInt(request.getParameter("hour"));
-        if(request.getParameter("last").isEmpty()){
-            res.put("result_code",1);
-            res.put("result_msg","入住时长不能为空");
-            return res.toString();
-        }
+        String checkInDate=request.getParameter("checkInDate");
+        StringBuilder bu=new StringBuilder(checkInDate);
+        bu.setCharAt(10,' ');
+        checkInDate=bu.toString();
+        SimpleDateFormat sdf =  new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
+        Date checkIn=sdf.parse(checkInDate);
+        System.out.println("yyyyyyyyy时间："+checkInDate);
+        Date checkOut=checkIn;
+
         int last=Integer.parseInt(request.getParameter("last"));
         if(request.getParameter("pwd").isEmpty()||request.getParameter("pwd").length()!=6){
             res.put("result_code",1);
@@ -253,38 +261,20 @@ public class BuyRoomController extends BaseController
         }
         int pwd=Integer.parseInt(request.getParameter("pwd"));
 
-        //判断时间
-        Date cur = new Date();
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
-        System.out.println(dateFormat.format(cur));
-        int curYear=cur.getYear();
-        int curMonth=cur.getMonth();
-        int curDay=cur.getDay();
 
-        if(curYear>year){
-            res.put("result_code",1);
-            res.put("result_msg","请填写正确（未来）的日期");
-            return res.toString();
-        }
-        else if(curYear==year&&curMonth>month){
-            res.put("result_code",1);
-            res.put("result_msg","请填写正确（未来）的日期");
-            return res.toString();
-        }
-        else if(curYear==year&&curMonth==month&&curDay>=day){
-            res.put("result_code",1);
-            res.put("result_msg","请填写正确（未来）的日期");
-            return res.toString();
-        }
+
         int[] lon=new int[]{1,31,28,31,30,31,30,31,31,30,31,30,31};
-        if(lon[month]<day){
-            res.put("result_code",1);
-            res.put("result_msg","请填写正确（未来）的日期");
-            return res.toString();
-        }
+
 
         //计算时间
-        int toYear=year,toMonth=month,toDay=day;
+        String sYear=checkInDate.substring(0,4);
+        String sMonth=checkInDate.substring(5,7);
+        String sDay=checkInDate.substring(8,10);
+        String sHour=checkInDate.substring(11,13);
+        String sMinute=checkInDate.substring(14,16);
+        String sSecond=checkInDate.substring(17,19);
+        int toYear=Integer.parseInt(sYear),toMonth=Integer.parseInt(sMonth),toDay=Integer.parseInt(sDay);
+        System.out.println(toYear+"$$$"+toMonth+"$$$"+toDay);
         for(int i=0;i<last;i++){
             if(toDay<lon[toMonth])toDay++;
             else{
@@ -296,6 +286,8 @@ public class BuyRoomController extends BaseController
                 }
             }
         }
+
+        checkOut.setYear(toYear);checkOut.setMonth((toMonth));checkOut.setDate(toDay);
 
         //比较余额
         BuyRoom bb=new BuyRoom();
@@ -320,21 +312,13 @@ public class BuyRoomController extends BaseController
         buyRoomService.updateMoney(money);
         bb.setId(idd);
         bb.setPricePerDay(cost);
-        String timein=String.valueOf(year)+"-"+month+"-"+day+" "+hour+":00:00";
-        String timeout=String.valueOf(toYear)+"-"+toMonth+"-"+toDay+" "+hour+":00:00";
+        String timein=checkInDate;
+        String timeout=toYear+"-"+toMonth+"-"+toDay+" "+sHour+":"+sMinute+":"+sSecond;
+        System.out.println("checkout："+timeout);
         bb.setStandard(timein);//借用
         bb.setRoomNumber(timeout);//借用
-        Date date=new Date();
-        SimpleDateFormat dateFormat1= new SimpleDateFormat("yyyy-MM-dd HH:MM:SS");
-        System.out.println(dateFormat.format(date));
-        String buy_time=dateFormat.format(date);
-        // String buy_time=date.getYear()+"-"+date.getMonth()+"-"+date.getDay()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-        System.out.println(buy_time+"   &&&&&&&&&&&");
-        bb.setBuyTime(buy_time);
         buyRoomService.insertRecord(bb);
 
-
-        //buyRoomService.pay(idd);
         res.put("result_code",0);
         res.put("result_msg","预定成功");
         return res.toString();
@@ -386,14 +370,14 @@ public class BuyRoomController extends BaseController
         return res.toString();
     }
 
-    @RequiresPermissions("system:buyroom:statistics")
+    //@RequiresPermissions("system:buyroom:statistics")
     @GetMapping("/statistics")
     public String statistics(ModelMap mmap)
     {
         return prefix + "/statistics";
     }
 
-    @RequiresPermissions("system:buyroom:statistics")
+    //@RequiresPermissions("system:buyroom:statistics")
     @Log(title = "民宿订购统计", businessType = BusinessType.INSERT)
     @PostMapping("/statistics")
     @ResponseBody

@@ -1,8 +1,10 @@
 package com.ruoyi.web.system.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ruoyi.framework.web.domain.server.Sys;
+import com.ruoyi.web.system.domain.BuyRoom;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,7 +38,7 @@ public class HouseRoomController extends BaseController
     @Autowired
     private IHouseRoomService houseRoomService;
 
-    @RequiresPermissions("system:room:view")
+   //@RequiresPermissions("system:room:view")
     @GetMapping()
     public String room()
     {
@@ -46,17 +48,34 @@ public class HouseRoomController extends BaseController
     /**
      * 查询房子管理列表
      */
-    @RequiresPermissions("system:room:list")
+    //@RequiresPermissions("system:room:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(HouseRoom houseRoom)
     {
         startPage();
 
+        if(houseRoom.getPricePerDayUp()!=null&&houseRoom.getPricePerDayDown()!=null&&(houseRoom.getPricePerDayUp()<houseRoom.getPricePerDayDown())){
+            int down=houseRoom.getPricePerDayUp();
+            houseRoom.setPricePerDayUp(houseRoom.getPricePerDayDown());
+            houseRoom.setPricePerDayDown(down);
+        }
+
         if(houseRoom.getHouseName()!=null&&(!houseRoom.getHouseName().equals(""))){
-            String id=houseRoomService.getHouseIdByHouseName(houseRoom);
-            Long houseId=Long.parseLong(id);
-            houseRoom.setHouseId(houseId);
+            List<String> idList=houseRoomService.getHouseIdByHouseName(houseRoom);
+            List<HouseRoom> ans = new ArrayList<>();
+            System.out.println(idList);
+            for(String id:idList){
+                houseRoom.setHouseId(Long.parseLong(id));
+                List<HouseRoom> li=houseRoomService.selectHouseRoomList(houseRoom);;
+                for(HouseRoom bb: li){
+                    ans.add(bb);
+                }
+            }
+            for(HouseRoom buyroom1: ans){
+                buyroom1.houseName=houseRoomService.getHouseNameById(buyroom1.getHouseId());
+            }
+            return getDataTable(ans);
         }
 
         List<HouseRoom> list = houseRoomService.selectHouseRoomList(houseRoom);
@@ -69,7 +88,7 @@ public class HouseRoomController extends BaseController
     /**
      * 导出房子管理列表
      */
-    @RequiresPermissions("system:room:export")
+    //@RequiresPermissions("system:room:export")
     @Log(title = "房子管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
@@ -97,29 +116,31 @@ public class HouseRoomController extends BaseController
     /**
      * 新增保存房子管理
      */
-    @RequiresPermissions("system:room:add")
+    //@RequiresPermissions("system:room:add")
     @Log(title = "房子管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(HouseRoom houseRoom)
     {
-        String id=houseRoomService.getHouseIdByHouseName(houseRoom);
+        List<String> idList=houseRoomService.getHouseIdByExactHouseName(houseRoom);
         System.out.println(houseRoom.getHouseName()+"    %%%%%%%%%%");
-        if(id==null||id.equals("")){
+        if(idList.size()!=1){
             AjaxResult res=new AjaxResult();
             res.put("msg","民宿名称有误");
             return res;
         }
         System.out.println("yyyyyyyyyyyyyyyyyhhhhhhhhhhhhhhhhhhhhh&&&&&&&&&&&&&7");
-        Long houseId=Long.parseLong(id);
-        houseRoom.setHouseId(houseId);
+        for(String id:idList) {
+            Long houseId=Long.parseLong(id);
+            houseRoom.setHouseId(houseId);
+        }
         return toAjax(houseRoomService.insertHouseRoom(houseRoom));
     }
 
     /**
      * 修改房子管理
      */
-    @RequiresPermissions("system:room:edit")
+    //@RequiresPermissions("system:room:edit")
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
@@ -131,7 +152,7 @@ public class HouseRoomController extends BaseController
     /**
      * 修改保存房子管理
      */
-    @RequiresPermissions("system:room:edit")
+    //@RequiresPermissions("system:room:edit")
     @Log(title = "房子管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -143,7 +164,7 @@ public class HouseRoomController extends BaseController
     /**
      * 删除房子管理
      */
-    @RequiresPermissions("system:room:remove")
+    //@RequiresPermissions("system:room:remove")
     @Log(title = "房子管理", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody
@@ -152,14 +173,14 @@ public class HouseRoomController extends BaseController
         return toAjax(houseRoomService.deleteHouseRoomByIds(ids));
     }
 
-    @RequiresPermissions("system:room:statistics")
+    //@RequiresPermissions("system:room:statistics")
     @GetMapping("/statistics")
     public String statistics(ModelMap mmap)
     {
         return prefix + "/statistics";
     }
 
-    @RequiresPermissions("system:room:statistics")
+    //@RequiresPermissions("system:room:statistics")
     @Log(title = "房源统计", businessType = BusinessType.INSERT)
     @PostMapping("/statistics")
     @ResponseBody

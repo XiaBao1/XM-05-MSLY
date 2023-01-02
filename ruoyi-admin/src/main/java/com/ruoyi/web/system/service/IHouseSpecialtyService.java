@@ -67,5 +67,7 @@ public interface IHouseSpecialtyService
 
     public Long getSoldNumber(String name);
 
-    public String getHouseIdByHouseName(HouseSpecialty houseSpecialty);
+    public List<String> getHouseIdByHouseName(HouseSpecialty houseSpecialty);
+
+    List<String> getHouseIdByExactHouseName(HouseSpecialty houseSpecialty);
 }

@@ -76,7 +76,8 @@
         </div>
         <div>
             <p style="text-align: right">
-                <button th:style="'background:#1E90FF;border-style:none;color:#ffff;border-radius:10px;height:40px;width:70px'" name="dg" id="dg" onclick="dinggou()">我要订购</button>
+                <button th:style="'background:#1E90FF;border-style:none;color:#ffff;border-radius:10px;height:40px;width:70px'" name="dg" id="dg" onclick="dinggou()">我要下单</button>
+                <button th:style="'background:#DCDCDC;border-style:none;color:#ffff;border-radius:5px;height:40px;width:70px'" name="qx" id="qx" onclick="cancel()">返回</button>
             </p>
         </div>
     </form>
@@ -172,6 +173,10 @@
             var url="system/buySpecialty/infopage/"+id;
             $.modal.openTab("订购支付",url);
         }
+    }
+
+    function cancel() {
+        parent.location.reload();
     }
 
 </script>

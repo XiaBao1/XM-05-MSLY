@@ -98,5 +98,5 @@ public interface BuyRoomMapper
 
     public Long getSellNumber(String name);
 
-    String getHouseIdByHouseName(String houseName);
+    List<String> getHouseIdByHouseName(String houseName);
 }

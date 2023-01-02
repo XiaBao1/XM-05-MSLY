@@ -27,10 +27,12 @@
         <include refid="selectBuyRoomVo"/>
         <where>
             <if test="houseId != null "> and house_id = #{houseId}</if>
-            <if test="roomNumber != null  and roomNumber != ''"> and room_number = #{roomNumber}</if>
+            <if test="roomNumber != null  and roomNumber != ''"> and room_numberlike concat('%', #{roomNumber}, '%')</if>
             <if test="pricePerDay != null "> and price_per_day = #{pricePerDay}</if>
-            <if test="standard != null  and standard != ''"> and standard = #{standard}</if>
+            <if test="standard != null  and standard != ''"> and standard like concat('%', #{standard}, '%')</if>
             <if test="isFree != null "> and is_free = #{isFree}</if>
+            <if test="pricePerDayUp != null "> and #{pricePerDayUp} >= price_per_day</if>
+            <if test="pricePerDayDown != null "> and price_per_day >= #{pricePerDayDown}</if>
         </where>
     </select>
 
@@ -95,8 +97,8 @@
         select count(*) from client_room_record where (select house_name from landlord_house where id=(select house_id from house_room where house_room.id=client_room_record.room_id))=#{name}
     </select>
 
-    <select id="getHouseIdByHouseName" parameterType="String" resultType="String">
-        select id from landlord_house where house_name=#{houseName}
+    <select id="getHouseIdByHouseName" parameterType="String" resultMap="StringResult">
+        select id from landlord_house where house_name like concat('%',#{houseName},'%')
     </select>
 
     <insert id="insertBuyRoom" parameterType="BuyRoom" useGeneratedKeys="true" keyProperty="id">

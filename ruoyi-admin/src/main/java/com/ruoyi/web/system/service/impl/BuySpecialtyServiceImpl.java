@@ -144,7 +144,7 @@ public class BuySpecialtyServiceImpl implements IBuySpecialtyService
         buySpecialtyMapper.insertRecord(buySpecialty);
     }
 
-    public String getHouseIdByHouseName(String houseName){
+    public List<String> getHouseIdByHouseName(String houseName){
         return  buySpecialtyMapper.getHouseIdByHouseName(houseName);
     }
 }

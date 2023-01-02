@@ -35,10 +35,10 @@
         <include refid="selectLandlordRoomRecordVo"/>
             <if test="id != null "> and id = #{id}</if>
             <if test="clientNumber != null "> and client_number = #{clientNumber}</if>
-        <if test="clientName != '' "> and user_name = #{clientName}</if>
+        <if test="clientName != '' "> and user_name like concat('%', #{clientName}, '%')</if>
             <if test="roomId != null "> and room_id = #{roomId}</if>
             <if test="roomNumber != null "> and room_number = #{roomNumber}</if>
-            <if test="houseName != '' "> and house_name = #{houseName}</if>
+            <if test="houseName != '' "> and house_name like concat('%', #{houseName}, '%')</if>
             <if test="buyTime != null "> and buy_time = #{buyTime}</if>
             <if test="checkInDate != null "> and check_in_date = #{checkInDate}</if>
             <if test="checkOutDate != null "> and check_out_date = #{checkOutDate}</if>
