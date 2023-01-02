@@ -29,7 +29,8 @@ function initChart(canvas, width, height, dpr) {
           left: 'left'   // 设置标题位置
         },
         legend: {
-            data:['高温','低温']
+            data:['高温','低温'],
+            right: 'right'
         },
         grid: {
           containLabel: true,
@@ -68,7 +69,7 @@ function initChart(canvas, width, height, dpr) {
       ],
       series : [
           {
-              name:'最高气温',
+              name:'高温',
               type:'line',
               //data:[11, 11, 15, 13, 12, 13, 10],
               data: monthHighT,
@@ -85,7 +86,7 @@ function initChart(canvas, width, height, dpr) {
               }
           },
           {
-              name:'最低气温',
+              name:'低温',
               type:'line',
               //data:[1, -2, 2, 5, 3, 2, 0],
               data: monthLowT,

@@ -19,7 +19,8 @@ function initChart(canvas, width, height, dpr) {
           left: 'left'   // 设置标题位置
         },
         legend: {
-          data: ['销量']
+          data: ['销量'],
+          right: 'right'
         },
         grid: {
           containLabel: true
