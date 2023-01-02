@@ -4,7 +4,7 @@
     <th:block th:include="include :: header('修改房iii间订购')" />
     <link href="../static/css/login.min.css" th:href="@{/css/login.css}" rel="stylesheet"/>
 </head>
-<body id="bdpg" background="http://localhost/profile/back9.jpg" style="background-repeat:no-repeat;background-attachment:fixed; background-size:100% 100%;">
+<body id="bdpg" background="http://localhost/profile/specailty0.jpg" style="background-repeat:no-repeat;background-attachment:fixed; background-size:100% 100%;">
 <div class="wrapper wrapper-content animated fadeInRight pchpanel">
     <form class="form-horizontal m" id="form-buyRoom-buy" >
         <!--    <form class="form-horizontal m" id="form-buyroom-buy" th:object="${buyRoom}">-->
@@ -63,6 +63,11 @@
                 <input name="pricePerDay" class="form-control" type="password" id="pwd" maxlength="6" minlength="6" placeholder="请输入6位支付密码" >
             </div>
         </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label " th:size="10" style="color: white"></label>
+            <marquee id="affiche" align="right" behavior="scroll" bgcolor="transparent" direction="up" height="50" width="200" hspace="50" vspace="15" loop="-1" scrollamount="1" scrolldelay="90" onMouseOut="this.start()" onMouseOver="this.stop()"></marquee>
+        </div>
+        <div id="my" ><label style="font-family: 楷体;color:lightblue" >人生不过是一场旅行，你路过我，我路过你，然后各自修行，各自向前。</label></div>
     </form>
     <div>
         <p style="text-align: right">
@@ -79,6 +84,54 @@
 <th:block th:include="include :: summernote-js" />
 <script th:inline="javascript" >
     console.log("进入infopage的js");
+
+    window.onload=function(){
+        var imgs =["http://localhost/profile/specailty0.jpg",
+            "http://localhost/profile/specailty14.jpg",
+            "http://localhost/profile/specailty13.jpg",
+            "http://localhost/profile/specailty12.jpg",
+            "http://localhost/profile/specailty11.jpg",
+            "http://localhost/profile/specailty10.jpg",
+            "http://localhost/profile/specailty9.jpg",
+            "http://localhost/profile/specailty8.jpg",
+            "http://localhost/profile/specailty7.jpg",
+            "http://localhost/profile/specailty6.jpg",
+            "http://localhost/profile/specailty5.jpg",
+            "http://localhost/profile/specailty4.jpg",
+            "http://localhost/profile/specailty3.jpg",
+            "http://localhost/profile/specailty2.jpg",
+            "http://localhost/profile/specailty1.jpg",];//（设定想要显示的图片）
+        var mottos=["夜半酣酒江月下，美人纤手炙鱼头。",
+            "惟有莼鲈堪漫吃，下官亦为啖鱼回。",
+            "时绕麦田求野荠，强为僧舍煮山羹。",
+            "长江绕郭知鱼美，好竹连山觉笋香。",
+            "色如玉版猫头笋，味抵驼峰牛尾猩。",
+            "不须庾韭元修菜，吃到憎时始忆渠。",
+            "采掇归来便堪煮，半铢盐酪不须添。",
+            "扬州鲜笋趁鲥鱼，烂煮春风三月初。",
+            "蒸鸡最知名，美不数鱼鳖。",
+            "秦烹惟羊羹，陇馔有熊腊。",
+            "青浮卵碗槐芽饼，红点冰盘藿叶鱼。",
+            "幸春山笋贱，无人争吃，夜炉芋美，与客同煨。",
+            " 江上往来人，但爱鲈鱼美。",
+            "春日春盘细生菜，忽忆两京梅发时。",
+            "多种竹将挑笋吃，旋栽松待斫柴烧"
+        ];
+
+        var i =0;
+        var head=document.getElementById("bdpg");//获取DIV对象
+        var my=document.getElementById("my");//获取DIV对象
+        my.style.fontFamily="楷体";
+        my.style.color="lightblue";
+        function time(){
+            i++;
+            i=i%15;
+            head.background=imgs[i];
+            my.innerText=mottos[i];
+        }
+        setInterval(time,7000);
+    };
+
     var houseName,specialtyName,houseId,inventory,price,imageUrl,description;
     var id=$("#id").val();
     console.log("id="+id);
@@ -112,9 +165,30 @@
     document.getElementById("houseName").value=houseName;
     document.getElementById("description").value=description;
     var imageStr="<p style='text-align: center'>\n" +
-        "                <img src='"+imageUrl+"' alt='无法显示图片' th:width='300' height='200' style='text-align: center;opacity: 70%'>\n" +
+        "                <img src='"+imageUrl+"' alt='无法显示图片' th:width='300' height='200' style='text-align: center;opacity: 80%'>\n" +
         "            </p>";
     document.getElementById("showImage").innerHTML=imageStr;
+
+    $.ajax({//获取评价信息
+        type: 'post',
+        url: '/system/buySpecialty/getComment',
+        async: false,
+        data: data,
+        success: function(res) {
+            console.log(res);
+            let json = eval( "(" + res + ")" );
+            var str,ss;
+            if(json.allComment.length==0) str="<div><font size='3' color='yellow' face='楷体'>暂无评论，期待您的评价。</font></div>";
+            else for(var i=0;i<json.allComment.length;i++){
+                if(i==0)str="<div><font size='3' color='yellow' face='楷体'>"+json.allComment[i].name+"："+json.allComment[i].comment+"</font></div>";
+                else if(i%2==1) ss=str,str=ss+"<div><font size='3' color='#32cd32' face='楷体'>"+json.allComment[i].name+"："+json.allComment[i].comment+"</font></div>";
+                else ss=str,str=ss+"<div><font size='3' color='yellow' face='楷体'>"+json.allComment[i].name+"："+json.allComment[i].comment+"</font></div>";
+            }
+            document.getElementById("affiche").innerHTML=str;
+        }
+    });
+
+
 
     function confirm() {
         console.log("进入confirm");
