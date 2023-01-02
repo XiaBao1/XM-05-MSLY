@@ -3,7 +3,7 @@
   <view class='form'>
     <view class='inputBox'>
       <label>城市</label>
-      <text class="value" >{{city}}</text>
+      <input class="value" type="text" value="{{city}}" bindinput="inputCity"></input>
     </view>    
     <view class='inputBox'>
       <label>低温（℃）</label>
@@ -29,7 +29,6 @@
       <label>湿度（%）</label>
       <text class="value">{{humidity}}</text>
     </view>
-    <Select prop-array='{{dirDict}}' isDisabled="{{!dirBtnStatus}}" arrayKeyStr="value" arrayValueStr="label" defalutKey="{{weatherData.windDirection}}" selectColor="#36CBB7" id="dirSelect" bind:handledata="dirChange"></Select>
   </view>
 </view>
 

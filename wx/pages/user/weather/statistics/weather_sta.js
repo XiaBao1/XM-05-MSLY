@@ -16,6 +16,12 @@ function initChart(canvas, width, height, dpr) {
       console.log('处理过');
       console.log(monthHighT);
       console.log(monthLowT);
+      wx.removeStorage({
+        key: 'weatherSta',
+        success: function() {
+          console.log('清除 weatherSta');
+        }
+      });
       canvas.setChart(chart);
       var option = {
         title: {

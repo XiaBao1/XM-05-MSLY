@@ -5,12 +5,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    dirDict:[
-      {value:"0",label:"请选择风向"},
-      {value:"北",label:"北"},
-      {value:"东北",label:"东北"},
-    ],
-    dirBtnStatus: 1,
     weatherData: {
       id: 1,
       city: '',
@@ -24,9 +18,6 @@ Page({
       windScale: null,
       windSpeed: null,
     }
-  },
-  dirChange(e){
-    console.log(e);
   },
   /**
    * 生命周期函数--监听页面加载

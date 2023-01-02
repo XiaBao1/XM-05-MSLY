@@ -17,16 +17,29 @@
   <button type='primary' bindtap='toStatistics'>
     查看本月天气统计
   </button>
-	<view class="conference-list">
-    <navigator class="conference-item" wx:for="{{servicelist}}" wx:key="{{item.id}}">
-      <view class="conference-item-text">
-        <view class="conference-item-title">
-        {{item.city}}</view>
-        <view class="service-tags">
-          <text>{{item.weatherDate}}</text>
+	<view class='tab-items'>
+    <view class='recharge' wx:for="{{servicelist}}" wx:key="{{item.id}}" wx:for-item="item">
+      <view class='record'>
+        <view class='list'>
+          <view class="conference-item-title">
+          {{item.city}}</view>
         </view>
-        <view class="icon-zuobiao">气温{{item.lowT}}~{{item.highT}}℃，白天{{item.dayType}}，夜晚{{item.nightType}},{{item.windDirection}}风{{item.windScale}}级,空气湿度{{item.humidity}}%</view>
+        <view class='list'>
+          <view class="service-tags">
+            <text>{{item.weatherDate}}</text>
+          </view>
+        </view>
+        <view class='list'>
+          <view class="button-tags">
+            <text bindtap="onModifyTap" data-idx="{{index}}">修改</text>
+            <text bindtap="onDeleteTap" data-itemid="{{item.id}}">删除</text>
+          </view>
+        </view>
       </view>
-    </navigator>
+      <view class="icon-zuobiao">
+        气温{{item.lowT}}~{{item.highT}}℃，白天{{item.dayType}}，夜晚{{item.nightType}},{{item.windDirection}}风{{item.windScale}}级,空气湿度{{item.humidity}}%
+      </view>
+      
+    </view>
   </view>
 </view>

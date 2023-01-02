@@ -1,0 +1,39 @@
+<!--pages/user/weather/modify/weather_modify.wxml-->
+<view class='main'>
+  <view class='form'>
+    <view class='inputBox'>
+      <label>城市</label>
+      <input class="value" type="text" value="{{city}}" bindinput="inputCity"></input>
+    </view>    
+    <view class='inputBox'>
+      <label>低温（℃）</label>
+      <input class="value" type="number" value="{{lowT}}" bindinput="inputLowT"></input>
+    </view>
+    <view class='inputBox'>
+      <label>高温（℃）：</label>
+      <input class="value" type="number" value="{{highT}}" bindinput="inputHighT"></input>
+    </view>
+    <view class='inputBox'>
+      <label>白天天气</label>
+      <input class="value" type="text" value="{{dayType}}" bindinput="inputDayType"></input>
+    </view>
+    <view class='inputBox'>
+      <label>夜晚天气</label>
+      <input class="value" type="text" value="{{nightType}}" bindinput="inputNightType"></input>
+    </view>
+    <view class='inputBox'>
+      <label >风速（m/s）</label>
+      <input class="value" type="digit" value="{{windSpeed}}" bindinput="inputWindSpeed"></input>
+    </view>
+    <view class='inputBox'>
+      <label>湿度（%）</label>
+      <input class="value" type="number" value="{{humidity}}" bindinput="inputHumidity"></input>
+    </view>
+  </view>
+  <view class='confirm'>
+    <button class='confirmBtn' bindtap="submitBtnClicked">确认修改</button>
+  </view>
+</view>
+
+
+

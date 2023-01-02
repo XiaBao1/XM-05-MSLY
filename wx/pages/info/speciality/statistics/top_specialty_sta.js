@@ -87,7 +87,7 @@ function initChart(canvas, width, height, dpr) {
         success: function() {
           console.log('清除缓存specialitySta');
         }
-      })
+      });
     }
   });
   return chart;

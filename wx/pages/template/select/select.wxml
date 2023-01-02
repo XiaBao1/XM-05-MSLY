@@ -1,9 +1,0 @@
-<!--pages/template/select/select.wxml-->
-<view class='com-selectBox'>
-    <picker class='com-sContent' bindcancel="emitHideRegion" disabled="{{isDisabled}}" bindtap="{{isDisabled?'':'selectToggle'}}" bindchange="bindPickerChange" value="{{index}}" range="{{selectList}}">
-        <view class="com-sTxt">
-            {{nowText}}
-        </view>
-        <!-- <image src='../../images/right.png' class='com-sImg' animation="{{animationData}}"></image> -->
-    </picker>
-</view>

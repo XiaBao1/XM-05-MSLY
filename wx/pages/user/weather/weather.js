@@ -1,4 +1,5 @@
-import util from './../../../utils/util.js';
+let getCookie = require("../../../utils/util.js")['getCookie'];
+let curIdx = 0;
 Page({
   data: {
     filterdata:{},  //筛选条件数据
@@ -11,7 +12,7 @@ Page({
     returnDataSta: "",
     servicelist:[],
   },
-  onLoad(options) { //加载数据渲染页面
+  onLoad() { //加载数据渲染页面
     let that = this;
     wx.getStorage({
       key: "cookies",
@@ -206,5 +207,35 @@ Page({
     setTimeout(()=>{
       wx.stopPullDownRefresh()
     },1000)
-  }
+  },
+  onDeleteTap:function(e) {
+    curIdx = e.currentTarget.dataset.itemid;
+    console.log('删除'+curIdx);
+    getCookie(this.deleteById);
+  },
+  deleteById:function(cookies){
+    let that = this;
+    wx.request({
+      url: 'http://localhost/weather/weather/remove',
+      header: {'cookie': cookies.data.substring(0, 48), 'Content-Type': 'application/x-www-form-urlencoded'},
+      method: "post",
+      data: {ids: curIdx},
+      success: function(res) {
+        console.log(res);
+        that.onLoad();
+      }
+    });
+  },
+  onModifyTap:function(e) {
+    curIdx = e.currentTarget.dataset.idx;
+    console.log('修改index'+curIdx);
+    wx.setStorage({
+      key: "modifyweatherdat",
+      data: this.data.servicelist[curIdx]
+    });
+    wx.navigateTo({
+      url: './modify/weather_modify',
+    });
+  },
+
 })
