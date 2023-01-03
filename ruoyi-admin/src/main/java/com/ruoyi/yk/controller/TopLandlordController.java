@@ -53,9 +53,9 @@ public class TopLandlordController extends BaseController {
     @RequiresPermissions("yk:top_landlord:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list() {
+    public TableDataInfo list(TopLandlordHouse landlordHouse) {
         startPage();
-        List<TopLandlordHouse> list = getTopLandlordList();
+        List<TopLandlordHouse> list = getTopLandlordList(landlordHouse);
         return getDataTable(list);
     }
 
@@ -65,7 +65,7 @@ public class TopLandlordController extends BaseController {
     @ResponseBody
     public AjaxResult export(SysUser user)
     {
-        List<TopLandlordHouse> list = getTopLandlordList();
+        List<TopLandlordHouse> list = getTopLandlordList(null);
         ExcelUtil<TopLandlordHouse> util = new ExcelUtil<TopLandlordHouse>(TopLandlordHouse.class);
         return util.exportExcel(list, "热门民宿");
     }
@@ -84,7 +84,7 @@ public class TopLandlordController extends BaseController {
     @ResponseBody
     public JSONObject statisticsData()
     {
-        List<TopLandlordHouse> topSpecialityList = getTopLandlordList();
+        List<TopLandlordHouse> topSpecialityList = getTopLandlordList(null);
         JSONArray saleArray = new JSONArray();
         JSONArray nameArray = new JSONArray();
         JSONObject json = new JSONObject();
@@ -108,25 +108,34 @@ public class TopLandlordController extends BaseController {
         return prefix + "/detail";
     }
 
-    private List<TopLandlordHouse> getTopLandlordList() {
+    private List<TopLandlordHouse> getTopLandlordList(TopLandlordHouse landlordHouse) {
         PageDomain pageDomain = TableSupport.buildPageRequest();
         String orderBy = pageDomain.getOrderBy();
 
         List<TopLandlordHouse> list = new ArrayList<TopLandlordHouse>();
         Connection connection = null;
         PreparedStatement pstmt = null;
-        String sql = "select LH.id, LH.house_name, LH.host_number, LH.address, LH.register_time, LH.image_url, LH.city, count(CRR.id) as sale, AVG(CRC.score) as score " +
-                "from landlord_house LH " +
-                "   left JOIN house_room HR on LH.id = HR.house_id " +
-                "   left JOIN client_room_record CRR on HR.id = CRR.room_id " +
-                "   left JOIN client_room_comment CRC on CRR.id = CRC.room_record_id " +
-                "GROUP BY LH.id ";
+        String sql = " select LH.id, LH.house_name, LH.host_number, LH.address, LH.register_time, LH.image_url, LH.city, count(CRR.id) as sale, AVG(CRC.score) as score "
+                + " from landlord_house LH "
+                + "   left JOIN house_room HR on LH.id = HR.house_id "
+                + "   left JOIN client_room_record CRR on HR.id = CRR.room_id "
+                + "   left JOIN client_room_comment CRC on CRR.id = CRC.room_record_id "
+                + " where true ";
 
+        if (landlordHouse != null) {
+            if (landlordHouse.getAddress() != null  && ! landlordHouse.getAddress().isEmpty()) {
+                sql += " and LH.address like '%" + landlordHouse.getAddress() +"%' ";
+            }
+            if (landlordHouse.getHouseName() != null && ! landlordHouse.getHouseName().isEmpty()) {
+                sql += " and LH.house_name like '%" + landlordHouse.getHouseName() + "%' ";
+            }
+        }
+
+        sql += " GROUP BY LH.id ";
 
         if (orderBy != null && ! orderBy.isEmpty()) {
             sql += "order by " + orderBy;
         }
-        // System.out.println(sql);
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
@@ -137,6 +146,7 @@ public class TopLandlordController extends BaseController {
 
             while (rs.next()) {
                 TopLandlordHouse item = new TopLandlordHouse();
+
                 item.setId(rs.getLong("id"));
                 item.setAddress(rs.getString("address"));
                 item.setHouseName(rs.getString("house_name"));

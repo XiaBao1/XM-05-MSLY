@@ -47,9 +47,9 @@ public class TopSpecialityController extends BaseController {
     @RequiresPermissions("yk:top_speciality:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list() {
+    public TableDataInfo list(TopHouseSpecialty specialty) {
         startPage();
-        List<TopHouseSpecialty> list = getTopSpecialityList();
+        List<TopHouseSpecialty> list = getTopSpecialityList(specialty);
         return getDataTable(list);
     }
 
@@ -59,7 +59,7 @@ public class TopSpecialityController extends BaseController {
     @ResponseBody
     public AjaxResult export()
     {
-        List<TopHouseSpecialty> list = getTopSpecialityList();
+        List<TopHouseSpecialty> list = getTopSpecialityList(null);
         ExcelUtil<TopHouseSpecialty> util = new ExcelUtil<TopHouseSpecialty>(TopHouseSpecialty.class);
         return util.exportExcel(list, "热门特产");
     }
@@ -77,7 +77,7 @@ public class TopSpecialityController extends BaseController {
     @ResponseBody
     public List<Double> statisticsData()
     {
-        List<TopHouseSpecialty> topSpecialityList = getTopSpecialityList();
+        List<TopHouseSpecialty> topSpecialityList = getTopSpecialityList(null);
         List<Double> list = new ArrayList<Double>();
 
         for (TopHouseSpecialty item : topSpecialityList) {
@@ -88,7 +88,7 @@ public class TopSpecialityController extends BaseController {
         return list;
     }
 
-    private List<TopHouseSpecialty> getTopSpecialityList() {
+    private List<TopHouseSpecialty> getTopSpecialityList(TopHouseSpecialty speciality) {
         PageDomain pageDomain = TableSupport.buildPageRequest();
         String orderBy = pageDomain.getOrderBy();
 
@@ -96,13 +96,27 @@ public class TopSpecialityController extends BaseController {
         Connection connection = null;
         PreparedStatement pstmt = null;
         String sql = "SELECT HS.id, HS.specialty_name, HS.image_url, HS.price, count(CSR.specialty_id ) as sale, HS.description, HS.inventory, HS.house_id, LH.house_name, LH.address "
-                + "FROM house_specialty as HS left join client_specialty_record as CSR on HS.id = CSR.specialty_id "
-                + "join landlord_house as LH on LH.id = HS.house_id "
-                + "GROUP BY HS.id ";
+                + " FROM house_specialty as HS left join client_specialty_record as CSR on HS.id = CSR.specialty_id "
+                + " join landlord_house as LH on LH.id = HS.house_id "
+                + " where true ";
+
+        if (speciality != null) {
+            if (speciality.getSpecialtyName() != null && ! speciality.getSpecialtyName().isEmpty() ) {
+                sql += " and specialty_name like '%" + speciality.getSpecialtyName() + "%' ";
+            }
+            if (speciality.getHouseName() != null && ! speciality.getHouseName().isEmpty()) {
+                sql += " and house_name like '%" + speciality.getHouseName() + "%' ";
+            }
+            if (speciality.getAddress() != null && ! speciality.getAddress().isEmpty()) {
+                sql += " and address like '%" + speciality.getAddress() + "%' ";
+            }
+        }
+
+        sql += "GROUP BY HS.id ";
         if (orderBy != null && ! orderBy.isEmpty()) {
             sql += "order by " + orderBy;
         }
-        // System.out.println(sql);
+         System.out.println(sql);
         try
         {
             Class.forName("com.mysql.jdbc.Driver");

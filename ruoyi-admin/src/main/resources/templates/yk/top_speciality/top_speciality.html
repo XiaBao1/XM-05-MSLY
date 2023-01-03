@@ -27,26 +27,30 @@
 <body class="gray-bg">
      <div class="container-div">
         <div class="row">
-<!--            <div class="col-sm-12 search-collapse">-->
-<!--                <form id="formId">-->
-<!--                    <div class="select-list">-->
-<!--                        <ul>-->
-<!--                            <li>-->
-<!--                                <label>特产名称：</label>-->
-<!--                                <input type="text" name="specialtyName"/>-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <label>特产价格：</label>-->
-<!--                                <input type="text" name="price"/>-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <label>特产销量：</label>-->
-<!--                                <input type="text" name="sale"/>-->
-<!--                            </li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
-<!--                </form>-->
-<!--            </div>-->
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>特产名称：</label>
+                                <input type="text" name="specialtyName" id="speciality_name"/>
+                            </li>
+                            <li>
+                                <label>民宿名称：</label>
+                                <input type="text" name="houseName" id="hosue_name"/>
+                            </li>
+                            <li>
+                                <label>民宿地址：</label>
+                                <input type="text" name="address" id="address"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="resetPre()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="yk:top_speciality:export">
@@ -57,6 +61,12 @@
                 </a>
                 <a class="btn btn-success" onclick="$.modal.openTab('特产统计', '/yk/top_speciality/statistics');" shiro:hasPermission="yk:top_speciality:statistics">
                     <i class="fa fa-plus"></i> 统计
+                </a>
+                <a class="btn btn-success" onclick="$.table.refreshOptions({sortName: 'sale', sortOrder: 'desc'})">
+                    <i class="fa fa-plus"></i> 按销量降序排列
+                </a>
+                <a class="btn btn-success" onclick="$.table.refreshOptions({sortName: 'price', sortOrder: 'asc'})">
+                    <i class="fa fa-plus"></i> 按价格升序排列
                 </a>
             </div>
 
@@ -77,6 +87,7 @@
                 modalName: "最热特产榜单",
                 sortName: "sale",
                 sortOrder: "desc",
+                pagination: false,
                 columns:
                 [{
                     field: 'id',
@@ -100,12 +111,10 @@
                     title: '民宿地址',
                 },{
                     field: 'price',
-                    title: '特产价格',
-                    sortable: true
+                    title: '特产价格'
                 }, {
                     field: 'sale',
-                    title: '特产销量',
-                    sortable: true
+                    title: '特产销量'
                 },{
                     field: 'description',
                     title: '描述'
@@ -132,6 +141,13 @@
         function buy(id) {
             var url =  ctx + "system/buySpecialty" + '/buy/' + id;
             $.modal.openTab("详情页", url);
+        }
+
+        function resetPre() {
+            $("#speciality_name").val("");
+            $("#address").val("");
+            $("#house_name").val("");
+            $.table.search();
         }
 
         function printHtml() {

@@ -88,6 +88,15 @@
 					<a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="system:user:print">
 						<i class="fa fa-plus"></i> 打印
 					</a>
+					<a class="btn btn-success" onclick="$.table.refreshOptions({sortName: 'createTime', sortOrder: 'desc'})">
+						<i class="fa fa-plus"></i> 按创建时间降序
+					</a>
+					<a class="btn btn-success" onclick="$.table.refreshOptions({sortName: 'money', sortOrder: 'desc'})">
+						<i class="fa fa-plus"></i> 按余额降序
+					</a>
+					<a class="btn btn-success" onclick="$.table.refreshOptions({sortName: 'userId', sortOrder: 'asc'})">
+						<i class="fa fa-plus"></i> 按用户id升序
+					</a>
 		        </div>
 		        
 		        <div class="col-sm-12 select-table table-striped noprint" id="prints" style="width: 100%;">
@@ -142,8 +151,7 @@
 		        },
 		        {
 		            field: 'userId',
-		            title: '用户ID',
-					sortable: true
+		            title: '用户ID'
 		        },{
 		            field: 'loginName',
 		            title: '登录账号'
@@ -165,8 +173,7 @@
 					title: '省份'
 				},{
 					field: 'money',
-					title: '余额',
-					sortable: true
+					title: '余额'
 				},
 		        {
 		        	visible: editFlag == 'hidden' ? false : true,
@@ -178,8 +185,7 @@
 		        },
 		        {
 		            field: 'createTime',
-		            title: '创建时间',
-		            sortable: true
+		            title: '创建时间'
 		        },
 		        {
 		            title: '操作',
