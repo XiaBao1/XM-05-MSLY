@@ -7,7 +7,7 @@ Page({
   data: {
       id: 1,
       city: '',
-      windDirection: '北',
+      windDirection: '',
       dayType: '',
       highT: null,
       lowT: null,
@@ -71,6 +71,11 @@ Page({
   inputWindScale: function(e) {
     this.setData({
       windScale: e.detail.value
+    })
+  },
+  inputWindDirection: function(e) {
+    this.setData({
+      windDirection: e.detail.value
     })
   },
   inputHumidity: function(e) {

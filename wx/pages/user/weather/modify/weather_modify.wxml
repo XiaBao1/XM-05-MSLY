@@ -37,6 +37,10 @@
       <input class="value" type="number" value="{{windScale}}" bindinput="inputWindScale" placeholder="请输入当日风力"></input>
     </view>
     <view class='inputBox'>
+      <label >风向</label>
+      <input class="value" type="text" value="{{windDirection}}" bindinput="inputWindDirection" placeholder="请输入当日风向"></input>
+    </view>
+    <view class='inputBox'>
       <label>湿度（%）</label>
       <input class="value" type="number" value="{{humidity}}" bindinput="inputHumidity" placeholder="请输入空气湿度"></input>
     </view>

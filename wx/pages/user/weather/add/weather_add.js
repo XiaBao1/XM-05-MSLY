@@ -57,6 +57,11 @@ Page({
       windScale: e.detail.value
     })
   },
+  inputWindDirection: function(e) {
+    this.setData({
+      windDirection: e.detail.value
+    })
+  },
   inputHumidity: function(e) {
     this.setData({
       humidity: e.detail.value
