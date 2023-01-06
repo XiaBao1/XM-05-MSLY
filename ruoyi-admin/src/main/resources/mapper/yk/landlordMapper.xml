@@ -11,11 +11,13 @@
         <result property="address"    column="address"    />
         <result property="score"    column="score"    />
         <result property="registerTime"    column="register_time"    />
+        <result property="city"    column="city"    />
+        <result property="province"    column="province"    />
         <result property="imageUrl"    column="image_url"    />
     </resultMap>
 
     <sql id="selectlandlordVo">
-        select id, house_name, host_number, address, score, register_time,image_url from landlord_house
+        select id, house_name, host_number, address, score, register_time,image_url,city,province from landlord_house
     </sql>
 
     <select id="selectlandlordList" parameterType="landlord" resultMap="landlordResult">
@@ -55,6 +57,7 @@
             <if test="registerTime != null">register_time,</if>
             <if test="imageUrl != null">image_url,</if>
             <if test="city != null">city,</if>
+            <if test="province != null">province,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="houseName != null">#{houseName},</if>
@@ -64,6 +67,7 @@
             <if test="registerTime != null">#{registerTime},</if>
             <if test="imageUrl != null">#{imageUrl},</if>
             <if test="city != null">#{city},</if>
+            <if test="province != null">#{province},</if>
         </trim>
     </insert>
 
@@ -77,6 +81,7 @@
             <if test="registerTime != null">register_time = #{registerTime},</if>
             <if test="imageUrl != null">image_url = #{imageUrl},</if>
             <if test="city != null">city = #{city},</if>
+            <if test="province != null">province = #{province},</if>
         </trim>
         where id = #{id}
     </update>

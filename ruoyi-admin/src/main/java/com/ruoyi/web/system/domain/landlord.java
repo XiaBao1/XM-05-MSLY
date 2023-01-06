@@ -37,6 +37,8 @@ public class landlord extends BaseEntity
     //@Excel(name = "城市名称")
     private String city;
 
+    private String province;
+
     /**  */
     @Excel(name = "民宿评分")
     private BigDecimal score;
@@ -94,6 +96,12 @@ public class landlord extends BaseEntity
         return city;
     }
 
+    public void setProvince(String province){this.province=province;}
+
+    public String getProvince() {
+        return province;
+    }
+
     public void setScore(BigDecimal score)
     {
         this.score = score;
@@ -123,6 +131,7 @@ public class landlord extends BaseEntity
                 .append("houseName", getHouseName())
                 .append("hostNumber", getHostNumber())
                 .append("city", getCity())
+                .append("province",getProvince())
                 .append("address", getAddress())
                 .append("score", getScore())
                 .append("registerTime", getRegisterTime())

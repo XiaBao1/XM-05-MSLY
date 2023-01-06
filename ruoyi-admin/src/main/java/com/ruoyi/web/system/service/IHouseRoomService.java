@@ -66,4 +66,48 @@ public interface IHouseRoomService
     List<String> getHouseIdByHouseName(HouseRoom houseRoom);
 
     List<String> getHouseIdByExactHouseName(HouseRoom houseRoom);
+
+    Integer getAllUser();
+
+    Integer getAllHouse();
+
+    Integer getAllBill();
+
+    Integer getAllSpecialty();
+
+    Integer getDone(Long userId);
+
+    Integer getUndo(Long userId);
+
+    Integer getSay(Long userId);
+
+    Integer getUnSay(Long userId);
+
+    Integer getToDoDone(Long userId);
+
+    Integer getToDoUndo(Long userId);
+
+    List<Long> getIdFromRoomRecord();
+
+    String getNameFromRoomRecordById(Long id);
+
+    String getTimeFromRoomRecordById(Long id);
+
+    String getLandlordFromRoomRecordById(Long id);
+
+    String getRoomNumberFromRoomRecordById(Long id);
+
+    List<Long> getIdFromSpecialtyRecord();
+
+    String getNameFromSpecialtyRecordById(Long id);
+
+    String getTimeFromSpecialtyRecordById(Long id);
+
+    String getLandlordFromSpecialtyRecordById(Long id);
+
+    String getSpecialtyNameFromSpecialtyRecordById(Long id);
+
+    String getNumberFromSpecialtyRecordById(Long id);
+
+    List<String> getHouseAddress();
 }
