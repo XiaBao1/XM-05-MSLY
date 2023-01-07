@@ -1,29 +1,24 @@
 package com.ruoyi.web.system.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.json.JSONObject;
-import com.ruoyi.framework.web.domain.server.Sys;
-import com.ruoyi.web.system.domain.BuyRoom;
-import com.ruoyi.web.system.mapper.HouseRoomMapper;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.web.system.domain.HouseRoom;
+import com.ruoyi.web.system.service.IHouseRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.web.system.domain.HouseRoom;
-import com.ruoyi.web.system.service.IHouseRoomService;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.web.bind.annotation.*;
+import springfox.documentation.schema.Entry;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 房子管理Controller
@@ -272,6 +267,43 @@ public class HouseRoomController extends BaseController
             location.add(li);
         }
         res.put("distribute",location);
+        return res.toString();
+    }
+
+    @PostMapping("/dataPage")
+    @ResponseBody
+    public String dataPage(){
+        System.out.println("这里是dataPage后端");
+        JSONObject res=new JSONObject();
+        res.put("house",houseRoomService.getRoomBill());
+        res.put("specialty",houseRoomService.getSpecialtyBill());
+        Map<String,Integer> ha=new HashMap<>();
+        List<String> name=houseRoomService.getHouseName();
+        for(String li:name){
+            ha.put(li,houseRoomService.getBillNumberByHouseName(li));
+        }
+        List<Map.Entry<String, Integer>> list = new ArrayList<Map.Entry<String,Integer>>(ha.entrySet());
+        list.sort(Map.Entry.comparingByValue());
+
+        // 默认情况下，TreeMap对key进行升序排序
+        System.out.println("------------map按照value升序排序--------------------");
+        for (Map.Entry<String, Integer> entry : list) {
+            System.out.println(entry.getKey() + ":" + entry.getValue());
+        }
+
+        JSONObject.JSONArray array=new JSONObject.JSONArray();
+        int rank=0;
+        for(Map.Entry<String, Integer> entry : list){
+            rank=rank+1;
+            JSONObject li=new JSONObject();
+            li.put("name",entry.getKey());
+            li.put("value",entry.getValue());
+            li.put("owner",houseRoomService.getOwnerByHouseName(entry.getKey()));
+            li.put("rank",rank);
+            array.add(li);
+        }
+        res.put("table",array);
+
         return res.toString();
     }
 }

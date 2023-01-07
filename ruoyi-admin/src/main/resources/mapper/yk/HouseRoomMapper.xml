@@ -166,6 +166,30 @@
         select province from landlord_house
     </select>
 
+    <select id="getRoomBill" resultType="Long">
+        select count(*) from client_room_record
+    </select>
+
+    <select id="getSpecialtyBill" resultType="Long">
+        select count(*) from client_specialty_record
+    </select>
+
+    <select id="getHouseName" resultMap="StringResult">
+        select house_name from landlord_house
+    </select>
+
+    <select id="getRoomBillNumberByHouseName" parameterType="String" resultType="Integer">
+        select count(*) from client_room_record where room_id in (select id from house_room where house_id=(select id from landlord_house where house_name=#{name}))
+    </select>
+
+    <select id="getSpecialtyBillNumberByHouseName" parameterType="String" resultType="Integer">
+        select count(*) from client_specialty_record where specialty_id in (select id from house_specialty where house_id=(select id from landlord_house where house_name=#{name}))
+    </select>
+
+    <select id="getOwnerByHouseName" parameterType="String" resultType="String">
+        select user_name from sys_user where user_id=(select host_number from landlord_house where house_name=#{name})
+    </select>
+
     <insert id="insertHouseRoom" parameterType="HouseRoom" useGeneratedKeys="true" keyProperty="id">
         insert into house_room
         <trim prefix="(" suffix=")" suffixOverrides=",">

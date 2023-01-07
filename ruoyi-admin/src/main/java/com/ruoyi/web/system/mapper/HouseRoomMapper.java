@@ -122,4 +122,16 @@ public interface HouseRoomMapper
     String getNumberFromSpecialtyRecordById(Long id);
 
     List<String> getHouseAddress();
+
+    Long getRoomBill();
+
+    Long getSpecialtyBill();
+
+    List<String> getHouseName();
+
+    Integer getRoomBillNumberByHouseName(String name);
+
+    Integer getSpecialtyBillNumberByHouseName(String name);
+
+    String getOwnerByHouseName(String name);
 }

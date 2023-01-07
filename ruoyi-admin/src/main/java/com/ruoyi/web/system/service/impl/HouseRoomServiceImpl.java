@@ -208,4 +208,24 @@ public class HouseRoomServiceImpl implements IHouseRoomService
     public List<String> getHouseAddress(){
         return houseRoomMapper.getHouseAddress();
     }
+
+    public Long getRoomBill(){
+        return houseRoomMapper.getRoomBill();
+    }
+
+    public Long getSpecialtyBill(){
+        return houseRoomMapper.getSpecialtyBill();
+    }
+
+    public List<String> getHouseName(){
+        return houseRoomMapper.getHouseName();
+    }
+
+    public Integer getBillNumberByHouseName(String name){
+        return houseRoomMapper.getRoomBillNumberByHouseName(name)+houseRoomMapper.getSpecialtyBillNumberByHouseName(name);
+    }
+
+    public String getOwnerByHouseName(String name){
+        return houseRoomMapper.getOwnerByHouseName(name);
+    }
 }

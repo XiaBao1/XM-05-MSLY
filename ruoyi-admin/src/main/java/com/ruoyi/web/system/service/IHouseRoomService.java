@@ -110,4 +110,14 @@ public interface IHouseRoomService
     String getNumberFromSpecialtyRecordById(Long id);
 
     List<String> getHouseAddress();
+
+    Long getRoomBill();
+
+    Long getSpecialtyBill();
+
+    List<String> getHouseName();
+
+    Integer getBillNumberByHouseName(String li);
+
+    String getOwnerByHouseName(String key);
 }
