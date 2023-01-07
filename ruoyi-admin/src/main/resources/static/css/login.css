@@ -54,42 +54,12 @@ body.signin {
 	border-radius:3px;
 	padding:30px
 }
-
-
+/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% pch*/
 .pchpanel {
 	width:750px;
 	margin:10% auto 0;
 	/*color:rgba(255,255,255,.95)*/
 }
-/*.pchpanel .logopanel {*/
-/*	float:none;*/
-/*	width:auto;*/
-/*	padding:0;*/
-/*	background:0 0*/
-/*}*/
-/*.pchpanel .signin-info ul {*/
-/*	list-style:none;*/
-/*	padding:0;*/
-/*	margin:20px 0*/
-/*}*/
-/*.pchpanel .form-control {*/
-/*	display:block;*/
-/*	margin-top:15px*/
-/*}*/
-/*.pchpanel .uname {*/
-/*	background:#fff url(../img/user.png) no-repeat 95% center;*/
-/*	color:#333*/
-/*}*/
-/*.pchpanel .pword {*/
-/*	background:#fff url(../img/locked.png) no-repeat 95% center;*/
-/*	color:#333*/
-/*}*/
-/*.pchpanel .code {*/
-/*	background: #fff no-repeat 95% center;color:#333; margin:0 0 15px 0;*/
-/*}*/
-/*.pchpanel .btn {*/
-/*	margin-top:15px*/
-/*}*/
 .pchpanel form {
 	background:rgba(255,255,255,.2);
 	border:1px solid rgba(255,255,255,.3);
@@ -101,7 +71,16 @@ body.signin {
 	border-radius:3px;
 	padding:30px
 }
-
+.dynamic-background{
+	position: fixed;
+	top:0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -10;
+	object-fit: cover;
+}
+/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 
 .signup-footer {
