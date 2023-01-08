@@ -1,0 +1,44 @@
+var unit={
+  orderFilter:function(item){
+    var statusJson = {};
+    var x = "";
+    var y = "";
+   
+    switch (item) {
+      case 0:
+        x = "订单未完成";
+        y = "#FF4F4F";
+        break;
+      case 1:
+        x = "订单已完成";
+        y = "#10CA0D";
+        break;
+    }
+    statusJson.x = x;
+    statusJson.y = y;
+    return statusJson;
+  },
+  payFilter:function(item){
+    var statusJson = {};
+    var x = "";
+    var y = "";
+   
+    switch (item) {
+      case 0:
+        x = "订单未支付";
+        y = "#FF4F4F";
+        break;
+      case 1:
+        x = "订单已支付";
+        y = "#10CA0D";
+        break;
+    }
+    statusJson.x = x;
+    statusJson.y = y;
+    return statusJson;
+  }
+}
+module.exports={
+  orderFilter:unit.orderFilter,
+  payFilter:unit.payFilter
+}

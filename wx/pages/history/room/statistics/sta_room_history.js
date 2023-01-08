@@ -7,19 +7,19 @@ function initChart(canvas, width, height, dpr) {
     devicePixelRatio: dpr // 解决小程序视图模糊的问题，必写
   });
   wx.getStorage({
-    key: 'landlordSta',
+    key: 'RoomOrderSta',
     success: function(res) {
-      console.log('get landlordSta');
+      console.log('get RoomOrderSta');
       console.log(res);
       canvas.setChart(chart);
     
       var option = {
         title: {
-          text: '热门民宿统计图',
+          text: '订单数按月统计图',
           left: 'left'   // 设置标题位置
         },
         legend: {
-          data: ['销量'],
+          data: ['订单数'],
           right: 'right'
         },
         grid: {
@@ -33,7 +33,7 @@ function initChart(canvas, width, height, dpr) {
           {
             type: 'category',
             axisTick: { show: false },
-            data: res.data.name,
+            data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
             axisLine: {
               lineStyle: {
                 color: '#999'
@@ -58,7 +58,7 @@ function initChart(canvas, width, height, dpr) {
           }
         ],
         series: [{
-          name: '销量',
+          name: '订单数',
           type: 'bar',
           smooth: true,
           label: {
@@ -67,15 +67,15 @@ function initChart(canvas, width, height, dpr) {
               position: 'inside'
             }
           },
-          data: res.data.sale
+          data: res.data
         }]
       };
     
       chart.setOption(option);
       wx.removeStorage({
-        key: 'landlordSta',
+        key: 'RoomOrderSta',
         success: function() {
-          console.log('清除缓存 landlordSta');
+          console.log('清除缓存 RoomOrderSta');
         }
       });
     }

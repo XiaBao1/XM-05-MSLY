@@ -1,3 +1,7 @@
 {
-  "usingComponents": {}
+  "backgroundTextStyle": "dark",
+  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarTitleText": "我的民宿订单",
+  "navigationBarTextStyle": "black",
+  "enablePullDownRefresh": true
 }

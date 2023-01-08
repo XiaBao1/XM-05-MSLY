@@ -1,0 +1,62 @@
+/* pages/user/weather/modify/weather_add.wxss */
+page{
+  background: #ededed;
+  height: auto;
+}
+.form{
+  width: 100%;
+  height: 1000rpx;
+  margin-top: 16rpx;
+  background: #ffffff;
+}
+.inputBox{
+  width: 100%;
+  height: 90rpx;
+  border-bottom:2rpx solid #ededed;
+  display: flex;
+  justify-content: space-between;
+  padding:0 0 0 24rpx;
+}
+label{
+  width: 40%;
+  font-size: 32rpx;
+  font-weight: bold;
+  line-height: 90rpx;
+}
+.value{
+  width: 60%;
+  height: 90rpx;
+  margin-right: 30rpx;
+  text-align: left;
+  margin-top: 10rpx;
+  font-size: 30rpx;
+  color: #999999;
+}
+.confirm{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 98rpx;
+  border-top: 2rpx solid #cccccc;
+  margin-top: 176rpx;
+  background: #ffffff;
+}
+.confirmBtn{
+  width: 160rpx;
+  height: 60rpx;
+  font-size: 26rpx;
+  line-height: 30rpx;
+  display: block;
+  /* border:2rpx solid #e6e6e6; */
+  border-radius: 26rpx;
+  float: right;
+  margin: 22rpx 24rpx 0 0;
+  text-align: center;
+  color: #ffffff;
+  background-color: #f3b328;
+}
+.confirmBtn::after{
+  border:none;
+  border:2rpx solid #e6e6e6;
+}
