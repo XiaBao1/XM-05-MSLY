@@ -59,6 +59,10 @@
                 <input name="pricePerDay" class="form-control" type="password" id="pwd" maxlength="6" minlength="6" placeholder="请输入6位支付密码" required>
             </div>
         </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label " th:size="10" style="color: white"></label>
+            <marquee id="affiche" align="right" behavior="scroll" bgcolor="transparent" direction="up" height="50" width="200" hspace="50" vspace="15" loop="-1" scrollamount="1" scrolldelay="90" onMouseOut="this.start()" onMouseOver="this.stop()"></marquee>
+        </div>
         <div id="my" ><label style="font-family: 楷体;color:lightblue" >人生不过是一场旅行，你路过我，我路过你，然后各自修行，各自向前。</label></div>
     </form>
     <div>
@@ -97,7 +101,7 @@
             "旅行有时候是虚无缥缈的，但梦想不是。",
             "一个人的快乐，不是因为他拥有的多，而是他计较的少。",
             "我们活着不能与草木同腐，不能醉生梦死，枉度人生，要有所作为。",
-            "人的全部本领无非是耐心和时间的混合物",
+            "人的全部本领无非是耐心和时间的混合物。",
             "我去旅行，是因为我决定了要去，并不是因为对风景的兴趣。 洗澡、死亡、旅途是三个顿悟人生的时刻。我不是鱼，还不想死，我要去旅行。",
             "要想结为夫妻，先去旅行一次。",
             "做一个世界的水手，游遍每一个港口。",
@@ -148,6 +152,25 @@
     document.getElementById("standard").value=standard;
     document.getElementById("price").value=price;
     document.getElementById("houseName").value=houseName;
+
+    $.ajax({//获取评价信息
+        type: 'post',
+        url: '/system/buyroom/getComment',
+        async: false,
+        data: data,
+        success: function(res) {
+            console.log(res);
+            let json = eval( "(" + res + ")" );
+            var str,ss;
+            if(json.allComment.length==0) str="<div><font size='3' color='yellow' face='楷体'>暂无评论，期待您的评价。</font></div>";
+            else for(var i=0;i<json.allComment.length;i++){
+                if(i==0)str="<div><font size='3' color='yellow' face='楷体'>"+json.allComment[i].name+"："+json.allComment[i].comment+"</font></div>";
+                else if(i%2==1) ss=str,str=ss+"<div><font size='3' color='#32cd32' face='楷体'>"+json.allComment[i].name+"："+json.allComment[i].comment+"</font></div>";
+                else ss=str,str=ss+"<div><font size='3' color='yellow' face='楷体'>"+json.allComment[i].name+"："+json.allComment[i].comment+"</font></div>";
+            }
+            document.getElementById("affiche").innerHTML=str;
+        }
+    });
 
 
     function confirm() {
