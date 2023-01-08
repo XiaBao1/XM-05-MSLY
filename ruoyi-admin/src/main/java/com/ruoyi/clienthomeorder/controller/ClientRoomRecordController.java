@@ -2,10 +2,12 @@ package com.ruoyi.clienthomeorder.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ch.qos.logback.core.net.server.Client;
 import com.ruoyi.clientspecialtyorder.domain.ClientSpecialtyRecord;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +62,7 @@ public class ClientRoomRecordController extends BaseController
     {
         startPage();
         List<ClientRoomRecord> list = clientRoomRecordService.selectClientRoomRecordList(clientRoomRecord);
-        System.out.println(list);
+        //System.out.println(list);
         return getDataTable(list);
     }
 
@@ -277,5 +279,26 @@ public class ClientRoomRecordController extends BaseController
         return toAjax(clientRoomRecordService.updateClientRoomCommentRecord(clientRoomRecord));
     }
 
-
+    /**
+     * 小程序查看评论
+     */
+    @RequiresPermissions("clienthomeorder:homeorder:querycomment")
+    @Log(title = "小程序查看评论", businessType = BusinessType.UPDATE)
+    @PostMapping("/appquerycomment")
+    @ResponseBody
+    public List<ClientRoomRecord> appquerycomment(String id)
+    {
+        Long ids=Long.valueOf(id);
+        List<ClientRoomRecord> list=new ArrayList<ClientRoomRecord>(1);
+        ClientRoomRecord clientRoomRecord = clientRoomRecordService.selectClientRoomCommentRecordById(ids);
+        if(clientRoomRecord==null){
+            ClientRoomRecord N=new ClientRoomRecord();
+            N.setId(0L);
+            list.add(N);
+        }
+        else {
+            list.add(clientRoomRecordService.selectClientRoomCommentRecordById(ids));
+        }
+        return list;
+    }
 }
