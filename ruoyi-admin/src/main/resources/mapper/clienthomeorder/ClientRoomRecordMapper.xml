@@ -51,6 +51,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     </select>
 
+    <select id="selectDataNameList" parameterType="ClientRoomRecord" resultMap="ClientRoomRecordResult">
+       select house_name
+        from landlord_house join house_room join client_room_record
+        where landlord_house.id = house_room.house_id and house_room.id = client_room_record.room_id
+        group by house_name
+        order by count(house_name) desc
+        limit 5
+    </select>
+
+    <select id="getSellNumber"  parameterType="ClientRoomRecord" resultMap="ClientRoomRecordResult">
+       select count(house_name) as number
+        from landlord_house join house_room join client_room_record
+        where landlord_house.id = house_room.house_id and house_room.id = client_room_record.room_id and house_name = #{houseName}
+    </select>
+
     <select id="selectClientRoomRecordById" parameterType="Long" resultMap="ClientRoomRecordResult">
         select id, client_number, room_id, check_in_date, check_out_date, reserve_in_date, reserve_out_date, price, is_paid, is_done from client_room_record where id = #{id}
     </select>

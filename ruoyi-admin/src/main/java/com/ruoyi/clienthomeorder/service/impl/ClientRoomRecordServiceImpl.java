@@ -126,6 +126,21 @@ public class ClientRoomRecordServiceImpl implements IClientRoomRecordService
         return list;
     }
 
+
+    @Override
+    public List<String> getDataNameList() {
+        int len = 5;
+        List<Integer> list = new ArrayList<Integer>(len);
+        for (int i = 0; i < len; i++) {
+            list.add(0);
+        }
+        List<String> datalist= clientRoomRecordMapper.selectDataNameList(new ClientRoomRecord());
+        return datalist;
+    }
+
+    public Long getSellNumber(String name){
+        return clientRoomRecordMapper.getSellNumber(name);
+    }
     /**
      * 删除民宿订单信息
      * 

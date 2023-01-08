@@ -6,7 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONArray;
 import com.ruoyi.clientspecialtyorder.domain.ClientSpecialtyRecord;
+import com.ruoyi.common.json.JSONObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -143,6 +145,7 @@ public class ClientRoomRecordController extends BaseController
 
     @RequiresPermissions("clienthomeorder:homeorder:eCharts")
     @GetMapping("/eCharts")
+    @ResponseBody
     public String statistics(ModelMap mmap)
     {
         return prefix + "/eCharts";
@@ -157,6 +160,37 @@ public class ClientRoomRecordController extends BaseController
         List<Integer> list = clientRoomRecordService.getMonthlyClientRoomRecordIncrement();
         return list;
     }
+
+    /**
+     * 驾驶舱数据
+     */
+//    @RequiresPermissions("clienthomeorder:homeorder:data")
+    @GetMapping("/data")
+    public String FrontData(ModelMap mmap)
+    {
+        return prefix + "/data";
+    }
+
+    @RequiresPermissions("clienthomeorder:homeorder:data")
+    @Log(title = "驾驶舱统计", businessType = BusinessType.INSERT)
+    @PostMapping("/data")
+    @ResponseBody
+    public String Data()
+    {
+        JSONObject res=new JSONObject();
+        JSONArray s=new JSONArray();
+        List<String> namelist = clientRoomRecordService.getDataNameList();
+        for(String name:namelist){
+            JSONObject tmp=new JSONObject();
+            tmp.put("name",name);
+            tmp.put("record",clientRoomRecordService.getSellNumber(name));
+            s.add(tmp);
+        }
+        res.put("data",s);
+        System.out.println(res);
+        return res.toString();
+    }
+
 
 
     /**
