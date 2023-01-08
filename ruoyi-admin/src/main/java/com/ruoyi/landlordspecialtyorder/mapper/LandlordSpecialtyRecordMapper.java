@@ -1,5 +1,6 @@
 package com.ruoyi.landlordspecialtyorder.mapper;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.ruoyi.landlordspecialtyorder.domain.LandlordSpecialtyRecord;
@@ -28,6 +29,7 @@ public interface LandlordSpecialtyRecordMapper
      * @return 订单集合
      */
     public List<LandlordSpecialtyRecord> selectLandlordSpecialtyRecordList(LandlordSpecialtyRecord landlordSpecialtyRecord);
+    public List<LandlordSpecialtyRecord> selectLandlordSpecialtyRecordList2(LandlordSpecialtyRecord landlordSpecialtyRecord);
 
     /**
      * 新增订单
@@ -60,4 +62,9 @@ public interface LandlordSpecialtyRecordMapper
      * @return 结果
      */
     public int deleteLandlordSpecialtyRecordByIds(String[] ids);
+
+    public int getId(Long roomRecordId);
+    public BigDecimal getScore(Long roomRecordId);
+    public String getComment(Long roomRecordId);
+    public String getPhoto (Long roomRecordId);
 }

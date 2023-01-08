@@ -35,10 +35,10 @@ where client_specialty_record.specialty_id= house_specialty.id and house_special
     <select id="selectLandlordSpecialtyRecordList" parameterType="LandlordSpecialtyRecord" resultMap="LandlordSpecialtyRecordResult">
         <include refid="selectLandlordSpecialtyRecordVo"/>
             <if test="clientNumber != null "> and client_number = #{clientNumber}</if>
-            <if test="clientName != '' "> and user_name = #{clientName}</if>
+            <if test="clientName != '' ">and user_name like concat('%', #{clientName}, '%')</if>
             <if test="specialtyId != null "> and specialty_id = #{specialtyId}</if>
-            <if test="specialtyName != ''  "> and specialty_name = #{specialtyName}</if>
-            <if test="houseName != '' "> and house_name = #{houseName}</if>
+            <if test="specialtyName != ''  ">and specialty_name like concat('%', #{specialtyName}, '%')</if>
+            <if test="houseName != '' "> and house_name like concat('%', #{houseName}, '%')</if>
             <if test="quantity != null "> and quantity = #{quantity}</if>
             <if test="price != null "> and price = #{price}</if>
             <if test="orderTime != null "> and order_time = #{orderTime}</if>
@@ -47,7 +47,13 @@ where client_specialty_record.specialty_id= house_specialty.id and house_special
             <if test="isPaid != null "> and is_paid = #{isPaid}</if>
             <if test="isDone != null "> and is_done = #{isDone}</if>
     </select>
-    
+
+    <select id="selectLandlordSpecialtyRecordList2" parameterType="LandlordSpecialtyRecord" resultMap="LandlordSpecialtyRecordResult">
+            select client_specialty_record.id as id , client_number, user_name, specialty_id,specialty_name,house_name, quantity, client_specialty_record.price as price, order_time, finish_time, is_received, is_paid, is_done
+from client_specialty_record join sys_user join house_specialty join landlord_house
+where client_specialty_record.specialty_id= house_specialty.id and house_specialty.house_id = landlord_house.id and client_number=user_id and specialty_id in (select id from house_specialty where house_id = (select id from landlord_house where  host_number=(select user_id from sys_user where user_name = #{userName})) )
+    </select>
+
     <select id="selectLandlordSpecialtyRecordById" parameterType="Long" resultMap="LandlordSpecialtyRecordResult">
   select client_specialty_record.id as id, client_number, user_name, specialty_id,specialty_name,house_name, quantity, client_specialty_record.price as price, order_time, finish_time, is_received, is_paid, is_done
 from client_specialty_record join sys_user join house_specialty join landlord_house

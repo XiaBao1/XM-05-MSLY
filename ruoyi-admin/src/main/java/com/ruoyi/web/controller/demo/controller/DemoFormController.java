@@ -244,7 +244,7 @@ public class DemoFormController
         cxList.add(cxSelectTB);
         cxList.add(cxSelectJD);
 
-        mmap.put("data", JSON.toJSON(cxList));
+        mmap.put("templates/data", JSON.toJSON(cxList));
         return prefix + "/cxselect";
     }
 

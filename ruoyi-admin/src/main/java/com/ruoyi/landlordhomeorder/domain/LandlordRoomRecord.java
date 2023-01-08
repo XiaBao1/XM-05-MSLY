@@ -31,12 +31,12 @@ public class LandlordRoomRecord extends BaseEntity
     private String clientName;
 
     /** 用户名 */
-    @Excel(name = "顾客名")
+
     private String loginName;
 
     /** 特产订单ID */
-    @Excel(name = "特产订单ID")
-    private Long roomRecordId;
+
+    public Long roomRecordId;
 
     /** 房间号 */
     @Excel(name = "房间号")
@@ -46,18 +46,18 @@ public class LandlordRoomRecord extends BaseEntity
     private String houseName;
 
     /** 特产得分 */
-    @Excel(name = "得分")
+
     private BigDecimal score;
 
     /** 特产评价 */
-    @Excel(name = "评价")
+
     private String comment;
 
     /** 特产照片 */
-    @Excel(name = "照片")
+
     public String photo;
 
-    @Excel(name = "照片地址")
+
     private String path;
 
     /** 房间ID */

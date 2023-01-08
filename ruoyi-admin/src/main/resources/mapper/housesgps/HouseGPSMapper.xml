@@ -8,13 +8,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="id"    column="id"    />
         <result property="houseName"    column="house_name"    />
         <result property="hostNumber"    column="host_number"    />
+        <result property="city"    column="city"    />
         <result property="address"    column="address"    />
         <result property="score"    column="score"    />
         <result property="registerTime"    column="register_time"    />
     </resultMap>
 
     <sql id="selectHouseGPSVo">
-        select id, house_name, host_number, address, score, register_time from landlord_house
+        select id, house_name, host_number, address, city, score, register_time from landlord_house
     </sql>
 
     <select id="selectHouseGPSList" parameterType="HouseGPS" resultMap="HouseGPSResult">
@@ -22,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="houseName != null  and houseName != ''"> and house_name like concat('%', #{houseName}, '%')</if>
             <if test="address != null  and address != ''"> and address like concat('%', #{address}, '%')</if>
-            <if test="score != null "> and score like concat('%', #{score}, '%')</if>
+            <if test="city != null  and city != ''"> and city like concat('%', #{city}, '%')</if>
         </where>
     </select>
     

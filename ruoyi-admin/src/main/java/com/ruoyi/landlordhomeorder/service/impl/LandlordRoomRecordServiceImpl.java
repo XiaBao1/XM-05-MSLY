@@ -111,14 +111,14 @@ public class LandlordRoomRecordServiceImpl implements ILandlordRoomRecordService
         }
 
         Calendar ca = Calendar.getInstance();
-        List<LandlordRoomRecord> clientRoomRecord= landlordRoomRecordMapper.selectLandlordRoomRecordList(new LandlordRoomRecord());
+        List<LandlordRoomRecord> clientRoomRecord= landlordRoomRecordMapper.selectLandlordRoomRecordList2(new LandlordRoomRecord());
         for (LandlordRoomRecord user : clientRoomRecord) {
-            if ( !"1".equals(user.getIsDone()) ) {
-                ca.setTime(user.getCheckInDate());
+
+                ca.setTime(user.getReserveInDate());
                 int idx = ca.get(Calendar.MONTH);
                 int cur = list.get(idx);
                 list.set(idx, 1 + cur);
-            }
+
         }
 
         return list;

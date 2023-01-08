@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.system;
 
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ import com.ruoyi.common.utils.file.MimeTypeUtils;
 import com.ruoyi.framework.shiro.service.SysPasswordService;
 import com.ruoyi.system.service.ISysUserService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 个人信息 业务处理
  * 
@@ -46,6 +50,19 @@ public class SysProfileController extends BaseController
     private SysPasswordService passwordService;
 
 
+
+    @Log(title = "个人信息", businessType = BusinessType.EXPORT)
+    @PostMapping("/export")
+    @ResponseBody
+    public AjaxResult export(SysUser user)
+    {
+        user=getSysUser();
+        SysUser curUser = userService.selectUserById(user.getUserId());
+        ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
+        List<SysUser> list = new ArrayList<SysUser>(1);
+        list.add(curUser);
+        return util.exportExcel(list, "个人信息");
+    }
 
     /**
      * 个人信息

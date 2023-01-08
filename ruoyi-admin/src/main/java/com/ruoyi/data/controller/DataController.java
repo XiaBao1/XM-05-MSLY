@@ -36,7 +36,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping("/data/data")
 public class DataController extends BaseController{
-    private String prefix = "data";
+    private String prefix = "data/data";
 
 
 

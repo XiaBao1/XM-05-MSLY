@@ -35,10 +35,10 @@
         <include refid="selectLandlordRoomRecordVo"/>
             <if test="id != null "> and id = #{id}</if>
             <if test="clientNumber != null "> and client_number = #{clientNumber}</if>
-        <if test="clientName != '' "> and user_name = #{clientName}</if>
+        <if test="clientName != '' "> and user_name like concat('%', #{clientName}, '%')</if>
             <if test="roomId != null "> and room_id = #{roomId}</if>
             <if test="roomNumber != null "> and room_number = #{roomNumber}</if>
-            <if test="houseName != '' "> and house_name = #{houseName}</if>
+            <if test="houseName != '' "> and house_name like concat('%', #{houseName}, '%')</if>
             <if test="buyTime != null "> and buy_time = #{buyTime}</if>
             <if test="checkInDate != null "> and check_in_date = #{checkInDate}</if>
             <if test="checkOutDate != null "> and check_out_date = #{checkOutDate}</if>
@@ -47,6 +47,11 @@
             <if test="price != null "> and price = #{price}</if>
             <if test="isPaid != null "> and is_paid = #{isPaid}</if>
             <if test="isDone != null "> and is_done = #{isDone}</if>
+    </select>
+
+    <select id="selectLandlordRoomRecordList2" parameterType="LandlordRoomRecord" resultMap="LandlordRoomRecordResult">
+        select client_room_record.id as id,buy_time,check_in_date, check_out_date, reserve_in_date, reserve_out_date, price, is_paid, is_done from client_room_record join sys_user join landlord_house join house_room
+         where client_number=user_id and room_id = house_room.id and house_room.house_id =landlord_house.id and house_room.house_id in (select id from landlord_house where host_number=(select user_id from sys_user where user_name =  #{userName}))
     </select>
 
     <select id="selectLandlordRoomRecordById" parameterType="Long" resultMap="LandlordRoomRecordResult">
@@ -94,7 +99,7 @@ where house_room.house_id = landlord_house.id and landlord_house.house_name=#{ho
         update client_room_record
         <trim prefix="SET" suffixOverrides=",">
             <if test="clientNumber != null">client_number = #{clientNumber},</if>
-            <if test="roomNumber != null">room_id = (select id from house_room where room_number=#{roomNumber}),</if>
+                <if test="roomNumber != null">room_id = (select id from house_room where room_number=#{roomNumber} and  house_id = (select id from landlord_house where house_name=#{houseName})),</if>
             <if test="buyTime != null ">  buy_time = #{buyTime},</if>
             <if test="checkInDate != null">check_in_date = #{checkInDate},</if>
             <if test="checkOutDate != null">check_out_date = #{checkOutDate},</if>
@@ -110,10 +115,10 @@ where house_room.house_id = landlord_house.id and landlord_house.house_name=#{ho
     <update id="updateLandlordRoomCommentRecord" parameterType="LandlordRoomRecord">
         update client_room_comment
         <trim prefix="SET" suffixOverrides=",">
-            <if test="roomRecordId != null">room_record_id = #{roomRecordId},</if>
-            <if test="score != null">score = #{score},</if>
-            <if test="comment != null">comment = #{comment},</if>
-            <if test="photo != null">photo= #{photo},</if>
+            room_record_id = #{roomRecordId},
+            score = #{score},
+            comment= #{comment},
+            photo= #{photo},
         </trim>
         where id = #{id}
     </update>

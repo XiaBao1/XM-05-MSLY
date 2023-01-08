@@ -20,7 +20,7 @@
     <resultMap id="StringResult" type="String"></resultMap>
 
     <sql id="selectBuyRoomVo">
-        select id, house_id, room_number, price_per_day, standard, is_free from house_room
+        select id, house_id, room_number, price_per_day, standard, is_free from house_room A
     </sql>
 
     <select id="selectBuyRoomList" parameterType="BuyRoom" resultMap="BuyRoomResult">

@@ -32,8 +32,8 @@
         <include refid="selectClientSpecialtyRecordVo"/>
             <if test="id != null "> and id = #{id}</if>
             <if test="specialtyId != null "> and specialty_id = #{specialtyId}</if>
-            <if test="specialtyName != '' "> and specialty_name = #{specialtyName}</if>
-            <if test="houseName != '' "> and house_name = #{houseName}</if>
+            <if test="specialtyName != '' ">and specialty_name like concat('%', #{specialtyName}, '%')</if>
+            <if test="houseName != '' "> and house_name like concat('%', #{houseName}, '%')</if>
             <if test="quantity != null "> and quantity = #{quantity}</if>
             <if test="price != null "> and price = #{price}</if>
             <if test="orderTime != null "> and order_time = #{orderTime}</if>
@@ -43,12 +43,16 @@
             <if test="isDone != null "> and is_done = #{isDone}</if>
     </select>
 
+    <select id="selectClientSpecialtyRecordList2" parameterType="ClientSpecialtyRecord" resultMap="ClientSpecialtyRecordResult">
+        select client_specialty_record.id as id, user_name, specialty_id,specialty_name,house_name,quantity, client_specialty_record.price as price, order_time, finish_time, is_received, is_paid, is_done from client_specialty_record join sys_user join house_specialty join landlord_house where specialty_id =house_specialty.id and house_specialty.house_id=landlord_house.id and user_id = client_number and user_name =#{userName}
+    </select>
+
     <select id="selectClientSpecialtyRecordById" parameterType="Long" resultMap="ClientSpecialtyRecordResult">
         select id,client_number, specialty_id, quantity, price, order_time, finish_time, is_received, is_paid, is_done from client_specialty_record  where id = #{id}
     </select>
 
     <select id="selectClientSpecialtyCommentRecordById" parameterType="Long" resultMap="ClientSpecialtyRecordResult">
-        select id,specialty_record_id, score, comment, photo from client_specialty_comment  where id = #{id}
+        select max(id) as id ,specialty_record_id, max(score) as score, comment, photo from client_specialty_comment  where specialty_record_id = #{id}
     </select>
 
     <insert id="insertClientSpecialtyRecord" parameterType="ClientSpecialtyRecord" useGeneratedKeys="true" keyProperty="id">

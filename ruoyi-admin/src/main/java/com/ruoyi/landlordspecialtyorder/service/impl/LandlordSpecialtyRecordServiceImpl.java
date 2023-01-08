@@ -1,5 +1,6 @@
 package com.ruoyi.landlordspecialtyorder.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -105,14 +106,14 @@ public class LandlordSpecialtyRecordServiceImpl implements ILandlordSpecialtyRec
         }
 
         Calendar ca = Calendar.getInstance();
-        List<LandlordSpecialtyRecord> clientRoomRecord= landlordSpecialtyRecordMapper.selectLandlordSpecialtyRecordList(new LandlordSpecialtyRecord());
+        List<LandlordSpecialtyRecord> clientRoomRecord= landlordSpecialtyRecordMapper.selectLandlordSpecialtyRecordList2(new LandlordSpecialtyRecord());
         for (LandlordSpecialtyRecord user : clientRoomRecord) {
-            if ( !"1".equals(user.getIsDone()) ) {
-                ca.setTime(user.getFinishTime());
+
+                ca.setTime(user.getOrderTime());
                 int idx = ca.get(Calendar.MONTH);
                 int cur = list.get(idx);
                 list.set(idx, 1 + cur);
-            }
+
         }
 
         return list;
@@ -130,5 +131,22 @@ public class LandlordSpecialtyRecordServiceImpl implements ILandlordSpecialtyRec
         return landlordSpecialtyRecordMapper.deleteLandlordSpecialtyRecordById(id);
     }
 
+    public int getId(Long roomRecordId)
+    {
+        return  landlordSpecialtyRecordMapper.getId(roomRecordId);
+    }
+    public BigDecimal getScore(Long roomRecordId)
+    {
+        return  landlordSpecialtyRecordMapper.getScore(roomRecordId);
+    }
+    public String getComment(Long roomRecordId)
+    {
+        return  landlordSpecialtyRecordMapper.getComment(roomRecordId);
+    }
+
+    public String getPhoto(Long roomRecordId)
+    {
+        return  landlordSpecialtyRecordMapper.getPhoto(roomRecordId);
+    }
 
 }

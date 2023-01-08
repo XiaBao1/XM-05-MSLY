@@ -104,7 +104,7 @@
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="clienthomeorder:homeorder:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
-                <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="xxxx:xxxx:print">
+                <a class="btn btn-success" onclick="printHtml();" shiro:hasPermission="clienthomeorder:homeorder:print">
                     <i class="glyphicon glyphicon-print icon-share"></i> 打印
                 </a>
                 <a class="btn btn-warning" onclick="$.modal.openTab('用户历史订单统计', '/clienthomeorder/homeorder/eCharts');" shiro:hasPermission="clienthomeorder:homeorder:eCharts">
@@ -128,7 +128,8 @@
         var editFlag = [[${@permission.hasPermi('clienthomeorder:homeorder:edit')}]];
         var removeFlag = [[${@permission.hasPermi('clienthomeorder:homeorder:remove')}]];
         var commentsFlag = [[${@permission.hasPermi('clienthomeorder:homeorder:comment')}]];
-        var querycommentsFlag = [[${@permission.hasPermi('landlordhomeorder:landlordorder:querycomment')}]];
+        var querycommentsFlag = [[${@permission.hasPermi('clienthomeorder:homeorder:querycomment')}]];
+        var printFlag =[[${@permission.hasPermi('clienthomeorder:homeorder:print')}]];
         var isPaidDatas = [[${@dict.getType('sys_user_is_paid')}]];
         var isDoneDatas = [[${@dict.getType('sys_user_is_done')}]];
         var prefix = ctx + "clienthomeorder/homeorder";

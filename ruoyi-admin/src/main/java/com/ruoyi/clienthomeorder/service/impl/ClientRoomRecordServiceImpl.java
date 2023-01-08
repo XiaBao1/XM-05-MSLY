@@ -37,10 +37,10 @@ public class ClientRoomRecordServiceImpl implements IClientRoomRecordService
     }
 
     @Override
-    public ClientRoomRecord selectClientRoomCommentRecordById(Long id)
-    {
+    public ClientRoomRecord selectClientRoomCommentRecordById(Long id) {
         return clientRoomRecordMapper.selectClientRoomCommentRecordById(id);
     }
+
     /**
      * 查询民宿订单列表
      * 
@@ -113,14 +113,14 @@ public class ClientRoomRecordServiceImpl implements IClientRoomRecordService
         }
 
         Calendar ca = Calendar.getInstance();
-        List<ClientRoomRecord> clientRoomRecord= clientRoomRecordMapper.selectClientRoomRecordList(new ClientRoomRecord());
+        List<ClientRoomRecord> clientRoomRecord= clientRoomRecordMapper.selectClientRoomRecordList2(new ClientRoomRecord());
         for (ClientRoomRecord user : clientRoomRecord) {
-            if ( !"1".equals(user.getIsDone()) ) {
-                ca.setTime(user.getCheckInDate());
+
+                ca.setTime(user.getBuyTime());
                 int idx = ca.get(Calendar.MONTH);
                 int cur = list.get(idx);
                 list.set(idx, 1 + cur);
-            }
+
         }
 
         return list;
