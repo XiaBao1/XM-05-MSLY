@@ -1,9 +1,12 @@
 <view class='yue'>
   <button class='sbutton' bindtap="orderTimeOrderClicked">
-    按时间排序
+    时间排序
   </button>
   <button class='sbutton' bindtap="quantityOrderClicked">
-    按数量排序
+    数量排序
+  </button>
+  <button class='sbutton' bindtap="statisticsClicked">
+    统计
   </button>
 </view>
 <view class='tab-items'>
@@ -20,6 +23,7 @@
         </view>
         <view>
           <view class='state' bindtap="SpecialityClicked" data-id="{{index}}">查看详情</view>
+          <view class='state' bindtap="deletClicked" data-id="{{index}}">删除</view>
         </view>
       </view>
     </view>

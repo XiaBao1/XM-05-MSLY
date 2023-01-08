@@ -30,7 +30,8 @@
     "pages/history/speciality/specialty_history_detail",
     "pages/history/speciality/specialty_all_comment",
     "pages/info/speciality_order/specialty_comment",
-    "pages/info/speciality_order/statistics"
+    "pages/info/speciality_order/statistics",
+    "pages/history/speciality/statistics"
   ],
   "window": {
     "backgroundTextStyle": "light",
