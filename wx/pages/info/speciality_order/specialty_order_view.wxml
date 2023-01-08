@@ -1,0 +1,60 @@
+<!--logs.wxml-->
+<view class="container1">
+	<view class="container-body space-content">
+    <view class="space-img">
+      <image src="{{spacedata.imageUrl}}" mode="aspectFill"></image>
+    </view>
+	  <view class="space-top">
+  	  <view class="space-info">
+  	  	<view class="space-list">
+  	  		<view class="space-item">
+  	  			<text class="text-left">特产名称：{{spacedata.specialtyName}}</text>
+  	  		</view>
+  	  		<view class="space-item">
+  	  			<text class="text-left">售卖民宿：{{spacedata.houseName}}</text>
+  	  			<!-- <text class="text-right">{{spacedata.FeeScaleRoomUnitValue}}㎡</text> -->
+  	  		</view>
+  	  		<view class="space-item">
+  	  			<text class="text-left">地理位置：{{spacedata.address}}</text>
+  	  			<!-- <text class="text-right" data-address="{{spacedata.Address}}" data-latitude="{{spacedata.latitude}}" data-longitude="{{spacedata.longitude}}" bindtap="getAddress">{{spacedata.Address}}</text> -->
+  	  		</view>
+  	  	</view>
+  	  </view>
+	  </view>
+	  <view class="space-block">
+	  	<view class="space-block-title">基本介绍</view>
+	  	<view class="space-block-content">
+	  		<view class="space-list">
+	  			<view class="space-item">
+	  				<text class="text-left">特产描述：{{spacedata.description}}</text>
+	  				<!-- <text class="text-right">{{spacedata.TotalBulidingArea}}㎡</text> -->
+	  			</view>
+	  			<view class="space-item">
+	  				<text class="text-left">已售：{{spacedata.sale}}</text>
+	  				<!-- <text class="text-right">{{spacedata.RoomRate}}%</text> -->
+	  			</view>
+	  			<view class="space-item">
+	  				<text class="text-left">单价：{{spacedata.price}}</text>
+	  				<!-- <text class="text-right">{{spacedata.TotalWorkstation}}个</text> -->
+	  			</view>
+	  			<view class="space-item">
+	  				<text class="text-left">库存：{{spacedata.inventory}}</text>
+	  				<!-- <text class="text-right">{{spacedata.TotalRoom}}个</text> -->
+	  			</view>
+	  		</view>
+	  		<view class="space-passage">{{spacedata.Summary}}</view>
+	  	</view>
+	  </view>
+	  <!-- <view class="space-block">
+	  	<view class="space-block-title">优惠政策</view>
+	  	<view class="space-block-content">
+	  		<view class="space-passage">{{spacedata.Policy}}</view>
+	  	</view>
+  	</view> -->
+	</view>
+	<view class="container-footer">
+		<!-- <text>联系责任人</text> -->
+		<text bindtap="checkComment">查看评价</text>
+		<text class="apply-btn" bindtap="goBuy">购买</text>
+	</view>
+</view>

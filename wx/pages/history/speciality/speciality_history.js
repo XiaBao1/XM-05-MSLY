@@ -1,66 +1,45 @@
-// pages/history/speciality/speciality_history.js
+let getCookie = require("../../../utils/util.js")['getCookie'];
+let sortName = 'orderTime';
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    SpecialityList: []
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad(options) {
-
+  onLoad: function() {
+    getCookie(this.getSpecialityList);
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
+  getSpecialityList: function(cookies) {
+    let that = this;
+    wx.request({
+      url: 'http://localhost/clientspecialtyorder/clientorder/list',
+      header: {'cookie': cookies.data.substring(0, 48), 'Content-Type': 'application/x-www-form-urlencoded'},
+      method: "post",
+      //data: {orderByColumn: sortName, isAsc: 'desc'},
+      data:{isAsc: 'desc',pageNum: 1,pageSize: 10,houseName:'',specialtyName:'',orderByColumn: sortName},
+      success: function(res) {
+        console.log(res);
+        that.setSpecialityList(res.data.rows)
+      }
+    });
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
+  setSpecialityList: function(data){
+    this.setData({
+      SpecialityList: data
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
+  SpecialityClicked:function(e) {
+    console.log(e);
+    let id = e.currentTarget.dataset.id;
+    let data = this.data.SpecialityList[id];
+    wx.navigateTo({
+      url: './specialty_history_detail?specialtyHistoryInfo=' + JSON.stringify(data),
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
+  orderTimeOrderClicked: function() {
+    sortName = 'orderTime';
+    getCookie(this.getSpecialityList);
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
+  quantityOrderClicked: function() {
+    sortName = 'quantity';
+    getCookie(this.getSpecialityList);
   }
 })

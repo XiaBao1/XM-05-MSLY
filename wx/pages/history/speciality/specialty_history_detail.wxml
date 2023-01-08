@@ -1,0 +1,47 @@
+<!--logs.wxml-->
+<view class="container1">
+	<view class="container-body space-content">
+    <view class="space-img">
+      <image src="{{imageUrl}}" mode="aspectFill"></image>
+    </view>
+	  <view class="space-top">
+  	  <view class="space-info">
+  	  	<view class="space-list">
+  	  		<view class="space-item">
+  	  			<text class="text-left">特产名称：{{orderdata.specialtyName}}</text>
+  	  		</view>
+  	  		<view class="space-item">
+  	  			<text class="text-left">售卖民宿：{{orderdata.houseName}}</text>
+  	  			</view>
+  	  		<view class="space-item">
+  	  			<text class="text-left">单价：{{orderdata.price}}</text>
+  	  			</view>
+  	  	</view>
+  	  </view>
+	  </view>
+	  <view class="space-block">
+	  	<view class="space-block-title">付款信息</view>
+	  	<view class="space-block-content">
+	  		<view class="space-list">
+	  			<view class="space-item">
+	  				<text class="text-left">订货量：{{orderdata.quantity}}</text>
+	  				</view>
+	  			<view class="space-item">
+	  				<text class="text-left">总付款：{{sumMoney}}</text>
+	  				</view>
+	  			<view class="space-item">
+	  				<text class="text-left">下单时间：{{orderdata.orderTime}}</text>
+	  				</view>
+	  			<!-- <view class="space-item">
+	  				<text class="text-left">库存：{{orderdata.inventory}}</text>
+	  				</view> -->
+	  		</view>
+	  		
+	  	</view>
+	  </view>
+	</view>
+	<view class="container-footer">
+		<text bindtap="allComment">查看评价</text>
+		<!-- <text class="apply-btn" bindtap="goBuy">评价</text> -->
+	</view>
+</view>

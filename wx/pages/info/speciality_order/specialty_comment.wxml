@@ -1,0 +1,23 @@
+
+<view class='tab-items'>
+  <view class='show'  wx:if="{{count>0}}">
+    <view class='list' wx:for="{{commentList}}" wx:for-item="item" wx:key='id'>
+      <view class='list_top'  data-id="{{index}}">
+        <view class='numAndTime'>
+          <!-- <image class='numPic' src='{{item.photo}}'></image> -->
+          <view  class='numInfo'>
+            <view class='num'>{{item.name}}</view>
+            <view class='time'>评价：{{item.comment}}</view>
+            <!-- <view class='time'>下单时间：{{item.orderTime}}</view> -->
+          </view>
+        </view>
+        
+      </view>
+
+    </view>
+    
+  </view>
+  <view class='list_name' style='text-align: center;' wx:else>
+      抱歉，该特产暂无评价
+    </view>
+</view>

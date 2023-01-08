@@ -6,8 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    account: "admin",
-    password: "admin123"
+    account: "client02",
+    password: "123456"
   },
   onLoad: function() {
   },

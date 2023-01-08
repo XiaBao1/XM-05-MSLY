@@ -1,2 +1,27 @@
-<!--pages/history/speciality/speciality_history.wxml-->
-<text>pages/history/speciality/speciality_history.wxml</text>
+<view class='yue'>
+  <button class='sbutton' bindtap="orderTimeOrderClicked">
+    按时间排序
+  </button>
+  <button class='sbutton' bindtap="quantityOrderClicked">
+    按数量排序
+  </button>
+</view>
+<view class='tab-items'>
+  <view class='show'>
+    <view class='list' wx:for="{{SpecialityList}}" wx:for-item="item" wx:key='id'>
+      <view class='list_top'  data-id="{{index}}">
+        <view class='numAndTime'>
+          <!-- <image class='numPic' src='{{item.imageUrl}}'></image> -->
+          <view  class='numInfo'>
+            <view class='num'>{{item.specialtyName}}×{{item.quantity}}</view>
+            <view class='time'>{{item.houseName}}</view>
+            <view class='time'>下单时间：{{item.orderTime}}</view>
+          </view>
+        </view>
+        <view>
+          <view class='state' bindtap="SpecialityClicked" data-id="{{index}}">查看详情</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

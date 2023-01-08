@@ -111,3 +111,8 @@ page{
   border-bottom-left-radius: 27rpx;
   margin-top: 18rpx;
 }
+.list_name{
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333333;
+}

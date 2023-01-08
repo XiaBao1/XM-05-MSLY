@@ -1,2 +1,29 @@
 <!--pages/info/speciality_order/speciality_order.wxml-->
-<text>pages/info/speciality_order/speciality_order.wxml</text>
+<view class="container1">
+	<view class="container-footer">
+    <text class="apply-btn" bindtap="saleOrderClicked">按销量排序</text>
+		<text class="apply-btn" bindtap="priceOrderClicked">按价格排序</text>
+    <text class="apply-btn" bindtap="statisticsClicked">统计</text>
+
+  </view>
+	
+	<scroll-view class="container-body" scroll-y="true" scroll-top="{{scrolltop}}" bindscroll="scrollHandle" lower-threshold="50" bindscrolltolower="scrollLoading">
+		<view class="service-list">
+			<navigator class="service-item" wx:for="{{servicelist}}" wx:key="{{item.id}}" url="specialty_order_view?id={{item.id}}">
+				<view class="service-img">
+					<image src="{{item.imgurl}}" mode="aspectFill"></image>
+				</view>
+				<view class="service-text">
+					<view class="service-tite">{{item.specialtyName}}</view>
+					<view class="service-tags">
+						<text>{{item.houseName}}</text>
+					</view>
+          <text class="service-city">价格：{{item.price}}      </text>
+					<text class="service-city">            销量：{{item.sale}}</text>
+				</view>
+			</navigator>
+		</view>
+		<view class="gototop {{scrolltop>200?'active':''}}" bindtap="goToTop"></view>
+	</scroll-view>
+</view>
+
