@@ -13,11 +13,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.clientspecialtyorder.domain.ClientSpecialtyRecord;
@@ -255,7 +251,18 @@ public class ClientSpecialtyRecordController extends BaseController {
     @ResponseBody
     public AjaxResult  querycommentSave(ClientSpecialtyRecord clientSpecialtyRecord)
     {
-        System.out.println(clientSpecialtyRecord);
+        System.out.println("====================="+clientSpecialtyRecord);
         return toAjax(clientSpecialtyRecordService.updateClientSpecialtyCommentRecord(clientSpecialtyRecord));
+    }
+
+    //yyt小程序查看评论接口
+    @PostMapping("/wxcommentlist")
+    @ResponseBody
+    public List<ClientSpecialtyRecord> wxcommentlist(@RequestParam Long id)
+    {
+        ClientSpecialtyRecord commentlist = new ClientSpecialtyRecord();
+        commentlist.setspecialtyRecordId(id);
+        System.out.println("======================="+id);
+        return clientSpecialtyRecordService.selectwxcommentlist(commentlist);
     }
 }

@@ -67,4 +67,6 @@ public interface ClientSpecialtyRecordMapper
     public int deleteClientSpecialtyRecordByIds(String[] ids);
 
 
+    //yyt
+    public List<ClientSpecialtyRecord> selectwxcommentlist(ClientSpecialtyRecord clientSpecialtyRecord);
 }

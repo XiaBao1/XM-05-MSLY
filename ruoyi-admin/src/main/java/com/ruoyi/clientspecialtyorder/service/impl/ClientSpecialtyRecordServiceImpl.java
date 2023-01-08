@@ -52,6 +52,12 @@ public class ClientSpecialtyRecordServiceImpl implements IClientSpecialtyRecordS
         return clientSpecialtyRecordMapper.selectClientSpecialtyRecordList(clientSpecialtyRecord);
     }
 
+    //yyt
+    @Override
+    public List<ClientSpecialtyRecord> selectwxcommentlist(ClientSpecialtyRecord clientSpecialtyRecord){
+        return clientSpecialtyRecordMapper.selectwxcommentlist(clientSpecialtyRecord);
+    }
+
     /**
      * 新增订单
      *

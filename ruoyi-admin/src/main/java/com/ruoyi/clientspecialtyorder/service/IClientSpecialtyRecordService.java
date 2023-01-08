@@ -30,6 +30,9 @@ public interface IClientSpecialtyRecordService
      */
     public List<ClientSpecialtyRecord> selectClientSpecialtyRecordList(ClientSpecialtyRecord clientSpecialtyRecord);
 
+    //yyt微信查看评论
+    public List<ClientSpecialtyRecord> selectwxcommentlist(ClientSpecialtyRecord clientSpecialtyRecord);
+
     /**
      * 新增订单
      *
