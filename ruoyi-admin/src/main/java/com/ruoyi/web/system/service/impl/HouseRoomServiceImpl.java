@@ -120,4 +120,112 @@ public class HouseRoomServiceImpl implements IHouseRoomService
     public List<String> getHouseIdByExactHouseName(HouseRoom houseRoom){
         return houseRoomMapper.getHouseIdByExactHouseName(houseRoom);
     }
+
+    public Integer getAllUser(){
+        return houseRoomMapper.getAllUser();
+    }
+
+    public Integer getAllHouse(){
+        return houseRoomMapper.getAllHouse();
+    }
+
+    public Integer getAllBill(){
+        return houseRoomMapper.getAllRoomBill()+houseRoomMapper.getAllSpecialtyBill();
+    }
+
+    public Integer getAllSpecialty(){
+        return houseRoomMapper.getAllSpecialty();
+    }
+
+    public Integer getDone(Long userId){
+        return houseRoomMapper.getRoomDone(userId)+houseRoomMapper.getSpecialtyDone(userId);
+    }
+
+    public Integer getUndo(Long userId){
+        return houseRoomMapper.getRoomUndo(userId)+houseRoomMapper.getSpecialtyUndo(userId);
+    }
+
+    public Integer getSay(Long userId){
+        return houseRoomMapper.getSpecialtySay(userId)+houseRoomMapper.getRoomSay(userId);
+    }
+
+    public Integer getUnSay(Long userId){
+        return houseRoomMapper.getSpecialtyUnSay(userId)+houseRoomMapper.getRoomUnSay(userId);
+    }
+
+    public Integer getToDoDone(Long userId){
+        return houseRoomMapper.getToDoDone(userId);
+    }
+
+    public Integer getToDoUndo(Long userId){
+        return houseRoomMapper.getToDoUndo(userId);
+    }
+
+    public List<Long> getIdFromRoomRecord(){
+        return houseRoomMapper.getIdFromRoomRecord();
+    }
+
+    public String getNameFromRoomRecordById(Long id){
+        return houseRoomMapper.getNameFromRoomRecordById(id);
+    }
+
+    public String getTimeFromRoomRecordById(Long id){
+        return houseRoomMapper.getTimeFromRoomRecordById(id);
+    }
+
+    public String getLandlordFromRoomRecordById(Long id){
+        return houseRoomMapper.getLandlordFromRoomRecordById(id);
+    }
+
+    public String getRoomNumberFromRoomRecordById(Long id){
+        return houseRoomMapper.getRoomNumberFromRoomRecordById(id);
+    }
+
+    public List<Long> getIdFromSpecialtyRecord(){
+        return houseRoomMapper.getIdFromSpecialtyRecord();
+    }
+
+    public String getNameFromSpecialtyRecordById(Long id){
+        return houseRoomMapper.getNameFromSpecialtyRecordById(id);
+    }
+
+    public String getTimeFromSpecialtyRecordById(Long id){
+        return houseRoomMapper.getTimeFromSpecialtyRecordById(id);
+    }
+
+    public String getLandlordFromSpecialtyRecordById(Long id){
+        return houseRoomMapper.getLandlordFromSpecialtyRecordById(id);
+    }
+
+    public String getSpecialtyNameFromSpecialtyRecordById(Long id){
+        return houseRoomMapper.getSpecialtyNameFromSpecialtyRecordById(id);
+    }
+
+    public String getNumberFromSpecialtyRecordById(Long id){
+        return houseRoomMapper.getNumberFromSpecialtyRecordById(id);
+    }
+
+    public List<String> getHouseAddress(){
+        return houseRoomMapper.getHouseAddress();
+    }
+
+    public Long getRoomBill(){
+        return houseRoomMapper.getRoomBill();
+    }
+
+    public Long getSpecialtyBill(){
+        return houseRoomMapper.getSpecialtyBill();
+    }
+
+    public List<String> getHouseName(){
+        return houseRoomMapper.getHouseName();
+    }
+
+    public Integer getBillNumberByHouseName(String name){
+        return houseRoomMapper.getRoomBillNumberByHouseName(name)+houseRoomMapper.getSpecialtyBillNumberByHouseName(name);
+    }
+
+    public String getOwnerByHouseName(String name){
+        return houseRoomMapper.getOwnerByHouseName(name);
+    }
 }

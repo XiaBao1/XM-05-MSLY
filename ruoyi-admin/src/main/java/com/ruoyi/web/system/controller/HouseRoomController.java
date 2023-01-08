@@ -1,27 +1,24 @@
 package com.ruoyi.web.system.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.ruoyi.framework.web.domain.server.Sys;
-import com.ruoyi.web.system.domain.BuyRoom;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.json.JSONObject;
+import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.web.system.domain.HouseRoom;
+import com.ruoyi.web.system.service.IHouseRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.web.system.domain.HouseRoom;
-import com.ruoyi.web.system.service.IHouseRoomService;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.web.bind.annotation.*;
+import springfox.documentation.schema.Entry;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 房子管理Controller
@@ -190,5 +187,123 @@ public class HouseRoomController extends BaseController
         HouseRoom houseRoom=new HouseRoom();
         List<Integer> list = houseRoomService.getAppointmentData(houseRoom);
         return list;
+    }
+
+    @PostMapping("/frontPageUp")
+    @ResponseBody
+    public String frontPageUp()
+    {
+        System.out.println("这里是后端");
+        JSONObject res=new JSONObject();
+        res.put("allUser",houseRoomService.getAllUser());
+        res.put("allHouse",houseRoomService.getAllHouse());
+        res.put("allBill",houseRoomService.getAllBill());
+        res.put("allSpecialty",houseRoomService.getAllSpecialty());
+        return res.toString();
+    }
+
+    @PostMapping("/frontPageGraph")
+    @ResponseBody
+    public String frontPageGraph()
+    {
+        System.out.println("这里是后端");
+        HouseRoom houseRoom=new HouseRoom();
+        JSONObject res=new JSONObject();
+        res.put("done",houseRoomService.getDone(houseRoom.userId));
+        res.put("undo",houseRoomService.getUndo(houseRoom.userId));
+        res.put("say",houseRoomService.getSay(houseRoom.userId));
+        res.put("unsay",houseRoomService.getUnSay(houseRoom.userId));
+        res.put("todo1",houseRoomService.getToDoDone(houseRoom.userId));
+        res.put("todo2",houseRoomService.getToDoUndo(houseRoom.userId));
+        return res.toString();
+    }
+
+    @PostMapping("/frontPageMessage")
+    @ResponseBody
+    public String frontPageMessage()
+    {
+        System.out.println("这里是后端");
+        HouseRoom houseRoom=new HouseRoom();
+        JSONObject res=new JSONObject();
+        JSONObject.JSONArray room=new JSONObject.JSONArray();
+        List<Long> idList =houseRoomService.getIdFromRoomRecord();
+        System.out.println("idlist:"+idList);
+        for(Long id:idList){
+            JSONObject li=new JSONObject();
+            li.put("name",houseRoomService.getNameFromRoomRecordById(id));
+            li.put("time",houseRoomService.getTimeFromRoomRecordById(id));
+            li.put("landlord",houseRoomService.getLandlordFromRoomRecordById(id));
+            li.put("roomNumber",houseRoomService.getRoomNumberFromRoomRecordById(id));
+            room.add(li);
+        }
+        res.put("room",room);
+        JSONObject.JSONArray specialty=new JSONObject.JSONArray();
+        idList=houseRoomService.getIdFromSpecialtyRecord();
+        for(Long id:idList){
+            JSONObject li=new JSONObject();
+            li.put("name",houseRoomService.getNameFromSpecialtyRecordById(id));
+            li.put("time",houseRoomService.getTimeFromSpecialtyRecordById(id));
+            li.put("landlord",houseRoomService.getLandlordFromSpecialtyRecordById(id));
+            li.put("specialtyName",houseRoomService.getSpecialtyNameFromSpecialtyRecordById(id));
+            li.put("number",houseRoomService.getNumberFromSpecialtyRecordById(id));
+            specialty.add(li);
+        }
+        res.put("specialty",specialty);
+        List<String> address=houseRoomService.getHouseAddress();
+        String[] province= new String[]{"河北","山西","辽宁","吉林","黑龙江","江苏","浙江",
+                "安徽","福建","江西","山东","河南","湖北","湖南","广东","海南","四川","贵州",
+                "云南","陕西","甘肃","青海","台湾","内蒙古","广西","西藏","宁夏","新疆","北京",
+                "天津","上海","重庆","香港","澳门","南海"};
+        int cnt=0;
+        JSONObject.JSONArray location=new JSONObject.JSONArray();
+        for(int i=0;i<province.length;i++){
+            cnt=0;
+            for(String add:address){
+                if(add.contains(province[i]))cnt++;
+            }
+            JSONObject li=new JSONObject();
+            li.put("address",province[i]);
+            li.put("number",cnt);
+            location.add(li);
+        }
+        res.put("distribute",location);
+        return res.toString();
+    }
+
+    @PostMapping("/dataPage")
+    @ResponseBody
+    public String dataPage(){
+        System.out.println("这里是dataPage后端");
+        JSONObject res=new JSONObject();
+        res.put("house",houseRoomService.getRoomBill());
+        res.put("specialty",houseRoomService.getSpecialtyBill());
+        Map<String,Integer> ha=new HashMap<>();
+        List<String> name=houseRoomService.getHouseName();
+        for(String li:name){
+            ha.put(li,houseRoomService.getBillNumberByHouseName(li));
+        }
+        List<Map.Entry<String, Integer>> list = new ArrayList<Map.Entry<String,Integer>>(ha.entrySet());
+        list.sort(Map.Entry.comparingByValue());
+
+        // 默认情况下，TreeMap对key进行升序排序
+        System.out.println("------------map按照value升序排序--------------------");
+        for (Map.Entry<String, Integer> entry : list) {
+            System.out.println(entry.getKey() + ":" + entry.getValue());
+        }
+
+        JSONObject.JSONArray array=new JSONObject.JSONArray();
+        int rank=0;
+        for(Map.Entry<String, Integer> entry : list){
+            rank=rank+1;
+            JSONObject li=new JSONObject();
+            li.put("name",entry.getKey());
+            li.put("value",entry.getValue());
+            li.put("owner",houseRoomService.getOwnerByHouseName(entry.getKey()));
+            li.put("rank",rank);
+            array.add(li);
+        }
+        res.put("table",array);
+
+        return res.toString();
     }
 }
