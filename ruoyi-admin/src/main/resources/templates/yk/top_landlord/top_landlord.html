@@ -137,9 +137,11 @@
     function printHtml() {
         $("#prints").removeClass("noprint");
         $.table.hideColumn('image');
+        $.table.hideColumn('caozuo');
         window.print();
         $("#option").addClass("noprint");
         $.table.showColumn('image');
+        $.table.showColumn('caozuo');
     }
 </script>
 </body>

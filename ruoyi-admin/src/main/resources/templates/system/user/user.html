@@ -145,6 +145,7 @@
 		        sortName: "createTime",
 		        sortOrder: "desc",
 		        modalName: "用户",
+				pageSize: 1000,
 		        columns: [{
 		            checkbox: true,
 					field: 'checkbox'
@@ -179,6 +180,7 @@
 		        	visible: editFlag == 'hidden' ? false : true,
 		        	title: '用户状态',
 		        	align: 'center',
+					field: 'status',
 		        	formatter: function (value, row, index) {
 		        		return statusTools(row);
 		        	}
@@ -217,10 +219,12 @@
 			$("#prints").removeClass("noprint");
 			$.table.hideColumn("caozuo");
 			$.table.hideColumn("checkbox");
+			$.table.hideColumn("status");
 			window.print();
 			$("#option").addClass("noprint");
 			$.table.showColumn("caozuo");
 			$.table.showColumn("checkbox");
+			$.table.showColumn("status");
 		}
 
 		function queryDeptTree()

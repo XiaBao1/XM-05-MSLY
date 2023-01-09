@@ -26,7 +26,7 @@
 <body class="gray-bg">
     <div class="container-div">
 		<div class="row">
-			<div class="col-sm-12 search-collapse">
+			<div class="col-sm-12 search-collapse noprint">
 				<form id="menu-form">
 					<div class="select-list">
 						<ul>
@@ -48,7 +48,7 @@
 				</form>
 			</div>
                 
-            <div class="btn-group-sm" id="toolbar" role="group">
+            <div class="btn-group-sm noprint" id="toolbar" role="group">
 		        <a class="btn btn-success" onclick="$.operate.add(0)" shiro:hasPermission="system:menu:add">
                     <i class="fa fa-plus"></i> 新增
                 </a>
@@ -169,6 +169,7 @@
 		        },
 		        {
 		            title: '操作',
+					field: 'caozuo',
 		            width: '20',
 		            widthUnit: '%',
 		            align: "left",
@@ -185,11 +186,13 @@
 		});
 
 	function printHtml() {
-		$("#expandAllBtn").click();
+		$.table.hideColumn("caozuo");
+		// $("#expandAllBtn").click();
 		$("#prints").removeClass("noprint");
 		window.print();
-		$("#option").addClass("noprint");
-		$("#expandAllBtn").click();
+		$("#prints").addClass("noprint");
+		// $("#expandAllBtn").click();
+		$.table.showColumn("caozuo");
 	}
 	</script>
 

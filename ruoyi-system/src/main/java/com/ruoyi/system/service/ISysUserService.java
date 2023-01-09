@@ -12,7 +12,12 @@ import com.ruoyi.system.domain.SysUserRole;
 public interface ISysUserService
 {
     public List<Integer> getMonthlyUserIncrement();
-
+    public int getUserCount();
+    public List<Integer> getUserCountByRole();
+    public int getCurMonthCount();
+    public int getPrevMonthCount();
+    public List<Integer> getCountBySex();
+    public List<Integer> getCountByMoney();
 
     /**
      * 根据条件分页查询用户列表
