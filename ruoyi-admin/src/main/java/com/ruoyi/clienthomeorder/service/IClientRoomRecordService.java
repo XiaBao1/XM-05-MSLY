@@ -59,6 +59,10 @@ public interface IClientRoomRecordService
 
     public List<Integer> getMonthlyClientRoomRecordIncrement();
 
+    public List<String> getDataNameList();
+
+    public Long getSellNumber(String name);
+
     /**
      * 删除民宿订单信息
      * 

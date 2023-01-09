@@ -140,4 +140,20 @@ public class ClientSpecialtyRecordServiceImpl implements IClientSpecialtyRecordS
     {
         return clientSpecialtyRecordMapper.deleteClientSpecialtyRecordById(id);
     }
+
+    @Override
+    public List<String> getDataNameList() {
+        int len = 5;
+        List<Integer> list = new ArrayList<Integer>(len);
+        for (int i = 0; i < len; i++) {
+            list.add(0);
+        }
+        List<String> datalist= clientSpecialtyRecordMapper.selectDataNameList(new ClientSpecialtyRecord());
+        System.out.println(datalist);
+        return datalist;
+    }
+
+    public Long getSellNumber(String name){
+        return clientSpecialtyRecordMapper.getSellNumber(name);
+    }
 }

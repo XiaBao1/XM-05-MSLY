@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 import ch.qos.logback.core.net.server.Client;
+import com.alibaba.fastjson.JSONArray;
 import com.ruoyi.clientspecialtyorder.domain.ClientSpecialtyRecord;
+import com.ruoyi.common.json.JSONObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 民宿订单Controller
- * 
+ *
  * @author ruoyi
  * @date 2022-12-06
  */
@@ -301,4 +303,33 @@ public class ClientRoomRecordController extends BaseController
         }
         return list;
     }
+
+    /**
+     * 驾驶舱数据
+     */
+    @PostMapping("/data")
+    @ResponseBody
+    public String Data()
+    {
+        JSONObject res=new JSONObject();
+        JSONArray s=new JSONArray();
+        List<String> namelist = clientRoomRecordService.getDataNameList();
+        for(String name:namelist){
+            JSONObject tmp=new JSONObject();
+            String a = name;
+            tmp.put("name",a);
+            String b = String.valueOf(clientRoomRecordService.getSellNumber(name)) ;
+            tmp.put("number",b);
+            s.add(tmp);
+        }
+        res.put("data",s);
+        System.out.println(res);
+        return res.toString();
+    }
+
+
+
+
+
+
 }

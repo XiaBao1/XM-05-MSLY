@@ -6,8 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONArray;
 import com.ruoyi.clienthomeorder.domain.ClientRoomRecord;
 import com.ruoyi.common.config.ServerConfig;
+import com.ruoyi.common.json.JSONObject;
 import com.ruoyi.landlordhomeorder.domain.LandlordRoomRecord;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -257,5 +259,28 @@ public class ClientSpecialtyRecordController extends BaseController {
     {
         System.out.println(clientSpecialtyRecord);
         return toAjax(clientSpecialtyRecordService.updateClientSpecialtyCommentRecord(clientSpecialtyRecord));
+    }
+
+    /**
+     * 驾驶舱数据
+     */
+    @PostMapping("/specialtydata")
+    @ResponseBody
+    public String Data()
+    {
+        JSONObject res=new JSONObject();
+        JSONArray s=new JSONArray();
+        List<String> namelist = clientSpecialtyRecordService.getDataNameList();
+        for(String name:namelist){
+            JSONObject tmp=new JSONObject();
+            String a = name;
+            tmp.put("name",a);
+            String b = String.valueOf(clientSpecialtyRecordService.getSellNumber(name)) ;
+            tmp.put("number",b);
+            s.add(tmp);
+        }
+        res.put("data",s);
+        System.out.println(res);
+        return res.toString();
     }
 }
