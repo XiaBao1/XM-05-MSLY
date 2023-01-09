@@ -3,13 +3,22 @@ page{
   background: #ededed;
   height: 100%;
 }
-.yue{
+.add-img {
+  width: 150rpx;
   height: 150rpx;
+  border-radius: 50%;
+
+  position: absolute;
+  bottom: 20rpx;
+  right: 20rpx;
+}
+.yue{
+  height: 200rpx;
   margin-top: 10rpx;
   margin-left: 30rpx;
   margin-right: 30rpx;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 .sbutton1{
   height: 120rpx;
@@ -22,6 +31,12 @@ page{
   font-size: 30rpx;
   width: 20rpx;
   background: #f3b328;
+}
+.del-img {
+  width: 50rpx;
+  height: 50rpx;
+  margin-top: 50rpx;
+  margin-right: 20rpx;
 }
 .swiper-tab{ 
   position: fixed; 

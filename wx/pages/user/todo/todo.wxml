@@ -1,9 +1,9 @@
 <view class='yue'>
   <button class='sbutton' style="background-color: #1088d8; color: white;" bindtap="addClicked">
-    添加代办
+    添加待办
   </button>
   <button class='sbutton' bindtap="statisticsClicked">
-    代办统计
+    待办统计
   </button>
 </view>
 <view class='yue'>
@@ -17,16 +17,19 @@
 <view class='tab-items'>
   <view class='show'>
     <view class='list' wx:for="{{todoList}}" wx:for-item="item" wx:key='id'>
+      <view class="orderListTitle"> 
+        <!-- <view class="userImg"><image src="../../images/toux.jpg"></image></view> -->
+        <text class="userName">截止时间：{{item.ddlTime}}</text>
+        <view class='orderStatus' wx:if="{{item.status == 0}}">待完成</view>
+        <view class="orderStatus" style="color: rgb(51, 218, 0);" wx:else>已完成</view>
+    </view>
       <view class='list_top' data-id="{{index}}">
         <view class='numAndTime'>
           <view  class='numInfo' bindtap="modifyTodoClicked" data-idx="{{index}}">
-            <view class='num'>{{item.ddlTime}} 截止</view>
-            <view class='time'>{{item.content}}</view>
+            <view class='num'>{{item.content}}</view>
           </view>
         </view>
         <view>
-          <view class='doing' wx:if="{{item.status == 0}}">待完成</view>
-          <view class="done" wx:else>已完成</view>
           <view class='delete' bindtap="deleteTodoClicked" data-idx="{{index}}">删除</view>
         </view>
       </view>
