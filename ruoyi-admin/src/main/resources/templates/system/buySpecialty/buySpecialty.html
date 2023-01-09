@@ -22,10 +22,218 @@
         }
     </style>
     <th:block th:include="include :: header('特产订购列表')" />
+    <link href="../static/css/login.min.css" th:href="@{/css/login.css}" rel="stylesheet"/>
+    <link href="../static/assets/global/css/dynamic1.css" th:href="@{/assets/global/css/dynamic1.css}" rel="stylesheet" type="text/css"/>
 </head>
+
+
 <body class="gray-bg">
-<div class="container-div">
-    <div class="row">
+
+<div style="position: fixed">
+    <canvas id="canvas"></canvas>
+    <!--<h1>XM-05 民宿旅游系统</h1>-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/chroma-js/1.3.4/chroma.min.js"></script>
+    <script src="/js/dat.gui.min.js"></script>
+    <script type="text/javascript">
+        let settings = {
+            amplitudeX: 150,
+            amplitudeY: 20,
+            lines: 30,
+            startColor: '#500c44',
+            endColor: '#b4d455'
+        };
+
+        const c = document.getElementById("canvas");
+        const ctx1 = c.getContext("2d");
+        let winW = window.innerWidth;
+        let winH = window.innerHeight;
+        let Paths = [];
+        let color = [];
+        let mouseY = 0;
+        let mouseDown = false;
+        let time = 0;
+        let curves;
+        let velocity;
+
+        class Path {
+            constructor(y, color) {
+                this.y = y;
+                this.color = color;
+                this.root = [];
+                this.create();
+                this.draw();
+            }
+
+            create() {
+                let rootX = 0;
+                let rootY = this.y;
+
+                this.root = [{ x: rootX, y: rootY }];
+
+                while (rootX < winW) {
+                    let casual = Math.random() > 0.5 ? 1 : -1;
+                    let x = parseInt(
+                        settings.amplitudeX / 2 + Math.random() * settings.amplitudeX / 2
+                    );
+                    let y = parseInt(rootY + casual * (settings.amplitudeY / 2 + Math.random() * settings.amplitudeY / 2));
+                    rootX += x;
+                    let delay = Math.random() * 100;
+                    this.root.push({ x: rootX, y: y, height: rootY, casual: casual, delay: delay });
+                }
+            }
+
+            draw() {
+                ctx1.beginPath();
+                ctx1.moveTo(0, winH);
+
+                ctx1.lineTo(this.root[0].x, this.root[0].y);
+
+                for (let i = 1; i < this.root.length - 1; i++) {
+
+                    let x = this.root[i].x;
+                    let y = this.root[i].y;
+                    let nextX = this.root[i + 1].x;
+                    let nextY = this.root[i + 1].y;
+
+                    let xMid = (x + nextX) / 2;
+                    let yMid = (y + nextY) / 2;
+                    let cpX1 = (xMid + x) / 2;
+                    let cpY1 = (yMid + y) / 2;
+                    let cpX2 = (xMid + nextX) / 2;
+                    let cpY2 = (yMid + nextY) / 2;
+
+                    ctx1.quadraticCurveTo(cpX1, y, xMid, yMid);
+                    ctx1.quadraticCurveTo(cpX2, nextY, nextX, nextY);
+                }
+
+                const lastPoint = this.root.reverse()[0];
+                this.root.reverse();
+                ctx1.lineTo(lastPoint.x, lastPoint.y);
+                ctx1.lineTo(winW, winH);
+                ctx1.fillStyle = this.color;
+                ctx1.fill();
+                ctx1.closePath();
+            }
+        }
+
+        /* INIT */
+        let path;
+        function init() {
+            c.width = winW;
+            c.height = winH;
+            Paths = [];
+
+            color = chroma.scale([settings.startColor, settings.endColor])
+                .mode('lch').colors(settings.lines);
+
+            document.body.style = `background: ${settings.startColor}`;
+
+            for (let i = 0; i < settings.lines; i++) {
+                Paths.push(new Path(winH / settings.lines * i, color[i]));
+                settings.startY = winH / settings.lines * i;
+            }
+        }
+
+        /* WIN RESIZE */
+        window.addEventListener('resize', function () {
+            winW = window.innerWidth;
+            winH = window.innerHeight;
+            c.width = winW;
+            c.height = winH;
+            init();
+        });
+        window.dispatchEvent(new Event("resize"));
+        // console.log("fffff");
+
+        /* RENDER */
+        function render() {
+            c.width = winW;
+            c.height = winH;
+
+            curves = mouseDown ? 2 : 4;
+            velocity = mouseDown ? 6 : 0.8;
+
+            time += mouseDown ? 0.1 : 0.05 ;
+
+            Paths.forEach(function (path, i) {
+                path.root.forEach(function (r, j) {
+                    if (j % curves == 1) {
+                        let move = Math.sin(time + r.delay ) * velocity * r.casual;
+                        r.y -= (move / 2) - move;
+                    }
+                    if (j + 1 % curves == 0) {
+                        let move = Math.sin(time + r.delay ) * velocity * r.casual;
+                        r.x += (move / 2) - move / 10;
+                    }
+                });
+
+                path.draw();
+            });
+
+            requestAnimationFrame(render);
+        }
+        render();
+
+        /* MOUSEDOWN */
+        ('mousedown touchstart').split(' ').forEach(e => {
+            document.addEventListener(e, function() {
+                mouseDown = true;
+            })
+        });
+
+        /* MOUSEUP */
+        ('mouseup mouseleave touchend').split(' ').forEach(e => {
+            document.addEventListener(e, function() {
+                mouseDown = false;
+            })
+        });
+
+        /* MOUSEMOVE */
+        ('mousemove touchmove').split(' ').forEach(e => {
+            document.addEventListener(e, function(e) {
+                mouseY = e.clientY || e.touches[0].clientY;
+            })
+        });
+
+        console.log("gggggg");
+
+        /* DATA GUI */
+        // const gui = (
+        //     function datgui() {
+        //         var gui = new dat.GUI();
+        //         // dat.GUI.toggleHide();
+        //         gui.closed = true;
+        //         gui.add(settings, "amplitudeX", 40, 200).step(20).onChange(function(newValue) {
+        //             init();
+        //         });
+        //         gui.add(settings, "amplitudeY", 0, 100).step(1).onChange(function(newValue) {
+        //             init();
+        //         });
+        //         gui.add(settings, "lines", 5, 50).step(1).onChange(function(newValue) {
+        //             init();
+        //         });
+        //         gui.addColor(settings, "startColor").onChange(function(newValue) {
+        //
+        //             init();
+        //             document.querySelector('h1').innerHTML = 'or whatever you want';
+        //         });
+        //         gui.addColor(settings, "endColor").onChange(function(newValue) {
+        //             init();
+        //             document.querySelector('h1').innerHTML = 'or whatever you want';
+        //         });
+        //         gui.domElement.style.position='absolute';
+        //         gui.domElement.style.top='745px';
+        //         gui.domElement.style.right='0px';
+        //
+        //         return gui;
+        //     })();
+
+
+    </script>
+</div>
+
+<div class="container-div filter">
+    <div class="row" style="opacity: 0.8">
         <div class="col-sm-12 search-collapse">
             <form id="formId">
                 <div class="select-list">
@@ -172,6 +380,36 @@
         };
         $.table.init(options);
     });
+
+    const gui = (
+        function datgui() {
+            var gui = new dat.GUI();
+            // dat.GUI.toggleHide();
+            gui.closed = true;
+            gui.add(settings, "amplitudeX", 40, 200).step(20).onChange(function(newValue) {
+                init();
+            });
+            gui.add(settings, "amplitudeY", 0, 100).step(1).onChange(function(newValue) {
+                init();
+            });
+            gui.add(settings, "lines", 5, 50).step(1).onChange(function(newValue) {
+                init();
+            });
+            gui.addColor(settings, "startColor").onChange(function(newValue) {
+
+                init();
+                document.querySelector('h1').innerHTML = 'or whatever you want';
+            });
+            gui.addColor(settings, "endColor").onChange(function(newValue) {
+                init();
+                document.querySelector('h1').innerHTML = 'or whatever you want';
+            });
+            // gui.domElement.style.position='absolute';
+            // gui.domElement.style.top='645px';
+            // gui.domElement.style.right='0px';
+
+            return gui;
+        })();
 
     function buy(id) {
         var url = prefix + '/buy/' + id;

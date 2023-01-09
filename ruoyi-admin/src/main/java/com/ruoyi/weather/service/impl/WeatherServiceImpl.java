@@ -109,8 +109,7 @@ public class WeatherServiceImpl implements IWeatherService
         {
             ans.add(null);
         }
-        monthStart.add(Calendar.MONTH, 0); //获取当前月第一天
-        monthStart.set(Calendar.DAY_OF_MONTH, 1); //设置为1号,当前日期既为本月第一天
+        monthStart.set(Calendar.DAY_OF_MONTH,0); // 设成上月最后一天
         Calendar monthEnd = Calendar.getInstance();
         monthEnd.set(Calendar.DAY_OF_MONTH, monthEnd.getActualMaximum(Calendar.DAY_OF_MONTH)); //获取当前月最后一天
         //System.out.println(monthStart.getTime());
@@ -127,8 +126,8 @@ public class WeatherServiceImpl implements IWeatherService
                 //System.out.println(cur.getWeatherDate().toString());
                 tmp.setTime(cur.getWeatherDate());
                 int id=tmp.get(Calendar.DAY_OF_MONTH);
-                ans.set(id,cur.getHighT());
-                ans.set(id+31,cur.getLowT());
+                ans.set(id-1,cur.getHighT());
+                ans.set(id+30,cur.getLowT());
             }
         }
 

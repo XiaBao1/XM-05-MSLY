@@ -4,12 +4,12 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!--	<meta charset="utf-8"/>-->
-<!--	<title>Metronic | Dashboard</title>-->
-<!--	<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
-<!--	<meta content="width=device-width, initial-scale=1" name="viewport"/>-->
-<!--	<meta content="" name="description"/>-->
-<!--	<meta content="" name="author"/>-->
+	<!--	<meta charset="utf-8"/>-->
+	<!--	<title>Metronic | Dashboard</title>-->
+	<!--	<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+	<!--	<meta content="width=device-width, initial-scale=1" name="viewport"/>-->
+	<!--	<meta content="" name="description"/>-->
+	<!--	<meta content="" name="author"/>-->
 
 	<!--360浏览器优先以webkit内核解析-->
 	<title>XM-05 民宿旅游平台</title>
@@ -42,122 +42,502 @@
 	<link href="../static/assets/admin/layout/css/layout.css" th:href="@{/assets/admin/layout/css/layout.css}" rel="stylesheet" type="text/css"/>
 	<link href="../static/assets/admin/layout/css/themes/darkblue.css" th:href="@{/assets/admin/layout/css/themes/darkblue.css}" rel="stylesheet" type="text/css" id="style_color"/>
 	<link href="../static/assets/admin/layout/css/custom.css" th:href="@{/assets/admin/layout/css/custom.css}" rel="stylesheet" type="text/css"/>
+	<link href="../static/assets/global/css/dynamic1.css" th:href="@{/assets/global/css/dynamic1.css}" rel="stylesheet" type="text/css"/>
 	<!-- END THEME STYLES -->
 
 	<link rel="shortcut icon" href="favicon.ico"/>
 
 </head>
 
-<body class="gray-bg">
+<body class="gray-bg" style="overflow: hidden">
+<div class="landscape"></div>
+
+<div class="filter">
+	<div id="benti" class="row border-bottom  dashboard-header">
+		<!--	<div class="col-sm-5">-->
+		<!--		<h2>欢迎访问XM-05 民宿旅游平台 (ᕑᗢᓫ∗)˒</h2>-->
+		<!--		<p>一直想做一款后台管理系统，看了很多优秀的开源项目但是发现没有合适自己的。<b>网站管理后台</b></p>-->
+		<!--	</div>-->
+
+		<div  id="loading" style="display: flex; justify-content: space-around;">
+		    <div id="main" style="width: 600px; height:600px;position: absolute;"></div>
+		    <div id="toprightviewLines" style="width: 600px; height:600px; position: absolute;"></div>
+		</div>
+
+		<script src="/ajax/libs/report/echarts/echarts-all.min.js?v=4.2.1"></script>
+		<script type="text/javascript">
+			console.log("hirtbgbf");
+			var pid;
+			//window.onload=function(){
+				var myChart = echarts.init(document.getElementById('main'));
+
+				var pieData = [{
+					value: 22,
+					name: 'name1',
+					itemStyle: {
+						normal: {
+							// color: 'rgba(42,42,187,1)'
+							color: { //图形渐变颜色方法，四个数字分别代表，右，下，左，上，offset表示0%到100%
+								type: 'linear',
+								x: 0,
+								y: 0,
+								x2: 0, //从左到右 0-1
+								y2: 1,
+								colorStops: [{
+									offset: 0,
+									color: '#4b42f5' // 0% 处的颜色
+								}, {
+									offset: 1,
+									color: '#3540bb' // 100% 处的颜色
+								}],
+								globalCoord: false // 缺省为 false
+							}
+						}, //正常颜色
+						emphasis: {
+							color: 'rgba(42,42,187,0.5)'
+						}, //鼠标移入颜色
+					},
+				},
+					{
+						value: 22,
+						name: 'name2',
+						itemStyle: {
+							normal: {
+								color: {
+									type: 'linear',
+									x: 0,
+									y: 0,
+									x2: 0, //从左到右 0-1
+									y2: 1,
+									colorStops: [{
+										offset: 0,
+										color: '#3a48c1'
+									}, {
+										offset: 1,
+										color: '#4c70c2'
+									}],
+									globalCoord: false
+								}
+							},
+							emphasis: {
+								color: 'rgba(66,90,193,0.5)'
+							},
+						},
+					},
+					{
+						value: 22,
+						name: 'name3',
+						itemStyle: {
+							normal: {
+								color: 'rgba(85,132,151,1)'
+							},
+							emphasis: {
+								color: 'rgba(85,132,151,0.5)'
+							},
+						},
+					},
+					{
+						value: 22,
+						name: 'name4',
+						itemStyle: {
+							normal: {
+								color: 'rgba(87,179,180,1)'
+							},
+							emphasis: {
+								color: 'rgba(87,179,180,0.5)'
+							},
+						},
+					},
+					{
+						value: 22,
+						name: 'name5',
+						itemStyle: {
+							normal: {
+								color: 'rgba(58,177,184,1)'
+							},
+							emphasis: {
+								color: 'rgba(58,177,184,0.5)'
+							},
+						},
+					},
+					{
+						value: 22,
+						name: 'name6',
+						itemStyle: {
+							normal: {
+								color: 'rgba(29,173,194,1)'
+							},
+							emphasis: {
+								color: 'rgba(29,173,194,0.5)'
+							},
+						},
+					},
+					{
+						value: 22,
+						name: 'name7',
+						itemStyle: {
+							normal: {
+								color: 'rgba(4,171,203,1)'
+							},
+							emphasis: {
+								color: 'rgba(4,171,203,0.5)'
+							},
+						},
+					},
+					{
+						value: 22,
+						name: 'name8',
+						itemStyle: {
+							normal: {
+								color: 'rgba(3,177,203,1)'
+							},
+							emphasis: {
+								color: 'rgba(3,177,203,0.5)'
+							},
+						},
+					},
+					{
+						value: 22,
+						name: 'name9',
+						itemStyle: {
+							normal: {
+								color: 'rgba(3,134,205,1)'
+							},
+							emphasis: {
+								color: 'rgba(3,134,205,0.5)'
+							},
+						},
+					},
+					{
+						value: 22,
+						name: 'name10',
+						itemStyle: {
+							normal: {
+								color: 'rgba(3,102,205,1)'
+							},
+							emphasis: {
+								color: 'rgba(3,102,205,0.5)'
+							},
+						},
+					},
+					{
+						value: 22,
+						name: 'name11',
+						itemStyle: {
+							normal: {
+								color: 'rgba(89,105,180,1)'
+							},
+							emphasis: {
+								color: 'rgba(89,105,180,0.5)'
+							},
+						},
+					},
+					{
+						value: 22,
+						name: 'name12',
+						itemStyle: {
+							normal: {
+								color: 'rgba(68,65,198,1)'
+							},
+							emphasis: {
+								color: 'rgba(68,65,198,0.5)'
+							},
+						},
+					},
+				]
+				option = {
+					series: [{
+						text:"Loading",
+						name: '动图',
+						type: 'pie',
+						radius: ['60%', '70%'],
+						itemStyle: {
+							borderColor: '#0c092a', // 增加空隙，该颜色与背景色相同
+							borderWidth: 5, // 空隙大小
+						},
+						avoidLabelOverlap: false,
+						hoverAnimation: false, // 取消鼠标滑入放大的效果
+						animation: false, // 取消饼图展开的效果
+						label: {
+							normal: {
+								show: false
+								//formatter: "Loading...",
+							},
+							emphasis: {
+								show: false
+							}
+						},
+						labelLine: {
+							normal: {
+								show: false
+								//formatter: "Loading...",
+							}
+						},
+						data: pieData
+					}
+					],
+					title:{
+						show:true,
+						text:"Loading...",
+						left: "center",
+						top: '45%',
+						textStyle:{
+							fontSize: 52,
+							color:'#454c5c',
+							align:'center',
+							fontFamily : "Times New Roman",
+						},
+					}
+				};
+
+				myChart.setOption(option);
+
+				var myChartPieIndex = 0;
+
+				var a = setInterval(function () {
+					var dataLen = option.series[0].data.length;
+					// 取消之前高亮的图形
+					myChart.dispatchAction({
+						type: 'downplay',
+						seriesIndex: 0,
+						dataIndex: myChartPieIndex
+					});
+					myChartPieIndex = (myChartPieIndex + 1) % dataLen;
+					// 高亮当前图形
+					myChart.dispatchAction({
+						type: 'highlight',
+						seriesIndex: 0,
+						dataIndex: myChartPieIndex
+					});
+				}, 200);
+
+				showpieLinex();
+
+				function showpieLinex() {
+					var myChartLine = echarts.init(document.getElementById('toprightviewLines'));
+
+					var tips = 0;
+					var m = 0;
+					var mm = 1;
+
+					function loading() {
+						return [{
+							value: tips,
+							itemStyle: {
+								normal: {
+									color: '#5c78a7', // 走过的颜色
+								}
+							}
+						},
+							{
+								value: m,
+								itemStyle: {
+									normal: {
+										borderWidth: 5,
+										borderColor: {
+											type: 'linear',
+											x: 0,
+											y: 0,
+											x2: 0,
+											y2: 4,
+											colorStops: [{
+												offset: 0,
+												color: 'rgba(255,255,255,0.7)' // 0% 处的颜色
+											}, {
+												offset: 0.3,
+												color: 'rgba(255,255,255,1)' // 0% 处的颜色
+											}, {
+												offset: 0.6,
+												color: 'rgba(255,255,255,1)' // 0% 处的颜色
+											}, {
+												offset: 0.8,
+												color: 'rgba(255,255,255,1)' // 0% 处的颜色
+											}, {
+												offset: 1,
+												color: 'rgba(255,255,255,1)' // 100% 处的颜色
+											}],
+											globalCoord: false,
+										},
+										color: 'rgba(255,255,255,1)',
+										shadowBlur: 30,
+										shadowColor: 'rgba(255,255,255,1)'
+									}
+								}
+							}, {
+								value: 100 - tips,
+								itemStyle: {
+									normal: {
+										color: '#344285', // 未走的线的颜色
+									}
+								}
+							}
+						];
+					}
+					console.log("又到我了");
+
+					function loop() {
+						if (tips == 100) {
+							tips = 0;
+							m = 0;
+						} else if (tips <= 10) {
+							++tips;
+							++m
+						} else if (tips >= 90) {
+							++tips;
+							--m
+						} else {
+							++tips;
+						};
+						console.log("又到里面了");
+
+						myChartLine.setOption({
+							animation: false,
+							animationThreshold: 100,
+							animationDurationUpdate: function (idx) {
+								// 越往后的数据延迟越大
+								return idx * 1000;
+							},
+							series: [{
+								name: 'loading',
+								type: 'pie',
+								radius: ['75%', '80%'],
+								center: ['50%', '50%'],
+								hoverAnimation: false,
+								label: {
+									normal: {
+										show: false,
+									}
+								},
+								data: loading()
+							}]
+						})
+					}
+
+					pid=setInterval(loop, 50);
+				}
+			//}
+		</script>
+
+		<div id="graph">
+			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+				<div class="dashboard-stat blue-madison">
+					<div class="visual">
+						<i class="fa fa-comments"></i>
+					</div>
+					<div class="details">
+						<div class="number">
+							<label id="allUser" style="font-size:xx-large">查询中</label>
+						</div>
+						<div class="desc">
+							<i class="fa fa-comments"></i>平台用户数量
+						</div>
+					</div>
+					<!--			<a class="more" href="javascript:;">-->
+					<!--				View more <i class="m-icon-swapright m-icon-white"></i>-->
+					<!--			</a>-->
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+				<div class="dashboard-stat red-intense">
+					<div class="visual">
+						<i class="fa fa-bar-chart-o"></i>
+					</div>
+					<div class="details">
+						<div class="number">
+							<label id="allHouse" style="font-size:xx-large">查询中</label>
+						</div>
+						<div class="desc">
+							<i class="fa fa-bar-chart-o"></i>注册民宿数量
+						</div>
+					</div>
+					<!--			<a class="more" href="javascript:;">-->
+					<!--				View more <i class="m-icon-swapright m-icon-white"></i>-->
+					<!--			</a>-->
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+				<div class="dashboard-stat green-haze">
+					<div class="visual">
+						<i class="fa fa-shopping-cart"></i>
+					</div>
+					<div class="details">
+						<div class="number">
+							<label id="allBill" style="font-size:xx-large">查询中</label>
+						</div>
+						<div class="desc">
+							<i class="fa fa-shopping-cart"></i>历史订单总数
+						</div>
+					</div>
+					<!--			<a class="more" href="javascript:;">-->
+					<!--				View more <i class="m-icon-swapright m-icon-white"></i>-->
+					<!--			</a>-->
+				</div>
+			</div>
+			<div class="col-lg-3">
+				<div class="dashboard-stat purple-plum">
+					<div class="visual">
+						<i class="fa fa-globe"></i>
+					</div>
+					<div class="details">
+						<div class="number">
+							<label id="allSpecialty" style="font-size:xx-large">查询中</label>
+						</div>
+						<div class="desc">
+							<i class="fa fa-globe"></i>库存特产种类
+						</div>
+					</div>
+					<!--			<a class="more" href="javascript:;">-->
+					<!--				View more <i class="m-icon-swapright m-icon-white"></i>-->
+					<!--			</a>-->
+				</div>
+			</div>
+
+			<div class="col-lg-7 col-md-7 col-sm-6 col-xs-12" >
+				<div class="echarts" id="china-map" style="height: 800px;width: 100%;margin-top: 0px"></div>
+			</div>
+
+			<div class="col-lg-5 col-md-7 col-sm-6 col-xs-12">
+				<div class="echarts" id="chart1" style="height: 250px;width: 100%"></div>
+			</div>
+
+			<div class="col-lg-5 col-md-7 col-sm-6 col-xs-12">
+				<div class="echarts" id="chart2" style="height: 300px;width: 100%;"></div>
+			</div>
+		</div>
+        <script type="text/javascript">
+            document.getElementById("graph").style.visibility="hidden";
+        </script>
+
+		<div id="msgBox" class="col-lg-5 col-md-7 col-sm-6 col-xs-12" >
+			<div id="message" >
+				<div><label style="margin-left: 300px;font-size: large;font-family: 黑体;"><b>消息栏</b></label></div>
+				<marquee id="affiche" align="left" behavior="scroll" bgcolor="transparent" direction="up" height="60" width="400" hspace="130" vspace="0" loop="-1" scrollamount="1" scrolldelay="90" onMouseOut="this.start()" onMouseOver="this.stop()">
+					<div><font style="font-family: 楷体" size="3" color='yellow'>------------欢迎使用XM-05 民宿旅游系统------------</font></div>
+					<div><font style="font-family: 宋体" size="3" color='#32cd32'>------------欢迎使用XM-05 民宿旅游系统------------</font></div>
+					<div><font style="font-family: 'Times New Roman'" size="3" color='#ff69b4'>------------------欢迎使用XM-05 民宿旅游系统------------------</font></div>
+					<div><font style="font-family: 黑体" size="3" color='blue'>------------欢迎使用XM-05 民宿旅游系统------------</font></div>
+				</marquee>
+			</div>
+			<div class="col-lg-12" style="text-align: right;">
+				<div class="father" style="width: 97px;float: right"><button onclick="hide()" style="background: transparent;border: transparent;color: whitesmoke;" class="pchelement"><u>显示/隐藏桌面</u></button></div>
+			</div>
+		</div>
+        <script type="text/javascript">
+            document.getElementById("msgBox").style.visibility="hidden";
+        </script>
+	</div>
+</div>
+
+<canvas id="canvas"></canvas>
+
+
 <!--<body id="bdpg" background="https://localhost/profile/Fall.mp4" style="background-repeat:no-repeat;background-attachment:fixed; background-size:100% 100%;">-->
 <!--<body background="https://images7.alphacoders.com/370/370162.jpg" style="background-repeat:no-repeat;background-attachment:fixed; background-size:100% 100%;">-->
-<video id="dynamic-background" src="http://localhost/profile/Fall.mp4" class="dynamic-background" autoplay loop muted playbackRate="0.5"></video>
-<div id="benti" class="row border-bottom  dashboard-header">
-<!--	<div class="col-sm-5">-->
-<!--		<h2>欢迎访问XM-05 民宿旅游平台 (ᕑᗢᓫ∗)˒</h2>-->
-<!--		<p>一直想做一款后台管理系统，看了很多优秀的开源项目但是发现没有合适自己的。<b>网站管理后台</b></p>-->
-<!--	</div>-->
+<!--	<video id="dynamic-background" src="http://localhost/profile/Fall.mp4" class="dynamic-background" autoplay loop muted playbackRate="0.5"></video>-->
 
-	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-		<div class="dashboard-stat blue-madison">
-			<div class="visual">
-				<i class="fa fa-comments"></i>
-			</div>
-			<div class="details">
-				<div class="number">
-					1349
-				</div>
-				<div class="desc">
-					<i class="fa fa-comments"></i>平台用户数量
-				</div>
-			</div>
-<!--			<a class="more" href="javascript:;">-->
-<!--				View more <i class="m-icon-swapright m-icon-white"></i>-->
-<!--			</a>-->
-		</div>
-	</div>
-	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-		<div class="dashboard-stat red-intense">
-			<div class="visual">
-				<i class="fa fa-bar-chart-o"></i>
-			</div>
-			<div class="details">
-				<div class="number">
-					+<label style="font-size:xx-large">66</label>
-				</div>
-				<div class="desc">
-					<i class="fa fa-bar-chart-o"></i>昨日新增用户
-				</div>
-			</div>
-<!--			<a class="more" href="javascript:;">-->
-<!--				View more <i class="m-icon-swapright m-icon-white"></i>-->
-<!--			</a>-->
-		</div>
-	</div>
-	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-		<div class="dashboard-stat green-haze">
-			<div class="visual">
-				<i class="fa fa-shopping-cart"></i>
-			</div>
-			<div class="details">
-				<div class="number">
-					549
-				</div>
-				<div class="desc">
-					<i class="fa fa-shopping-cart"></i>历史订单总数
-				</div>
-			</div>
-<!--			<a class="more" href="javascript:;">-->
-<!--				View more <i class="m-icon-swapright m-icon-white"></i>-->
-<!--			</a>-->
-		</div>
-	</div>
-	<div class="col-lg-3">
-		<div class="dashboard-stat purple-plum">
-			<div class="visual">
-				<i class="fa fa-globe"></i>
-			</div>
-			<div class="details">
-				<div class="number">
-					+<label style="font-size:xx-large">24</label>
-				</div>
-				<div class="desc">
-					<i class="fa fa-globe"></i>昨日新增订单
-				</div>
-			</div>
-<!--			<a class="more" href="javascript:;">-->
-<!--				View more <i class="m-icon-swapright m-icon-white"></i>-->
-<!--			</a>-->
-		</div>
-	</div>
+<!--	<div class="father" style="width: 97px"><button onclick="hide()" style="background: transparent;border: transparent;color: #00B83F" class="pchelement"><u>显示/隐藏桌面</u></button></div>-->
+<!--	<div class="father" style="width: 65px"><button onclick="change()" style="background: transparent;border: transparent;color: yellowgreen" class="pchelement"><u>切换主题</u></button></div>-->
 
-	<div class="col-lg-7 col-md-7 col-sm-6 col-xs-12" >
-	<div class="echarts" id="china-map" style="height: 800px;width: 100%;margin-top: 0px"></div>
-	</div>
-
-	<div class="col-lg-5 col-md-7 col-sm-6 col-xs-12">
-		<div class="echarts" id="chart1" style="height: 250px;width: 100%;"></div>
-	</div>
-
-	<div class="col-lg-5 col-md-7 col-sm-6 col-xs-12">
-		<div class="echarts" id="chart2" style="height: 300px;width: 100%;"></div>
-	</div>
-
-	<div class="col-lg-5 col-md-7 col-sm-6 col-xs-12">
-		<div><label style="margin-left: 300px;font-size: x-large;font-family: 黑体">消息栏</label></div>
-		<marquee id="affiche" align="right" behavior="scroll" bgcolor="transparent" direction="up" height="100" width="400" hspace="225" vspace="15" loop="-1" scrollamount="1" scrolldelay="90" onMouseOut="this.start()" onMouseOver="this.stop()">
-			<div><font style="font-family: 楷体" size="3" color='yellow'>欢迎使用XM-05 民宿旅游系统</font></div>
-			<div><font style="font-family: 宋体" size="3" color='#32cd32'>欢迎使用XM-05 民宿旅游系统</font></div>
-			<div><font style="font-family: 'Times New Roman'" size="3" color='#ff69b4'>欢迎使用XM-05 民宿旅游系统</font></div>
-			<div><font style="font-family: 黑体" size="3" color='blue'>欢迎使用XM-05 民宿旅游系统</font></div>
-		</marquee>
-	</div>
-</div>
-
-<div >
-	<div><button onclick="hide()" style="background: transparent;border: transparent;color: #00B83F">显示/隐藏桌面</button></div>
-	<div><button onclick="change()" style="background: transparent;border: transparent;color: #00B83F">切换主题</button></div>
-</div>
 </body>
 
 <script th:src="@{/js/jquery.min.js}"></script>
@@ -206,22 +586,213 @@
 <script th:src="@{/assets/admin/pages/scripts/tasks.js}" type="text/javascript"></script>
 <script th:src="@{/assets/admin/pages/scripts/maps-vector.js}"></script>
 
-<script type="text/javascript">
-	// jQuery(document).ready(function() {
-	// 	// initiate layout and plugins
-	// 	Metronic.init(); // init metronic core components
-	// 	Layout.init(); // init current layout
-	// 	QuickSidebar.init(); // init quick sidebar
-	// 	Demo.init(); // init demo features
-	// 	MapsVector.init();
-	// });
 
-	console.log("rrrrrrrrrrr");
+
+<script type="text/javascript">
+	console.log("进入背景js1");
+	//showpieLinex();
+	function Star(id, x, y) {
+		this.id = id;
+		this.x = x;
+		this.y = y;
+		this.r = Math.floor(Math.random() * 2) + 1;
+		var alpha = (Math.floor(Math.random() * 10) + 1) / 10 / 2;
+		this.color = "rgba(255,255,255," + alpha + ")";
+	}
+
+	Star.prototype.draw = function() {
+		ctx.fillStyle = this.color;
+		ctx.shadowBlur = this.r * 2;
+		ctx.beginPath();
+		ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+		ctx.closePath();
+		ctx.fill();
+	}
+
+	Star.prototype.move = function() {
+		this.y -= .15;
+		if (this.y <= -10) this.y = HEIGHT + 10;
+		this.draw();
+	}
+
+	Star.prototype.die = function() {
+		stars[this.id] = null;
+		delete stars[this.id];
+	}
+
+
+	function Dot(id, x, y, r) {
+		this.id = id;
+		this.x = x;
+		this.y = y;
+		this.r = Math.floor(Math.random() * 5) + 1;
+		this.maxLinks = 2;
+		this.speed = .5;
+		this.a = .5;
+		this.aReduction = .005;
+		this.color = "rgba(255,255,255," + this.a + ")";
+		this.linkColor = "rgba(255,255,255," + this.a / 4 + ")";
+
+		this.dir = Math.floor(Math.random() * 140) + 200;
+	}
+
+	Dot.prototype.draw = function() {
+		ctx.fillStyle = this.color;
+		ctx.shadowBlur = this.r * 2;
+		ctx.beginPath();
+		ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+		ctx.closePath();
+		ctx.fill();
+	}
+
+	Dot.prototype.link = function() {
+		if (this.id == 0) return;
+		var previousDot1 = getPreviousDot(this.id, 1);
+		var previousDot2 = getPreviousDot(this.id, 2);
+		var previousDot3 = getPreviousDot(this.id, 3);
+		if (!previousDot1) return;
+		ctx.strokeStyle = this.linkColor;
+		ctx.moveTo(previousDot1.x, previousDot1.y);
+		ctx.beginPath();
+		ctx.lineTo(this.x, this.y);
+		if (previousDot2 != false) ctx.lineTo(previousDot2.x, previousDot2.y);
+		if (previousDot3 != false) ctx.lineTo(previousDot3.x, previousDot3.y);
+		ctx.stroke();
+		ctx.closePath();
+	}
+
+	function getPreviousDot(id, stepback) {
+		if (id == 0 || id - stepback < 0) return false;
+		if (typeof dots[id - stepback] != "undefined") return dots[id - stepback];
+		else return false; //getPreviousDot(id - stepback);
+	}
+
+	Dot.prototype.move = function() {
+		this.a -= this.aReduction;
+		if (this.a <= 0) {
+			this.die();
+			return
+		}
+		this.color = "rgba255,255,255," + this.a + ")";
+		this.linkColor = "rgba(255,255,255," + this.a / 4 + ")";
+		this.x = this.x + Math.cos(degToRad(this.dir)) * this.speed,
+				this.y = this.y + Math.sin(degToRad(this.dir)) * this.speed;
+
+		this.draw();
+		this.link();
+	}
+
+	Dot.prototype.die = function() {
+		dots[this.id] = null;
+		delete dots[this.id];
+	}
+
+
+	var canvas = document.getElementById('canvas'),
+			ctx = canvas.getContext('2d'),
+			WIDTH,
+			HEIGHT,
+			mouseMoving = false,
+			mouseMoveChecker,
+			mouseX,
+			mouseY,
+			stars = [],
+			initStarsPopulation = 80,
+			dots = [],
+			dotsMinDist = 2,
+			maxDistFromCursor = 50;
+
+	setCanvasSize();
+	init();
+
+	function setCanvasSize() {
+		WIDTH = document.documentElement.clientWidth,
+				HEIGHT = document.documentElement.clientHeight;
+
+		canvas.setAttribute("width", WIDTH);
+		canvas.setAttribute("height", HEIGHT);
+	}
+
+	function init() {
+		ctx.strokeStyle = "white";
+		ctx.shadowColor = "white";
+		for (var i = 0; i < initStarsPopulation; i++) {
+			stars[i] = new Star(i, Math.floor(Math.random() * WIDTH), Math.floor(Math.random() * HEIGHT));
+			//stars[i].draw();
+		}
+		ctx.shadowBlur = 0;
+		animate();
+	}
+
+	function animate() {
+		ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
+		for (var i in stars) {
+			stars[i].move();
+		}
+		for (var i in dots) {
+			dots[i].move();
+		}
+		drawIfMouseMoving();
+		requestAnimationFrame(animate);
+	}
+
+	window.onmousemove = function(e) {
+		mouseMoving = true;
+		mouseX = e.clientX;
+		mouseY = e.clientY;
+		clearInterval(mouseMoveChecker);
+		mouseMoveChecker = setTimeout(function() {
+			mouseMoving = false;
+		}, 100);
+	}
+
+
+	function drawIfMouseMoving() {
+		if (!mouseMoving) return;
+
+		if (dots.length == 0) {
+			dots[0] = new Dot(0, mouseX, mouseY);
+			dots[0].draw();
+			return;
+		}
+
+		var previousDot = getPreviousDot(dots.length, 1);
+		var prevX = previousDot.x;
+		var prevY = previousDot.y;
+
+		var diffX = Math.abs(prevX - mouseX);
+		var diffY = Math.abs(prevY - mouseY);
+
+		if (diffX < dotsMinDist || diffY < dotsMinDist) return;
+
+		var xVariation = Math.random() > .5 ? -1 : 1;
+		xVariation = xVariation * Math.floor(Math.random() * maxDistFromCursor) + 1;
+		var yVariation = Math.random() > .5 ? -1 : 1;
+		yVariation = yVariation * Math.floor(Math.random() * maxDistFromCursor) + 1;
+		dots[dots.length] = new Dot(dots.length, mouseX + xVariation, mouseY + yVariation);
+		dots[dots.length - 1].draw();
+		dots[dots.length - 1].link();
+	}
+	//setInterval(drawIfMouseMoving, 17);
+
+	function degToRad(deg) {
+		return deg * (Math.PI / 180);
+	}
+</script>
+
+
+<script type="text/javascript">
+
+	console.log("进入图标js2");
+	var dataChina=[];
+	var tot=0;
+
 	console.log(document.getElementById('china-map'));
 	var chinaMap = echarts.init(document.getElementById("china-map"));
 	console.log("WWWWWWW");
 	window.onresize = chinaMap.resize; // 窗口或框架被调整大小时执行chinaMap.resize
-	chinaMap.setOption({
+	var chinaOption=({
 		tooltip: {}, // 鼠标移到图里面的浮动提示框
 		title: {
 			text: "民宿分布统计图",
@@ -273,46 +844,24 @@
 				name: "民宿注册数量", // 浮动框的标题
 				type: "map",
 				geoIndex: 0,
-				data: [
-					{
-						name: "北京",
-						value: 599,
-					},
-					{
-						name: "上海",
-						value: 142,
-					},
-					{
-						name: "黑龙江",
-						value: 44,
-					},
-					{
-						name: "深圳",
-						value: 92,
-					},
-					{
-						name: "湖北",
-						value: 810,
-					},
-					{
-						name: "四川",
-						value: 453,
-					},
-				],
+				data: dataChina,
 			},
 		],
 	});
 
 
-	var dataName=[1,2,3,4,5,6,7,8,9];
-	var dataRecord=[1,2,3,4,5,6,7,8,9];
-	var barChart = echarts.init(document.getElementById("chart1"));
-	var baroption = {
+	var dataName=["已完成订单","未完成订单","已评价订单","未评价订单"];
+	var dataRecord=[1,2,3,4];
+	var dataDB=[];
+	var done={},undo={};
+	done.name="已完成事项";undo.name="待完成事项";
+	var barChart1 = echarts.init(document.getElementById("chart1"));
+	var baroption1 = {
 		title : {
-			text: '特产历史购买情况统计',
+			text: '我的历史订单统计',
 			left: "center",
 		},
-		color: "rgba(110,30,0,0.65)",
+		color: "rgba(128,0,0,1)",
 		tooltip : {
 			trigger: 'axis'
 		},
@@ -338,7 +887,7 @@
 		],
 		series : [
 			{
-				name:'历史购买数目',
+				name:'订单数量',
 				type:'bar',
 				data: dataRecord,
 				markPoint : {
@@ -351,71 +900,188 @@
 					data : [
 						{type : 'average', name: '平均值'}
 					]
+				},
+				itemStyle: {
+					shadowBlur: 10,
+					shadowColor: 'rgba(0, 0, 0, 0.5)',
 				}
 			}
 		]
 	};
-	barChart.setOption(baroption);
-	window.onresize = barChart.resize;
-	barChart = echarts.init(document.getElementById("chart2"));
-	barChart.setOption({
+	barChart1.setOption(baroption1);
+	barChart1.on('click',function(param){
+		top.layer.confirm("确认跳转到订单管理页面吗？",{
+			title:"XM-05 民宿旅游系统",
+			btn:['确认','取消'],
+		},function () {
+			top.layer.closeAll('dialog');
+			window.location.href="http://localhost/usertodolist/todolist";
+		});
+	});
+	window.onresize = barChart1.resize;
+
+
+	var barChart2 = echarts.init(document.getElementById("chart2"));
+	var baroption2={
 		title : {
-			text: '特产历史购买情况统计',
+			text: '我的待办事项统计',
 			left: "center",
+		},
+		tooltip:{
+			show: true,
 		},
 		series : [
 			{
-				name: '访问来源',
-				opacity: 0.5,
+				//name: '事项数目',
+				//opacity: 0.5,
 				type: 'pie',    // 设置图表类型为饼图
 				radius: '75%',  // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
 				itemStyle: {
 					normal: {
 						color: function (colors) {
 							var colorList = [
-								'rgba(120,47,28,0.66)',
-								'rgba(45,39,53,0.66)',
-								'rgba(20,82,19,0.66)',
-								'rgba(15,82,61,0.66)',
-								'rgba(93,11,121,0.66)',
+								'rgba(20,82,19,1)',
+								'rgba(180,180,20,1)',
+								'rgba(93,11,121,1)',
 							];
 							return colorList[colors.dataIndex];
-						}
+						},
+						shadowBlur: 10,
+						shadowColor: 'rgba(0, 0, 0, 0.5)',
 					},
 				},
-				data:[          // 数据数组，name 为数据项名称，value 为数据项值
-					{value:235, name:'视频广告'},
-					{value:274, name:'联盟广告'},
-					{value:310, name:'邮件营销'},
-					{value:335, name:'直接访问'},
-					{value:400, name:'搜索引擎'}
-				]
+				data: dataDB,
 			}
 		]
+	};
+	barChart2.setOption(baroption2);
+	barChart2.on('click',function(){
+		top.layer.confirm("确认跳转到待办事项页面吗？",{
+			title:"XM-05 民宿旅游系统",
+			btn:['确认','取消'],
+		},function () {
+			top.layer.closeAll('dialog');
+			window.location.href="http://localhost/usertodolist/todolist";
+		});
 	});
-	window.onresize = barChart.resize;
+	window.onresize = barChart2.resize;
+
+
+	$.ajax({//获取消息
+		type: 'post',
+		url: 'room/frontPageMessage',
+		async: true,
+		success: function(res) {
+			console.log(res);
+			let json = eval( "(" + res + ")" );
+			var msgArray=[];
+			for(var i=0;i<json.room.length;i++){
+				var li=json.room[i].name.substring(0,1)+"**于"+json.room[i].time+"在"+json.room[i].landlord+"预定了"+json.room[i].roomNumber+"号房间";
+				msgArray.push(li);
+			}
+			for(var i=0;i<json.specialty.length;i++){
+				var li=json.specialty[i].name.substring(0,1)+"**于"+json.specialty[i].time+"在"+json.specialty[i].landlord+"购买了"+json.specialty[i].number+"件特产（"+json.specialty[i].specialtyName+"）";
+				msgArray.push(li);
+			}
+			var str,ss;
+			//if(json.allComment.length==0) str="<div><font size='3' color='yellow' face='楷体'>暂无评论，期待您的评价。</font></div>";
+			for(var i=0;i<msgArray.length;i++){
+				if(i==0)str="<div><font size='2' color='yellow' face='楷体'>"+msgArray[i]+"</font></div>";
+				else if(i%2==1) ss=str,str=ss+"<div><font size='2' color='pink' face='楷体'>"+msgArray[i]+"</font></div>";
+				else ss=str,str=ss+"<div><font size='2' color='yellow' face='楷体'>"+msgArray[i]+"</font></div>";
+			}
+			document.getElementById("affiche").innerHTML=str;
+			for(var i=0;i<json.distribute.length;i++){
+				var tmp={};
+				tmp.name=json.distribute[i].address;
+				if(tmp.name=="南海")tmp.name="南海诸岛";
+				tmp.value=json.distribute[i].number;
+				dataChina.push(tmp);
+			}
+			chinaOption.series.data=dataChina;
+			chinaMap.setOption(chinaOption);
+			tot=tot+1;
+			if(tot==3){
+				document.getElementById("loading").style.visibility="hidden";
+				clearTimeout(pid);
+				document.getElementById("graph").style.visibility="visible";
+				document.getElementById("msgBox").style.visibility="visible";
+			}
+		}
+	});
+
+
+	$.ajax({
+		type: 'post',
+		url: 'room/frontPageGraph',
+		async: true,
+		success: function(res) {
+			console.log(res);
+			let json = eval( "(" + res + ")" );
+			dataRecord[0]=json.done;
+			dataRecord[1]=json.undo;
+			dataRecord[2]=json.say;
+			dataRecord[3]=json.unsay;
+			done.value=json.todo1;
+			undo.value=json.todo2;
+			dataDB.push(done);
+			dataDB.push(undo);
+			baroption1.series.data=dataRecord;
+			barChart1.setOption(baroption1);
+			baroption2.series.data=dataDB;
+			barChart2.setOption(baroption2);
+			tot=tot+1;
+			if(tot==3){
+				document.getElementById("loading").style.visibility="hidden";
+				clearTimeout(pid);
+				document.getElementById("graph").style.visibility="visible";
+				document.getElementById("msgBox").style.visibility="visible";
+			}
+		}
+	});
+
+	var allUser,allHouse,allBill,allSpecialty;
+	$.ajax({
+		type: 'post',
+		url: 'room/frontPageUp',
+		async: true,
+		success: function(res) {
+			console.log(res);
+			let json = eval( "(" + res + ")" );
+			allUser=json.allUser;
+			allHouse=json.allHouse;
+			allBill=json.allBill;
+			allSpecialty=json.allSpecialty;
+			document.getElementById("allUser").innerText=allUser;
+			document.getElementById("allHouse").innerText=allHouse;
+			document.getElementById("allBill").innerText=allBill;
+			document.getElementById("allSpecialty").innerText=allSpecialty;
+			tot=tot+1;
+			if(tot==3){
+				document.getElementById("loading").style.visibility="hidden";
+				clearTimeout(pid);
+				document.getElementById("graph").style.visibility="visible";
+				document.getElementById("msgBox").style.visibility="visible";
+			}
+		}
+	});
+
+
 
 	var cnt=0;
 	function hide() {
 		console.log("DDDDD");
 		if(cnt==0){
 			cnt=cnt+1;
-			document.getElementById("benti").style.visibility="hidden";
+			document.getElementById("graph").style.visibility="hidden";
+			document.getElementById("message").style.visibility="hidden";
 		}
 		else{
 			cnt=cnt-1;
-			document.getElementById("benti").style.visibility="visible";
+			document.getElementById("graph").style.visibility="visible";
+			document.getElementById("message").style.visibility="visible";
 		}
-	}
+	};
 
-	var imgs =["http://localhost/profile/Fall.mp4",
-		"http://localhost/profile/Blue.mp4",
-		"http://localhost/profile/Stars.mp4",];
-	var cnt2=0;
-	function change() {
-		console.log("OOOOOOO");
-		cnt2=(cnt2+1)%3;
-		document.getElementById("dynamic-background").src=imgs[cnt2];
-	}
 </script>
 </html>

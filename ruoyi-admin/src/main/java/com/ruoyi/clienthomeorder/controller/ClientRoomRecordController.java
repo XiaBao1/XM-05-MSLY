@@ -2,10 +2,12 @@ package com.ruoyi.clienthomeorder.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ch.qos.logback.core.net.server.Client;
 import com.alibaba.fastjson.JSONArray;
 import com.ruoyi.clientspecialtyorder.domain.ClientSpecialtyRecord;
 import com.ruoyi.common.json.JSONObject;
@@ -31,7 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 民宿订单Controller
- * 
+ *
  * @author ruoyi
  * @date 2022-12-06
  */
@@ -62,7 +64,7 @@ public class ClientRoomRecordController extends BaseController
     {
         startPage();
         List<ClientRoomRecord> list = clientRoomRecordService.selectClientRoomRecordList(clientRoomRecord);
-        System.out.println(list);
+        //System.out.println(list);
         return getDataTable(list);
     }
 
@@ -145,7 +147,6 @@ public class ClientRoomRecordController extends BaseController
 
     @RequiresPermissions("clienthomeorder:homeorder:eCharts")
     @GetMapping("/eCharts")
-    @ResponseBody
     public String statistics(ModelMap mmap)
     {
         return prefix + "/eCharts";
@@ -160,37 +161,6 @@ public class ClientRoomRecordController extends BaseController
         List<Integer> list = clientRoomRecordService.getMonthlyClientRoomRecordIncrement();
         return list;
     }
-
-    /**
-     * 驾驶舱数据
-     */
-//    @RequiresPermissions("clienthomeorder:homeorder:data")
-    @GetMapping("/data")
-    public String FrontData(ModelMap mmap)
-    {
-        return prefix + "/data";
-    }
-
-    @RequiresPermissions("clienthomeorder:homeorder:data")
-    @Log(title = "驾驶舱统计", businessType = BusinessType.INSERT)
-    @PostMapping("/data")
-    @ResponseBody
-    public String Data()
-    {
-        JSONObject res=new JSONObject();
-        JSONArray s=new JSONArray();
-        List<String> namelist = clientRoomRecordService.getDataNameList();
-        for(String name:namelist){
-            JSONObject tmp=new JSONObject();
-            tmp.put("name",name);
-            tmp.put("record",clientRoomRecordService.getSellNumber(name));
-            s.add(tmp);
-        }
-        res.put("data",s);
-        System.out.println(res);
-        return res.toString();
-    }
-
 
 
     /**
@@ -310,6 +280,56 @@ public class ClientRoomRecordController extends BaseController
         System.out.println(clientRoomRecord);
         return toAjax(clientRoomRecordService.updateClientRoomCommentRecord(clientRoomRecord));
     }
+
+    /**
+     * 小程序查看评论
+     */
+    @RequiresPermissions("clienthomeorder:homeorder:querycomment")
+    @Log(title = "小程序查看评论", businessType = BusinessType.UPDATE)
+    @PostMapping("/appquerycomment")
+    @ResponseBody
+    public List<ClientRoomRecord> appquerycomment(String id)
+    {
+        Long ids=Long.valueOf(id);
+        List<ClientRoomRecord> list=new ArrayList<ClientRoomRecord>(1);
+        ClientRoomRecord clientRoomRecord = clientRoomRecordService.selectClientRoomCommentRecordById(ids);
+        if(clientRoomRecord==null){
+            ClientRoomRecord N=new ClientRoomRecord();
+            N.setId(0L);
+            list.add(N);
+        }
+        else {
+            list.add(clientRoomRecordService.selectClientRoomCommentRecordById(ids));
+        }
+        return list;
+    }
+
+    /**
+     * 驾驶舱数据
+     */
+    @PostMapping("/data")
+    @ResponseBody
+    public String Data()
+    {
+        JSONObject res=new JSONObject();
+        JSONArray s=new JSONArray();
+        List<String> namelist = clientRoomRecordService.getDataNameList();
+        for(String name:namelist){
+            JSONObject tmp=new JSONObject();
+            String a = name;
+            tmp.put("name",a);
+            String b = String.valueOf(clientRoomRecordService.getSellNumber(name)) ;
+            tmp.put("number",b);
+            s.add(tmp);
+        }
+        res.put("data",s);
+        System.out.println(res);
+        return res.toString();
+    }
+
+
+
+
 
 
 }

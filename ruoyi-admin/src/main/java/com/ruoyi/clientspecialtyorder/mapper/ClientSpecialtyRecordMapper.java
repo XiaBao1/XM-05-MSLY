@@ -2,6 +2,7 @@ package com.ruoyi.clientspecialtyorder.mapper;
 
 import java.util.List;
 
+import com.ruoyi.clienthomeorder.domain.ClientRoomRecord;
 import com.ruoyi.clientspecialtyorder.domain.ClientSpecialtyRecord;
 
 /**
@@ -66,5 +67,6 @@ public interface ClientSpecialtyRecordMapper
      */
     public int deleteClientSpecialtyRecordByIds(String[] ids);
 
-
+    public List<String> selectDataNameList(ClientSpecialtyRecord clientSpecialtyRecord);
+    public Long getSellNumber(String name);
 }

@@ -68,4 +68,70 @@ public interface HouseRoomMapper
     List<String> getHouseIdByHouseName(HouseRoom houseRoom);
 
     List<String> getHouseIdByExactHouseName(HouseRoom houseRoom);
+
+    Integer getAllUser();
+
+    Integer getAllHouse();
+
+    Integer getAllSpecialty();
+
+    Integer getAllRoomBill();
+
+    Integer getAllSpecialtyBill();
+
+    Integer getRoomDone(Long userId);
+
+    Integer getRoomUndo(Long userId);
+
+    Integer getSpecialtyDone(Long userId);
+
+    Integer getSpecialtyUndo(Long userId);
+
+    Integer getSpecialtySay(Long userId);
+
+    Integer getRoomSay(Long userId);
+
+    Integer getSpecialtyUnSay(Long userId);
+
+    Integer getRoomUnSay(Long userId);
+
+    Integer getToDoDone(Long userId);
+
+    Integer getToDoUndo(Long userId);
+
+    List<Long> getIdFromRoomRecord();
+
+    String getNameFromRoomRecordById(Long id);
+
+    String getTimeFromRoomRecordById(Long id);
+
+    String getLandlordFromRoomRecordById(Long id);
+
+    String getRoomNumberFromRoomRecordById(Long id);
+
+    List<Long> getIdFromSpecialtyRecord();
+
+    String getNameFromSpecialtyRecordById(Long id);
+
+    String getTimeFromSpecialtyRecordById(Long id);
+
+    String getLandlordFromSpecialtyRecordById(Long id);
+
+    String getSpecialtyNameFromSpecialtyRecordById(Long id);
+
+    String getNumberFromSpecialtyRecordById(Long id);
+
+    List<String> getHouseAddress();
+
+    Long getRoomBill();
+
+    Long getSpecialtyBill();
+
+    List<String> getHouseName();
+
+    Integer getRoomBillNumberByHouseName(String name);
+
+    Integer getSpecialtyBillNumberByHouseName(String name);
+
+    String getOwnerByHouseName(String name);
 }

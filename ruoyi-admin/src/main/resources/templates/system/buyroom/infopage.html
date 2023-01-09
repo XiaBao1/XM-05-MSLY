@@ -5,9 +5,10 @@
     <link href="../static/css/login.min.css" th:href="@{/css/login.css}" rel="stylesheet"/>
 </head>
 <!--<body class="signin">-->
-<!--<body class="white-bg">-->
-<body  id="bdpg" background="http://localhost/profile/back0.jpg" style="background-repeat:no-repeat;background-attachment:fixed; background-size:100% 100%;">
+<body class="white-bg">
+<!--<body  id="bdpg" background="http://localhost/profile/back0.jpg" style="background-repeat:no-repeat;background-attachment:fixed; background-size:100% 100%;">-->
 <!--<div class="wrapper wrapper-content animated fadeInRight ibox-content">-->
+<video id="dynamic-background" src="http://localhost/profile/Cave.mp4" class="dynamic-background" autoplay loop muted playbackRate="0.5"></video>
 <div class="wrapper wrapper-content animated fadeInRight pchpanel">
     <form class="form-horizontal m" id="form-buyRoom-buy">
         <!--    <form class="form-horizontal m" id="form-buyroom-buy" th:object="${buyRoom}">-->
@@ -73,6 +74,11 @@
     </div>
 
 </div>
+<div class="col-lg-12" style="text-align: end">
+    <div style="text-align: right">
+        <div class="father" style="width: 97px;float: right"><button onclick="change()" style="background: transparent;border: transparent;color: lightgoldenrodyellow;" class="pchelement"><u>切换主题</u></button></div>
+    </div>
+</div>
 
 
 
@@ -81,46 +87,40 @@
 <script th:inline="javascript" >
     console.log("进入infopage的js");
 
+    var imgs =["http://localhost/profile/Cave.mp4",
+        "http://localhost/profile/Ink.mp4",
+        "http://localhost/profile/Snow.mp4",
+        "http://localhost/profile/Sunrise.mp4",
+        "http://localhost/profile/Tree.mp4",
+        "http://localhost/profile/Village.mp4",
+        "http://localhost/profile/Sunrise2.mp4"];//（设定想要显示的图片）
+    var mottos=["人生不过是一场旅行，你路过我，我路过你，然后各自修行，各自向前。",
+        "想有一只黑色的猫，陪我去旅行。",
+        "旅行有时候是虚无缥缈的，但梦想不是。",
+        "一个人的快乐，不是因为他拥有的多，而是他计较的少。",
+        "我们活着不能与草木同腐，不能醉生梦死，枉度人生，要有所作为。",
+        "人的全部本领无非是耐心和时间的混合物。",
+        "我去旅行，是因为我决定了要去，并不是因为对风景的兴趣。 洗澡、死亡、旅途是三个顿悟人生的时刻。我不是鱼，还不想死，我要去旅行。",
+        "要想结为夫妻，先去旅行一次。",
+        "做一个世界的水手，游遍每一个港口。",
+        "人生本来就是一场独自旅行，或许中途曾有人同路，但终将各自走散。这就是时间给我们的答案。",
+        "旅行是消除无知和仇恨的最好方法。",
+        "没有旅行的生活，只能称之为生存。一生中至少要有两次冲动，一次为奋不顾身的爱情，一次为说走就走的旅行。",
+        "如果问我旅行的意义是什么，我也不知道，假如你还没有出发，不如一起走走。",
+        "我只是你世界中的一位旅行者，而你却是我心中的蓝天。"
+    ];
+
     window.onload=function(){
-        var imgs =["http://localhost/profile/back0.jpg",
-            "http://localhost/profile/back9.jpg",
-            "http://localhost/profile/back3.jpg",
-            "http://localhost/profile/back4.jpg",
-            "http://localhost/profile/back5.jpg",
-            "http://localhost/profile/back6.jpg",
-            "http://localhost/profile/back7.jpg",
-            "http://localhost/profile/back8.jpg",
-            "http://localhost/profile/back1.jpg",
-            "http://localhost/profile/back10.jpg",
-            "http://localhost/profile/back11.jpg",
-            "http://localhost/profile/back2.jpg",
-            "http://localhost/profile/back12.jpg",
-            "http://localhost/profile/back13.jpg"];//（设定想要显示的图片）
-        var mottos=["人生不过是一场旅行，你路过我，我路过你，然后各自修行，各自向前。",
-            "想有一只黑色的猫，陪我去旅行。",
-            "旅行有时候是虚无缥缈的，但梦想不是。",
-            "一个人的快乐，不是因为他拥有的多，而是他计较的少。",
-            "我们活着不能与草木同腐，不能醉生梦死，枉度人生，要有所作为。",
-            "人的全部本领无非是耐心和时间的混合物。",
-            "我去旅行，是因为我决定了要去，并不是因为对风景的兴趣。 洗澡、死亡、旅途是三个顿悟人生的时刻。我不是鱼，还不想死，我要去旅行。",
-            "要想结为夫妻，先去旅行一次。",
-            "做一个世界的水手，游遍每一个港口。",
-            "人生本来就是一场独自旅行，或许中途曾有人同路，但终将各自走散。这就是时间给我们的答案。",
-            "旅行是消除无知和仇恨的最好方法。",
-            "没有旅行的生活，只能称之为生存。一生中至少要有两次冲动，一次为奋不顾身的爱情，一次为说走就走的旅行。",
-            "如果问我旅行的意义是什么，我也不知道，假如你还没有出发，不如一起走走。",
-            "我只是你世界中的一位旅行者，而你却是我心中的蓝天。"
-        ];
 
         var i =0;
-        var head=document.getElementById("bdpg");//获取DIV对象
+        //var head=document.getElementById("dynamic-background");//获取DIV对象
         var my=document.getElementById("my");//获取DIV对象
         my.style.fontFamily="楷体";
         my.style.color="lightblue";
         function time(){
             i++;
             i=i%14;
-            head.background=imgs[i];
+            //head.background=imgs[i];
             my.innerText=mottos[i];
         }
             setInterval(time,7000);
@@ -218,6 +218,12 @@
 
     function cancel() {
         parent.location.reload();
+    }
+
+    var cnt=0;
+    function change() {
+        cnt=(cnt+1)%7;
+        document.getElementById("dynamic-background").src=imgs[cnt];
     }
 
 

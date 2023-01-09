@@ -135,6 +135,7 @@ public class ClientRoomRecordServiceImpl implements IClientRoomRecordService
             list.add(0);
         }
         List<String> datalist= clientRoomRecordMapper.selectDataNameList(new ClientRoomRecord());
+        System.out.println(datalist);
         return datalist;
     }
 
