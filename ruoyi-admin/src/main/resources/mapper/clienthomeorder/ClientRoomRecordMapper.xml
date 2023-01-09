@@ -25,6 +25,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="path"    column="path"    />
     </resultMap>
 
+    <resultMap id="StringResult" type="String"></resultMap>
+
+    <resultMap id="LongResult" type="Long"></resultMap>
+
     <sql id="selectClientRoomRecordVo">
     select client_room_record.id as id, user_name, room_id,room_number,house_name,buy_time,check_in_date, check_out_date, reserve_in_date, reserve_out_date, price, is_paid, is_done from (client_room_record join sys_user) join landlord_house join house_room where client_number = user_id and room_id =house_room.id and house_room.house_id = landlord_house.id  and user_name =#{userName}
     </sql>
@@ -49,6 +53,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectClientRoomRecordList2" parameterType="ClientRoomRecord" resultMap="ClientRoomRecordResult">
         select client_room_record.id as id, user_name, room_id,room_number,house_name,buy_time,check_in_date, check_out_date, reserve_in_date, reserve_out_date, price, is_paid, is_done from (client_room_record join sys_user) join landlord_house join house_room where client_number = user_id and room_id =house_room.id and house_room.house_id = landlord_house.id and user_name =#{userName}
 
+    </select>
+
+    <select id="selectDataNameList" resultMap="StringResult">
+       select house_name
+        from landlord_house join house_room join client_room_record
+        where landlord_house.id = house_room.house_id and house_room.id = client_room_record.room_id
+        group by house_name
+        order by count(house_name) desc
+        limit 5
+    </select>
+
+    <select id="getSellNumber"  parameterType="ClientRoomRecord" resultType="Long">
+       select count(house_name) as number
+        from landlord_house join house_room join client_room_record
+        where landlord_house.id = house_room.house_id and house_room.id = client_room_record.room_id and house_name = #{houseName}
     </select>
 
     <select id="selectClientRoomRecordById" parameterType="Long" resultMap="ClientRoomRecordResult">

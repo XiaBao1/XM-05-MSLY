@@ -80,8 +80,8 @@
                 <div class="boxfoot"></div>
             </div>
             <div class="boxall" style="height: 2.95rem">
-                <div class="alltitle">行业区分比例</div>
-                <div id="echarts4" style="height: 2.2rem; width: 100%;"></div>
+                <div class="alltitle">最受顾客欢迎的民宿Top 5</div>
+                <div id="xwj1" style="height: 2.2rem; width: 100%;"></div>
                 <div class="boxfoot"></div>
             </div>
             <div class="boxall" style="height: 2.65rem" hidden>
@@ -311,11 +311,9 @@
                     </div>
                 </div><!--&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&pch!-->
 
-                <div class="boxall" style="height: 2.65rem">
-                    <div class="alltitle">消费占比</div>
-                    <div class="sy" id="echarts1"></div>
-                    <div class="sy" id="echarts2"></div>
-                    <div class="sy" id="echarts3"></div>
+                <div class="boxall" style="height: 2.95rem">
+                    <div class="alltitle">最受顾客欢迎的特产Top 5</div>
+                    <div id="xwj2" style="height: 2.2rem; width: 100%;"></div>
                     <div class="boxfoot"></div>
                 </div>
             </div>
@@ -663,138 +661,291 @@
     }, 500);
 
 </script>
-<script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts4'));
-    var plantCap = [{
-        name: '工业',
-        value: '222'
-    }, {
-        name: '农业',
-        value: '115'
-    }, {
-        name: '互联网',
-        value: '113'
-    }, {
-        name: '医疗',
-        value: '95'
-    }, {
-        name: '文学',
-        value: '92'
-    }, {
-        name: '服装',
-        value: '87'
-    }];
-    var datalist = [{
-        offset: [56, 48],
-        symbolSize: 110,
-
-        color: 'rgba(73,188,247,.14)',
-
-    }, {
-
-        offset: [30, 70],
-        symbolSize: 70,
-        color: 'rgba(73,188,247,.14)'
-    }, {
-        offset: [0, 43],
-        symbolSize: 60,
-        color: 'rgba(73,188,247,.14)'
-
-    }, {
-        offset: [93, 30],
-        symbolSize: 70,
-        color: 'rgba(73,188,247,.14)'
-    }, {
-        offset: [26, 19],
-        symbolSize: 65,
-        color: 'rgba(73,188,247,.14)'
-    }, {
-        offset: [75, 75],
-        symbolSize: 60,
-        color: 'rgba(73,188,247,.14)'
-
-    }];
-
-    var datas = [];
-    for (var i = 0; i < plantCap.length; i++) {
-        var item = plantCap[i];
-        var itemToStyle = datalist[i];
-        datas.push({
-            name: item.value + '\n' + item.name,
-            value: itemToStyle.offset,
-            symbolSize: itemToStyle.symbolSize,
-            label: {
-                normal: {
-                    textStyle: {
-                        fontSize: 14
-                    }
-                }
-            },
-
-            itemStyle: {
-                normal: {
-                    color: itemToStyle.color,
-                    opacity: itemToStyle.opacity
-                }
-            },
-        })
-    }
-    option = {
-        grid: {
-            show: false,
-            top: 10,
-            bottom: 10
-        },
-
-        xAxis: [{
-            gridIndex: 0,
-            type: 'value',
-            show: false,
-            min: 0,
-            max: 100,
-            nameLocation: 'middle',
-            nameGap: 5
-        }],
-
-        yAxis: [{
-            gridIndex: 0,
-            min: 0,
-            show: false,
-            max: 100,
-            nameLocation: 'middle',
-            nameGap: 30
-        }],
-        series: [{
-            type: 'scatter',
-            symbol: 'circle',
-            symbolSize: 120,
-            label: {
-                normal: {
-                    show: true,
-                    formatter: '{b}',
-                    color: '#FFF',
-                    textStyle: {
-                        fontSize: '30'
-                    }
-                },
-            },
-            itemStyle: {
-                normal: {
-                    color: '#F30'
-                }
-            },
-            data: datas
-        }]
-
-    };
-    myChart.setOption(option);
+<script type="text/javascript" id="xwj1_script">
     $(document).ready(function () {
         myChart.resize();
-
-    })
+    });
     window.addEventListener("resize", function () {
         myChart.resize();
     });
+    var name;
+    var number;
+    $.ajax({
+        type: 'post',
+        url: 'http://localhost/clienthomeorder/homeorder/data',
+        async: false,
+        success: function(res) {
+            console.log(res);
+            let json = eval( "(" + res + ")" );
+            var myChart = echarts.init(document.getElementById('xwj1'));
+            var plantCap = [{
+                name:json.data[0].name ,
+                value: json.data[0].number
+            }, {
+                name: json.data[1].name,
+                value:json.data[1].number
+            }, {
+                name: json.data[2].name,
+                value: json.data[2].number
+            }, {
+                name: json.data[3].name,
+                value: json.data[3].number
+            }, {
+                name: json.data[4].name,
+                value:json.data[4].number
+            }];
+            var datalist = [{
+                offset: [56, 48],
+                symbolSize: 110,
+
+                color: 'rgba(73,188,247,.14)',
+
+            }, {
+
+                offset: [30, 70],
+                symbolSize: 70,
+                color: 'rgba(73,188,247,.14)'
+            }, {
+                offset: [0, 43],
+                symbolSize: 60,
+                color: 'rgba(73,188,247,.14)'
+
+            }, {
+                offset: [93, 30],
+                symbolSize: 70,
+                color: 'rgba(73,188,247,.14)'
+            }, {
+                offset: [26, 19],
+                symbolSize: 65,
+                color: 'rgba(73,188,247,.14)'
+            }, ];
+
+            var datas = [];
+            for (var i = 0; i < plantCap.length; i++) {
+                var item = plantCap[i];
+                var itemToStyle = datalist[i];
+                datas.push({
+                    name: item.value + '\n' + item.name,
+                    value: itemToStyle.offset,
+                    symbolSize: itemToStyle.symbolSize,
+                    label: {
+                        normal: {
+                            textStyle: {
+                                fontSize: 14
+                            }
+                        }
+                    },
+
+                    itemStyle: {
+                        normal: {
+                            color: itemToStyle.color,
+                            opacity: itemToStyle.opacity
+                        }
+                    },
+                })
+            }
+            option = {
+                grid: {
+                    show: false,
+                    top: 10,
+                    bottom: 10
+                },
+
+                xAxis: [{
+                    gridIndex: 0,
+                    type: 'value',
+                    show: false,
+                    min: 0,
+                    max: 100,
+                    nameLocation: 'middle',
+                    nameGap: 5
+                }],
+
+                yAxis: [{
+                    gridIndex: 0,
+                    min: 0,
+                    show: false,
+                    max: 100,
+                    nameLocation: 'middle',
+                    nameGap: 30
+                }],
+                series: [{
+                    type: 'scatter',
+                    symbol: 'circle',
+                    symbolSize: 120,
+                    label: {
+                        normal: {
+                            show: true,
+                            formatter: '{b}',
+                            color: '#FFF',
+                            textStyle: {
+                                fontSize: '30'
+                            }
+                        },
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#F30'
+                        }
+                    },
+                    data: datas
+                }]
+
+            };
+            myChart.setOption(option);
+            $(document).ready(function () {
+                myChart.resize();
+
+            })
+            window.addEventListener("resize", function () {
+                myChart.resize();
+            });
+        }
+    });
+
+</script>
+<script type="text/javascript" id="xwj2_script">
+    $(document).ready(function () {
+        myChart.resize();
+    });
+    window.addEventListener("resize", function () {
+        myChart.resize();
+    });
+    var name;
+    var number;
+    $.ajax({
+        type: 'post',
+        url: 'http://localhost/clientspecialtyorder/clientorder/specialtydata',
+        async: false,
+        success: function(res) {
+            console.log(res);
+            let json = eval( "(" + res + ")" );
+            var myChart = echarts.init(document.getElementById('xwj2'));
+            var plantCap = [{
+                name:json.data[0].name ,
+                value: json.data[0].number
+            }, {
+                name: json.data[1].name,
+                value:json.data[1].number
+            }, {
+                name: json.data[2].name,
+                value: json.data[2].number
+            }, {
+                name: json.data[3].name,
+                value: json.data[3].number
+            }, {
+                name: json.data[4].name,
+                value:json.data[4].number
+            }];
+            var datalist = [{
+                offset: [56, 48],
+                symbolSize: 110,
+
+                color: 'rgba(73,188,247,.14)',
+
+            }, {
+
+                offset: [30, 70],
+                symbolSize: 70,
+                color: 'rgba(73,188,247,.14)'
+            }, {
+                offset: [0, 43],
+                symbolSize: 60,
+                color: 'rgba(73,188,247,.14)'
+
+            }, {
+                offset: [93, 30],
+                symbolSize: 70,
+                color: 'rgba(73,188,247,.14)'
+            }, {
+                offset: [26, 19],
+                symbolSize: 65,
+                color: 'rgba(73,188,247,.14)'
+            }, ];
+
+            var datas = [];
+            for (var i = 0; i < plantCap.length; i++) {
+                var item = plantCap[i];
+                var itemToStyle = datalist[i];
+                datas.push({
+                    name: item.value + '\n' + item.name,
+                    value: itemToStyle.offset,
+                    symbolSize: itemToStyle.symbolSize,
+                    label: {
+                        normal: {
+                            textStyle: {
+                                fontSize: 14
+                            }
+                        }
+                    },
+
+                    itemStyle: {
+                        normal: {
+                            color: itemToStyle.color,
+                            opacity: itemToStyle.opacity
+                        }
+                    },
+                })
+            }
+            option = {
+                grid: {
+                    show: false,
+                    top: 10,
+                    bottom: 10
+                },
+
+                xAxis: [{
+                    gridIndex: 0,
+                    type: 'value',
+                    show: false,
+                    min: 0,
+                    max: 100,
+                    nameLocation: 'middle',
+                    nameGap: 5
+                }],
+
+                yAxis: [{
+                    gridIndex: 0,
+                    min: 0,
+                    show: false,
+                    max: 100,
+                    nameLocation: 'middle',
+                    nameGap: 30
+                }],
+                series: [{
+                    type: 'scatter',
+                    symbol: 'circle',
+                    symbolSize: 120,
+                    label: {
+                        normal: {
+                            show: true,
+                            formatter: '{b}',
+                            color: '#FFF',
+                            textStyle: {
+                                fontSize: '30'
+                            }
+                        },
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#F30'
+                        }
+                    },
+                    data: datas
+                }]
+
+            };
+            myChart.setOption(option);
+            $(document).ready(function () {
+                myChart.resize();
+
+            })
+            window.addEventListener("resize", function () {
+                myChart.resize();
+            });
+        }
+    });
+
 </script>
 <script type="text/javascript" src="http://www.weikebaijia.net/upload/moban/dsj/%E7%94%9F%E6%84%8F%E5%8F%82%E8%B0%8B%E9%94%80%E5%94%AE%E5%A4%A7%E6%95%B0%E6%8D%AE%E9%A1%B5%E9%9D%A2%E6%A8%A1%E6%9D%BF/js/jquery.waypoints.min.js"></script>
 <script type="text/javascript" src="http://www.weikebaijia.net/upload/moban/dsj/%E7%94%9F%E6%84%8F%E5%8F%82%E8%B0%8B%E9%94%80%E5%94%AE%E5%A4%A7%E6%95%B0%E6%8D%AE%E9%A1%B5%E9%9D%A2%E6%A8%A1%E6%9D%BF/js/jquery.countup.min.js"></script>
