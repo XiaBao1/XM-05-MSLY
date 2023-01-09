@@ -62,7 +62,7 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label is-required">是否收获：</label>
+                <label class="col-sm-3 control-label is-required">是否收货：</label>
                 <div class="col-sm-8">
                     <select name="isReceived" class="form-control m-b" th:with="type=${@dict.getType('sys_user_is_received')}" required>
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
