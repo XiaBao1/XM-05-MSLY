@@ -1,5 +1,6 @@
 package com.ruoyi.clienthomeorder.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import com.ruoyi.clienthomeorder.domain.ClientRoomRecord;
 
@@ -62,6 +63,12 @@ public interface IClientRoomRecordService
     public List<String> getDataNameList();
 
     public Long getSellNumber(String name);
+
+    public List<Long> getDataIdList(Long id);
+    public Long getRoomRecordId(Long id);
+    public BigDecimal getScore(Long id);
+    public String getComment(Long id);
+    public String getPhoto(Long id);
 
     /**
      * 删除民宿订单信息

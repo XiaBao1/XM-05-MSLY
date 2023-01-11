@@ -172,4 +172,24 @@ limit 5;
        from client_specialty_record join house_specialty join landlord_house
         where specialty_id = house_specialty.id and house_specialty.house_id = landlord_house.id and specialty_name = #{specialtyName}
     </select>
+
+    <select id="getRoomRecordId" parameterType="Long" resultType="Long">
+       select specialty_record_id from client_specialty_comment  where id = #{id}
+    </select>
+
+    <select id="getScore" parameterType="Long"  resultType="BigDecimal">
+       select score from client_specialty_comment  where id = #{id}
+    </select>
+
+    <select id="getComment" parameterType="Long"  resultType="String">
+       select comment from client_specialty_comment  where id = #{id}
+    </select>
+
+    <select id="getPhoto" parameterType="Long"  resultType="String">
+       select photo from client_specialty_comment  where id = #{id}
+    </select>
+
+    <select id="selectDataIdList" parameterType="Long"  resultMap="LongResult">
+       select id from client_specialty_comment  where specialty_record_id = #{id}
+    </select>
 </mapper>

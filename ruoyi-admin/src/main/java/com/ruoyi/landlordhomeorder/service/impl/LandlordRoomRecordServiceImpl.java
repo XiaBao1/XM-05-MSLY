@@ -1,5 +1,6 @@
 package com.ruoyi.landlordhomeorder.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -138,7 +139,26 @@ public class LandlordRoomRecordServiceImpl implements ILandlordRoomRecordService
         return landlordRoomRecordMapper.deleteLandlordRoomRecordById(id);
     }
 
+    @Override
+    public List<Long> getDataIdList(Long id) {
 
+        List<Long> datalist= landlordRoomRecordMapper.selectDataIdList(id);
+        System.out.println(datalist);
+        return datalist;
+    }
+
+    public Long getRoomRecordId(Long id){
+        return landlordRoomRecordMapper.getRoomRecordId(id);
+    }
+    public BigDecimal getScore(Long id){
+        return landlordRoomRecordMapper.getScore(id);
+    }
+    public String getComment(Long id){
+        return landlordRoomRecordMapper.getComment(id);
+    }
+    public String getPhoto(Long id){
+        return landlordRoomRecordMapper.getPhoto(id);
+    }
 
 
 }

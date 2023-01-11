@@ -45,17 +45,16 @@
             <div class="logopanel m-b">
                 <h1><img alt="[ 找不到图片 ]"  th:src="*{photo}"></h1>
             </div>
-        </div>
 
     </form>
 </div>
 <th:block th:include="include :: footer" />
 <th:block th:include="include :: datetimepicker-js" />
 <script th:inline="javascript">
-    var prefix = ctx + "clienthomeorder/homeorder";
-    $("#form-landlordorder-edit").validate({
-        focusCleanup: true
-    });
+    // var prefix = ctx + "clienthomeorder/homeorder";
+    // $("#form-landlordorder-edit").validate({
+    //     focusCleanup: true
+    // });
 
     // function submitHandler() {
     //     if ($.validate.form()) {

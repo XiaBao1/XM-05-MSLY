@@ -70,6 +70,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where landlord_house.id = house_room.house_id and house_room.id = client_room_record.room_id and house_name = #{houseName}
     </select>
 
+    <select id="getRoomRecordId" parameterType="Long" resultType="Long">
+       select room_record_id from client_room_comment  where id = #{id}
+    </select>
+
+    <select id="getScore" parameterType="Long"  resultType="BigDecimal">
+       select score from client_room_comment  where id = #{id}
+    </select>
+
+    <select id="getComment" parameterType="Long"  resultType="String">
+       select comment from client_room_comment  where id = #{id}
+    </select>
+
+    <select id="getPhoto" parameterType="Long"  resultType="String">
+       select photo from client_room_comment  where id = #{id}
+    </select>
+
+    <select id="selectDataIdList" parameterType="Long"  resultMap="LongResult">
+       select id from client_room_comment  where room_record_id = #{id}
+    </select>
+
     <select id="selectClientRoomRecordById" parameterType="Long" resultMap="ClientRoomRecordResult">
         select id, client_number, room_id, check_in_date, check_out_date, reserve_in_date, reserve_out_date, price, is_paid, is_done from client_room_record where id = #{id}
     </select>

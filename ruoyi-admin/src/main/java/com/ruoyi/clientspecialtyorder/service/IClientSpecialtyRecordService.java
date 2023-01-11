@@ -1,5 +1,6 @@
 package com.ruoyi.clientspecialtyorder.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.ruoyi.clienthomeorder.domain.ClientRoomRecord;
@@ -73,5 +74,11 @@ public interface IClientSpecialtyRecordService
     public List<String> getDataNameList();
 
     public Long getSellNumber(String name);
+
+    public List<Long> getDataIdList(Long id);
+    public Long getRoomRecordId(Long id);
+    public BigDecimal getScore(Long id);
+    public String getComment(Long id);
+    public String getPhoto(Long id);
 
 }

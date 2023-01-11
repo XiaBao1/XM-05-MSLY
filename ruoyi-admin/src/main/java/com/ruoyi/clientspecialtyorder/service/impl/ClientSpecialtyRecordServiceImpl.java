@@ -1,5 +1,6 @@
 package com.ruoyi.clientspecialtyorder.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -155,5 +156,26 @@ public class ClientSpecialtyRecordServiceImpl implements IClientSpecialtyRecordS
 
     public Long getSellNumber(String name){
         return clientSpecialtyRecordMapper.getSellNumber(name);
+    }
+
+    @Override
+    public List<Long> getDataIdList(Long id) {
+
+        List<Long> datalist= clientSpecialtyRecordMapper.selectDataIdList(id);
+        System.out.println(datalist);
+        return datalist;
+    }
+
+    public Long getRoomRecordId(Long id){
+        return clientSpecialtyRecordMapper.getRoomRecordId(id);
+    }
+    public BigDecimal getScore(Long id){
+        return clientSpecialtyRecordMapper.getScore(id);
+    }
+    public String getComment(Long id){
+        return clientSpecialtyRecordMapper.getComment(id);
+    }
+    public String getPhoto(Long id){
+        return clientSpecialtyRecordMapper.getPhoto(id);
     }
 }

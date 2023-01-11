@@ -27,6 +27,10 @@
         <result property="path"    column="path"    />
     </resultMap>
 
+    <resultMap id="StringResult" type="String"></resultMap>
+
+    <resultMap id="LongResult" type="Long"></resultMap>
+
     <sql id="selectLandlordRoomRecordVo">
         select client_room_record.id as id,client_number,user_name, room_id,room_number,house_name,buy_time,check_in_date, check_out_date, reserve_in_date, reserve_out_date, price, is_paid, is_done from client_room_record join sys_user join landlord_house join house_room where client_number=user_id and room_id = house_room.id and house_room.house_id =landlord_house.id and house_room.house_id in (select id from landlord_house where host_number=(select user_id from sys_user where user_name =  #{userName}))
     </sql>
@@ -133,5 +137,27 @@ where house_room.house_id = landlord_house.id and landlord_house.house_name=#{ho
             #{id}
         </foreach>
     </delete>
+
+
+    <select id="getRoomRecordId" parameterType="Long" resultType="Long">
+       select room_record_id from client_room_comment  where id = #{id}
+    </select>
+
+    <select id="getScore" parameterType="Long"  resultType="BigDecimal">
+       select score from client_room_comment  where id = #{id}
+    </select>
+
+    <select id="getComment" parameterType="Long"  resultType="String">
+       select comment from client_room_comment  where id = #{id}
+    </select>
+
+    <select id="getPhoto" parameterType="Long"  resultType="String">
+       select photo from client_room_comment  where id = #{id}
+    </select>
+
+    <select id="selectDataIdList" parameterType="Long"  resultMap="LongResult">
+       select id from client_room_comment  where room_record_id = #{id}
+    </select>
+
 
 </mapper>

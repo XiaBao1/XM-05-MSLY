@@ -2,10 +2,7 @@ package com.ruoyi.clienthomeorder.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import ch.qos.logback.core.net.server.Client;
 import com.alibaba.fastjson.JSONArray;
@@ -15,11 +12,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.clienthomeorder.domain.ClientRoomRecord;
@@ -29,6 +22,8 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -282,6 +277,66 @@ public class ClientRoomRecordController extends BaseController
     }
 
     /**
+     * 查询所有评论
+     * @return
+     */
+    @RequiresPermissions("clienthomeorder:homeorder:queryallcomment")
+    @GetMapping("/queryallcomment/{id}")
+    public String queryallcommentPage(@PathVariable("id") Long id, ModelMap mmap) {
+//        ClientRoomRecord clientRoomRecord = clientRoomRecordService.selectClientRoomCommentRecordById(id);
+//        if(clientRoomRecord==null) {
+//            System.out.println("hello___________________________________");
+//            clientRoomRecord = clientRoomRecordService.selectClientRoomCommentRecordById((long) 0);
+//        }
+//        System.out.println(clientRoomRecord);
+//        mmap.put("clientRoomRecord",clientRoomRecord);
+//        System.out.println("getmapping:"+clientRoomRecord);
+        System.out.println(id);
+        mmap.put("id",id);
+        return prefix+ "/queryallcomment";
+    }
+
+    @RequiresPermissions("clienthomeorder:homeorder:queryallcomment")
+    @Log(title = "全部评论", businessType = BusinessType.UPDATE)
+    @PostMapping("/queryallcomment")
+    @ResponseBody
+    public String queryallcomment(HttpServletRequest request)
+    {
+            Long id= Long.valueOf(request.getParameter("id"));
+            System.out.println("id is:"+id);
+//        System.out.println("postmapping:"+clientRoomRecord);
+//        Long id = clientRoomRecord.roomRecordId;
+        List<Long> idlist =  clientRoomRecordService.getDataIdList(id);
+
+        if(idlist.isEmpty()){
+            System.out.println("idlist is null---------------------------");
+            Long ids = Long.valueOf(0);
+            idlist = clientRoomRecordService.getDataIdList(ids);
+        }
+        System.out.println(idlist);
+        JSONObject res=new JSONObject();
+        JSONArray s=new JSONArray();
+        for(Long idnew:idlist){
+            JSONObject tmp=new JSONObject();
+            String a = String.valueOf(idnew);
+            tmp.put("id",a);
+            String b = String.valueOf(clientRoomRecordService.getRoomRecordId(idnew)) ;
+            tmp.put("room_record_id",b);
+            String e = String.valueOf(clientRoomRecordService.getScore(idnew)) ;
+            tmp.put("score",e);
+            String c = clientRoomRecordService.getComment(idnew) ;
+            tmp.put("comment",c);
+            String d = clientRoomRecordService.getPhoto(idnew) ;
+            tmp.put("photo",d);
+            s.add(tmp);
+        }
+        res.put("data",s);
+        System.out.println(res);
+        return res.toString();
+    }
+
+
+    /**
      * 小程序查看评论
      */
     @RequiresPermissions("clienthomeorder:homeorder:querycomment")
@@ -326,10 +381,4 @@ public class ClientRoomRecordController extends BaseController
         System.out.println(res);
         return res.toString();
     }
-
-
-
-
-
-
 }
