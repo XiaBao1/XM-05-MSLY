@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+    <head>
+        <th:block th:include="include :: header('菜单列表')" />
+        <style>
+            @media print {
+                .fixed-table-toolbar {
+                    display: none;
+                }
+
+                .noprint {
+                    display: none;
+                }
+
+                .fixed-table-pagination {
+                    display: none !important;
+                }
+
+            }
+            @page {
+                size: auto;
+                margin: 0mm;
+            }
+        </style>
+    </head>
+    <body class="gray-bg">
+        <div class="container-div">
+            <div class="row">
+                <div class="col-sm-12 select-table table-striped noprint" id="prints" style="width: 100%;">
+                    <table id="bootstrap-tree-table" style="width: 100%;word-break:break-all; word-wrap:break-all; "></table>
+                </div>
+            </div>
+        </div>
+
+        <th:block th:include="include :: footer" />
+        <script th:inline="javascript">
+            var addFlag = [[${@permission.hasPermi('system:menu:add')}]];
+            var editFlag = [[${@permission.hasPermi('system:menu:edit')}]];
+            var removeFlag = [[${@permission.hasPermi('system:menu:remove')}]];
+            var datas = [[${@dict.getType('sys_show_hide')}]];
+            var prefix = ctx + "system/menu";
+
+            $(function() {
+                var options = {
+                    code: "menuId",
+                    parentCode: "parentId",
+                    uniqueId: "menuId",
+                    expandAll: false,
+                    expandFirst: false,
+                    url: prefix + "/list",
+                    createUrl: prefix + "/add/{id}",
+                    updateUrl: prefix + "/edit/{id}",
+                    removeUrl: prefix + "/remove/{id}",
+                    exportUrl: prefix + "/export",
+                    modalName: "菜单",
+
+                    columns: [{
+                        field: 'selectItem',
+                        radio: true
+                    },
+                        {
+                            title: '菜单名称',
+                            field: 'menuName',
+                            width: '20',
+                            widthUnit: '%',
+                            formatter: function(value, row, index) {
+                                if ($.common.isEmpty(row.icon)) {
+                                    return row.menuName;
+                                } else {
+                                    return '<i class="' + row.icon + '"></i> <span class="nav-label">' + row.menuName + '</span>';
+                                }
+                            }
+                        },
+                        {
+                            field: 'orderNum',
+                            title: '排序',
+                            width: '10',
+                            widthUnit: '%',
+                            align: "left"
+                        },
+                        {
+                            field: 'url',
+                            title: '请求地址',
+                            width: '15',
+                            widthUnit: '%',
+                            align: "left",
+                            formatter: function(value, row, index) {
+                                return $.table.tooltip(value);
+                            }
+                        },
+                        {
+                            title: '类型',
+                            field: 'menuType',
+                            width: '10',
+                            widthUnit: '%',
+                            align: "left",
+                            formatter: function(value, item, index) {
+                                if (item.menuType == 'M') {
+                                    return '目录';
+                                }
+                                else if (item.menuType == 'C') {
+                                    return '菜单';
+                                }
+                                else if (item.menuType == 'F') {
+                                    return '按钮';
+                                }
+                            }
+                        },
+                        {
+                            field: 'visible',
+                            title: '可见',
+                            width: '10',
+                            widthUnit: '%',
+                            align: "left",
+                            formatter: function(value, row, index) {
+                                if (row.menuType == 'F') {
+                                    return '-';
+                                }
+                                return row.visible;
+                            }
+                        },
+                        {
+                            field: 'perms',
+                            title: '权限标识',
+                            width: '15',
+                            widthUnit: '%',
+                            align: "left",
+                            formatter: function(value, row, index) {
+                                return $.table.tooltip(value);
+                            }
+                        }]
+                };
+                $.treeTable.onInit = function () {
+                    console.log("init");
+                    window.print();
+                };
+                $.treeTable.init(options);
+
+            });
+
+
+        </script>
+
+    </body>
+</html>

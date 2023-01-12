@@ -2,6 +2,7 @@ package com.ruoyi.weather.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.github.pagehelper.PageHelper;
 import com.ruoyi.common.core.page.PageDomain;
@@ -154,5 +155,15 @@ public class WeatherController extends BaseController
     public String print(ModelMap mmap)
     {
         return prefix + "/print";
+    }
+
+    @RequiresPermissions("weather:weather:statistics")
+    @Log(title = "天气信息统计", businessType = BusinessType.INSERT)
+    @PostMapping("/data")
+    @ResponseBody
+    public List<Long> Data()
+    {
+        List<Long> list = weatherService.getMonthDirection();
+        return list;
     }
 }

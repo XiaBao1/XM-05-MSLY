@@ -24,6 +24,11 @@
         <result property="path"    column="path"    />
     </resultMap>
 
+
+    <resultMap id="StringResult" type="String"></resultMap>
+
+    <resultMap id="LongResult" type="Long"></resultMap>
+
     <sql id="selectClientSpecialtyRecordVo">
         select client_specialty_record.id as id, user_name, specialty_id,specialty_name,house_name,quantity, client_specialty_record.price as price, order_time, finish_time, is_received, is_paid, is_done from client_specialty_record join sys_user join house_specialty join landlord_house where specialty_id =house_specialty.id and house_specialty.house_id=landlord_house.id and user_id = client_number and user_name =#{userName}
     </sql>
@@ -155,4 +160,21 @@
             <if test="path != null">#{path},</if>
         </trim>
     </insert>
+
+    <select id="selectDataNameList" resultMap="StringResult">
+select specialty_name
+from client_specialty_record join house_specialty join landlord_house
+where specialty_id = house_specialty.id and house_specialty.house_id = landlord_house.id
+group by specialty_name
+order by count(quantity) desc
+limit 5;
+    </select>
+
+
+
+    <select id="getSellNumber"  parameterType="ClientRoomRecord" resultType="Long">
+       select count(quantity) as number
+       from client_specialty_record join house_specialty join landlord_house
+        where specialty_id = house_specialty.id and house_specialty.house_id = landlord_house.id and specialty_name = #{specialtyName}
+    </select>
 </mapper>

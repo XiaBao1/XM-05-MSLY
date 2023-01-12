@@ -370,4 +370,34 @@ public class SysUserController extends BaseController
         mmap.put("dept", deptService.selectDeptById(deptId));
         return prefix + "/deptTree";
     }
+
+    @PostMapping("/count")
+    @ResponseBody
+    public int selectUserCount() {
+        return userService.getUserCount();
+    }
+
+    @PostMapping("/cur_month_count")
+    @ResponseBody
+    public int getCurMonthCount() {
+        return userService.getCurMonthCount();
+    }
+
+    @PostMapping("/prev_month_count")
+    @ResponseBody
+    public int getPrevMonthCount() {
+        return userService.getPrevMonthCount();
+    }
+
+    @PostMapping("/count_by_sex")
+    @ResponseBody
+    public List<Integer> getCountBySex() {
+        return userService.getCountBySex();
+    }
+
+    @PostMapping("/count_by_money")
+    @ResponseBody
+    public List<Integer> getCountByMoney() {
+        return userService.getCountByMoney();
+    }
 }

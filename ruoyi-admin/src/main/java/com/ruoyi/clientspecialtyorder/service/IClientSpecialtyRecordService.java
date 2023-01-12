@@ -72,4 +72,9 @@ public interface IClientSpecialtyRecordService
      * @return 结果
      */
     public int deleteClientSpecialtyRecordById(Long id);
+
+    public List<String> getDataNameList();
+
+    public Long getSellNumber(String name);
+
 }

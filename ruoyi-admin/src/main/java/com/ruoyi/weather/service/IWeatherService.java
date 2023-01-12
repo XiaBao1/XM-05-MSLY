@@ -1,6 +1,8 @@
 package com.ruoyi.weather.service;
 
 import java.util.List;
+import java.util.Map;
+
 import com.ruoyi.weather.domain.Weather;
 
 /**
@@ -60,9 +62,16 @@ public interface IWeatherService
     public int deleteWeatherById(Long id);
 
     /**
-     * 统计本月天气信息
+     * 统计本月温度信息
      *
      * @return 结果
      */
     public List<Long> getMonthTemperature();
+
+    /**
+     * 统计本月风向信息
+     *
+     * @return 结果
+     */
+    public List<Long> getMonthDirection();
 }

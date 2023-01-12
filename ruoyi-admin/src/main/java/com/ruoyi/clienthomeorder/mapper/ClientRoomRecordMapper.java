@@ -29,6 +29,8 @@ public interface ClientRoomRecordMapper
      */
     public List<ClientRoomRecord> selectClientRoomRecordList(ClientRoomRecord clientRoomRecord);
     public List<ClientRoomRecord> selectClientRoomRecordList2(ClientRoomRecord clientRoomRecord);
+    public List<String> selectDataNameList(ClientRoomRecord clientRoomRecord);
+    public Long getSellNumber(String name);
     /**
      * 新增民宿订单
      * 
