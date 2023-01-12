@@ -14,12 +14,11 @@ Page({
     standard: "",
 
     date: '2023-02-02',
-    arriveTime: 18,
+    time: '00:00',
     liveTime: 5,
     passwd: '',
 
     curDate: '2022-12-31',
-    arriveTimeList: [...Array(24).keys()],
     liveTimeList: [...Array(30).keys()]
 
   },
@@ -60,9 +59,9 @@ Page({
       date: e.detail.value
     })
   },
-  bindArriveTimeChange: function(e) {
+  bindTimeChange: function(e) {
     this.setData({
-      arriveTime: e.detail.value
+      time: e.detail.value
     })
   },
   bindLiveTimeChange: function(e) {
@@ -82,10 +81,7 @@ Page({
     let that = this;
     let data = {
       id: parseInt(this.data.roomId),
-      year: parseInt(this.data.date.substring(0, 4)),
-      month: parseInt(this.data.date.substring(5, 7)),
-      day: parseInt(this.data.date.substring(8, 10)),
-      hour: parseInt(this.data.arriveTime),
+      checkInDate: this.data.date + 'T' + this.data.time + ':00',
       last: parseInt(this.data.liveTime),
       pwd: 123456
     }
@@ -98,7 +94,7 @@ Page({
       success: function(res) {
         console.log(res)
         wx.reLaunch({
-          url: '../index/info_index',
+          url: '../../user/center/self_center',
         })
       }
     });

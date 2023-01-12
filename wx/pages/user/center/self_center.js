@@ -8,7 +8,7 @@ Page({
     money: -1,
     province: "",
   },
-  onLoad: function() {
+  onShow: function() {
     getCookie(this.getProfile);
   },
   getProfile: function(cookies) {
