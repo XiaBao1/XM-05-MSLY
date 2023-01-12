@@ -112,6 +112,11 @@ public class SysMenuController extends BaseController
         return prefix + "/add";
     }
 
+    @GetMapping("/print")
+    public String print() {
+        return prefix + "/print";
+    }
+
     /**
      * 新增保存菜单
      */

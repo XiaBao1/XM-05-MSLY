@@ -66,6 +66,11 @@ public class SysUserServiceImpl implements ISysUserService
     protected Validator validator;
 
     @Override
+    public int getUserCount() {
+        return userMapper.selectUserCount();
+    }
+
+    @Override
     public List<Integer> getMonthlyUserIncrement() {
         int len = 12;
         List<Integer> list = new ArrayList<Integer>(len);
@@ -76,7 +81,7 @@ public class SysUserServiceImpl implements ISysUserService
         Calendar ca = Calendar.getInstance();
         List<SysUser> users = userMapper.selectUserList(new SysUser());
         for (SysUser user : users) {
-            if ( !"2".equals(user.getDelFlag()) ) {
+            if ( ! "2".equals(user.getDelFlag()) ) {
                 ca.setTime(user.getCreateTime());
                 int idx = ca.get(Calendar.MONTH);
                 int cur = list.get(idx);
@@ -84,6 +89,84 @@ public class SysUserServiceImpl implements ISysUserService
             }
         }
 
+        return list;
+    }
+
+    @Override
+    public List<Integer> getUserCountByRole() {
+        List<Integer> result = new ArrayList<Integer>();
+        result.add(userRoleMapper.countUserRoleByRoleId((long)1));
+        result.add(userRoleMapper.countUserRoleByRoleId((long)2));
+        result.add(userRoleMapper.countUserRoleByRoleId((long)3));
+        return result;
+    }
+
+    @Override
+    public int getCurMonthCount() {
+        Calendar calendar = Calendar.getInstance();
+        int month = calendar.get(Calendar.MONTH);
+
+        List list = getMonthlyUserIncrement();
+        return (int)list.get(month);
+    }
+
+    @Override
+    public int getPrevMonthCount() {
+        Calendar calendar = Calendar.getInstance();
+        int month = calendar.get(Calendar.MONTH);
+        month = (month + 11) % 12;
+
+        List list = getMonthlyUserIncrement();
+        return (int)list.get(month);
+    }
+
+    @Override
+    public List<Integer> getCountByMoney() {
+        int[] cnt = {0, 0, 0, 0, 0};
+
+        List<SysUser> users = userMapper.selectUserList(new SysUser());
+        for (SysUser user : users) {
+            if ( ! "2".equals(user.getDelFlag()) ) {
+                if(user.getMoney() == null) continue;
+                double money = user.getMoney();
+                int idx = -1;
+                if ( money < 10)        idx = 0;
+                else if (money < 100)   idx = 1;
+                else if (money < 1000)  idx = 2;
+                else if (money < 10000) idx = 3;
+                else                    idx = 4;
+
+                cnt[idx] = cnt[idx] + 1;
+            }
+        }
+
+        List<Integer> list = new ArrayList<Integer>();
+        for (int item : cnt) {
+            list.add(item);
+        }
+        return list;
+    }
+
+    @Override
+    public List<Integer> getCountBySex() {
+        int[] cnt = {0, 0};
+
+        List<SysUser> users = userMapper.selectUserList(new SysUser());
+        for (SysUser user : users) {
+            if ( ! "2".equals(user.getDelFlag()) ) {
+                String sex = user.getSex();
+                int idx = -1;
+                if ( "0".equals(sex) )  idx = 0;
+                else                    idx = 1;
+
+                cnt[idx] = cnt[idx] + 1;
+            }
+        }
+
+        List<Integer> list = new ArrayList<Integer>();
+        for (int item : cnt) {
+            list.add(item);
+        }
         return list;
     }
 
