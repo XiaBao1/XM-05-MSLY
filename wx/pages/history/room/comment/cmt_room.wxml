@@ -10,8 +10,7 @@
     </view>
     <view class='image'>
       <label>照片</label>
-      <!-- <image class='img' src="{{photo}}" mode="aspectFit"></image> -->
-      <image class='img' src="http://localhost/profile/1672669920136750.png" mode="aspectFit"></image>
+      <image class='img' src="{{photo}}" mode="aspectFit"></image>
     </view>
   </view>
 </view>
