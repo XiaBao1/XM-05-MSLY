@@ -1,6 +1,9 @@
 package com.ruoyi.landlordhomeorder.controller;
 
 import java.util.List;
+
+import com.alibaba.fastjson.JSONArray;
+import com.ruoyi.common.json.JSONObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +21,8 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 民宿订单Controller
@@ -185,5 +190,56 @@ public class LandlordRoomRecordController extends BaseController
     {
         System.out.println(landlordRoomRecord);
         return toAjax(landlordRoomRecordService.updateLandlordRoomCommentRecord(landlordRoomRecord));
+    }
+
+    /**
+     * 查询所有评论
+     * @return
+     */
+    @RequiresPermissions("landlordhomeorder:landlordorder:queryallcomment")
+    @GetMapping("/queryallcomment/{id}")
+    public String queryallcommentPage(@PathVariable("id") Long id, ModelMap mmap) {
+        System.out.println(id);
+        mmap.put("id",id);
+        return prefix+ "/queryallcomment";
+    }
+
+    @RequiresPermissions("landlordhomeorder:landlordorder:queryallcomment")
+    @Log(title = "全部评论", businessType = BusinessType.UPDATE)
+    @PostMapping("/queryallcomment")
+    @ResponseBody
+    public String queryallcomment(HttpServletRequest request)
+    {
+        Long id= Long.valueOf(request.getParameter("id"));
+        System.out.println("id is:"+id);
+//        System.out.println("postmapping:"+clientRoomRecord);
+//        Long id = clientRoomRecord.roomRecordId;
+        List<Long> idlist =  landlordRoomRecordService.getDataIdList(id);
+
+        if(idlist.isEmpty()){
+            System.out.println("idlist is null---------------------------");
+            Long ids = Long.valueOf(0);
+            idlist = landlordRoomRecordService.getDataIdList(ids);
+        }
+        System.out.println(idlist);
+        JSONObject res=new JSONObject();
+        JSONArray s=new JSONArray();
+        for(Long idnew:idlist){
+            JSONObject tmp=new JSONObject();
+            String a = String.valueOf(idnew);
+            tmp.put("id",a);
+            String b = String.valueOf(landlordRoomRecordService.getRoomRecordId(idnew)) ;
+            tmp.put("room_record_id",b);
+            String e = String.valueOf(landlordRoomRecordService.getScore(idnew)) ;
+            tmp.put("score",e);
+            String c = landlordRoomRecordService.getComment(idnew) ;
+            tmp.put("comment",c);
+            String d = landlordRoomRecordService.getPhoto(idnew) ;
+            tmp.put("photo",d);
+            s.add(tmp);
+        }
+        res.put("data",s);
+        System.out.println(res);
+        return res.toString();
     }
 }

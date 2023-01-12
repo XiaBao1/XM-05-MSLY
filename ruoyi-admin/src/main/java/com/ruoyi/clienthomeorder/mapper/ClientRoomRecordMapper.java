@@ -1,5 +1,6 @@
 package com.ruoyi.clienthomeorder.mapper;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.ruoyi.clienthomeorder.domain.ClientRoomRecord;
@@ -21,6 +22,7 @@ public interface ClientRoomRecordMapper
     public ClientRoomRecord selectClientRoomRecordById(Long id);
 
     public ClientRoomRecord  selectClientRoomCommentRecordById(Long id);
+
     /**
      * 查询民宿订单列表
      * 
@@ -31,6 +33,12 @@ public interface ClientRoomRecordMapper
     public List<ClientRoomRecord> selectClientRoomRecordList2(ClientRoomRecord clientRoomRecord);
     public List<String> selectDataNameList(ClientRoomRecord clientRoomRecord);
     public Long getSellNumber(String name);
+
+    public List<Long> selectDataIdList(Long id);
+    public Long getRoomRecordId(Long id);
+    public BigDecimal getScore(Long id);
+    public String getComment(Long id);
+    public String getPhoto(Long id);
     /**
      * 新增民宿订单
      * 

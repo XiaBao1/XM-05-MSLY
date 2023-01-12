@@ -148,5 +148,25 @@ public class LandlordSpecialtyRecordServiceImpl implements ILandlordSpecialtyRec
     {
         return  landlordSpecialtyRecordMapper.getPhoto(roomRecordId);
     }
+    @Override
+    public List<Long> getDataIdList(Long id) {
+
+        List<Long> datalist= landlordSpecialtyRecordMapper.selectDataIdList(id);
+        System.out.println(datalist);
+        return datalist;
+    }
+
+    public Long getRoomRecordId(Long id){
+        return landlordSpecialtyRecordMapper.getRoomRecordId(id);
+    }
+    public BigDecimal getScore2(Long id){
+        return landlordSpecialtyRecordMapper.getScore2(id);
+    }
+    public String getComment2(Long id){
+        return landlordSpecialtyRecordMapper.getComment2(id);
+    }
+    public String getPhoto2(Long id){
+        return landlordSpecialtyRecordMapper.getPhoto2(id);
+    }
 
 }

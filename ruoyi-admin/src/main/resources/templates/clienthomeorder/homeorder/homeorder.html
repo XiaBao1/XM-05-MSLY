@@ -129,6 +129,7 @@
         var removeFlag = [[${@permission.hasPermi('clienthomeorder:homeorder:remove')}]];
         var commentsFlag = [[${@permission.hasPermi('clienthomeorder:homeorder:comment')}]];
         var querycommentsFlag = [[${@permission.hasPermi('clienthomeorder:homeorder:querycomment')}]];
+        var queryallcommentsFlag = [[${@permission.hasPermi('clienthomeorder:homeorder:queryallcomment')}]];
         var printFlag =[[${@permission.hasPermi('clienthomeorder:homeorder:print')}]];
         var isPaidDatas = [[${@dict.getType('sys_user_is_paid')}]];
         var isDoneDatas = [[${@dict.getType('sys_user_is_done')}]];
@@ -143,6 +144,7 @@
                 // discussUrl:prefix + "/comment/{id}",
                 discussUrl:prefix + "/comment",
                 queryUrl:prefix+"/querycomment/{id}",
+                queryallUrl:prefix+"/queryallcomment/{id}",
                 exportUrl: prefix + "/export",
                 modalName: "民宿订单",
                 columns: [{
@@ -231,7 +233,8 @@
                     formatter: function(value, row, index) {
                         var actions = [];
                          actions.push('<a class="btn btn-success btn-xs ' + commentsFlag + '" href="javascript:void(0)" onclick="$.operate.comment(\'' + row.id + '\')"><i class="fa fa-add"></i>评价</a> ');
-                         actions.push('<a class="btn btn-success btn-xs ' + querycommentsFlag + '" href="javascript:void(0)" onclick="$.operate.querycommentTab(\'' + row.id + '\')"><i class="fa fa-add"></i>查看评论</a>');
+                         actions.push('<a class="btn btn-success btn-xs ' + querycommentsFlag + '" href="javascript:void(0)" onclick="$.operate.querycommentTab(\'' + row.id + '\')"><i class="fa fa-add"></i>最新评论</a>');
+                        actions.push('<a class="btn btn-success btn-xs ' + queryallcommentsFlag + '" href="javascript:void(0)" onclick="$.operate.queryallcommentTab(\'' + row.id + '\')"><i class="fa fa-add"></i>查看评论</a>');
                         return actions.join('');
                     }
                 }]

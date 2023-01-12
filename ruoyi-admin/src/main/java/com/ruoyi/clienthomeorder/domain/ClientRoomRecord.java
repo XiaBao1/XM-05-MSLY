@@ -23,7 +23,7 @@ public class ClientRoomRecord extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 订单ID */
-    private Long id;
+    public Long id;
 
     /** 顾客账号 */
 
@@ -44,10 +44,10 @@ public class ClientRoomRecord extends BaseEntity
     private String userName;
 
 
-    private BigDecimal score;
+    public BigDecimal score;
 
 
-    private String comment;
+    public String comment;
 
 
     public String photo;
@@ -59,7 +59,7 @@ public class ClientRoomRecord extends BaseEntity
     public MultipartFile newsMenuIconFile;
 
 
-    private Long roomRecordId;
+    public Long roomRecordId;
 
     /** 下单时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")

@@ -1,5 +1,6 @@
 package com.ruoyi.clienthomeorder.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -40,6 +41,8 @@ public class ClientRoomRecordServiceImpl implements IClientRoomRecordService
     public ClientRoomRecord selectClientRoomCommentRecordById(Long id) {
         return clientRoomRecordMapper.selectClientRoomCommentRecordById(id);
     }
+
+
 
     /**
      * 查询民宿订单列表
@@ -152,5 +155,26 @@ public class ClientRoomRecordServiceImpl implements IClientRoomRecordService
     public int deleteClientRoomRecordById(Long id)
     {
         return clientRoomRecordMapper.deleteClientRoomRecordById(id);
+    }
+
+    @Override
+    public List<Long> getDataIdList(Long id) {
+
+        List<Long> datalist= clientRoomRecordMapper.selectDataIdList(id);
+        System.out.println(datalist);
+        return datalist;
+    }
+
+    public Long getRoomRecordId(Long id){
+        return clientRoomRecordMapper.getRoomRecordId(id);
+    }
+    public BigDecimal getScore(Long id){
+        return clientRoomRecordMapper.getScore(id);
+    }
+    public String getComment(Long id){
+        return clientRoomRecordMapper.getComment(id);
+    }
+    public String getPhoto(Long id){
+        return clientRoomRecordMapper.getPhoto(id);
     }
 }

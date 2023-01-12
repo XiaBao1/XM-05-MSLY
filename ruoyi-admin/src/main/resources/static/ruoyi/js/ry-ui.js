@@ -1196,6 +1196,40 @@ var table = {
                 }
                 return url;
             },
+            queryallcomment: function(id) {
+                table.set();
+                if ($.common.isEmpty(id) && table.options.type == table_type.bootstrapTreeTable) {
+                    var row = $("#" + table.options.id).bootstrapTreeTable('getSelections')[0];
+                    if ($.common.isEmpty(row)) {
+                        $.modal.alertWarning("请至少选择一条记录");
+                        return;
+                    }
+                    var url = table.options.queryallUrl.replace("{id}", row[table.options.uniqueId]);
+                    $.modal.open("查询" + table.options.modalName, url);
+                } else {
+                    $.modal.open("查询" + table.options.modalName, $.operate.queryallcommentUrl(id));
+                }
+            },
+            // 添加信息，以tab页展现
+            queryallcommentTab: function (id) {
+                table.set();
+                $.modal.openTab("查询" + table.options.modalName, $.operate.queryallcommentUrl(id));
+            },
+            // 修改访问地址
+            queryallcommentUrl: function(id) {
+                var url = "/404.html";
+                if ($.common.isNotEmpty(id)) {
+                    url = table.options.queryallUrl.replace("{id}", id);
+                } else {
+                    var id = $.common.isEmpty(table.options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(table.options.uniqueId);
+                    if (id.length == 0) {
+                        $.modal.alertWarning("请至少选择一条记录");
+                        return;
+                    }
+                    url = table.options.queryallUrl.replace("{id}", id);
+                }
+                return url;
+            },
             houseaddressTab: function (id) {
                 table.set();
                 $.modal.openTab("查询" + table.options.modalName, $.operate.houseaddressUrl(id));

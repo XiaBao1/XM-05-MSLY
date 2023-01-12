@@ -30,6 +30,8 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 订单Controller
  *
@@ -277,6 +279,55 @@ public class ClientSpecialtyRecordController extends BaseController {
             tmp.put("name",a);
             String b = String.valueOf(clientSpecialtyRecordService.getSellNumber(name)) ;
             tmp.put("number",b);
+            s.add(tmp);
+        }
+        res.put("data",s);
+        System.out.println(res);
+        return res.toString();
+    }
+
+    /**
+     * 查询所有评论
+     * @return
+     */
+    @RequiresPermissions("clientspecialtyorder:clientorder:queryallcomment")
+    @GetMapping("/queryallcomment/{id}")
+    public String queryallcommentPage(@PathVariable("id") Long id, ModelMap mmap) {
+        System.out.println(id);
+        mmap.put("id",id);
+        return prefix+ "/queryallcomment";
+    }
+
+    @RequiresPermissions("clientspecialtyorder:clientorder:queryallcomment")
+    @Log(title = "全部评论", businessType = BusinessType.UPDATE)
+    @PostMapping("/queryallcomment")
+    @ResponseBody
+    public String queryallcomment(HttpServletRequest request)
+    {
+        Long id= Long.valueOf(request.getParameter("id"));
+        System.out.println("id is:"+id);
+        List<Long> idlist =  clientSpecialtyRecordService.getDataIdList(id);
+
+        if(idlist.isEmpty()){
+            System.out.println("idlist is null---------------------------");
+            Long ids = Long.valueOf(0);
+            idlist = clientSpecialtyRecordService.getDataIdList(ids);
+        }
+        System.out.println(idlist);
+        JSONObject res=new JSONObject();
+        JSONArray s=new JSONArray();
+        for(Long idnew:idlist){
+            JSONObject tmp=new JSONObject();
+            String a = String.valueOf(idnew);
+            tmp.put("id",a);
+            String b = String.valueOf(clientSpecialtyRecordService.getRoomRecordId(idnew)) ;
+            tmp.put("room_record_id",b);
+            String e = String.valueOf(clientSpecialtyRecordService.getScore(idnew)) ;
+            tmp.put("score",e);
+            String c = clientSpecialtyRecordService.getComment(idnew) ;
+            tmp.put("comment",c);
+            String d = clientSpecialtyRecordService.getPhoto(idnew) ;
+            tmp.put("photo",d);
             s.add(tmp);
         }
         res.put("data",s);

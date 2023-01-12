@@ -123,6 +123,7 @@
         var editFlag = [[${@permission.hasPermi('landlordspecialtyorder:specialtyorder:edit')}]];
         var removeFlag = [[${@permission.hasPermi('landlordspecialtyorder:specialtyorder:remove')}]];
         var querycommentFlag = [[${@permission.hasPermi('landlordspecialtyorder:specialtyorder:querycomment')}]];
+        var queryallcommentsFlag = [[${@permission.hasPermi('landlordspecialtyorder:specialtyorder:queryallcomment')}]];
         var printFlag = [[${@permission.hasPermi('landlordspecialtyorder:specialtyorder:print')}]];
         var isReceivedDatas = [[${@dict.getType('sys_user_is_received')}]];
         var isPaidDatas = [[${@dict.getType('sys_user_is_paid')}]];
@@ -135,6 +136,7 @@
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
                 queryUrl:prefix + "/querycomment/{id}",
+                queryallUrl:prefix + "/queryallcomment/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
                 modalName: "订单",
@@ -218,7 +220,8 @@
                     align: 'center',
                     formatter: function(value, row, index) {
                         var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + querycommentFlag + '" href="javascript:void(0)" onclick="$.operate.querycommentTab(\'' + row.id + '\')"><i class="fa fa-edit"></i>查看评价</a> ');
+                        actions.push('<a class="btn btn-success btn-xs ' + querycommentFlag + '" href="javascript:void(0)" onclick="$.operate.querycommentTab(\'' + row.id + '\')"><i class="fa fa-edit"></i>最新评价</a> ');
+                        actions.push('<a class="btn btn-success btn-xs ' + queryallcommentsFlag + '" href="javascript:void(0)" onclick="$.operate.queryallcommentTab(\'' + row.id + '\')"><i class="fa fa-add"></i>查看评论</a>');
                          actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
                     }

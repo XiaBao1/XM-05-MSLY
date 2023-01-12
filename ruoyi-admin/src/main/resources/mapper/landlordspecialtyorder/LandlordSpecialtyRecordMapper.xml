@@ -25,10 +25,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="path"    column="path"    />
     </resultMap>
 
+    <resultMap id="StringResult" type="String"></resultMap>
+
+    <resultMap id="LongResult" type="Long"></resultMap>
+
     <sql id="selectLandlordSpecialtyRecordVo">
          select client_specialty_record.id as id , client_number, user_name, specialty_id,specialty_name,house_name, quantity, client_specialty_record.price as price, order_time, finish_time, is_received, is_paid, is_done
 from client_specialty_record join sys_user join house_specialty join landlord_house
-where client_specialty_record.specialty_id= house_specialty.id and house_specialty.house_id = landlord_house.id and client_number=user_id and specialty_id in (select id from house_specialty where house_id = (select id from landlord_house where  host_number=(select user_id from sys_user where user_name = #{userName})) )
+where client_specialty_record.specialty_id= house_specialty.id and house_specialty.house_id = landlord_house.id and client_number=user_id and specialty_id in (select id from house_specialty where house_id in (select id from landlord_house where  host_number=(select user_id from sys_user where user_name = #{userName})) )
 
     </sql>
 
@@ -51,7 +55,7 @@ where client_specialty_record.specialty_id= house_specialty.id and house_special
     <select id="selectLandlordSpecialtyRecordList2" parameterType="LandlordSpecialtyRecord" resultMap="LandlordSpecialtyRecordResult">
             select client_specialty_record.id as id , client_number, user_name, specialty_id,specialty_name,house_name, quantity, client_specialty_record.price as price, order_time, finish_time, is_received, is_paid, is_done
 from client_specialty_record join sys_user join house_specialty join landlord_house
-where client_specialty_record.specialty_id= house_specialty.id and house_specialty.house_id = landlord_house.id and client_number=user_id and specialty_id in (select id from house_specialty where house_id = (select id from landlord_house where  host_number=(select user_id from sys_user where user_name = #{userName})) )
+where client_specialty_record.specialty_id= house_specialty.id and house_specialty.house_id = landlord_house.id and client_number=user_id and specialty_id in (select id from house_specialty where house_id in (select id from landlord_house where  host_number=(select user_id from sys_user where user_name = #{userName})) )
     </select>
 
     <select id="selectLandlordSpecialtyRecordById" parameterType="Long" resultMap="LandlordSpecialtyRecordResult">
@@ -135,4 +139,23 @@ where client_number=user_id and client_specialty_record.id = #{id} and specialty
         </foreach>
     </delete>
 
+    <select id="getRoomRecordId" parameterType="Long" resultType="Long">
+       select specialty_record_id from client_specialty_comment  where id = #{id}
+    </select>
+
+    <select id="getScore2" parameterType="Long"  resultType="BigDecimal">
+       select score from client_specialty_comment  where id = #{id}
+    </select>
+
+    <select id="getComment2" parameterType="Long"  resultType="String">
+       select comment from client_specialty_comment  where id = #{id}
+    </select>
+
+    <select id="getPhoto2" parameterType="Long"  resultType="String">
+       select photo from client_specialty_comment  where id = #{id}
+    </select>
+
+    <select id="selectDataIdList" parameterType="Long"  resultMap="LongResult">
+       select id from client_specialty_comment  where specialty_record_id = #{id}
+    </select>
 </mapper>

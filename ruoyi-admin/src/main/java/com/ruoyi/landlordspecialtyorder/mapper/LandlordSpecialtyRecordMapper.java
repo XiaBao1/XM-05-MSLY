@@ -67,4 +67,10 @@ public interface LandlordSpecialtyRecordMapper
     public BigDecimal getScore(Long roomRecordId);
     public String getComment(Long roomRecordId);
     public String getPhoto (Long roomRecordId);
+
+    public List<Long> selectDataIdList(Long id);
+    public Long getRoomRecordId(Long id);
+    public BigDecimal getScore2(Long id);
+    public String getComment2(Long id);
+    public String getPhoto2(Long id);
 }
