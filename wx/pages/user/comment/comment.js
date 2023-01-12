@@ -15,7 +15,7 @@ Page({
       url: 'http://localhost/client_landlord_feedback/client_landlord_feedback/list',
       header: {'cookie': cookies.data.substring(0, 48), 'Content-Type': 'application/x-www-form-urlencoded'},
       method: "post",
-      data: {orderByColumn: sortName, isAsc: 'asc'},
+      data: {orderByColumn: sortName, isAsc: 'asc', pageSize: 100},
       success: function(res) {
         console.log(res);
         that.setFeedbackList(res.data.rows)

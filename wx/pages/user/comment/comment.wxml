@@ -1,14 +1,12 @@
+<image class="add-img" bindtap="addClicked" src="/image/add.png"></image>
 <view class='yue'>
-  <button class='sbutton1' style="width: 15rpx; background-color: #8ffe09; color: white;" bindtap="addClicked">
-    添加
-  </button>
-  <button class='sbutton1' style="width: 15rpx; background-color: #04f489; color: white;" bindtap="statisticsClicked">
+  <button class='sbutton1' style="background-color: #da9516; color: white;" bindtap="statisticsClicked">
     统计
   </button>
-  <button class='sbutton2' style="background-color: #8ffe09; color: white;" bindtap="orderTimeClicked">
+  <button class='sbutton2' style="background-color: #2e8fb6; color: white;" bindtap="orderTimeClicked">
     按时间排序
   </button>
-  <button class='sbutton2' style="background-color: #04f489; color: white;" bindtap="orderStatusClicked">
+  <button class='sbutton2' style="background-color: #da9516; color: white;" bindtap="orderStatusClicked">
     按状态排序
   </button>
 </view>
@@ -23,7 +21,7 @@
           </view>
         </view>
         <view>
-          <view class='delete' bindtap="deleteFeedbackClicked" data-idx="{{index}}">删除</view>
+          <image class="del-img" src="/image/del.png" bindtap="deleteFeedbackClicked" data-idx="{{index}}"></image>
         </view>
       </view>
     </view>

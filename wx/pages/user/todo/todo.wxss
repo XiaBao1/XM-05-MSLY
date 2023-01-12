@@ -3,6 +3,26 @@ page{
   background: #ededed;
   height: 100%;
 }
+
+.orderListTitle{
+  height: 100rpx;
+  line-height: 100rpx;
+  border-bottom: 1rpx solid #f3f3f3;
+}
+.orderListTitle .userName{
+  padding-right: 50rpx;
+  background-size: 35rpx 35rpx;
+  color: #999;
+  font-size: 32rpx;
+  padding-left: 20rpx;
+}
+.orderListTitle .orderStatus{
+  float: right;
+  margin-right: 20rpx;
+  color: #FE5723;
+  font-size: 32rpx;
+}
+
 .yue{
   height: 80rpx;
   margin-left: 30rpx;
@@ -59,7 +79,7 @@ page{
 }
 .list{  
   width: 94%;
-  height: 150rpx;
+  height: 250rpx;
   margin: 16rpx auto;
   background: #ffffff;
   border-radius: 8rpx;
@@ -100,16 +120,16 @@ page{
   color:#999999;
 }
 .delete{
-  width: 180rpx;
-  height: 50rpx;
+  width: 120rpx;
+  height: 40rpx;
   background:rgb(255, 153, 0);
-  font-size: 34rpx;
-  line-height: 54rpx;
+  font-size: 25rpx;
+  line-height: 40rpx;
   text-align: center;
   color:#ffffff;
   border-top-left-radius: 27rpx;
   border-bottom-left-radius: 27rpx;
-  margin-top: 18rpx;
+  margin-top: 80rpx;
 }
 .doing{
   width: 180rpx;

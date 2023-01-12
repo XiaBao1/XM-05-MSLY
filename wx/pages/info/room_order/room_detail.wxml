@@ -14,7 +14,7 @@
 
     <view class='else' wx:if="{{isFree>0}}">
       <view class='lists'>
-        <view class='list_name'>入住时间</view>
+        <view class='list_name'>入住日期</view>
         <view class='list_items'>
           <picker mode="date" value="{{date}}" start="{{curDate}}" end="2023-12-31" bindchange="bindDateChange">
             <view class="inputInfo">
@@ -25,11 +25,11 @@
         </view>
       </view>
       <view class='lists'>
-        <view class='list_name'>到店时刻</view>
+        <view class='list_name'>入住时间</view>
         <view class='list_items'>
-          <picker mode="selector" value="{{arriveTime}}" range="{{arriveTimeList}}" bindchange="bindArriveTimeChange">
+          <picker mode="time" value="{{time}}" start='00:00' end='23:59' bindchange="bindTimeChange">
             <view class="inputInfo">
-              {{arriveTime}}
+              {{time}}
             </view>
           </picker>
           <image class='editPic' src='/image/edit.png'></image>
