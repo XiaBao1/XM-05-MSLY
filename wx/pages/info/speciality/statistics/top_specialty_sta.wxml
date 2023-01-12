@@ -1,0 +1,3 @@
+<view class="index">
+  <ec-canvas id="mychart-dom-point" canvas-id="mychart-point" ec="{{ ec }}"></ec-canvas>
+</view>

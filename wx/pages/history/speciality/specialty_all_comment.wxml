@@ -4,7 +4,7 @@
     <view class='list' wx:for="{{commentList}}" wx:for-item="item" wx:key='id'>
       <view class='list_top'  data-id="{{index}}">
         <view class='numAndTime'>
-          <!-- <image class='numPic' src='{{item.photo}}'></image> -->
+          <image class='numPic' src='{{item.photo}}'></image>
           <view  class='numInfo'>
             <view class='num'>打分：{{item.score}}</view>
             <view class='time'>评价：{{item.comment}}</view>

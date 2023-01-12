@@ -1,5 +1,4 @@
 {
-  "navigationBarTitleText": "热门民宿统计",
   "usingComponents": {
     "ec-canvas": "../../../../ec-canvas/ec-canvas"
   }
