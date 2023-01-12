@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html>
 <head>
@@ -98,29 +97,10 @@
                 <div class="sy" id="pch3"></div>
                 <div class="boxfoot"></div>
             </div><!--&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&!-->
-            <div class="boxall" style="height: 3.4rem">
-                <div class="alltitle">实时消费记录</div>
-                <div class="wrap">
-                    <ul>
-                        <li>
-                            <p>1李东梁-支付宝支付-120元-XXX门店</p>
-                        </li>
-                        <li>
-                            <p>2李东梁-支付宝支付-120元-XXX门店</p>
-                        </li>
-                        <li>
-                            <p>3李东梁-支付宝支付-120元-XXX门店</p>
-                        </li>
-                        <li>
-                            <p>4李东梁-支付宝支付-120元-XXX门店</p>
-                        </li>
-                        <li>
-                            <p>5李东梁-支付宝支付-120元-XXX门店</p>
-                        </li>
-                        <li>
-                            <p>6李东梁-支付宝支付-120元-XXX门店</p>
-                        </li>
-                    </ul>
+
+            <div class="boxall" style="height: 3.4rem" hidden>
+                <div class="alltitle">xxx</div>
+                <div class="wrap" >
                 </div>
                 <div class="boxfoot"></div>
             </div>
@@ -130,14 +110,13 @@
         <li>
             <div class="bar">
                 <div class="barbox">
-                    <ul class="clearfix">
-                        <li class="pulll_left counter">12581189</li>
-                        <li class="pulll_left counter">3912410</li>
+                    <ul class="clearfix" id="yyt1">
+
                     </ul>
                 </div>
                 <div class="barbox2">
                     <ul class="clearfix">
-                        <li class="pulll_left">消费总金额</li>
+                        <li class="pulll_left">平台用户数</li>
                         <li class="pulll_left">消费总笔数</li>
                     </ul>
                 </div>
@@ -150,50 +129,10 @@
             </div>
 
             <div class="boxall" style="height: 300px">
-                <div class="alltitle">标题样式</div>
-                <div class="navboxall">
-                    <table class="table1" width="100%" border="0" cellspacing="0" cellpadding="0">
-                        <tbody>
-                        <tr>
-                            <th scope="col">排名</th>
-                            <th scope="col">公司</th>
-                            <th scope="col">数量</th>
-                            <th scope="col">增长率</th>
-                        </tr>
-                        <tr>
-                            <td><span>1</span></td>
-                            <td>腾讯科技</td>
-                            <td>114万<br></td>
-                            <td>100%<br></td>
-                        </tr>
-                        <tr>
-                            <td><span>2</span></td>
-                            <td>百度公司</td>
-                            <td>923823万</td>
-                            <td>21%</td>
-                        </tr>
-
-                        <tr>
-                            <td><span>3</span></td>
-                            <td>新浪</td>
-                            <td>1240253万</td>
-                            <td>12%</td>
-                        </tr>
-                        <tr>
-                            <td><span>4</span></td>
-                            <td>网易</td>
-                            <td>1.2亿</td>
-                            <td>39%</td>
-                        </tr>
-                        <tr>
-                            <td><span>5</span></td>
-                            <td>雅虎</td>
-                            <td>13423万</td>
-                            <td>9%</td>
-                        </tr>
-
-                        </tbody>
-                    </table>
+                <div class="alltitle">平台反馈记录</div>
+                <div class="wrap">
+                    <ul id = "yyt2">
+                    </ul>
                 </div>
             </div>
 
@@ -229,7 +168,7 @@
                 <div class="boxfoot"></div>
             </div>
 
-            <div class="boxall" style="height:260px;">
+            <div class="boxall" style="height:260px;" hidden>
                 <div class="alltitle">标题样式</div>
                 <div class="navboxall">
                     <div class="wraptit">
@@ -252,8 +191,9 @@
 
                 </div>
 
+            </div>
 
-                <div class="boxall" style="height: 300px" hidden>
+            <div class="boxall" style="height: 300px" hidden>
                 <div class="alltitle">标题样式</div>
                 <div class="navboxall">
                     <table class="table1" width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -301,6 +241,7 @@
                 </div>
 
             </div>
+            <div>
                 <div class="boxall" style="height:300px"><!--&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&pch!-->
                     <div class="alltitle">民宿订单统计</div>
                     <div class="navboxall">
@@ -1009,6 +950,46 @@
 
 
 </script>
+<script type="text/javascript" id="yyt-script">
+    $.ajax({
+        type: 'post',
+        url: 'http://localhost/admin_feedback/admin_feedback/list',
+        async: false,
+        success: function(res) {
+            console.log(res);
+            let rows = res.rows;
+            console.log(rows);
+            let length = rows.length;
+            console.log(length);
+            var str = "";
 
+            for(let i = 0 ;i < length; i++){
+                str = str +"<li><p>"+rows[i].userNumber+"  ——  "+rows[i].feedbackContent+"</p></li>";
+                console.log(rows[i].userNumber);
+            }
+            document.getElementById("yyt2").innerHTML=str;
+
+        }
+    });
+    $.ajax({
+        type: 'post',
+        url: 'http://localhost/system/room/frontPageUp',
+        async: true,
+        success: function(res) {
+            console.log(res);
+            let json = eval( "(" + res + ")" );
+            let allUser=json.allUser;
+            let allBill=json.allBill;
+
+            var str = "<li class=\"pulll_left counter\">"+ allUser +"</li>\n" +
+                "                        <li class=\"pulll_left counter\">"+allBill+"</li>";
+
+            document.getElementById("yyt1").innerHTML=str;
+
+        }
+    });
+
+
+</script>
 </body>
 </html>
