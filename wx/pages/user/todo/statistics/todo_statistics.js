@@ -18,7 +18,7 @@ Page({
         left: 'center'
       },
       title: {
-        text: '代办事项统计',
+        text: '待办事项统计',
         left: 'center'
       },
       backgroundColor: "#ffffff",
